@@ -9,6 +9,7 @@ export default function Accueil({ onNavigate, setDark }) {
   const reveal = useReveal(0.35)
   const sectionRef = useRef(null)
   const mediaRef = useRef(null)
+  const creamRef = useRef(null)
   const wordRef = useRef(null)
   const studioRef = useRef(null)
   const target = useRef(0)
@@ -33,6 +34,9 @@ export default function Accueil({ onNavigate, setDark }) {
     const apply = (p) => {
       if (mediaRef.current) {
         mediaRef.current.style.opacity = String(Math.max(1 - p * 1.15, 0))
+      }
+      if (creamRef.current) {
+        creamRef.current.style.opacity = String(p)
       }
       if (wordRef.current) {
         wordRef.current.style.opacity = String(Math.max(1 - p * 1.6, 0))
@@ -83,8 +87,6 @@ export default function Accueil({ onNavigate, setDark }) {
     }
     const onTouchEnd = () => {
       touchY = null
-      // La scène se pose sur l'état le plus proche
-      target.current = target.current > 0.5 ? 1 : 0
     }
     section.addEventListener('touchstart', onTouchStart, { passive: true })
     section.addEventListener('touchmove', onTouchMove, { passive: true })
@@ -129,6 +131,9 @@ export default function Accueil({ onNavigate, setDark }) {
         <div className="absolute inset-0 bg-encre/40" />
       </div>
 
+      {/* Le jour se lève exactement au rythme du scroll */}
+      <div ref={creamRef} aria-hidden="true" className="absolute inset-0 z-[1] bg-creme opacity-0" />
+
       {/* Mot-symbole en bas à gauche, catchline en face : la scène d'ouverture */}
       <div ref={wordRef} className="absolute inset-x-6 bottom-[9vh] z-[2] md:inset-x-16">
         <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-8">
@@ -153,12 +158,9 @@ export default function Accueil({ onNavigate, setDark }) {
         </div>
       </div>
 
-      {/* Le studio se présente quand le jour se lève */}
-      <div
-        ref={studioRef}
-        className="absolute inset-x-6 top-1/2 z-[2] max-w-2xl -translate-y-1/2 opacity-0 md:inset-x-16"
-        style={{ pointerEvents: 'none' }}
-      >
+      {/* Le studio se présente quand le jour se lève, au centre de la scène */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 px-6 text-center">
+        <div ref={studioRef} className="opacity-0" style={{ pointerEvents: 'none' }}>
         <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
           Le studio
         </p>
@@ -167,7 +169,7 @@ export default function Accueil({ onNavigate, setDark }) {
           Le film central de votre maison<span className="text-or">.</span>
         </h2>
 
-        <p className="mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
+        <p className="mx-auto mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
           Bel Augure est un studio de films de marque fondé à Bordeaux. Nous
           concevons la pièce maîtresse de l'image d'une maison : un film
           signature en lumière naturelle, étalonné comme au cinéma, décliné
@@ -178,7 +180,7 @@ export default function Accueil({ onNavigate, setDark }) {
         <button
           type="button"
           onClick={() => onNavigate('films')}
-          className="group mt-9 flex cursor-pointer items-center gap-5"
+          className="group mx-auto mt-9 flex cursor-pointer items-center gap-5"
         >
           <span aria-hidden="true" className="relative block h-7 w-14">
             <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
@@ -188,7 +190,8 @@ export default function Accueil({ onNavigate, setDark }) {
           <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 group-hover:text-encre">
             Découvrir les quatre films<span className="text-or">.</span>
           </span>
-        </button>
+          </button>
+        </div>
       </div>
     </section>
   )
