@@ -170,7 +170,6 @@ export default function Offres() {
       aria-label="Offres"
       className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
     >
-      {/* L'index des offres : des rangées pleine largeur, comme une carte */}
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
         <div>
           <p
@@ -201,55 +200,62 @@ export default function Offres() {
         </p>
       </div>
 
+      {/* Les cinq formats en cases : Héritage au centre, Signature en or */}
       <ul
         aria-label="Grille des offres"
-        className="reveal-up -mx-4 mt-8 flex flex-col lg:mt-10 lg:flex-1"
+        className="reveal-up mt-8 grid gap-4 md:grid-cols-2 lg:mt-10 lg:flex-1 xl:grid-cols-5 xl:gap-5"
         style={{ '--d': '0.3s' }}
       >
         {TIERS.map((tier) => (
-          <li key={tier.name} className="lg:flex lg:flex-1">
+          <li key={tier.name} className="flex">
             <button
               type="button"
               onClick={() => setActive(tier)}
-              className={`group relative w-full cursor-pointer border-t border-encre/10 py-5 text-left transition-colors duration-500 lg:flex lg:flex-col lg:justify-center ${
+              className={`group relative flex w-full cursor-pointer flex-col rounded-2xl border p-6 text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${
                 tier.featured
-                  ? 'border-l-2 border-l-or bg-sable/70 pl-[14px] pr-4 hover:bg-sable'
-                  : 'px-4 hover:bg-sable/40'
+                  ? 'border-or/60 bg-sable/70 shadow-[0_24px_60px_-36px_rgb(217_198_166/0.9)] hover:bg-sable'
+                  : 'border-encre/10 hover:border-encre/20 hover:bg-sable/40'
               }`}
             >
-              {/* Trait d'or qui s'étire le long du filet au survol */}
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 top-[-1px] h-px origin-left scale-x-0 bg-or transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
-              />
-
-              <span className="grid items-baseline gap-1 md:grid-cols-12 md:gap-8">
-                <span className="md:col-span-4 lg:col-span-3">
-                  <span className="inline-block font-display text-[clamp(1.5rem,2.3vw,2.1rem)] text-encre transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
-                    {tier.name}
-                    <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      .
-                    </span>
-                  </span>
-                  {tier.featured && (
-                    <span className="ml-3 text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
-                      Format central
-                    </span>
-                  )}
+              {tier.featured && (
+                <span className="absolute right-5 top-5 text-[8.5px] font-medium uppercase tracking-[0.22em] text-grege">
+                  Format central
                 </span>
+              )}
 
-                <span className="self-center text-[13px] font-light leading-[1.6] text-grege md:col-span-5 lg:col-span-6">
-                  {tier.tagline}
+              <span className="font-display text-[clamp(1.4rem,1.8vw,1.8rem)] leading-tight text-encre">
+                {tier.name}
+                <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  .
                 </span>
+              </span>
 
-                <span className="flex items-baseline justify-between gap-6 md:col-span-3 md:justify-end lg:col-span-3">
-                  <span className="text-[13.5px] font-light text-encre/75 transition-colors duration-500 group-hover:text-encre">
-                    {tier.price}
-                  </span>
-                  <span className="-translate-x-2 text-[10px] font-normal uppercase tracking-[0.18em] text-grege opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
-                    Découvrir
-                  </span>
-                </span>
+              <span className="mt-2 text-[14.5px] font-normal text-encre/85">{tier.price}</span>
+
+              <span className="mt-3 text-[12px] font-light leading-[1.7] text-grege">
+                {tier.tagline}
+              </span>
+
+              <span aria-hidden="true" className="mb-4 mt-5 block h-px w-full bg-encre/10" />
+
+              <ul className="flex-1 space-y-2.5">
+                {tier.includes.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2.5 text-[12px] font-light leading-[1.55] text-encre/80"
+                  >
+                    <span aria-hidden="true" className="mt-[0.55em] h-px w-3 shrink-0 bg-or" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <span className="mt-5 text-[10px] font-normal uppercase tracking-[0.18em] text-grege">
+                {tier.meta}
+              </span>
+
+              <span className="mt-2 text-[10px] font-normal uppercase tracking-[0.18em] text-encre opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                Découvrir
               </span>
             </button>
           </li>
