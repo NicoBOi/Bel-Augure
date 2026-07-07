@@ -85,9 +85,9 @@ const TIERS = [
 // l'encre profonde, l'or au centre de la gamme.
 const TONES = {
   light: 'border-encre/10 hover:border-encre/20 hover:bg-sable/40',
-  gold: 'border-or/60 bg-sable/70 shadow-[0_24px_60px_-36px_rgb(217_198_166/0.9)] hover:bg-sable',
+  gold: 'border-or bg-or/45 shadow-[0_24px_60px_-36px_rgb(217_198_166)] hover:bg-or/60',
   dark: 'border-encre bg-encre shadow-[0_24px_60px_-36px_rgb(26_21_18/0.55)] hover:bg-[#251e18]',
-  greige: 'border-grege/30 bg-grege/8 hover:bg-grege/15',
+  greige: 'border-grege bg-grege shadow-[0_24px_60px_-36px_rgb(110_99_80/0.6)] hover:bg-[#7a6e59]',
   dashed: 'border-dashed border-encre/30 hover:border-encre/45 hover:bg-sable/30',
 }
 
@@ -105,73 +105,77 @@ export default function Offres() {
       >
         <BackLink label="Toutes les offres" onClick={() => setActive(null)} />
 
-        <div className="mt-10 grid items-end gap-10 md:mt-auto lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-7">
-            <div className="relative aspect-video w-full overflow-hidden rounded-3xl bg-encre">
-              <iframe
-                title={`Exemple de film ${active.name}`}
-                src={`https://player.vimeo.com/video/${VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`}
-                allow="autoplay; fullscreen"
-                tabIndex={-1}
-                className="pointer-events-none absolute inset-0 h-full w-full border-0"
-              />
+        <div className="mt-8 md:mt-auto">
+          <h2 className="font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] text-encre">
+            {active.name}
+            <span className="text-or">.</span>
+          </h2>
+          <p className="mt-3 text-[13px] font-light tracking-[0.08em] text-grege">
+            {active.price}
+            {active.featured && (
+              <span className="ml-4 text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
+                Format central
+              </span>
+            )}
+          </p>
+
+          <div className="mt-8 grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-7">
+              <div className="relative aspect-video w-full overflow-hidden rounded-3xl bg-encre">
+                <iframe
+                  title={`Exemple de film ${active.name}`}
+                  src={`https://player.vimeo.com/video/${VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`}
+                  allow="autoplay; fullscreen"
+                  tabIndex={-1}
+                  className="pointer-events-none absolute inset-0 h-full w-full border-0"
+                />
+              </div>
+              <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-grege">
+                Exemple de réalisation
+              </p>
             </div>
-            <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-grege">
-              Exemple de réalisation
-            </p>
-          </div>
 
-          <div className="lg:col-span-4 lg:col-start-9">
-            <h2 className="font-display text-[clamp(2.2rem,3.8vw,3.4rem)] leading-[1.1] text-encre">
-              {active.name}
-              <span className="text-or">.</span>
-            </h2>
-            <p className="mt-3 text-[14px] font-light tracking-[0.06em] text-grege">
-              {active.price}
-              {active.featured && (
-                <span className="ml-4 text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
-                  Format central
-                </span>
-              )}
-            </p>
-            <p className="mt-6 max-w-[44ch] text-[13.5px] font-light leading-[1.85] text-encre/80">
-              {active.desc}
-            </p>
+            <div className="lg:col-span-4 lg:col-start-9">
+              <p className="max-w-[44ch] text-[13.5px] font-light leading-[1.85] text-encre/80">
+                {active.desc}
+              </p>
 
-            <ul className="mt-6">
-              {active.includes.map((item) => (
-                <li
-                  key={item}
-                  className="border-t border-encre/10 py-2.5 text-[13px] font-light text-encre/85"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-4 text-[12px] font-light tracking-[0.06em] text-grege">
-              {active.meta}
-            </p>
-
-            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3">
-              <a
-                href={`mailto:nico@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
-                className="cta inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
-              >
-                Ouvrir un échange
-              </a>
-              <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Autres offres">
-                {TIERS.filter((t) => t.name !== active.name).map((tier) => (
-                  <li key={tier.name}>
-                    <button
-                      type="button"
-                      onClick={() => setActive(tier)}
-                      className="nav-link cursor-pointer py-2 text-[12px] font-light text-grege transition-colors duration-500 hover:text-encre"
-                    >
-                      <span className="nav-label">{tier.name}</span>
-                    </button>
+              <ul className="mt-5">
+                {active.includes.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2.5 border-t border-encre/10 py-2.5 text-[13px] font-light text-encre/85"
+                  >
+                    <span aria-hidden="true" className="mt-[0.6em] h-px w-3 shrink-0 bg-or" />
+                    {item}
                   </li>
                 ))}
               </ul>
+              <p className="mt-4 text-[11px] font-normal uppercase tracking-[0.18em] text-grege">
+                {active.meta}
+              </p>
+
+              <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
+                <a
+                  href={`mailto:nico@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
+                  className="cta inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
+                >
+                  Ouvrir un échange
+                </a>
+                <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Autres offres">
+                  {TIERS.filter((t) => t.name !== active.name).map((tier) => (
+                    <li key={tier.name}>
+                      <button
+                        type="button"
+                        onClick={() => setActive(tier)}
+                        className="nav-link cursor-pointer py-2 text-[12px] font-light text-grege transition-colors duration-500 hover:text-encre"
+                      >
+                        <span className="nav-label">{tier.name}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -229,14 +233,14 @@ export default function Offres() {
               className={`group relative flex w-full cursor-pointer flex-col rounded-2xl border p-6 text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${TONES[tier.tone]}`}
             >
               {tier.featured && (
-                <span className="absolute right-5 top-5 text-[8.5px] font-medium uppercase tracking-[0.22em] text-grege">
+                <span className="absolute right-5 top-5 text-[8.5px] font-medium uppercase tracking-[0.22em] text-encre/60">
                   Format central
                 </span>
               )}
 
               <span
                 className={`font-display text-[clamp(1.4rem,1.8vw,1.8rem)] leading-tight ${
-                  tier.tone === 'dark' ? 'text-creme' : 'text-encre'
+                  ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
                 }`}
               >
                 {tier.name}
@@ -247,7 +251,7 @@ export default function Offres() {
 
               <span
                 className={`mt-2 text-[14.5px] font-normal ${
-                  tier.tone === 'dark' ? 'text-creme/85' : 'text-encre/85'
+                  ['dark', 'greige'].includes(tier.tone) ? 'text-creme/85' : 'text-encre/85'
                 }`}
               >
                 {tier.price}
@@ -255,7 +259,7 @@ export default function Offres() {
 
               <span
                 className={`mt-3 text-[12px] font-light leading-[1.7] ${
-                  tier.tone === 'dark' ? 'text-sable/75' : 'text-grege'
+                  ['dark', 'greige'].includes(tier.tone) ? 'text-sable/75' : 'text-grege'
                 }`}
               >
                 {tier.tagline}
@@ -264,7 +268,7 @@ export default function Offres() {
               <span
                 aria-hidden="true"
                 className={`mb-4 mt-5 block h-px w-full ${
-                  tier.tone === 'dark' ? 'bg-creme/15' : 'bg-encre/10'
+                  ['dark', 'greige'].includes(tier.tone) ? 'bg-creme/15' : 'bg-encre/10'
                 }`}
               />
 
@@ -273,7 +277,7 @@ export default function Offres() {
                   <li
                     key={item}
                     className={`flex items-start gap-2.5 text-[12px] font-light leading-[1.55] ${
-                      tier.tone === 'dark' ? 'text-creme/80' : 'text-encre/80'
+                      ['dark', 'greige'].includes(tier.tone) ? 'text-creme/80' : 'text-encre/80'
                     }`}
                   >
                     <span aria-hidden="true" className="mt-[0.55em] h-px w-3 shrink-0 bg-or" />
@@ -284,7 +288,7 @@ export default function Offres() {
 
               <span
                 className={`mt-5 text-[10px] font-normal uppercase tracking-[0.18em] ${
-                  tier.tone === 'dark' ? 'text-sable/65' : 'text-grege'
+                  ['dark', 'greige'].includes(tier.tone) ? 'text-sable/65' : 'text-grege'
                 }`}
               >
                 {tier.meta}
@@ -292,7 +296,7 @@ export default function Offres() {
 
               <span
                 className={`mt-2 text-[10px] font-normal uppercase tracking-[0.18em] opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
-                  tier.tone === 'dark' ? 'text-creme' : 'text-encre'
+                  ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
                 }`}
               >
                 Découvrir
