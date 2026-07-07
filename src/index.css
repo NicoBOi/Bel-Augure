@@ -207,22 +207,6 @@ textarea.field {
   animation: dotBreathe 5s ease-in-out infinite alternate;
 }
 
-/* Bouts de projets qui dépassent en bas du héros : flottement lent */
-
-@keyframes cardFloat {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-10px);
-  }
-}
-
-.hero-card {
-  animation: cardFloat 6.5s ease-in-out infinite alternate;
-  animation-delay: calc(var(--i, 0) * 0.9s);
-}
-
 /* ---------- Animations de révélation ---------- */
 
 @keyframes revealUp {
@@ -346,8 +330,7 @@ textarea.field {
   .rings,
   .ring-a,
   .ring-b,
-  .dot-breathe,
-  .hero-card {
+  .dot-breathe {
     animation: none !important;
   }
 
