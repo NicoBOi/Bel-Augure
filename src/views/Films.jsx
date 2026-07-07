@@ -123,7 +123,7 @@ export default function Films({ setDark }) {
         </div>
       ))}
 
-      <div className="relative z-[1] flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16">
+      <div className="relative z-[1] flex h-full flex-col justify-end px-6 pb-[9vh] pt-28 md:px-16">
         <p
           className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
           style={{ '--d': '0.05s' }}
@@ -143,14 +143,14 @@ export default function Films({ setDark }) {
                   onFocus={() => enter(project)}
                   onBlur={leave}
                   onClick={() => openProject(project)}
-                  className={`flex w-full cursor-pointer items-baseline gap-6 py-3 text-left font-display text-[clamp(2rem,4.6vw,4rem)] leading-[1.12] transition-colors duration-500 md:py-4 ${
+                  className={`flex w-full cursor-pointer items-baseline gap-6 py-3 text-left font-display text-[clamp(2rem,4.6vw,4rem)] leading-[1.12] transition-colors duration-300 md:py-4 ${
                     isHovered ? 'text-creme' : dimmed ? 'text-creme/25' : 'text-encre'
                   }`}
                 >
                   <span>
                     {project.title}
                     <span
-                      className={`text-or transition-opacity duration-500 ${
+                      className={`text-or transition-opacity duration-300 ${
                         isHovered ? 'opacity-100' : 'opacity-0'
                       }`}
                     >
@@ -158,7 +158,7 @@ export default function Films({ setDark }) {
                     </span>
                   </span>
                   <span
-                    className={`ml-auto hidden shrink-0 text-[10.5px] font-normal uppercase tracking-[0.22em] text-grege transition-all duration-500 md:block ${
+                    className={`ml-auto hidden shrink-0 text-[10.5px] font-normal uppercase tracking-[0.22em] text-grege transition-all duration-300 md:block ${
                       isHovered ? 'translate-x-0 opacity-100' : '-translate-x-3 opacity-0'
                     }`}
                   >
