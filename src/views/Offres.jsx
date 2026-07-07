@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import BackLink from '../components/BackLink.jsx'
+import VimeoBackground from '../components/VimeoBackground.jsx'
 
 // Vidéo d'exemple montrée dans chaque offre en attendant les films du
 // studio : identifiant Vimeo, lu en mode background.
@@ -165,12 +166,10 @@ export default function Offres({ setDark }) {
                   ink ? 'border border-creme/15' : ''
                 }`}
               >
-                <iframe
+                <VimeoBackground
+                  id={VIMEO_ID}
                   title={`Exemple de film ${active.name}`}
-                  src={`https://player.vimeo.com/video/${VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`}
-                  allow="autoplay; fullscreen"
-                  tabIndex={-1}
-                  className="pointer-events-none absolute inset-0 h-full w-full border-0"
+                  className="absolute inset-0 h-full w-full"
                 />
               </div>
               <p

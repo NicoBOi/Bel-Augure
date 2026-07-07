@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Navbar from './components/Navbar.jsx'
 import Accueil from './views/Accueil.jsx'
 import Films from './views/Films.jsx'
@@ -27,12 +27,27 @@ export default function App() {
   // L'accueil et la lecture d'un film vivent dans l'encre : le fond, le
   // header et le contenu transitionnent ensemble, sans overlay.
   const [dark, setDark] = useState(true)
+  // Voile d'ouverture : l'encre porte le logo le temps que le film de
+  // fond démarre. Il se lève dès que la vidéo joue (minimum une seconde
+  // de présence), ou au bout de 2,6 s si elle tarde — jamais d'attente
+  // infinie, jamais de player à moitié chargé à l'écran.
+  const [veiled, setVeiled] = useState(true)
+  const [heroReady, setHeroReady] = useState(false)
+  const bootAt = useRef(performance.now())
   const View = VIEWS[view]
 
   const navigate = (next) => {
     setDark(false)
     setView(next)
   }
+
+  useEffect(() => {
+    if (!veiled) return
+    const elapsed = performance.now() - bootAt.current
+    const delay = heroReady ? Math.max(1000 - elapsed, 0) : Math.max(2600 - elapsed, 0)
+    const t = setTimeout(() => setVeiled(false), delay)
+    return () => clearTimeout(t)
+  }, [heroReady, veiled])
 
   // La page ne navigue jamais : le titre du document reflète la vue active
   // pour l'historique mental et les lecteurs d'écran.
@@ -49,9 +64,25 @@ export default function App() {
       <Navbar activeView={view} onNavigate={navigate} dark={dark} />
       <main className="relative z-[1] h-full">
         <div key={view} className="view-enter h-full">
-          <View onNavigate={navigate} setDark={setDark} />
+          <View
+            onNavigate={navigate}
+            setDark={setDark}
+            onHeroReady={() => setHeroReady(true)}
+          />
         </div>
       </main>
+
+      {/* Voile d'ouverture : la salle obscure, le temps que le film démarre */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-encre transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          veiled ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] text-creme">
+          Bel Augure<span className="dot-breathe text-or">.</span>
+        </p>
+      </div>
     </div>
   )
 }
