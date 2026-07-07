@@ -79,9 +79,15 @@ export default function App() {
           veiled ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] text-creme">
-          Bel Augure<span className="dot-breathe text-or">.</span>
-        </p>
+        <div className="flex flex-col items-center">
+          <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] text-creme">
+            Bel Augure<span className="dot-breathe text-or">.</span>
+          </p>
+          {/* Filet de chargement : l'or avance, vif puis patient */}
+          <span className="mt-7 block h-px w-44 overflow-hidden bg-creme/12">
+            <span className="veil-bar block h-full w-full bg-or" />
+          </span>
+        </div>
       </div>
     </div>
   )

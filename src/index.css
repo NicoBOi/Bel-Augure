@@ -330,6 +330,24 @@ textarea.field {
   }
 }
 
+/* ---------- Voile d'ouverture : filet de chargement ---------- */
+
+/* Départ vif puis lente approche : la barre suggère l'activité sans
+   prétendre mesurer — calée sur la fenêtre max du voile (2,6 s) */
+@keyframes veilLoad {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.veil-bar {
+  transform-origin: left;
+  animation: veilLoad 2.4s var(--ease-augure) 0.2s both;
+}
+
 /* ---------- prefers-reduced-motion : tout est coupé ---------- */
 
 @media (prefers-reduced-motion: reduce) {
