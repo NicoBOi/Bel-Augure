@@ -19,7 +19,6 @@ export default function Accueil({ onNavigate }) {
   const infoRef = useRef(null)
   const target = useRef(0)
   const current = useRef(0)
-  const leaving = useRef(false)
 
   // Le scroll ne bascule pas d'un état à l'autre : il scrute la transition.
   // Une boucle rAF lisse la progression (lerp) et n'écrit que des transforms
@@ -65,19 +64,8 @@ export default function Accueil({ onNavigate }) {
     }
     raf = requestAnimationFrame(loop)
 
-    let overflow = 0
     const onWheel = (e) => {
-      const before = target.current
-      target.current = Math.min(Math.max(before + e.deltaY / 1100, 0), 1)
-      if (before >= 1 && e.deltaY > 0) {
-        overflow += e.deltaY
-        if (overflow > 320 && !leaving.current) {
-          leaving.current = true
-          onNavigate('films')
-        }
-      } else {
-        overflow = 0
-      }
+      target.current = Math.min(Math.max(target.current + e.deltaY / 1100, 0), 1)
     }
     section.addEventListener('wheel', onWheel, { passive: true })
 
@@ -196,28 +184,20 @@ export default function Accueil({ onNavigate }) {
           {FEATURED.desc}
         </p>
 
+        {/* Le portefeuille de films : trois vignettes qui s'éventaillent */}
         <button
           type="button"
           onClick={() => onNavigate('films')}
-          className="group mt-7 flex cursor-pointer items-center gap-3 text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 hover:text-encre"
+          className="group mt-8 flex cursor-pointer items-center gap-5"
         >
-          Tous nos films
-          <svg
-            width="20"
-            height="10"
-            viewBox="0 0 20 10"
-            fill="none"
-            aria-hidden="true"
-            className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
-          >
-            <path
-              d="M1 5h18M19 5l-4.2-4M19 5l-4.2 4"
-              stroke="currentColor"
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <span aria-hidden="true" className="relative block h-7 w-14">
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%+9px)] rotate-[10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%+17px)] group-hover:rotate-[16deg]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
+          </span>
+          <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 group-hover:text-encre">
+            Découvrir les quatre films<span className="text-or">.</span>
+          </span>
         </button>
       </div>
     </section>
