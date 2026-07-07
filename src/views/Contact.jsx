@@ -25,10 +25,10 @@ export default function Contact() {
     <section
       ref={ref}
       aria-label="Contact"
-      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-end md:pb-[9vh] md:px-16"
+      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
     >
-      <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-5">
+      <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-between">
           <p
             className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
             style={{ '--d': '0.05s' }}
@@ -36,7 +36,8 @@ export default function Contact() {
             Contact
           </p>
 
-          <h2 className="mt-8 font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.3] text-encre">
+          <div>
+          <h2 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
               <span>
                 Parlez-nous de votre maison<span className="text-or">.</span>
@@ -66,14 +67,15 @@ export default function Contact() {
           <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.32s' }}>
             Bordeaux · Nouvelle-Aquitaine
           </p>
+          </div>
         </div>
 
         <form
-          className="reveal-right lg:col-span-6 lg:col-start-7"
+          className="reveal-right lg:col-span-6 lg:col-start-7 lg:flex lg:flex-col lg:justify-end"
           style={{ '--d': '0.08s' }}
           onSubmit={submit}
         >
-          <div className="grid gap-x-8 gap-y-7 md:grid-cols-2">
+          <div className="grid gap-x-8 gap-y-9 md:grid-cols-2">
             <div>
               <label
                 htmlFor="contact-nom"
@@ -136,7 +138,7 @@ export default function Contact() {
               </label>
               <textarea
                 id="contact-message"
-                rows="4"
+                rows="5"
                 required
                 className="field mt-1"
                 value={form.message}

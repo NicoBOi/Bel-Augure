@@ -12,10 +12,10 @@ export default function Studio() {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-end md:pb-[9vh] md:px-16"
+      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
     >
-      <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-6">
+      <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-6 lg:flex lg:flex-col lg:justify-between">
           <p
             className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
             style={{ '--d': '0.05s' }}
@@ -23,7 +23,7 @@ export default function Studio() {
             Le studio
           </p>
 
-          <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
+          <h2 className="mt-8 font-display text-[clamp(2.2rem,4.4vw,4rem)] leading-[1.22] text-encre lg:mt-0">
             <span className="mask" style={{ '--d': '0.12s' }}>
               <span>Ceux qui vendent le film</span>
             </span>
@@ -35,7 +35,7 @@ export default function Studio() {
           </h2>
         </div>
 
-        <div className="reveal-right lg:col-span-5 lg:col-start-8" style={{ '--d': '0.32s' }}>
+        <div className="reveal-right lg:col-span-5 lg:col-start-8 lg:flex lg:flex-col lg:justify-end" style={{ '--d': '0.32s' }}>
           <p className="max-w-[46ch] text-[14px] font-light leading-[1.9] text-encre/80">
             Bel Augure est un studio fondé à Bordeaux par deux artisans de
             l'image. Nous travaillons en lumière naturelle, sans artifice, au

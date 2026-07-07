@@ -87,7 +87,7 @@ export default function Offres() {
       >
         <BackLink label="Toutes les offres" onClick={() => setActive(null)} />
 
-        <div className="mt-10 grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="mt-10 grid items-end gap-12 md:mt-auto lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
             <h2 className="font-display text-[clamp(2.6rem,6vw,5.2rem)] leading-[1.05] text-encre">
               {active.name}
@@ -155,10 +155,10 @@ export default function Offres() {
     <section
       ref={ref}
       aria-label="Offres"
-      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-end md:pb-[9vh] md:px-16"
+      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
     >
-      <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-6">
+      <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-6 lg:flex lg:flex-col lg:justify-between">
           <p
             className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
             style={{ '--d': '0.05s' }}
@@ -166,7 +166,8 @@ export default function Offres() {
             Offres
           </p>
 
-          <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
+          <div>
+          <h2 className="font-display text-[clamp(2.2rem,4.2vw,3.8rem)] leading-[1.22] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
               <span>Un film signature s'amortit</span>
             </span>
@@ -185,9 +186,10 @@ export default function Offres() {
             La grille est publique et ne varie pas. Quand un budget se
             resserre, nous ajustons le périmètre, jamais l'exigence.
           </p>
+          </div>
         </div>
 
-        <div className="reveal-right lg:col-span-5 lg:col-start-8" style={{ '--d': '0.18s' }}>
+        <div className="reveal-right lg:col-span-5 lg:col-start-8 lg:flex lg:flex-col lg:justify-end" style={{ '--d': '0.18s' }}>
           {/* Les filets partagent tous les mêmes bornes : le bloc Signature
               reste net, rien ne file au-delà */}
           <ul aria-label="Grille des offres" className="-mx-4">
@@ -196,7 +198,7 @@ export default function Offres() {
                 <button
                   type="button"
                   onClick={() => setActive(tier)}
-                  className={`group relative w-full cursor-pointer border-t border-encre/10 py-4 text-left transition-colors duration-500 ${
+                  className={`group relative w-full cursor-pointer border-t border-encre/10 py-5 text-left transition-colors duration-500 ${
                     tier.featured
                       ? 'border-l-2 border-l-or bg-sable/70 pl-[14px] pr-4 hover:bg-sable'
                       : 'px-4 hover:bg-sable/40'
