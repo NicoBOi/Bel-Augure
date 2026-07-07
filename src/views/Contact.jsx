@@ -74,11 +74,11 @@ export default function Contact() {
         </div>
 
         <form
-          className="reveal-right lg:col-span-6 lg:col-start-7 lg:flex lg:flex-col lg:justify-between lg:pt-20"
+          className="reveal-right lg:col-span-6 lg:col-start-7 lg:flex lg:flex-col lg:justify-end"
           style={{ '--d': '0.08s' }}
           onSubmit={submit}
         >
-          <div className="grid gap-x-8 gap-y-9 md:grid-cols-2 lg:flex-1 lg:content-between">
+          <div className="grid gap-x-8 gap-y-7 md:grid-cols-2">
             <div>
               <label
                 htmlFor="contact-nom"
@@ -141,7 +141,7 @@ export default function Contact() {
               </label>
               <textarea
                 id="contact-message"
-                rows="7"
+                rows="5"
                 required
                 className="field mt-1"
                 value={form.message}
@@ -152,7 +152,7 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="cta mt-10 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] lg:mt-12"
+            className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
           >
             {sent ? 'Message prêt dans votre messagerie' : 'Ouvrir un échange'}
           </button>
