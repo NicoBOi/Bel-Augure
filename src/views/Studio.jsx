@@ -1,5 +1,10 @@
 import { useReveal } from '../hooks/useReveal.js'
 
+const ARTISANS = [
+  { name: 'Nico', role: 'Direction, image, étalonnage' },
+  { name: 'Corentin', role: 'Montage, motion design' },
+]
+
 export default function Studio() {
   const ref = useReveal(0.35)
 
@@ -7,35 +12,51 @@ export default function Studio() {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="flex h-full flex-col items-center justify-center px-6 text-center"
+      className="flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
     >
-      <p
-        className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
-        style={{ '--d': '0.1s' }}
-      >
-        Le studio
-      </p>
+      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-6">
+          <p
+            className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
+            style={{ '--d': '0.1s' }}
+          >
+            Le studio
+          </p>
 
-      <h2 className="mt-10 max-w-[26ch] font-display text-[clamp(1.9rem,3.6vw,3.2rem)] leading-[1.35] text-encre">
-        <span className="mask" style={{ '--d': '0.25s' }}>
-          <span>Ceux qui vendent le film</span>
-        </span>
-        <span className="mask" style={{ '--d': '0.4s' }}>
-          <span>
-            sont ceux qui le fabriquent<span className="text-or">.</span>
-          </span>
-        </span>
-      </h2>
+          <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
+            <span className="mask" style={{ '--d': '0.25s' }}>
+              <span>Ceux qui vendent le film</span>
+            </span>
+            <span className="mask" style={{ '--d': '0.4s' }}>
+              <span>
+                sont ceux qui le fabriquent<span className="text-or">.</span>
+              </span>
+            </span>
+          </h2>
+        </div>
 
-      <p
-        className="reveal-up mt-10 max-w-[52ch] text-[14px] font-light leading-[1.9] text-grege"
-        style={{ '--d': '0.65s' }}
-      >
-        Studio de films de marque fondé à Bordeaux, deux artisans, zéro
-        intermédiaire. Nico : direction, image, étalonnage. Corentin :
-        montage, motion design. Lumière naturelle, caméra qui respire,
-        temps long. Rien qui ressemble à de la pub.
-      </p>
+        <div className="reveal-right lg:col-span-5 lg:col-start-8" style={{ '--d': '0.6s' }}>
+          <p className="max-w-[46ch] text-[14px] font-light leading-[1.9] text-encre/80">
+            Studio de films de marque fondé à Bordeaux. Deux artisans, zéro
+            intermédiaire. Lumière naturelle, caméra qui respire, temps long.
+            Rien qui ressemble à de la pub.
+          </p>
+
+          <ul className="mt-10" aria-label="L'équipe">
+            {ARTISANS.map((artisan) => (
+              <li
+                key={artisan.name}
+                className="flex items-baseline justify-between gap-6 border-t border-encre/10 py-4"
+              >
+                <span className="font-display text-[17px] text-encre">{artisan.name}</span>
+                <span className="text-right text-[13px] font-light text-grege">
+                  {artisan.role}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </section>
   )
 }
