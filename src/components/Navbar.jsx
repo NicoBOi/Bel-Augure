@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
 const LINKS = [
-  { label: 'Films', href: '#films' },
-  { label: 'Studio', href: '#studio' },
-  { label: 'Offres', href: '#offres' },
-  { label: 'Contact', href: '#contact' },
+  { view: 'films', label: 'Films' },
+  { view: 'studio', label: 'Studio' },
+  { view: 'offres', label: 'Offres' },
+  { view: 'contact', label: 'Contact' },
 ]
 
 function formatBordeauxTime() {
@@ -29,52 +29,59 @@ function useBordeauxClock() {
   return time
 }
 
-function NavLink({ label, href, onClick }) {
+function NavLink({ view, label, active, onNavigate }) {
   return (
-    <a
-      href={href}
-      onClick={onClick}
-      className="nav-link inline-block py-1 text-[13px] font-normal tracking-[0.03em] text-creme"
+    <button
+      type="button"
+      onClick={() => onNavigate(view)}
+      aria-current={active ? 'page' : undefined}
+      className="nav-link inline-block cursor-pointer py-1 text-[12px] font-normal tracking-[0.08em] text-creme/90"
     >
       <span className="nav-label">{label}</span>
-    </a>
+    </button>
   )
 }
 
-export default function Navbar() {
+export default function Navbar({ activeView, onNavigate }) {
   const [open, setOpen] = useState(false)
   const time = useBordeauxClock()
 
+  const navigate = (view) => {
+    onNavigate(view)
+    setOpen(false)
+  }
+
   return (
     <header className="absolute inset-x-0 top-0 z-10">
-      <div className="flex items-center justify-between px-6 py-7 md:px-12 md:py-9">
+      <div className="flex items-center justify-between px-6 py-7 md:px-16 md:py-10">
         <nav aria-label="Navigation principale" className="hidden md:block">
-          <ul className="flex items-center gap-10">
+          <ul className="flex items-center gap-12">
             {LINKS.map((link) => (
-              <li key={link.label}>
-                <NavLink {...link} />
+              <li key={link.view}>
+                <NavLink {...link} active={activeView === link.view} onNavigate={navigate} />
               </li>
             ))}
           </ul>
         </nav>
 
         {/* Marque discrète côté mobile, la nav passe dans le panneau */}
-        <a
-          href="/"
-          className="font-display text-lg text-creme md:hidden"
+        <button
+          type="button"
+          onClick={() => navigate('accueil')}
+          className="cursor-pointer font-display text-lg text-creme md:hidden"
           aria-label="Bel Augure, accueil"
         >
           Bel Augure<span className="text-or">.</span>
-        </a>
+        </button>
 
-        <div className="hidden items-center gap-10 md:flex">
+        <div className="hidden items-center gap-12 md:flex">
           <a
             href="mailto:nico@belaugure.studio"
-            className="nav-link text-[13px] tracking-[0.03em] text-creme"
+            className="nav-link text-[12px] tracking-[0.08em] text-creme/90"
           >
             <span className="nav-label">nico@belaugure.studio</span>
           </a>
-          <p className="text-[13px] font-light text-grege">
+          <p className="text-[12px] font-light tracking-[0.06em] text-grege">
             Bordeaux, <time>{time}</time>
           </p>
         </div>
@@ -108,15 +115,15 @@ export default function Navbar() {
           >
             <ul className="flex flex-col gap-5">
               {LINKS.map((link) => (
-                <li key={link.label}>
-                  <NavLink {...link} onClick={() => setOpen(false)} />
+                <li key={link.view}>
+                  <NavLink {...link} active={activeView === link.view} onNavigate={navigate} />
                 </li>
               ))}
             </ul>
             <div className="mt-8 flex items-center justify-between border-t border-creme/10 pt-6">
               <a
                 href="mailto:nico@belaugure.studio"
-                className="text-[13px] tracking-[0.03em] text-creme"
+                className="text-[12px] tracking-[0.08em] text-creme/90"
               >
                 nico@belaugure.studio
               </a>
