@@ -89,14 +89,14 @@ export default function Films({ setDark }) {
           </div>
 
           <div className="lg:col-span-4 lg:col-start-9">
-            <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
+            <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-sable/75">
               {selected.world}
             </p>
             <h3 className="mt-6 font-display text-[clamp(1.8rem,3vw,2.8rem)] leading-[1.2] text-creme">
               {selected.title}
               <span className="text-or">.</span>
             </h3>
-            <p className="mt-3 text-[12px] font-light tracking-[0.08em] text-grege">
+            <p className="mt-3 text-[12px] font-light tracking-[0.08em] text-sable/75">
               {selected.format}
             </p>
             <p className="mt-8 max-w-[44ch] text-[14px] font-light leading-[1.9] text-sable">
@@ -125,7 +125,9 @@ export default function Films({ setDark }) {
 
       <div className="relative z-[1] flex h-full flex-col justify-end px-6 pb-[9vh] pt-28 md:px-16">
         <p
-          className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
+          className={`reveal-up text-[11px] font-normal uppercase tracking-[0.3em] transition-colors duration-300 ${
+            hovered ? 'text-sable/70' : 'text-grege'
+          }`}
           style={{ '--d': '0.05s' }}
         >
           Films
@@ -158,7 +160,7 @@ export default function Films({ setDark }) {
                     </span>
                   </span>
                   <span
-                    className={`ml-auto hidden shrink-0 text-[10.5px] font-normal uppercase tracking-[0.22em] text-grege transition-all duration-300 md:block ${
+                    className={`ml-auto hidden shrink-0 text-[10.5px] font-normal uppercase tracking-[0.22em] text-sable/80 transition-all duration-300 md:block ${
                       isHovered ? 'translate-x-0 opacity-100' : '-translate-x-3 opacity-0'
                     }`}
                   >

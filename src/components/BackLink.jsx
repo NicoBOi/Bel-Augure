@@ -7,7 +7,7 @@ export default function BackLink({ label, onClick, light = false }) {
     <button
       type="button"
       onClick={onClick}
-      className={`group flex w-max cursor-pointer items-center gap-3 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${
+      className={`group flex w-max cursor-pointer items-center gap-3 py-2 -my-2 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${
         light ? 'text-creme/70 hover:text-creme' : 'text-grege hover:text-encre'
       }`}
     >

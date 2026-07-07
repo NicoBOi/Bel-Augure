@@ -14,7 +14,7 @@
   --color-encre: #1a1512;
   --color-or: #d9c6a6;
   --color-sable: #f0e6d8;
-  --color-grege: #8a7e68;
+  --color-grege: #6e6350;
   --color-creme: #f2ede4;
 
   --font-display: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;
@@ -43,7 +43,7 @@ body {
 }
 
 :focus-visible {
-  outline: 1px solid var(--color-encre);
+  outline: 1px solid currentColor;
   outline-offset: 4px;
 }
 

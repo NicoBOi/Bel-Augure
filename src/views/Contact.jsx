@@ -4,6 +4,7 @@ import { useReveal } from '../hooks/useReveal.js'
 export default function Contact() {
   const ref = useReveal(0.35)
   const [form, setForm] = useState({ nom: '', maison: '', email: '', message: '' })
+  const [sent, setSent] = useState(false)
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }))
 
@@ -19,6 +20,8 @@ export default function Contact() {
       }`,
     )
     window.location.href = `mailto:nico@belaugure.studio?subject=${subject}&body=${body}`
+    setSent(true)
+    setTimeout(() => setSent(false), 5000)
   }
 
   return (
@@ -151,8 +154,11 @@ export default function Contact() {
             type="submit"
             className="cta mt-10 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] lg:mt-12"
           >
-            Ouvrir un échange
+            {sent ? 'Message prêt dans votre messagerie' : 'Ouvrir un échange'}
           </button>
+          <p aria-live="polite" className="sr-only">
+            {sent ? 'Votre messagerie s\'ouvre avec le message préparé.' : ''}
+          </p>
         </form>
       </div>
     </section>

@@ -13,7 +13,7 @@ function NavLink({ view, label, active, onNavigate, dark }) {
       type="button"
       onClick={() => onNavigate(view)}
       aria-current={active ? 'page' : undefined}
-      className={`nav-link inline-block cursor-pointer py-1 text-[12px] font-normal tracking-[0.08em] transition-colors duration-500 ${
+      className={`nav-link inline-block cursor-pointer py-3 -my-2 text-[12px] font-normal tracking-[0.08em] transition-colors duration-500 ${
         dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
       }`}
     >
@@ -58,7 +58,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
 
         <button
           type="button"
-          className="relative flex h-10 w-10 items-center justify-center justify-self-start md:hidden"
+          className="relative flex h-11 w-11 items-center justify-center justify-self-start md:hidden"
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
