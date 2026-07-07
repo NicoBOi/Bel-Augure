@@ -12,9 +12,9 @@ export default function Studio() {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-center md:px-16"
+      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-end md:pb-[9vh] md:px-16"
     >
-      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+      <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-6">
           <p
             className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"

@@ -78,11 +78,11 @@ export default function Films({ setDark }) {
       <section
         key={selected.id}
         aria-label={selected.title}
-        className="view-enter flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
+        className="view-enter flex h-full flex-col justify-center px-6 pb-14 pt-28 md:justify-end md:pb-[9vh] md:px-16"
       >
         <BackLink label="Tous les films" onClick={closeProject} light />
 
-        <div className="mt-10 grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
+        <div className="mt-10 grid items-end gap-10 lg:grid-cols-12 lg:gap-8">
           {/* Zone média : reçoit le film ou le still étalonné */}
           <div className="lg:col-span-7">
             <div className="aspect-video w-full rounded-3xl border border-creme/15 bg-creme/5" />
