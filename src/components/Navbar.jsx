@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 const LINKS = [
   { view: 'films', label: 'Films' },
-  { view: 'studio', label: 'Studio' },
   { view: 'offres', label: 'Offres' },
+  { view: 'studio', label: 'Studio' },
   { view: 'contact', label: 'Contact' },
 ]
 
