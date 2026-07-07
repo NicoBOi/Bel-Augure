@@ -24,9 +24,9 @@ const TITLES = {
 
 export default function App() {
   const [view, setView] = useState('accueil')
-  // La lecture d'un film plonge tout le site dans l'encre : le fond, le
+  // L'accueil et la lecture d'un film vivent dans l'encre : le fond, le
   // header et le contenu transitionnent ensemble, sans overlay.
-  const [dark, setDark] = useState(false)
+  const [dark, setDark] = useState(true)
   const View = VIEWS[view]
 
   const navigate = (next) => {

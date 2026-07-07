@@ -10,19 +10,23 @@ const FEATURED = {
   desc: "Tourné au lever du jour, quand l'océan tient encore la maison dans son silence.",
 }
 
-export default function Accueil({ onNavigate }) {
+export default function Accueil({ onNavigate, setDark }) {
   const reveal = useReveal(0.35)
   const sectionRef = useRef(null)
   const cardRef = useRef(null)
   const wordRef = useRef(null)
-  const ringsRef = useRef(null)
   const infoRef = useRef(null)
   const target = useRef(0)
   const current = useRef(0)
 
-  // Le scroll ne bascule pas d'un état à l'autre : il scrute la transition.
-  // Une boucle rAF lisse la progression (lerp) et n'écrit que des transforms
-  // et des opacités. Molette au bureau, glissement au doigt sur mobile.
+  // Le héros vit dans l'encre : la salle obscure avant le film.
+  useEffect(() => {
+    setDark(true)
+  }, [setDark])
+
+  // Le scroll ne bascule pas d'un état à l'autre : il scrute le lever de
+  // rideau. Une boucle rAF lisse la progression (lerp) et n'écrit que des
+  // transforms et des opacités. Molette au bureau, glissement au doigt.
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
@@ -34,17 +38,14 @@ export default function Accueil({ onNavigate }) {
       const desktop = desktopQuery.matches
       if (cardRef.current) {
         const dx = desktop ? 16 * (1 - p) : 0
-        const dy = (desktop ? 60 : 62) * (1 - p)
+        const dy = (desktop ? 76 : 64) * (1 - p)
         const s0 = desktop ? 74 / 56 : 1
         const s = s0 + (1 - s0) * p
         cardRef.current.style.transform = `translate(-50%, -50%) translate(${dx}vw, ${dy}vh) scale(${s})`
       }
       if (wordRef.current) {
         wordRef.current.style.opacity = String(Math.max(1 - p * 1.6, 0))
-        wordRef.current.style.transform = `translateY(${-p * 10}vh)`
-      }
-      if (ringsRef.current) {
-        ringsRef.current.style.opacity = String(1 - p)
+        wordRef.current.style.transform = `translateY(${-p * 8}vh)`
       }
       if (infoRef.current) {
         const q = Math.min(Math.max((p - 0.5) / 0.5, 0), 1)
@@ -113,67 +114,33 @@ export default function Accueil({ onNavigate }) {
         sectionRef.current = el
       }}
       aria-labelledby="hero-titre"
-      className="relative h-full overflow-hidden text-center"
+      className="relative h-full overflow-hidden"
     >
-      {/* Le signe favorable : deux anneaux d'or en rotation lente */}
-      <div
-        ref={ringsRef}
-        aria-hidden="true"
-        className="rings pointer-events-none absolute inset-0 flex items-center justify-center"
-      >
-        <svg
-          viewBox="0 0 100 100"
-          className="h-[min(80vw,560px)] w-[min(80vw,560px)] -translate-y-[9vh]"
-          fill="none"
-        >
-          <circle
-            className="ring-a"
-            cx="50"
-            cy="50"
-            r="48.5"
-            stroke="#d9c6a6"
-            strokeWidth="0.18"
-            strokeDasharray="0.2 1.6"
-            opacity="0.55"
-          />
-          <circle
-            className="ring-b"
-            cx="50"
-            cy="50"
-            r="41"
-            stroke="#d9c6a6"
-            strokeWidth="0.22"
-            strokeDasharray="92 166"
-            strokeLinecap="round"
-            opacity="0.4"
-          />
-        </svg>
-      </div>
-
-      {/* Mot-symbole : se dissout à mesure que le film prend l'écran */}
-      <div className="pointer-events-none absolute inset-x-0 top-[38vh] -translate-y-1/2">
-        <div ref={wordRef}>
-          <h1
-            id="hero-titre"
-            className="font-display text-[clamp(3rem,9vw,8rem)] leading-[1.05] tracking-[0.005em] text-encre"
-          >
-            <span className="mask" style={{ '--d': '0.2s' }}>
-              <span>
-                Bel Augure<span className="dot-breathe text-or">.</span>
+      {/* Mot-symbole en bas à gauche, catchline en face : la scène d'ouverture */}
+      <div ref={wordRef} className="absolute inset-x-6 bottom-[9vh] z-[2] md:inset-x-16">
+        <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-8">
+            <h1
+              id="hero-titre"
+              className="font-display text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:whitespace-nowrap"
+            >
+              <span className="mask" style={{ '--d': '0.2s' }}>
+                <span>
+                  Bel Augure<span className="dot-breathe text-or">.</span>
+                </span>
               </span>
-            </span>
-          </h1>
+            </h1>
+          </div>
 
-          <p
-            className="reveal-up mt-5 font-display text-[clamp(1.1rem,1.7vw,1.5rem)] leading-[1.5] text-encre/75"
-            style={{ '--d': '0.7s' }}
-          >
-            Les films signatures du bien-être d'exception
-          </p>
+          <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.7s' }}>
+            <p className="max-w-[22ch] font-display text-[clamp(1.2rem,1.7vw,1.7rem)] leading-[1.45] text-sable">
+              Les films signatures du bien-être d'exception
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* La carte du film : sa géométrie est écrite par la boucle de scroll */}
+      {/* La carte du film affleure sous le pli : le rideau se lève au scroll */}
       <button
         ref={cardRef}
         type="button"
@@ -182,10 +149,10 @@ export default function Accueil({ onNavigate }) {
           else target.current = 1
         }}
         aria-label={`Découvrir le film ${FEATURED.title}`}
-        className="fade-in absolute left-1/2 top-[40vh] aspect-video w-[88vw] cursor-pointer overflow-hidden rounded-3xl bg-encre shadow-[0_40px_110px_-30px_rgb(26_21_18/0.45)] md:left-[34vw] md:top-1/2 md:w-[56vw]"
+        className="fade-in absolute left-1/2 top-[40vh] z-[1] aspect-video w-[88vw] cursor-pointer overflow-hidden rounded-3xl bg-[#0f0c0a] shadow-[0_-10px_50px_-22px_rgb(217_198_166/0.12)] ring-1 ring-creme/15 md:left-[34vw] md:top-1/2 md:w-[56vw]"
         style={{
-          '--d': '0.9s',
-          transform: 'translate(-50%, -50%) translate(16vw, 60vh) scale(1.32)',
+          '--d': '1.1s',
+          transform: 'translate(-50%, -50%) translate(16vw, 76vh) scale(1.32)',
         }}
       />
 
@@ -198,14 +165,14 @@ export default function Accueil({ onNavigate }) {
         <p className="text-[10.5px] font-normal uppercase tracking-[0.28em] text-grege">
           {FEATURED.world}
         </p>
-        <h2 className="mt-4 font-display text-[clamp(1.5rem,2.2vw,2.1rem)] leading-[1.2] text-encre">
+        <h2 className="mt-4 font-display text-[clamp(1.5rem,2.2vw,2.1rem)] leading-[1.2] text-creme">
           {FEATURED.title}
           <span className="text-or">.</span>
         </h2>
         <p className="mt-2 text-[12px] font-light tracking-[0.08em] text-grege">
           {FEATURED.format}
         </p>
-        <p className="mt-6 hidden max-w-[36ch] text-[13px] font-light leading-[1.9] text-encre/75 md:block">
+        <p className="mt-6 hidden max-w-[36ch] text-[13px] font-light leading-[1.9] text-sable md:block">
           {FEATURED.desc}
         </p>
 
@@ -216,11 +183,11 @@ export default function Accueil({ onNavigate }) {
           className="group mt-8 flex cursor-pointer items-center gap-5"
         >
           <span aria-hidden="true" className="relative block h-7 w-14">
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%+9px)] rotate-[10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%+17px)] group-hover:rotate-[16deg]" />
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-creme/15 ring-1 ring-creme/25 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%+9px)] rotate-[10deg] rounded-[5px] bg-creme/15 ring-1 ring-creme/25 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%+17px)] group-hover:rotate-[16deg]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-creme/25 ring-1 ring-creme/40 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
           </span>
-          <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 group-hover:text-encre">
+          <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-creme/80 transition-colors duration-500 group-hover:text-creme">
             Découvrir les quatre films<span className="text-or">.</span>
           </span>
         </button>
