@@ -184,18 +184,6 @@ body {
   }
 }
 
-/* Respiration lente, organique — pas d'onde radar */
-@keyframes dotPulse {
-  from {
-    opacity: 0.35;
-    transform: scale(0.88);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-}
-
 .reveal-up {
   opacity: 0;
   transform: translateY(18px);
@@ -231,8 +219,13 @@ body {
   animation: wordRise 1.25s var(--ease-augure) var(--d, 0s) both;
 }
 
-.dot-pulse {
-  animation: dotPulse 4.8s ease-in-out infinite alternate;
+/* Écrans très bas (mobile paysage) : le verrou anti-scroll céderait au clipping,
+   on autorise un défilement interne en dégradation douce */
+@media (max-height: 540px) {
+  html,
+  body {
+    overflow: auto;
+  }
 }
 
 /* ---------- prefers-reduced-motion : tout est coupé ---------- */
@@ -244,10 +237,6 @@ body {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
-  }
-
-  .dot-pulse {
-    animation: none;
   }
 
   *,
