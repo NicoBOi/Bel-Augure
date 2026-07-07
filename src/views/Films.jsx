@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import BackLink from '../components/BackLink.jsx'
 
-// Projets fictifs en attendant les films fondateurs : les cases encre
+// Projets fictifs en attendant les films fondateurs : les cartes encre
 // reçoivent les stills étalonnés, la structure ne bouge pas.
 const PROJECTS = [
   {
@@ -11,8 +11,6 @@ const PROJECTS = [
     world: 'Hôtellerie · Côte basque',
     format: 'Film signature, 2 min',
     desc: "Tourné au lever du jour, quand l'océan tient encore la maison dans son silence. Le film suit ce que vos hôtes viennent chercher ici sans toujours savoir le nommer.",
-    tile: 'wide',
-    offset: 'mt-0',
   },
   {
     id: 'salies',
@@ -20,8 +18,6 @@ const PROJECTS = [
     world: 'Thalasso · Béarn',
     format: 'Film signature et saisons',
     desc: "Un film central autour de l'eau et du geste, puis quatre variations qui accompagnent la maison au fil de l'année. L'image reste la même. La lumière change.",
-    tile: 'tall',
-    offset: 'mt-10 md:mt-16',
   },
   {
     id: 'lisle',
@@ -29,8 +25,6 @@ const PROJECTS = [
     world: 'Vin · Médoc',
     format: 'Film héritage, 3 min',
     desc: "Le domaine se transmet depuis trois générations. Le film prend le temps d'aller chercher ce que l'étiquette ne dira jamais : la main, le chai, l'hiver.",
-    tile: 'wide',
-    offset: 'mt-6 md:mt-8',
   },
   {
     id: 'almae',
@@ -38,8 +32,6 @@ const PROJECTS = [
     world: 'Cosmétique · Bordeaux',
     format: 'Film signature, 45 s',
     desc: "Quarante-cinq secondes sur la matière première, avant le produit. Un format court qui se place partout et ne s'use pas.",
-    tile: 'tall',
-    offset: 'mt-12 md:mt-20',
   },
   {
     id: 'ondine',
@@ -47,17 +39,32 @@ const PROJECTS = [
     world: 'Longévité · Genève',
     format: 'Film signature, 90 s',
     desc: 'Une villa où l\'on vient ralentir. Le film respire au même rythme qu\'elle, et rajeunit le regard que l\'on porte sur la maison.',
-    tile: 'wide',
-    offset: 'mt-2 md:mt-4',
   },
 ]
+
+// Position de chaque carte selon son écart à la carte active :
+// la centrale s'avance, les voisines se rangent derrière en éventail.
+function deckStyle(offset) {
+  const abs = Math.abs(offset)
+  return {
+    transform: `translateX(${offset * 42}%) scale(${Math.max(1 - abs * 0.14, 0.6)})`,
+    zIndex: 30 - abs * 10,
+    // La profondeur vient de l'échelle et de l'ombre : les cartes voisines
+    // restent encre, à peine voilées, jamais grises.
+    opacity: abs > 2 ? 0 : abs === 0 ? 1 : abs === 1 ? 0.9 : 0.5,
+    pointerEvents: abs > 2 ? 'none' : 'auto',
+  }
+}
 
 export default function Films({ setDark }) {
   const reveal = useReveal(0.35)
   const sectionRef = useRef(null)
-  const trackRef = useRef(null)
   const [selected, setSelected] = useState(null)
-  const [progress, setProgress] = useState(0)
+  const [index, setIndex] = useState(0)
+  const wheelLock = useRef(false)
+  const wheelAcc = useRef(0)
+
+  const active = PROJECTS[index]
 
   const openProject = (project) => {
     setSelected(project)
@@ -69,15 +76,29 @@ export default function Films({ setDark }) {
     setDark(false)
   }
 
-  // Le scroll vertical devient un défilement horizontal de la galerie.
+  const step = (dir) => {
+    setIndex((i) => Math.min(Math.max(i + dir, 0), PROJECTS.length - 1))
+  }
+
+  // Le scroll fait tourner le portefeuille : une carte à la fois,
+  // verrouillé le temps que la transition se pose.
   useEffect(() => {
     const section = sectionRef.current
-    const track = trackRef.current
-    if (!section || !track || selected) return
+    if (!section || selected) return
 
     const onWheel = (e) => {
       e.preventDefault()
-      track.scrollLeft += e.deltaY + e.deltaX
+      if (wheelLock.current) return
+      wheelAcc.current += e.deltaY + e.deltaX
+      if (Math.abs(wheelAcc.current) > 40) {
+        const dir = wheelAcc.current > 0 ? 1 : -1
+        wheelAcc.current = 0
+        wheelLock.current = true
+        step(dir)
+        setTimeout(() => {
+          wheelLock.current = false
+        }, 700)
+      }
     }
 
     section.addEventListener('wheel', onWheel, { passive: false })
@@ -85,23 +106,20 @@ export default function Films({ setDark }) {
   }, [selected])
 
   useEffect(() => {
-    if (!selected) return
     const onKey = (e) => {
-      if (e.key === 'Escape') closeProject()
+      if (selected) {
+        if (e.key === 'Escape') closeProject()
+        return
+      }
+      if (e.key === 'ArrowRight') step(1)
+      if (e.key === 'ArrowLeft') step(-1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   })
 
-  const onTrackScroll = () => {
-    const el = trackRef.current
-    if (!el) return
-    const max = el.scrollWidth - el.clientWidth
-    setProgress(max > 0 ? el.scrollLeft / max : 0)
-  }
-
   // Lecture d'un projet : le site entier est passé en encre (via setDark),
-  // le détail remplace la galerie dans la page. Aucun overlay.
+  // le détail remplace le carrousel dans la page. Aucun overlay.
   if (selected) {
     return (
       <section
@@ -121,7 +139,7 @@ export default function Films({ setDark }) {
             <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
               {selected.world}
             </p>
-            <h3 className="mt-6 font-title text-[clamp(1.7rem,2.8vw,2.5rem)] font-normal leading-[1.2] text-creme">
+            <h3 className="mt-6 font-display text-[clamp(1.8rem,3vw,2.8rem)] leading-[1.2] text-creme">
               {selected.title}
               <span className="text-or">.</span>
             </h3>
@@ -144,7 +162,7 @@ export default function Films({ setDark }) {
         sectionRef.current = el
       }}
       aria-label="Films"
-      className="flex h-full flex-col justify-center pb-14 pt-28"
+      className="flex h-full flex-col justify-center overflow-hidden pb-12 pt-28"
     >
       <div className="flex items-end justify-between px-6 md:px-16">
         <div>
@@ -156,14 +174,14 @@ export default function Films({ setDark }) {
           </p>
 
           <p
-            className="reveal-up mt-6 font-title text-[clamp(1.2rem,1.7vw,1.55rem)] font-normal tracking-[0.02em] text-encre"
+            className="reveal-up mt-5 font-display text-[clamp(1.3rem,1.8vw,1.7rem)] leading-[1.4] text-encre"
             style={{ '--d': '0.2s' }}
           >
             Chaque maison a une lumière. Nos films la trouvent.
           </p>
         </div>
 
-        {/* Indication de défilement horizontal */}
+        {/* Progression du portefeuille */}
         <div
           className="reveal-up mb-1 hidden items-center gap-4 md:flex"
           style={{ '--d': '0.45s' }}
@@ -174,45 +192,64 @@ export default function Films({ setDark }) {
           </span>
           <span className="relative block h-px w-24 bg-encre/15">
             <span
-              className="absolute inset-y-0 left-0 w-full origin-left bg-encre/60 transition-transform duration-300 ease-out"
-              style={{ transform: `scaleX(${Math.max(progress, 0.06)})` }}
+              className="absolute inset-y-0 left-0 w-full origin-left bg-encre/60 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={{
+                transform: `scaleX(${(index + 1) / PROJECTS.length})`,
+              }}
             />
           </span>
         </div>
       </div>
 
-      {/* Disposition décalée façon Pinterest : offsets et hauteurs varient */}
+      {/* Le portefeuille : cartes 16:9 qui se chevauchent, l'active au centre */}
       <div
-        ref={trackRef}
-        onScroll={onTrackScroll}
-        className="reveal-up no-scrollbar mt-8 flex items-start gap-6 overflow-x-auto px-6 md:gap-10 md:px-16"
-        style={{ '--d': '0.3s' }}
+        className="reveal-up relative mx-auto mt-9 w-[86vw] md:w-[min(52vw,640px)]"
+        style={{ '--d': '0.35s' }}
+        role="group"
+        aria-roledescription="carrousel"
+        aria-label={`Projet ${index + 1} sur ${PROJECTS.length} : ${active.title}`}
       >
-        {PROJECTS.map((project) => (
-          <button
-            key={project.id}
-            type="button"
-            onClick={() => openProject(project)}
-            className={`group shrink-0 cursor-pointer text-left transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 ${project.offset}`}
-            aria-label={`Voir le projet ${project.title}`}
-          >
-            <div className="overflow-hidden rounded-2xl">
-              <div
-                className={`bg-encre transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] ${
-                  project.tile === 'wide'
-                    ? 'aspect-[16/10] w-[74vw] md:w-[420px]'
-                    : 'aspect-[3/4] w-[50vw] md:w-[265px]'
-                }`}
-              />
-            </div>
-            <p className="mt-4 font-title text-[15px] font-medium tracking-[0.02em] text-encre">
-              {project.title}
-            </p>
-            <p className="mt-1 text-[10.5px] font-normal uppercase tracking-[0.18em] text-grege">
-              {project.world}
-            </p>
-          </button>
-        ))}
+        {/* Réserve la hauteur du deck */}
+        <div className="aspect-video" />
+
+        {PROJECTS.map((project, i) => {
+          const offset = i - index
+          const isActive = offset === 0
+          return (
+            <button
+              key={project.id}
+              type="button"
+              onClick={() => (isActive ? openProject(project) : setIndex(i))}
+              tabIndex={Math.abs(offset) > 2 ? -1 : 0}
+              aria-label={
+                isActive ? `Voir le projet ${project.title}` : `Amener ${project.title} au centre`
+              }
+              className={`group absolute inset-0 cursor-pointer overflow-hidden rounded-2xl bg-encre transition-[transform,opacity,box-shadow] duration-[850ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                isActive
+                  ? 'shadow-[0_36px_90px_-28px_rgb(26_21_18/0.4)]'
+                  : 'shadow-[0_12px_40px_-20px_rgb(26_21_18/0.25)]'
+              }`}
+              style={deckStyle(offset)}
+            >
+              {isActive && (
+                <span className="absolute inset-0 flex items-center justify-center text-[10px] font-normal uppercase tracking-[0.28em] text-creme/0 transition-colors duration-700 group-hover:text-creme/80">
+                  Voir le film
+                </span>
+              )}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Légende de la carte active : fond enchaîné à chaque mouvement */}
+      <div key={active.id} className="view-enter mt-8 text-center">
+        <p className="font-display text-[clamp(1.2rem,1.6vw,1.5rem)] text-encre">
+          {active.title}
+          <span className="text-or">.</span>
+        </p>
+        <p className="mt-1.5 text-[10.5px] font-normal uppercase tracking-[0.2em] text-grege">
+          {active.world}
+        </p>
       </div>
     </section>
   )

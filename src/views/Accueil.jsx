@@ -84,7 +84,7 @@ export default function Accueil({ onNavigate }) {
         </h1>
 
         <p
-          className="reveal-up mt-6 font-title text-[clamp(1rem,1.5vw,1.3rem)] font-normal tracking-[0.06em] text-encre/75"
+          className="reveal-up mt-6 font-display text-[clamp(1.15rem,1.8vw,1.6rem)] leading-[1.5] text-encre/75"
           style={{ '--d': '0.7s' }}
         >
           Les films signatures du bien-être d'exception

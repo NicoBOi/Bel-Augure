@@ -36,7 +36,7 @@ export default function Contact() {
             Contact
           </p>
 
-          <h2 className="mt-8 font-title text-[clamp(1.7rem,3vw,2.6rem)] font-normal leading-[1.35] tracking-[0.02em] text-encre">
+          <h2 className="mt-8 font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.3] text-encre">
             <span className="mask" style={{ '--d': '0.25s' }}>
               <span>
                 Parlez-nous de votre maison<span className="text-or">.</span>

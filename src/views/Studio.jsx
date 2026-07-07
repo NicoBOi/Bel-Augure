@@ -23,7 +23,7 @@ export default function Studio() {
             Le studio
           </p>
 
-          <h2 className="mt-8 font-title text-[clamp(1.8rem,3.2vw,2.8rem)] font-normal leading-[1.35] tracking-[0.02em] text-encre">
+          <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
             <span className="mask" style={{ '--d': '0.25s' }}>
               <span>Ceux qui vendent le film</span>
             </span>
@@ -50,7 +50,7 @@ export default function Studio() {
                 key={artisan.name}
                 className="flex items-baseline justify-between gap-6 border-t border-encre/10 py-4"
               >
-                <span className="font-title text-[16px] font-medium tracking-[0.02em] text-encre">{artisan.name}</span>
+                <span className="font-display text-[17px] text-encre">{artisan.name}</span>
                 <span className="text-right text-[13px] font-light text-grege">
                   {artisan.role}
                 </span>
