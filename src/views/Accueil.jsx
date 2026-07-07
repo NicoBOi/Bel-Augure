@@ -1,59 +1,57 @@
 import { useEffect, useRef } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-// Le film mis en avant sur le héros : la carte reçoit le still ou la boucle
-// muette du film fondateur dès qu'ils existent.
-const FEATURED = {
-  title: 'Maison Itsasoa',
-  world: 'Hôtellerie · Côte basque',
-  format: 'Film signature, 2 min',
-  desc: "Tourné au lever du jour, quand l'océan tient encore la maison dans son silence.",
-}
+// Vidéo de fond : identifiant Vimeo, lu en mode background (muet, en
+// boucle, sans contrôles). Vider la constante pour revenir au fond encre.
+const VIMEO_ID = '961941216'
 
 export default function Accueil({ onNavigate, setDark }) {
   const reveal = useReveal(0.35)
   const sectionRef = useRef(null)
-  const cardRef = useRef(null)
+  const mediaRef = useRef(null)
   const wordRef = useRef(null)
-  const infoRef = useRef(null)
+  const studioRef = useRef(null)
   const target = useRef(0)
   const current = useRef(0)
+  const wasDark = useRef(true)
 
-  // Le héros vit dans l'encre : la salle obscure avant le film.
+  // Le héros s'ouvre dans l'encre : la salle obscure avant le film.
   useEffect(() => {
     setDark(true)
+    wasDark.current = true
   }, [setDark])
 
-  // Le scroll ne bascule pas d'un état à l'autre : il scrute le lever de
-  // rideau. Une boucle rAF lisse la progression (lerp) et n'écrit que des
-  // transforms et des opacités. Molette au bureau, glissement au doigt.
+  // Le scroll scrute la transition : la vidéo s'estompe, le site passe au
+  // jour et le texte du studio se révèle. Boucle rAF, transforms et
+  // opacités uniquement. Molette au bureau, glissement au doigt.
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const desktopQuery = window.matchMedia('(min-width: 768px)')
     let raf
 
     const apply = (p) => {
-      const desktop = desktopQuery.matches
-      if (cardRef.current) {
-        const dx = desktop ? 16 * (1 - p) : 0
-        const dy = (desktop ? 76 : 64) * (1 - p)
-        const s0 = desktop ? 74 / 56 : 1
-        const s = s0 + (1 - s0) * p
-        cardRef.current.style.transform = `translate(-50%, -50%) translate(${dx}vw, ${dy}vh) scale(${s})`
+      if (mediaRef.current) {
+        mediaRef.current.style.opacity = String(Math.max(1 - p * 1.15, 0))
       }
       if (wordRef.current) {
         wordRef.current.style.opacity = String(Math.max(1 - p * 1.6, 0))
         wordRef.current.style.transform = `translateY(${-p * 8}vh)`
+        wordRef.current.inert = p > 0.5
       }
-      if (infoRef.current) {
-        const q = Math.min(Math.max((p - 0.5) / 0.5, 0), 1)
-        infoRef.current.style.opacity = String(q)
-        infoRef.current.style.transform = `translateX(${(1 - q) * 26}px)`
-        infoRef.current.style.pointerEvents = q > 0.6 ? 'auto' : 'none'
+      if (studioRef.current) {
+        const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
+        studioRef.current.style.opacity = String(q)
+        studioRef.current.style.transform = `translateY(${(1 - q) * 24}px)`
+        studioRef.current.style.pointerEvents = q > 0.6 ? 'auto' : 'none'
         // Invisible = hors du parcours clavier
-        infoRef.current.inert = q < 0.5
+        studioRef.current.inert = q < 0.5
+      }
+      // Le site entier passe au jour à mi-course, header compris
+      const darkNow = p < 0.5
+      if (darkNow !== wasDark.current) {
+        wasDark.current = darkNow
+        setDark(darkNow)
       }
     }
 
@@ -85,7 +83,7 @@ export default function Accueil({ onNavigate, setDark }) {
     }
     const onTouchEnd = () => {
       touchY = null
-      // La carte se pose sur l'état le plus proche
+      // La scène se pose sur l'état le plus proche
       target.current = target.current > 0.5 ? 1 : 0
     }
     section.addEventListener('touchstart', onTouchStart, { passive: true })
@@ -105,7 +103,7 @@ export default function Accueil({ onNavigate, setDark }) {
       section.removeEventListener('touchend', onTouchEnd)
       window.removeEventListener('keydown', onKey)
     }
-  }, [onNavigate])
+  }, [setDark])
 
   return (
     <section
@@ -116,6 +114,21 @@ export default function Accueil({ onNavigate, setDark }) {
       aria-labelledby="hero-titre"
       className="relative h-full overflow-hidden"
     >
+      {/* La vidéo de fond, sous un voile d'encre pour la lisibilité */}
+      <div ref={mediaRef} aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden">
+        <div className="h-full w-full bg-encre" />
+        {VIMEO_ID && (
+          <iframe
+            title="Film de fond"
+            src={`https://player.vimeo.com/video/${VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`}
+            allow="autoplay; fullscreen"
+            tabIndex={-1}
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0"
+          />
+        )}
+        <div className="absolute inset-0 bg-encre/40" />
+      </div>
+
       {/* Mot-symbole en bas à gauche, catchline en face : la scène d'ouverture */}
       <div ref={wordRef} className="absolute inset-x-6 bottom-[9vh] z-[2] md:inset-x-16">
         <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-8">
@@ -140,54 +153,39 @@ export default function Accueil({ onNavigate, setDark }) {
         </div>
       </div>
 
-      {/* La carte du film affleure sous le pli : le rideau se lève au scroll */}
-      <button
-        ref={cardRef}
-        type="button"
-        onClick={() => {
-          if (current.current > 0.9) onNavigate('films')
-          else target.current = 1
-        }}
-        aria-label={`Découvrir le film ${FEATURED.title}`}
-        className="fade-in absolute left-1/2 top-[40vh] z-[1] aspect-video w-[88vw] cursor-pointer overflow-hidden rounded-3xl bg-[#0f0c0a] shadow-[0_-10px_50px_-22px_rgb(217_198_166/0.12)] ring-1 ring-creme/15 md:left-[34vw] md:top-1/2 md:w-[56vw]"
-        style={{
-          '--d': '1.1s',
-          transform: 'translate(-50%, -50%) translate(16vw, 76vh) scale(1.32)',
-        }}
-      />
-
-      {/* Les informations du film, révélées par la fin de course */}
+      {/* Le studio se présente quand le jour se lève */}
       <div
-        ref={infoRef}
-        className="absolute inset-x-6 bottom-[4vh] text-left opacity-0 md:inset-x-auto md:bottom-auto md:right-[6vw] md:top-1/2 md:w-[26vw] md:max-w-[330px] md:-translate-y-1/2"
+        ref={studioRef}
+        className="absolute inset-x-6 top-1/2 z-[2] max-w-2xl -translate-y-1/2 opacity-0 md:inset-x-16"
         style={{ pointerEvents: 'none' }}
       >
-        <p className="text-[10.5px] font-normal uppercase tracking-[0.28em] text-grege">
-          {FEATURED.world}
+        <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
+          Le studio
         </p>
-        <h2 className="mt-4 font-display text-[clamp(1.5rem,2.2vw,2.1rem)] leading-[1.2] text-creme">
-          {FEATURED.title}
-          <span className="text-or">.</span>
+
+        <h2 className="mt-7 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.25] text-encre">
+          Le film central de votre maison<span className="text-or">.</span>
         </h2>
-        <p className="mt-2 text-[12px] font-light tracking-[0.08em] text-grege">
-          {FEATURED.format}
-        </p>
-        <p className="mt-6 hidden max-w-[36ch] text-[13px] font-light leading-[1.9] text-sable md:block">
-          {FEATURED.desc}
+
+        <p className="mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
+          Bel Augure est un studio de films de marque fondé à Bordeaux. Nous
+          concevons la pièce maîtresse de l'image d'une maison : un film
+          signature en lumière naturelle, étalonné comme au cinéma, décliné
+          pour vivre partout, des années.
         </p>
 
         {/* Le portefeuille de films : trois vignettes qui s'éventaillent */}
         <button
           type="button"
           onClick={() => onNavigate('films')}
-          className="group mt-8 flex cursor-pointer items-center gap-5"
+          className="group mt-9 flex cursor-pointer items-center gap-5"
         >
           <span aria-hidden="true" className="relative block h-7 w-14">
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-creme/15 ring-1 ring-creme/25 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%+9px)] rotate-[10deg] rounded-[5px] bg-creme/15 ring-1 ring-creme/25 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%+17px)] group-hover:rotate-[16deg]" />
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-creme/25 ring-1 ring-creme/40 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%+9px)] rotate-[10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%+17px)] group-hover:rotate-[16deg]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
           </span>
-          <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-creme/80 transition-colors duration-500 group-hover:text-creme">
+          <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 group-hover:text-encre">
             Découvrir les quatre films<span className="text-or">.</span>
           </span>
         </button>
