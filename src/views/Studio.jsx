@@ -39,9 +39,10 @@ export default function Studio() {
         </span>
       </h2>
 
-      {/* Le récit */}
+      {/* Le récit et les principes respirent au centre de la page */}
+      <div className="flex flex-1 flex-col items-center justify-center py-4">
       <div
-        className="reveal-up mt-9 max-w-[64ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80"
+        className="reveal-up max-w-[60ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80"
         style={{ '--d': '0.3s' }}
       >
         <p>
@@ -58,39 +59,39 @@ export default function Studio() {
         </p>
       </div>
 
-      {/* Les principes, en litanie */}
+      {/* Les principes, en litanie contenue */}
       <ul
-        className="reveal-up mt-10 flex flex-col flex-wrap items-center justify-center gap-x-12 gap-y-3 md:flex-row"
+        className="reveal-up mt-10 flex flex-col flex-wrap items-center justify-center gap-x-8 gap-y-3 md:flex-row"
         style={{ '--d': '0.42s' }}
         aria-label="Les principes du studio"
       >
         {PRINCIPES.map((principe) => (
           <li
             key={principe}
-            className="flex items-center gap-3 text-[12.5px] font-light text-encre/85"
+            className="flex items-center gap-2.5 text-[13px] font-normal text-encre/85"
           >
             <span aria-hidden="true" className="h-px w-4 shrink-0 bg-or" />
             {principe}
           </li>
         ))}
       </ul>
+      </div>
 
       {/* Les deux artisans, assis sur la base */}
-      <div
-        className="reveal-up mt-auto flex items-start justify-center gap-16 pt-12 md:gap-24"
-        style={{ '--d': '0.5s' }}
-      >
-        {ARTISANS.map((artisan) => (
-          <div key={artisan.name}>
-            <p className="font-display text-[clamp(1.3rem,1.8vw,1.7rem)] text-encre">
-              {artisan.name}
-              <span className="text-or">.</span>
-            </p>
-            <p className="mt-1.5 text-[12px] font-light tracking-[0.04em] text-grege">
-              {artisan.role}
-            </p>
-          </div>
-        ))}
+      <div className="reveal-up" style={{ '--d': '0.5s' }}>
+        <span aria-hidden="true" className="mx-auto mb-7 block h-px w-10 bg-or" />
+        <div className="flex items-start justify-center divide-x divide-encre/15">
+          {ARTISANS.map((artisan) => (
+            <div key={artisan.name} className="w-56 px-6 md:w-64 md:px-8">
+              <p className="font-display text-[clamp(1.3rem,1.8vw,1.7rem)] text-encre">
+                {artisan.name}
+              </p>
+              <p className="mt-1.5 text-[12px] font-light tracking-[0.04em] text-grege">
+                {artisan.role}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
