@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 // Le film mis en avant sur le héros : la carte reçoit le still ou la boucle
@@ -13,47 +13,85 @@ const FEATURED = {
 export default function Accueil({ onNavigate }) {
   const reveal = useReveal(0.35)
   const sectionRef = useRef(null)
-  const [expanded, setExpanded] = useState(false)
-  const lock = useRef(false)
+  const cardRef = useRef(null)
+  const wordRef = useRef(null)
+  const ringsRef = useRef(null)
+  const infoRef = useRef(null)
+  const target = useRef(0)
+  const current = useRef(0)
+  const leaving = useRef(false)
 
-  // Scroll : la carte s'étend en plein écran ; un second geste mène aux
-  // films ; remonter replie.
+  // Le scroll ne bascule pas d'un état à l'autre : il scrute la transition.
+  // Une boucle rAF lisse la progression (lerp) et n'écrit que des transforms
+  // et des opacités ; à fond de course, continuer mène aux films.
   useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
+    const section = sectionRef.current
+    if (!section) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const desktopQuery = window.matchMedia('(min-width: 768px)')
+    let raf
 
-    const onWheel = (e) => {
-      if (lock.current) return
-      if (e.deltaY > 30) {
-        lock.current = true
-        setExpanded((was) => {
-          if (was) onNavigate('films')
-          return true
-        })
-        setTimeout(() => {
-          lock.current = false
-        }, 1050)
-      } else if (e.deltaY < -30) {
-        lock.current = true
-        setExpanded(false)
-        setTimeout(() => {
-          lock.current = false
-        }, 1050)
+    const apply = (p) => {
+      const desktop = desktopQuery.matches
+      if (cardRef.current) {
+        const dx = desktop ? 16 * (1 - p) : 0
+        const dy = (desktop ? 60 : 62) * (1 - p)
+        const s0 = desktop ? 74 / 56 : 1
+        const s = s0 + (1 - s0) * p
+        cardRef.current.style.transform = `translate(-50%, -50%) translate(${dx}vw, ${dy}vh) scale(${s})`
+      }
+      if (wordRef.current) {
+        wordRef.current.style.opacity = String(Math.max(1 - p * 1.6, 0))
+        wordRef.current.style.transform = `translateY(${-p * 10}vh)`
+      }
+      if (ringsRef.current) {
+        ringsRef.current.style.opacity = String(1 - p)
+      }
+      if (infoRef.current) {
+        const q = Math.min(Math.max((p - 0.5) / 0.5, 0), 1)
+        infoRef.current.style.opacity = String(q)
+        infoRef.current.style.transform = `translateX(${(1 - q) * 26}px)`
+        infoRef.current.style.pointerEvents = q > 0.6 ? 'auto' : 'none'
       }
     }
 
-    el.addEventListener('wheel', onWheel, { passive: true })
-    return () => el.removeEventListener('wheel', onWheel)
-  }, [onNavigate])
+    const loop = () => {
+      const t = target.current
+      const c = current.current
+      const next = reduce ? t : c + (t - c) * 0.075
+      current.current = Math.abs(next - t) < 0.0005 ? t : next
+      apply(current.current)
+      raf = requestAnimationFrame(loop)
+    }
+    raf = requestAnimationFrame(loop)
 
-  useEffect(() => {
-    if (!expanded) return
+    let overflow = 0
+    const onWheel = (e) => {
+      const before = target.current
+      target.current = Math.min(Math.max(before + e.deltaY / 1100, 0), 1)
+      if (before >= 1 && e.deltaY > 0) {
+        overflow += e.deltaY
+        if (overflow > 320 && !leaving.current) {
+          leaving.current = true
+          onNavigate('films')
+        }
+      } else {
+        overflow = 0
+      }
+    }
+    section.addEventListener('wheel', onWheel, { passive: true })
+
     const onKey = (e) => {
-      if (e.key === 'Escape') setExpanded(false)
+      if (e.key === 'Escape') target.current = 0
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [expanded])
+
+    return () => {
+      cancelAnimationFrame(raf)
+      section.removeEventListener('wheel', onWheel)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [onNavigate])
 
   return (
     <section
@@ -66,10 +104,9 @@ export default function Accueil({ onNavigate }) {
     >
       {/* Le signe favorable : deux anneaux d'or en rotation lente */}
       <div
+        ref={ringsRef}
         aria-hidden="true"
-        className={`rings pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ${
-          expanded ? 'opacity-0' : 'opacity-100'
-        }`}
+        className="rings pointer-events-none absolute inset-0 flex items-center justify-center"
       >
         <svg
           viewBox="0 0 100 100"
@@ -100,54 +137,50 @@ export default function Accueil({ onNavigate }) {
         </svg>
       </div>
 
-      {/* Mot-symbole : s'efface quand le film prend l'écran */}
-      <div
-        className={`absolute inset-x-0 top-[38vh] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          expanded
-            ? 'pointer-events-none -translate-y-[16vh] opacity-0'
-            : '-translate-y-1/2 opacity-100'
-        }`}
-      >
-        <h1
-          id="hero-titre"
-          className="font-display text-[clamp(3rem,9vw,8rem)] leading-[1.05] tracking-[0.005em] text-encre"
-        >
-          <span className="mask" style={{ '--d': '0.2s' }}>
-            <span>
-              Bel Augure<span className="dot-breathe text-or">.</span>
+      {/* Mot-symbole : se dissout à mesure que le film prend l'écran */}
+      <div className="pointer-events-none absolute inset-x-0 top-[38vh] -translate-y-1/2">
+        <div ref={wordRef}>
+          <h1
+            id="hero-titre"
+            className="font-display text-[clamp(3rem,9vw,8rem)] leading-[1.05] tracking-[0.005em] text-encre"
+          >
+            <span className="mask" style={{ '--d': '0.2s' }}>
+              <span>
+                Bel Augure<span className="dot-breathe text-or">.</span>
+              </span>
             </span>
-          </span>
-        </h1>
+          </h1>
 
-        <p
-          className="reveal-up mt-5 font-display text-[clamp(1.1rem,1.7vw,1.5rem)] leading-[1.5] text-encre/75"
-          style={{ '--d': '0.7s' }}
-        >
-          Les films signatures du bien-être d'exception
-        </p>
+          <p
+            className="reveal-up mt-5 font-display text-[clamp(1.1rem,1.7vw,1.5rem)] leading-[1.5] text-encre/75"
+            style={{ '--d': '0.7s' }}
+          >
+            Les films signatures du bien-être d'exception
+          </p>
+        </div>
       </div>
 
-      {/* La carte du film : affleure en bas, s'étend au scroll */}
+      {/* La carte du film : sa géométrie est écrite par la boucle de scroll */}
       <button
+        ref={cardRef}
         type="button"
-        onClick={() => (expanded ? onNavigate('films') : setExpanded(true))}
-        aria-label={
-          expanded ? 'Découvrir tous nos films' : `Découvrir le film ${FEATURED.title}`
-        }
-        className={`reveal-up absolute aspect-video -translate-x-1/2 -translate-y-1/2 cursor-pointer overflow-hidden rounded-3xl bg-encre shadow-[0_40px_110px_-30px_rgb(26_21_18/0.45)] transition-all duration-[1150ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          expanded
-            ? 'left-1/2 top-[40vh] w-[88vw] md:left-[34vw] md:top-1/2 md:w-[56vw]'
-            : 'left-1/2 top-[102vh] w-[88vw] md:top-[110vh] md:w-[min(74vw,900px)]'
-        }`}
-        style={{ '--d': '0.9s' }}
+        onClick={() => {
+          if (current.current > 0.9) onNavigate('films')
+          else target.current = 1
+        }}
+        aria-label={`Découvrir le film ${FEATURED.title}`}
+        className="fade-in absolute left-1/2 top-[40vh] aspect-video w-[88vw] cursor-pointer overflow-hidden rounded-3xl bg-encre shadow-[0_40px_110px_-30px_rgb(26_21_18/0.45)] md:left-[34vw] md:top-1/2 md:w-[56vw]"
+        style={{
+          '--d': '0.9s',
+          transform: 'translate(-50%, -50%) translate(16vw, 60vh) scale(1.32)',
+        }}
       />
 
-      {/* Les informations du film, sur le côté quand la carte est en scène */}
+      {/* Les informations du film, révélées par la fin de course */}
       <div
-        aria-hidden={!expanded}
-        className={`absolute text-left transition-all delay-200 duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          expanded ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-6 opacity-0'
-        } inset-x-6 bottom-[4vh] md:inset-x-auto md:bottom-auto md:right-[6vw] md:top-1/2 md:w-[26vw] md:max-w-[330px] md:-translate-y-1/2`}
+        ref={infoRef}
+        className="absolute inset-x-6 bottom-[4vh] text-left opacity-0 md:inset-x-auto md:bottom-auto md:right-[6vw] md:top-1/2 md:w-[26vw] md:max-w-[330px] md:-translate-y-1/2"
+        style={{ pointerEvents: 'none' }}
       >
         <p className="text-[10.5px] font-normal uppercase tracking-[0.28em] text-grege">
           {FEATURED.world}

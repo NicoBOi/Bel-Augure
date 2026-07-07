@@ -188,20 +188,27 @@ export default function Offres() {
         </div>
 
         <div className="reveal-right lg:col-span-5 lg:col-start-8" style={{ '--d': '0.65s' }}>
-          <ul aria-label="Grille des offres">
+          {/* Les filets partagent tous les mêmes bornes : le bloc Signature
+              reste net, rien ne file au-delà */}
+          <ul aria-label="Grille des offres" className="-mx-4">
             {TIERS.map((tier) => (
               <li key={tier.name}>
                 <button
                   type="button"
                   onClick={() => setActive(tier)}
-                  className={`group w-full cursor-pointer border-t border-encre/10 py-4 text-left transition-colors duration-500 ${
+                  className={`group relative w-full cursor-pointer border-t border-encre/10 py-4 text-left transition-colors duration-500 ${
                     tier.featured
-                      ? 'border-l-2 border-l-or bg-sable/70 pl-5 pr-3 hover:bg-sable'
-                      : '-mx-3 px-3 hover:bg-sable/40'
+                      ? 'border-l-2 border-l-or bg-sable/70 pl-5 pr-4 hover:bg-sable'
+                      : 'px-4 hover:bg-sable/40'
                   }`}
                 >
+                  {/* Trait d'or qui s'étire le long du filet au survol */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-[-1px] h-px origin-left scale-x-0 bg-or transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                  />
                   <span className="flex items-baseline justify-between gap-4">
-                    <span className="flex items-baseline gap-3">
+                    <span className="flex items-baseline gap-3 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
                       <span className="font-display text-[19px] text-encre">{tier.name}</span>
                       {tier.featured && (
                         <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
@@ -209,15 +216,15 @@ export default function Offres() {
                         </span>
                       )}
                     </span>
-                    <span className="shrink-0 text-[13px] font-light text-encre/70">
+                    <span className="shrink-0 text-[13px] font-light text-grege transition-colors duration-500 group-hover:text-encre">
                       {tier.price}
                     </span>
                   </span>
                   <span className="mt-1 flex items-baseline justify-between gap-4">
-                    <span className="text-[12px] font-light leading-[1.6] text-grege">
+                    <span className="text-[12px] font-light leading-[1.6] text-grege transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
                       {tier.tagline}
                     </span>
-                    <span className="shrink-0 text-[10px] font-normal uppercase tracking-[0.18em] text-grege opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <span className="shrink-0 -translate-x-2 text-[10px] font-normal uppercase tracking-[0.18em] text-grege opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
                       Découvrir
                     </span>
                   </span>

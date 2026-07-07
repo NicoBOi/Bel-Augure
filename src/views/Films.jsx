@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import BackLink from '../components/BackLink.jsx'
 
-// Trois à quatre films fondateurs : la présentation est pensée pour peu de
-// pièces, chacune traitée comme une œuvre. Les cartes encre reçoivent les
-// stills étalonnés.
+// Trois à quatre films fondateurs. Les calques de fond par projet sont
+// prêts à recevoir la boucle vidéo ou le still étalonné de chacun.
 const PROJECTS = [
   {
     id: 'itsasoa',
@@ -38,14 +37,23 @@ const PROJECTS = [
 
 export default function Films({ setDark }) {
   const reveal = useReveal(0.35)
-  const sectionRef = useRef(null)
-  const [current, setCurrent] = useState(0)
+  const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(null)
-  const wheelLock = useRef(false)
 
-  const active = PROJECTS[current]
+  // Survoler un nom fait monter le film en fond : tout le site glisse vers
+  // l'encre (header compris), les noms passent en crème.
+  const enter = (project) => {
+    setHovered(project.id)
+    setDark(true)
+  }
+
+  const leave = () => {
+    setHovered(null)
+    if (!selected) setDark(false)
+  }
 
   const openProject = (project) => {
+    setHovered(null)
     setSelected(project)
     setDark(true)
   }
@@ -55,42 +63,16 @@ export default function Films({ setDark }) {
     setDark(false)
   }
 
-  // La molette parcourt l'index, une pièce à la fois.
   useEffect(() => {
-    const section = sectionRef.current
-    if (!section || selected) return
-
-    const onWheel = (e) => {
-      if (wheelLock.current) return
-      if (Math.abs(e.deltaY) < 25) return
-      wheelLock.current = true
-      const dir = e.deltaY > 0 ? 1 : -1
-      setCurrent((i) => Math.min(Math.max(i + dir, 0), PROJECTS.length - 1))
-      setTimeout(() => {
-        wheelLock.current = false
-      }, 550)
-    }
-
-    section.addEventListener('wheel', onWheel, { passive: true })
-    return () => section.removeEventListener('wheel', onWheel)
-  }, [selected])
-
-  useEffect(() => {
+    if (!selected) return
     const onKey = (e) => {
-      if (selected) {
-        if (e.key === 'Escape') closeProject()
-        return
-      }
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight')
-        setCurrent((i) => Math.min(i + 1, PROJECTS.length - 1))
-      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') setCurrent((i) => Math.max(i - 1, 0))
+      if (e.key === 'Escape') closeProject()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   })
 
-  // Lecture d'un projet : le site entier est passé en encre (via setDark),
-  // le détail remplace l'index dans la page. Aucun overlay.
+  // Lecture d'un projet : le détail se déploie dans la page, sur l'encre.
   if (selected) {
     return (
       <section
@@ -127,100 +109,66 @@ export default function Films({ setDark }) {
   }
 
   return (
-    <section
-      ref={(el) => {
-        reveal(el)
-        sectionRef.current = el
-      }}
-      aria-label="Films"
-      className="flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
-    >
-      <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
-        {/* Index : chaque film est un chapitre */}
-        <div className="lg:col-span-4">
-          <p
-            className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
-            style={{ '--d': '0.1s' }}
-          >
-            Films
-          </p>
+    <section ref={reveal} aria-label="Films" className="relative h-full overflow-hidden">
+      {/* Calques de fond : un par film, prêts pour la vidéo */}
+      {PROJECTS.map((project) => (
+        <div
+          key={project.id}
+          aria-hidden="true"
+          className={`absolute inset-0 transition-opacity duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            hovered === project.id ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <div className="h-full w-full bg-encre" />
+        </div>
+      ))}
 
-          <p
-            className="reveal-up mt-5 max-w-[30ch] font-display text-[clamp(1.2rem,1.6vw,1.5rem)] leading-[1.45] text-encre"
-            style={{ '--d': '0.2s' }}
-          >
-            Chaque maison a une lumière. Nos films la trouvent.
-          </p>
+      <div className="relative z-[1] flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16">
+        <p
+          className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
+          style={{ '--d': '0.1s' }}
+        >
+          Films
+        </p>
 
-          <ul className="reveal-up mt-10" style={{ '--d': '0.4s' }} aria-label="Nos films">
-            {PROJECTS.map((project, i) => (
+        <ul className="reveal-up mt-8" style={{ '--d': '0.3s' }} onMouseLeave={leave}>
+          {PROJECTS.map((project) => {
+            const isHovered = hovered === project.id
+            const dimmed = hovered !== null && !isHovered
+            return (
               <li key={project.id}>
                 <button
                   type="button"
-                  onMouseEnter={() => setCurrent(i)}
-                  onFocus={() => setCurrent(i)}
-                  onClick={() => (i === current ? openProject(project) : setCurrent(i))}
-                  aria-current={i === current ? 'true' : undefined}
-                  className={`group flex w-full cursor-pointer items-baseline justify-between gap-4 border-t border-encre/10 py-4 text-left transition-colors duration-700 ${
-                    i === current ? 'text-encre' : 'text-encre/35 hover:text-encre/70'
+                  onMouseEnter={() => enter(project)}
+                  onFocus={() => enter(project)}
+                  onBlur={leave}
+                  onClick={() => openProject(project)}
+                  className={`flex w-full cursor-pointer items-baseline gap-6 py-3 text-left font-display text-[clamp(2rem,4.6vw,4rem)] leading-[1.12] transition-colors duration-700 md:py-4 ${
+                    isHovered ? 'text-creme' : dimmed ? 'text-creme/25' : 'text-encre'
                   }`}
                 >
-                  <span className="font-display text-[clamp(1.4rem,1.9vw,1.8rem)] leading-tight">
+                  <span>
                     {project.title}
                     <span
-                      className={`transition-opacity duration-700 ${
-                        i === current ? 'text-or opacity-100' : 'opacity-0'
+                      className={`text-or transition-opacity duration-500 ${
+                        isHovered ? 'opacity-100' : 'opacity-0'
                       }`}
                     >
                       .
                     </span>
                   </span>
                   <span
-                    className={`shrink-0 text-[10px] font-normal uppercase tracking-[0.18em] transition-opacity duration-700 ${
-                      i === current ? 'text-grege opacity-100' : 'opacity-0'
+                    className={`ml-auto hidden shrink-0 text-[10.5px] font-normal uppercase tracking-[0.22em] text-grege transition-all duration-700 md:block ${
+                      isHovered ? 'translate-x-0 opacity-100' : '-translate-x-3 opacity-0'
                     }`}
                   >
-                    Voir
+                    {project.world}
                   </span>
                 </button>
               </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Aperçu : la pièce active, en fondu enchaîné */}
-        <div className="reveal-up lg:col-span-7 lg:col-start-6" style={{ '--d': '0.35s' }}>
-          <div className="relative aspect-video w-full">
-            {PROJECTS.map((project, i) => (
-              <button
-                key={project.id}
-                type="button"
-                onClick={() => openProject(project)}
-                tabIndex={i === current ? 0 : -1}
-                aria-label={`Voir le projet ${project.title}`}
-                aria-hidden={i !== current}
-                className={`group absolute inset-0 cursor-pointer overflow-hidden rounded-3xl bg-encre shadow-[0_36px_100px_-30px_rgb(26_21_18/0.4)] transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                  i === current
-                    ? 'scale-100 opacity-100'
-                    : 'pointer-events-none scale-[0.985] opacity-0'
-                }`}
-              >
-                <span className="absolute inset-0 flex items-center justify-center text-[10px] font-normal uppercase tracking-[0.28em] text-creme/0 transition-colors duration-700 group-hover:text-creme/80">
-                  Voir le film
-                </span>
-              </button>
-            ))}
-          </div>
-
-          <div key={active.id} className="view-enter mt-5 flex items-baseline justify-between">
-            <p className="text-[10.5px] font-normal uppercase tracking-[0.2em] text-grege">
-              {active.world}
-            </p>
-            <p className="text-[12px] font-light tracking-[0.06em] text-grege">
-              {active.format}
-            </p>
-          </div>
-        </div>
+            )
+          })}
+        </ul>
       </div>
     </section>
   )
