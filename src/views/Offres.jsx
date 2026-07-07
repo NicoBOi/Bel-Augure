@@ -19,6 +19,7 @@ const TIERS = [
       'Une déclinaison verticale',
     ],
     meta: 'Livraison sous trois semaines',
+    tone: 'light',
   },
   {
     name: 'Signature',
@@ -34,6 +35,7 @@ const TIERS = [
     ],
     meta: 'Livraison sous cinq semaines',
     featured: true,
+    tone: 'gold',
   },
   {
     name: 'Héritage',
@@ -48,6 +50,7 @@ const TIERS = [
       'Photographies de tournage',
     ],
     meta: 'Livraison sous huit semaines',
+    tone: 'dark',
   },
   {
     name: 'Saisons',
@@ -61,6 +64,7 @@ const TIERS = [
       'Un interlocuteur unique',
     ],
     meta: 'Engagement annuel',
+    tone: 'greige',
   },
   {
     name: 'Sur Mesure',
@@ -73,8 +77,19 @@ const TIERS = [
       'Direction artistique dédiée',
     ],
     meta: 'Sur devis',
+    tone: 'dashed',
   },
 ]
+
+// Chaque format a sa matière, déclinée de la charte : du crème léger à
+// l'encre profonde, l'or au centre de la gamme.
+const TONES = {
+  light: 'border-encre/10 hover:border-encre/20 hover:bg-sable/40',
+  gold: 'border-or/60 bg-sable/70 shadow-[0_24px_60px_-36px_rgb(217_198_166/0.9)] hover:bg-sable',
+  dark: 'border-encre bg-encre shadow-[0_24px_60px_-36px_rgb(26_21_18/0.55)] hover:bg-[#251e18]',
+  greige: 'border-grege/30 bg-grege/8 hover:bg-grege/15',
+  dashed: 'border-dashed border-encre/30 hover:border-encre/45 hover:bg-sable/30',
+}
 
 export default function Offres() {
   const ref = useReveal(0.35)
@@ -211,11 +226,7 @@ export default function Offres() {
             <button
               type="button"
               onClick={() => setActive(tier)}
-              className={`group relative flex w-full cursor-pointer flex-col rounded-2xl border p-6 text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${
-                tier.featured
-                  ? 'border-or/60 bg-sable/70 shadow-[0_24px_60px_-36px_rgb(217_198_166/0.9)] hover:bg-sable'
-                  : 'border-encre/10 hover:border-encre/20 hover:bg-sable/40'
-              }`}
+              className={`group relative flex w-full cursor-pointer flex-col rounded-2xl border p-6 text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${TONES[tier.tone]}`}
             >
               {tier.featured && (
                 <span className="absolute right-5 top-5 text-[8.5px] font-medium uppercase tracking-[0.22em] text-grege">
@@ -223,26 +234,47 @@ export default function Offres() {
                 </span>
               )}
 
-              <span className="font-display text-[clamp(1.4rem,1.8vw,1.8rem)] leading-tight text-encre">
+              <span
+                className={`font-display text-[clamp(1.4rem,1.8vw,1.8rem)] leading-tight ${
+                  tier.tone === 'dark' ? 'text-creme' : 'text-encre'
+                }`}
+              >
                 {tier.name}
                 <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   .
                 </span>
               </span>
 
-              <span className="mt-2 text-[14.5px] font-normal text-encre/85">{tier.price}</span>
+              <span
+                className={`mt-2 text-[14.5px] font-normal ${
+                  tier.tone === 'dark' ? 'text-creme/85' : 'text-encre/85'
+                }`}
+              >
+                {tier.price}
+              </span>
 
-              <span className="mt-3 text-[12px] font-light leading-[1.7] text-grege">
+              <span
+                className={`mt-3 text-[12px] font-light leading-[1.7] ${
+                  tier.tone === 'dark' ? 'text-sable/75' : 'text-grege'
+                }`}
+              >
                 {tier.tagline}
               </span>
 
-              <span aria-hidden="true" className="mb-4 mt-5 block h-px w-full bg-encre/10" />
+              <span
+                aria-hidden="true"
+                className={`mb-4 mt-5 block h-px w-full ${
+                  tier.tone === 'dark' ? 'bg-creme/15' : 'bg-encre/10'
+                }`}
+              />
 
               <ul className="flex-1 space-y-2.5">
                 {tier.includes.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2.5 text-[12px] font-light leading-[1.55] text-encre/80"
+                    className={`flex items-start gap-2.5 text-[12px] font-light leading-[1.55] ${
+                      tier.tone === 'dark' ? 'text-creme/80' : 'text-encre/80'
+                    }`}
                   >
                     <span aria-hidden="true" className="mt-[0.55em] h-px w-3 shrink-0 bg-or" />
                     {item}
@@ -250,11 +282,19 @@ export default function Offres() {
                 ))}
               </ul>
 
-              <span className="mt-5 text-[10px] font-normal uppercase tracking-[0.18em] text-grege">
+              <span
+                className={`mt-5 text-[10px] font-normal uppercase tracking-[0.18em] ${
+                  tier.tone === 'dark' ? 'text-sable/65' : 'text-grege'
+                }`}
+              >
                 {tier.meta}
               </span>
 
-              <span className="mt-2 text-[10px] font-normal uppercase tracking-[0.18em] text-encre opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+              <span
+                className={`mt-2 text-[10px] font-normal uppercase tracking-[0.18em] opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
+                  tier.tone === 'dark' ? 'text-creme' : 'text-encre'
+                }`}
+              >
                 Découvrir
               </span>
             </button>
