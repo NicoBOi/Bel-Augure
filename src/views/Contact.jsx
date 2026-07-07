@@ -25,7 +25,7 @@ export default function Contact() {
           studio pour votre maison.
         </p>
 
-        <h2 className="mt-8 font-display text-[clamp(1.7rem,4.2vw,3.8rem)] leading-[1.2] text-encre">
+        <h2 className="mt-8 font-serif text-[clamp(1.5rem,3.6vw,3.2rem)] font-semibold leading-[1.2] tracking-[-0.01em] text-encre">
           <span className="mask" style={{ '--d': '0.25s' }}>
             <span>
               <a

@@ -18,6 +18,7 @@
   --color-creme: #f2ede4;
 
   --font-display: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;
+  --font-serif: 'Bodoni Moda', 'Didot', 'Bodoni MT', Georgia, serif;
   --font-sans: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
 
   --ease-augure: cubic-bezier(0.16, 1, 0.3, 1);
@@ -121,6 +122,63 @@ body {
 .cta:hover::before,
 .cta:focus-visible::before {
   transform: translateY(0);
+}
+
+.cta:active {
+  transform: scale(0.98);
+}
+
+/* ---------- Accueil : anneaux du signe favorable + point qui respire ---------- */
+
+@keyframes ringSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ringSpinReverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes ringsBreathe {
+  from {
+    transform: scale(0.985);
+  }
+  to {
+    transform: scale(1.015);
+  }
+}
+
+.rings {
+  animation: ringsBreathe 12s ease-in-out infinite alternate;
+}
+
+.ring-a {
+  animation: ringSpin 95s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.ring-b {
+  animation: ringSpinReverse 150s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes dotBreathe {
+  from {
+    opacity: 0.7;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.dot-breathe {
+  display: inline-block;
+  animation: dotBreathe 5s ease-in-out infinite alternate;
 }
 
 /* ---------- Animations de révélation ---------- */
@@ -240,6 +298,13 @@ body {
   .mask > span {
     opacity: 1 !important;
     transform: none !important;
+    animation: none !important;
+  }
+
+  .rings,
+  .ring-a,
+  .ring-b,
+  .dot-breathe {
     animation: none !important;
   }
 

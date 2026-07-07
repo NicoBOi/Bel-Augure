@@ -87,7 +87,7 @@ function ProjectOverlay({ project, onClose }) {
           <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
             {project.world}
           </p>
-          <h3 className="mt-6 font-display text-[clamp(1.8rem,3vw,2.8rem)] leading-[1.2] text-creme">
+          <h3 className="mt-6 font-serif text-[clamp(1.7rem,2.6vw,2.4rem)] font-semibold leading-[1.2] text-creme">
             {project.title}
             <span className="text-or">.</span>
           </h3>
@@ -109,6 +109,7 @@ export default function Films() {
   const sectionRef = useRef(null)
   const trackRef = useRef(null)
   const [selected, setSelected] = useState(null)
+  const [progress, setProgress] = useState(0)
 
   // Le scroll vertical devient un défilement horizontal de la galerie.
   useEffect(() => {
@@ -126,6 +127,13 @@ export default function Films() {
     return () => section.removeEventListener('wheel', onWheel)
   }, [selected])
 
+  const onTrackScroll = () => {
+    const el = trackRef.current
+    if (!el) return
+    const max = el.scrollWidth - el.clientWidth
+    setProgress(max > 0 ? el.scrollLeft / max : 0)
+  }
+
   return (
     <section
       ref={(el) => {
@@ -135,43 +143,67 @@ export default function Films() {
       aria-label="Films"
       className="flex h-full flex-col justify-center pb-14 pt-28"
     >
-      <p
-        className="reveal-up px-6 text-[11px] font-normal uppercase tracking-[0.3em] text-grege md:px-16"
-        style={{ '--d': '0.1s' }}
-      >
-        Films
-      </p>
+      <div className="flex items-end justify-between px-6 md:px-16">
+        <div>
+          <p
+            className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
+            style={{ '--d': '0.1s' }}
+          >
+            Films
+          </p>
 
-      <p
-        className="reveal-up mt-6 px-6 font-display text-[clamp(1.3rem,1.8vw,1.7rem)] leading-[1.4] text-encre md:px-16"
-        style={{ '--d': '0.2s' }}
-      >
-        Chaque maison a une lumière. Nos films la trouvent.
-      </p>
+          <p
+            className="reveal-up mt-6 font-serif text-[clamp(1.25rem,1.7vw,1.6rem)] font-medium leading-[1.4] text-encre"
+            style={{ '--d': '0.2s' }}
+          >
+            Chaque maison a une lumière. <span className="italic">Nos films la trouvent.</span>
+          </p>
+        </div>
+
+        {/* Indication de défilement horizontal */}
+        <div
+          className="reveal-up mb-1 hidden items-center gap-4 md:flex"
+          style={{ '--d': '0.45s' }}
+          aria-hidden="true"
+        >
+          <span className="text-[10px] font-normal uppercase tracking-[0.22em] text-grege">
+            Faire défiler
+          </span>
+          <span className="relative block h-px w-24 bg-encre/15">
+            <span
+              className="absolute inset-y-0 left-0 w-full origin-left bg-encre/60 transition-transform duration-300 ease-out"
+              style={{ transform: `scaleX(${Math.max(progress, 0.06)})` }}
+            />
+          </span>
+        </div>
+      </div>
 
       <div
         ref={trackRef}
-        className="reveal-up no-scrollbar mt-12 flex items-start gap-8 overflow-x-auto px-6 md:gap-12 md:px-16"
+        onScroll={onTrackScroll}
+        className="reveal-up no-scrollbar mt-10 flex items-start gap-8 overflow-x-auto px-6 md:gap-12 md:px-16"
         style={{ '--d': '0.3s' }}
       >
-        {PROJECTS.map((project, i) => (
+        {PROJECTS.map((project) => (
           <button
             key={project.id}
             type="button"
             onClick={() => setSelected(project)}
-            className={`group shrink-0 cursor-pointer text-left ${
+            className={`group shrink-0 cursor-pointer text-left transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 ${
               project.tile === 'wide'
-                ? 'w-[76vw] md:w-[440px]'
-                : 'mt-10 w-[52vw] md:mt-16 md:w-[280px]'
+                ? 'w-[76vw] md:w-[420px]'
+                : 'mt-10 w-[52vw] md:mt-16 md:w-[270px]'
             }`}
             aria-label={`Voir le projet ${project.title}`}
           >
-            <div
-              className={`w-full bg-encre transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015] ${
-                project.tile === 'wide' ? 'aspect-[16/10]' : 'aspect-[3/4]'
-              }`}
-            />
-            <p className="mt-4 font-display text-[16px] text-encre">
+            <div className="overflow-hidden">
+              <div
+                className={`w-full bg-encre transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] ${
+                  project.tile === 'wide' ? 'aspect-[16/10]' : 'aspect-[3/4]'
+                }`}
+              />
+            </div>
+            <p className="mt-4 font-serif text-[15px] font-medium text-encre">
               {project.title}
             </p>
             <p className="mt-1 text-[10.5px] font-normal uppercase tracking-[0.18em] text-grege">
