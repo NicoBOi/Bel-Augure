@@ -2,6 +2,10 @@ import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import BackLink from '../components/BackLink.jsx'
 
+// Vidéo d'exemple montrée dans chaque offre en attendant les films du
+// studio : identifiant Vimeo, lu en mode background.
+const VIMEO_ID = '961941216'
+
 const TIERS = [
   {
     name: 'Prélude',
@@ -76,24 +80,38 @@ export default function Offres() {
   const ref = useReveal(0.35)
   const [active, setActive] = useState(null)
 
-  // Détail d'une offre : la grille s'efface, l'offre s'étale dans la page,
-  // les autres restent accessibles en colonne pour circuler.
+  // Détail : la vidéo d'exemple prend la scène, le périmètre à côté.
   if (active) {
     return (
       <section
         key={active.name}
         aria-label={`Offre ${active.name}`}
-        className="view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-end md:pb-[9vh] md:px-16"
+        className="view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
       >
         <BackLink label="Toutes les offres" onClick={() => setActive(null)} />
 
-        <div className="mt-10 grid items-end gap-12 md:mt-auto lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-5">
-            <h2 className="font-display text-[clamp(2.6rem,6vw,5.2rem)] leading-[1.05] text-encre">
+        <div className="mt-10 grid items-end gap-10 md:mt-auto lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-7">
+            <div className="relative aspect-video w-full overflow-hidden rounded-3xl bg-encre">
+              <iframe
+                title={`Exemple de film ${active.name}`}
+                src={`https://player.vimeo.com/video/${VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`}
+                allow="autoplay; fullscreen"
+                tabIndex={-1}
+                className="pointer-events-none absolute inset-0 h-full w-full border-0"
+              />
+            </div>
+            <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-grege">
+              Exemple de réalisation
+            </p>
+          </div>
+
+          <div className="lg:col-span-4 lg:col-start-9">
+            <h2 className="font-display text-[clamp(2.2rem,3.8vw,3.4rem)] leading-[1.1] text-encre">
               {active.name}
               <span className="text-or">.</span>
             </h2>
-            <p className="mt-4 text-[14px] font-light tracking-[0.06em] text-grege">
+            <p className="mt-3 text-[14px] font-light tracking-[0.06em] text-grege">
               {active.price}
               {active.featured && (
                 <span className="ml-4 text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
@@ -101,50 +119,45 @@ export default function Offres() {
                 </span>
               )}
             </p>
-            <p className="mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80">
+            <p className="mt-6 max-w-[44ch] text-[13.5px] font-light leading-[1.85] text-encre/80">
               {active.desc}
             </p>
 
-            {/* Circuler entre les offres sans revenir à la grille */}
-            <ul className="mt-10 flex flex-wrap gap-x-7 gap-y-2" aria-label="Autres offres">
-              {TIERS.filter((t) => t.name !== active.name).map((tier) => (
-                <li key={tier.name}>
-                  <button
-                    type="button"
-                    onClick={() => setActive(tier)}
-                    className="nav-link cursor-pointer text-[12px] font-light text-grege transition-colors duration-500 hover:text-encre"
-                  >
-                    <span className="nav-label">{tier.name}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:col-span-5 lg:col-start-8">
-            <p className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege">
-              Ce que comprend {active.name}
-            </p>
-            <ul className="mt-4">
+            <ul className="mt-6">
               {active.includes.map((item) => (
                 <li
                   key={item}
-                  className="border-t border-encre/10 py-3 text-[13px] font-light text-encre/85"
+                  className="border-t border-encre/10 py-2.5 text-[13px] font-light text-encre/85"
                 >
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="mt-5 text-[12px] font-light tracking-[0.06em] text-grege">
+            <p className="mt-4 text-[12px] font-light tracking-[0.06em] text-grege">
               {active.meta}
             </p>
 
-            <a
-              href={`mailto:nico@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
-              className="cta mt-9 inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
-            >
-              Ouvrir un échange
-            </a>
+            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3">
+              <a
+                href={`mailto:nico@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
+                className="cta inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
+              >
+                Ouvrir un échange
+              </a>
+              <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Autres offres">
+                {TIERS.filter((t) => t.name !== active.name).map((tier) => (
+                  <li key={tier.name}>
+                    <button
+                      type="button"
+                      onClick={() => setActive(tier)}
+                      className="nav-link cursor-pointer py-2 text-[12px] font-light text-grege transition-colors duration-500 hover:text-encre"
+                    >
+                      <span className="nav-label">{tier.name}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -157,8 +170,9 @@ export default function Offres() {
       aria-label="Offres"
       className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
     >
-      <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-6 lg:flex lg:flex-col lg:justify-between">
+      {/* L'index des offres : des rangées pleine largeur, comme une carte */}
+      <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+        <div>
           <p
             className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
             style={{ '--d': '0.05s' }}
@@ -166,76 +180,81 @@ export default function Offres() {
             Offres
           </p>
 
-          <div>
-          <h2 className="font-display text-[clamp(2.2rem,4.2vw,3.8rem)] leading-[1.22] text-encre">
+          <h2 className="mt-6 max-w-[34ch] font-display text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.3] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>Un film signature s'amortit</span>
+              <span>Un film signature s'amortit sur des années,</span>
             </span>
-            <span className="mask" style={{ '--d': '0.05s' }}>
+            <span className="mask" style={{ '--d': '0.18s' }}>
               <span>
-                sur des années, pas sur une campagne
-                <span className="text-or">.</span>
+                pas sur une campagne<span className="text-or">.</span>
               </span>
             </span>
           </h2>
-
-          <p
-            className="reveal-up mt-8 max-w-[44ch] text-[13px] font-light leading-[1.8] text-grege"
-            style={{ '--d': '0.08s' }}
-          >
-            La grille est publique et ne varie pas. Quand un budget se
-            resserre, nous ajustons le périmètre, jamais l'exigence.
-          </p>
-          </div>
         </div>
 
-        <div className="reveal-right lg:col-span-5 lg:col-start-8 lg:flex lg:flex-col lg:justify-end" style={{ '--d': '0.18s' }}>
-          {/* Les filets partagent tous les mêmes bornes : le bloc Signature
-              reste net, rien ne file au-delà */}
-          <ul aria-label="Grille des offres" className="-mx-4 lg:flex lg:h-full lg:flex-col">
-            {TIERS.map((tier) => (
-              <li key={tier.name} className="lg:flex lg:flex-1">
-                <button
-                  type="button"
-                  onClick={() => setActive(tier)}
-                  className={`group relative w-full cursor-pointer border-t border-encre/10 py-5 text-left transition-colors duration-500 lg:flex lg:flex-col lg:justify-center ${
-                    tier.featured
-                      ? 'border-l-2 border-l-or bg-sable/70 pl-[14px] pr-4 hover:bg-sable'
-                      : 'px-4 hover:bg-sable/40'
-                  }`}
-                >
-                  {/* Trait d'or qui s'étire le long du filet au survol */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 top-[-1px] h-px origin-left scale-x-0 bg-or transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
-                  />
-                  <span className="flex items-baseline justify-between gap-4">
-                    <span className="flex items-baseline gap-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
-                      <span className="font-display text-[clamp(1.2rem,1.6vw,1.5rem)] text-encre">{tier.name}</span>
-                      {tier.featured && (
-                        <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
-                          Format central
-                        </span>
-                      )}
-                    </span>
-                    <span className="shrink-0 text-[13px] font-light text-grege transition-colors duration-500 group-hover:text-encre">
-                      {tier.price}
-                    </span>
-                  </span>
-                  <span className="mt-1 flex items-baseline justify-between gap-4">
-                    <span className="text-[12px] font-light leading-[1.6] text-grege transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
-                      {tier.tagline}
-                    </span>
-                    <span className="shrink-0 -translate-x-2 text-[10px] font-normal uppercase tracking-[0.18em] text-grege opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
-                      Découvrir
-                    </span>
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <p
+          className="reveal-up hidden max-w-[34ch] text-right text-[12px] font-light leading-[1.8] text-grege lg:block"
+          style={{ '--d': '0.25s' }}
+        >
+          La grille est publique et ne varie pas. Quand un budget se resserre,
+          nous ajustons le périmètre, jamais l'exigence.
+        </p>
       </div>
+
+      <ul
+        aria-label="Grille des offres"
+        className="reveal-up -mx-4 mt-8 flex flex-col lg:mt-10 lg:flex-1"
+        style={{ '--d': '0.3s' }}
+      >
+        {TIERS.map((tier) => (
+          <li key={tier.name} className="lg:flex lg:flex-1">
+            <button
+              type="button"
+              onClick={() => setActive(tier)}
+              className={`group relative w-full cursor-pointer border-t border-encre/10 py-5 text-left transition-colors duration-500 lg:flex lg:flex-col lg:justify-center ${
+                tier.featured
+                  ? 'border-l-2 border-l-or bg-sable/70 pl-[14px] pr-4 hover:bg-sable'
+                  : 'px-4 hover:bg-sable/40'
+              }`}
+            >
+              {/* Trait d'or qui s'étire le long du filet au survol */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-[-1px] h-px origin-left scale-x-0 bg-or transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+              />
+
+              <span className="grid items-baseline gap-1 md:grid-cols-12 md:gap-8">
+                <span className="md:col-span-4 lg:col-span-3">
+                  <span className="inline-block font-display text-[clamp(1.5rem,2.3vw,2.1rem)] text-encre transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
+                    {tier.name}
+                    <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      .
+                    </span>
+                  </span>
+                  {tier.featured && (
+                    <span className="ml-3 text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
+                      Format central
+                    </span>
+                  )}
+                </span>
+
+                <span className="self-center text-[13px] font-light leading-[1.6] text-grege md:col-span-5 lg:col-span-6">
+                  {tier.tagline}
+                </span>
+
+                <span className="flex items-baseline justify-between gap-6 md:col-span-3 md:justify-end lg:col-span-3">
+                  <span className="text-[13.5px] font-light text-encre/75 transition-colors duration-500 group-hover:text-encre">
+                    {tier.price}
+                  </span>
+                  <span className="-translate-x-2 text-[10px] font-normal uppercase tracking-[0.18em] text-grege opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
+                    Découvrir
+                  </span>
+                </span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

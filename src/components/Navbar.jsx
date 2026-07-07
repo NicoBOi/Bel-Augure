@@ -30,9 +30,10 @@ export default function Navbar({ activeView, onNavigate, dark }) {
     setOpen(false)
   }
 
-  // Sur l'accueil le mot-symbole géant occupe la scène : le logo du bandeau
-  // s'efface pour ne pas doubler la marque.
-  const logoHidden = activeView === 'accueil'
+  // Sur la scène d'ouverture le mot-symbole géant occupe l'écran : le logo
+  // s'efface. Dès que le scroll lève le jour (dark tombe), il apparaît
+  // comme sur les autres pages.
+  const logoHidden = activeView === 'accueil' && dark
 
   return (
     <header className="absolute inset-x-0 top-0 z-10">
