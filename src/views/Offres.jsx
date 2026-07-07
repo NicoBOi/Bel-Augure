@@ -192,13 +192,13 @@ export default function Offres() {
         <div className="reveal-right lg:col-span-5 lg:col-start-8 lg:flex lg:flex-col lg:justify-end" style={{ '--d': '0.18s' }}>
           {/* Les filets partagent tous les mêmes bornes : le bloc Signature
               reste net, rien ne file au-delà */}
-          <ul aria-label="Grille des offres" className="-mx-4">
+          <ul aria-label="Grille des offres" className="-mx-4 lg:flex lg:h-full lg:flex-col">
             {TIERS.map((tier) => (
-              <li key={tier.name}>
+              <li key={tier.name} className="lg:flex lg:flex-1">
                 <button
                   type="button"
                   onClick={() => setActive(tier)}
-                  className={`group relative w-full cursor-pointer border-t border-encre/10 py-5 text-left transition-colors duration-500 ${
+                  className={`group relative w-full cursor-pointer border-t border-encre/10 py-5 text-left transition-colors duration-500 lg:flex lg:flex-col lg:justify-center ${
                     tier.featured
                       ? 'border-l-2 border-l-or bg-sable/70 pl-[14px] pr-4 hover:bg-sable'
                       : 'px-4 hover:bg-sable/40'
@@ -211,7 +211,7 @@ export default function Offres() {
                   />
                   <span className="flex items-baseline justify-between gap-4">
                     <span className="flex items-baseline gap-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
-                      <span className="font-display text-[19px] text-encre">{tier.name}</span>
+                      <span className="font-display text-[clamp(1.2rem,1.6vw,1.5rem)] text-encre">{tier.name}</span>
                       {tier.featured && (
                         <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
                           Format central
