@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 const TIERS = [
@@ -5,32 +6,155 @@ const TIERS = [
     name: 'Prélude',
     price: '7 000 €',
     tagline: 'Un premier film court, pour poser une image juste.',
+    desc: "Le format d'entrée. Un film court qui installe une image juste, sans engager la maison au-delà du nécessaire.",
+    includes: [
+      'Film de 45 à 60 secondes',
+      'Une journée de tournage',
+      'Étalonnage cinéma',
+      'Une déclinaison verticale',
+    ],
+    meta: 'Livraison sous trois semaines',
   },
   {
     name: 'Signature',
     price: '12 000 €',
     tagline: "Le film central d'une maison, pensé pour durer.",
+    desc: "Le cœur de notre travail. Le film que l'on montre d'abord, partout, longtemps : site, accueil, salons, réseaux.",
+    includes: [
+      'Film de 90 secondes à 2 minutes',
+      'Deux journées de tournage',
+      'Design sonore original',
+      'Trois déclinaisons sociales',
+      'Photographies de tournage',
+    ],
+    meta: 'Livraison sous cinq semaines',
     featured: true,
   },
   {
     name: 'Héritage',
     price: '18 000 €',
     tagline: "Le grand récit d'origine, pour les maisons qui transmettent.",
+    desc: "Le format long. Entretiens, archives, saisons : le film raconte d'où vient la maison et ce qu'elle devient.",
+    includes: [
+      'Film de 3 minutes',
+      'Trois journées de tournage',
+      'Entretiens et archives',
+      'Cinq déclinaisons',
+      'Photographies de tournage',
+    ],
+    meta: 'Livraison sous huit semaines',
   },
   {
     name: 'Saisons',
     price: '16 000 € / an',
     tagline: "Quatre rendez-vous par an pour faire vivre l'image.",
+    desc: "L'image de la maison au fil de l'année. Quatre films courts, un par saison, dans une même écriture.",
+    includes: [
+      'Quatre films courts, un par saison',
+      "Tournages répartis sur l'année",
+      'Déclinaisons à chaque saison',
+      'Un interlocuteur unique',
+    ],
+    meta: 'Engagement annuel',
   },
   {
     name: 'Sur Mesure',
     price: 'dès 25 000 €',
     tagline: "Au-delà, tout s'écrit ensemble.",
+    desc: 'Certains projets ne tiennent dans aucune grille : plusieurs lieux, plusieurs films, une saison entière de tournage.',
+    includes: [
+      'Périmètre défini ensemble',
+      'Plusieurs lieux ou plusieurs films',
+      'Direction artistique dédiée',
+    ],
+    meta: 'Sur devis',
   },
 ]
 
 export default function Offres() {
   const ref = useReveal(0.35)
+  const [active, setActive] = useState(null)
+
+  // Détail d'une offre : la grille s'efface, l'offre s'étale dans la page,
+  // les autres restent accessibles en colonne pour circuler.
+  if (active) {
+    return (
+      <section
+        key={active.name}
+        aria-label={`Offre ${active.name}`}
+        className="view-enter flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
+      >
+        <button
+          type="button"
+          onClick={() => setActive(null)}
+          className="nav-link w-max cursor-pointer text-[11px] font-normal uppercase tracking-[0.22em] text-grege transition-colors duration-500 hover:text-encre"
+        >
+          <span className="nav-label">Toutes les offres</span>
+        </button>
+
+        <div className="mt-10 grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <h2 className="font-display text-[clamp(2.6rem,6vw,5.2rem)] leading-[1.05] text-encre">
+              {active.name}
+              <span className="text-or">.</span>
+            </h2>
+            <p className="mt-4 text-[14px] font-light tracking-[0.06em] text-grege">
+              {active.price}
+              {active.featured && (
+                <span className="ml-4 text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
+                  Format central
+                </span>
+              )}
+            </p>
+            <p className="mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80">
+              {active.desc}
+            </p>
+
+            {/* Circuler entre les offres sans revenir à la grille */}
+            <ul className="mt-10 flex flex-wrap gap-x-7 gap-y-2" aria-label="Autres offres">
+              {TIERS.filter((t) => t.name !== active.name).map((tier) => (
+                <li key={tier.name}>
+                  <button
+                    type="button"
+                    onClick={() => setActive(tier)}
+                    className="nav-link cursor-pointer text-[12px] font-light text-grege transition-colors duration-500 hover:text-encre"
+                  >
+                    <span className="nav-label">{tier.name}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-5 lg:col-start-8">
+            <p className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege">
+              Ce que comprend {active.name}
+            </p>
+            <ul className="mt-4">
+              {active.includes.map((item) => (
+                <li
+                  key={item}
+                  className="border-t border-encre/10 py-3 text-[13px] font-light text-encre/85"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-[12px] font-light tracking-[0.06em] text-grege">
+              {active.meta}
+            </p>
+
+            <a
+              href={`mailto:nico@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
+              className="cta mt-9 inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
+            >
+              Ouvrir un échange
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section
@@ -47,14 +171,13 @@ export default function Offres() {
             Offres
           </p>
 
-          <h2 className="mt-8 font-serif text-[clamp(1.9rem,3.4vw,3rem)] font-semibold leading-[1.25] tracking-[-0.01em] text-encre">
+          <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
             <span className="mask" style={{ '--d': '0.25s' }}>
               <span>Un film signature s'amortit</span>
             </span>
             <span className="mask" style={{ '--d': '0.4s' }}>
               <span>
-                sur des années, pas sur
-                <span className="italic"> une campagne</span>
+                sur des années, pas sur une campagne
                 <span className="text-or">.</span>
               </span>
             </span>
@@ -72,40 +195,41 @@ export default function Offres() {
         <div className="reveal-right lg:col-span-5 lg:col-start-8" style={{ '--d': '0.65s' }}>
           <ul aria-label="Grille des offres">
             {TIERS.map((tier) => (
-              <li
-                key={tier.name}
-                className={`group border-t border-encre/10 py-4 transition-colors duration-500 ${
-                  tier.featured
-                    ? 'border-l-2 border-l-or bg-sable/70 pl-5 pr-3'
-                    : '-mx-3 px-3 hover:bg-sable/40'
-                }`}
-              >
-                <div className="flex items-baseline justify-between gap-4">
-                  <span className="flex items-baseline gap-3">
-                    <span className="font-display text-[19px] text-encre">{tier.name}</span>
-                    {tier.featured && (
-                      <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
-                        Format central
-                      </span>
-                    )}
+              <li key={tier.name}>
+                <button
+                  type="button"
+                  onClick={() => setActive(tier)}
+                  className={`group w-full cursor-pointer border-t border-encre/10 py-4 text-left transition-colors duration-500 ${
+                    tier.featured
+                      ? 'border-l-2 border-l-or bg-sable/70 pl-5 pr-3 hover:bg-sable'
+                      : '-mx-3 px-3 hover:bg-sable/40'
+                  }`}
+                >
+                  <span className="flex items-baseline justify-between gap-4">
+                    <span className="flex items-baseline gap-3">
+                      <span className="font-display text-[19px] text-encre">{tier.name}</span>
+                      {tier.featured && (
+                        <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
+                          Format central
+                        </span>
+                      )}
+                    </span>
+                    <span className="shrink-0 text-[13px] font-light text-encre/70">
+                      {tier.price}
+                    </span>
                   </span>
-                  <span className="shrink-0 text-[13px] font-light text-encre/70">
-                    {tier.price}
+                  <span className="mt-1 flex items-baseline justify-between gap-4">
+                    <span className="text-[12px] font-light leading-[1.6] text-grege">
+                      {tier.tagline}
+                    </span>
+                    <span className="shrink-0 text-[10px] font-normal uppercase tracking-[0.18em] text-grege opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      Découvrir
+                    </span>
                   </span>
-                </div>
-                <p className="mt-1 text-[12px] font-light leading-[1.6] text-grege">
-                  {tier.tagline}
-                </p>
+                </button>
               </li>
             ))}
           </ul>
-
-          <a
-            href="mailto:nico@belaugure.studio?subject=Ouvrir%20un%20%C3%A9change"
-            className="cta mt-9 inline-block px-10 py-4 text-[11px] font-normal uppercase tracking-[0.2em]"
-          >
-            Ouvrir un échange
-          </a>
         </div>
       </div>
     </section>

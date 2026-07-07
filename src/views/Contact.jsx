@@ -1,7 +1,25 @@
+import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 export default function Contact() {
   const ref = useReveal(0.35)
+  const [form, setForm] = useState({ nom: '', maison: '', email: '', message: '' })
+
+  const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }))
+
+  // Pas de backend : le module compose un email prêt à partir.
+  const submit = (e) => {
+    e.preventDefault()
+    const subject = encodeURIComponent(
+      form.maison ? `Échange · ${form.maison}` : 'Ouvrir un échange',
+    )
+    const body = encodeURIComponent(
+      `${form.message}\n\n${form.nom}${form.maison ? `\n${form.maison}` : ''}${
+        form.email ? `\n${form.email}` : ''
+      }`,
+    )
+    window.location.href = `mailto:nico@belaugure.studio?subject=${subject}&body=${body}`
+  }
 
   return (
     <section
@@ -9,49 +27,131 @@ export default function Contact() {
       aria-label="Contact"
       className="flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
     >
-      <div>
-        <p
-          className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
-          style={{ '--d': '0.1s' }}
-        >
-          Contact
-        </p>
+      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-5">
+          <p
+            className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
+            style={{ '--d': '0.1s' }}
+          >
+            Contact
+          </p>
 
-        <p
-          className="reveal-up mt-8 max-w-[48ch] text-[14px] font-light leading-[1.9] text-encre/80"
-          style={{ '--d': '0.2s' }}
-        >
-          Une demi-heure d'échange suffit pour savoir si nous sommes le bon
-          studio pour votre maison.
-        </p>
-
-        <h2 className="mt-8 font-serif text-[clamp(1.5rem,3.6vw,3.2rem)] font-semibold leading-[1.2] tracking-[-0.01em] text-encre">
-          <span className="mask" style={{ '--d': '0.25s' }}>
-            <span>
-              <a
-                href="mailto:nico@belaugure.studio"
-                className="transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-grege"
-              >
-                nico@belaugure.studio
-              </a>
+          <h2 className="mt-8 font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.3] text-encre">
+            <span className="mask" style={{ '--d': '0.25s' }}>
+              <span>
+                Parlez-nous de votre maison<span className="text-or">.</span>
+              </span>
             </span>
-          </span>
-        </h2>
+          </h2>
 
-        <p
-          className="reveal-up mt-6 text-[12px] font-light tracking-[0.1em] text-grege"
-          style={{ '--d': '0.5s' }}
-        >
-          Bordeaux · Nouvelle-Aquitaine
-        </p>
+          <p
+            className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
+            style={{ '--d': '0.45s' }}
+          >
+            Une demi-heure d'échange suffit pour savoir si nous sommes le bon
+            studio pour vous. Écrivez-nous, nous répondons sous deux jours.
+          </p>
 
-        <a
-          href="mailto:nico@belaugure.studio?subject=Ouvrir%20un%20%C3%A9change"
-          className="cta reveal-up mt-12 inline-block px-10 py-4 text-[11px] font-normal uppercase tracking-[0.2em]"
-          style={{ '--d': '0.65s' }}
+          <p
+            className="reveal-up mt-8 text-[13px] font-light tracking-[0.04em] text-grege"
+            style={{ '--d': '0.55s' }}
+          >
+            <a
+              href="mailto:nico@belaugure.studio"
+              className="nav-link text-encre/80 transition-colors duration-500 hover:text-encre"
+            >
+              <span className="nav-label">nico@belaugure.studio</span>
+            </a>
+          </p>
+          <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.6s' }}>
+            Bordeaux · Nouvelle-Aquitaine
+          </p>
+        </div>
+
+        <form
+          className="reveal-right lg:col-span-6 lg:col-start-7"
+          style={{ '--d': '0.55s' }}
+          onSubmit={submit}
         >
-          Ouvrir un échange
-        </a>
+          <div className="grid gap-x-8 gap-y-7 md:grid-cols-2">
+            <div>
+              <label
+                htmlFor="contact-nom"
+                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
+              >
+                Votre nom
+              </label>
+              <input
+                id="contact-nom"
+                type="text"
+                required
+                autoComplete="name"
+                className="field mt-1"
+                value={form.nom}
+                onChange={update('nom')}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="contact-maison"
+                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
+              >
+                Votre maison
+              </label>
+              <input
+                id="contact-maison"
+                type="text"
+                autoComplete="organization"
+                className="field mt-1"
+                value={form.maison}
+                onChange={update('maison')}
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label
+                htmlFor="contact-email"
+                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
+              >
+                Votre email
+              </label>
+              <input
+                id="contact-email"
+                type="email"
+                required
+                autoComplete="email"
+                className="field mt-1"
+                value={form.email}
+                onChange={update('email')}
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label
+                htmlFor="contact-message"
+                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
+              >
+                Votre projet
+              </label>
+              <textarea
+                id="contact-message"
+                rows="4"
+                required
+                className="field mt-1"
+                value={form.message}
+                onChange={update('message')}
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="cta mt-10 cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
+          >
+            Ouvrir un échange
+          </button>
+        </form>
       </div>
     </section>
   )

@@ -7,20 +7,22 @@ const LINKS = [
   { view: 'contact', label: 'Contact' },
 ]
 
-function NavLink({ view, label, active, onNavigate }) {
+function NavLink({ view, label, active, onNavigate, dark }) {
   return (
     <button
       type="button"
       onClick={() => onNavigate(view)}
       aria-current={active ? 'page' : undefined}
-      className="nav-link inline-block cursor-pointer py-1 text-[12px] font-normal tracking-[0.08em] text-encre/80 transition-colors duration-500 hover:text-encre"
+      className={`nav-link inline-block cursor-pointer py-1 text-[12px] font-normal tracking-[0.08em] transition-colors duration-700 ${
+        dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
+      }`}
     >
       <span className="nav-label">{label}</span>
     </button>
   )
 }
 
-export default function Navbar({ activeView, onNavigate }) {
+export default function Navbar({ activeView, onNavigate, dark }) {
   const [open, setOpen] = useState(false)
 
   const navigate = (view) => {
@@ -39,7 +41,12 @@ export default function Navbar({ activeView, onNavigate }) {
           <ul className="flex items-center gap-12">
             {LINKS.map((link) => (
               <li key={link.view}>
-                <NavLink {...link} active={activeView === link.view} onNavigate={navigate} />
+                <NavLink
+                  {...link}
+                  active={activeView === link.view}
+                  onNavigate={navigate}
+                  dark={dark}
+                />
               </li>
             ))}
           </ul>
@@ -54,12 +61,12 @@ export default function Navbar({ activeView, onNavigate }) {
           onClick={() => setOpen((v) => !v)}
         >
           <span
-            className={`absolute h-px w-6 bg-encre transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            className={`absolute h-px w-6 bg-current transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               open ? 'rotate-45' : '-translate-y-[4px]'
             }`}
           />
           <span
-            className={`absolute h-px w-6 bg-encre transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            className={`absolute h-px w-6 bg-current transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               open ? '-rotate-45' : 'translate-y-[4px]'
             }`}
           />
@@ -71,9 +78,9 @@ export default function Navbar({ activeView, onNavigate }) {
           onClick={() => navigate('accueil')}
           aria-label="Bel Augure, retour à l'accueil"
           tabIndex={logoHidden ? -1 : 0}
-          className={`cursor-pointer justify-self-center font-display text-[19px] tracking-[0.02em] text-encre transition-opacity duration-700 ${
-            logoHidden ? 'pointer-events-none opacity-0' : 'opacity-100'
-          }`}
+          className={`cursor-pointer justify-self-center font-display text-[19px] tracking-[0.02em] transition-opacity duration-700 ${
+            dark ? 'text-creme' : 'text-encre'
+          } ${logoHidden ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
         >
           Bel Augure<span className="text-or">.</span>
         </button>
@@ -81,7 +88,9 @@ export default function Navbar({ activeView, onNavigate }) {
         <div className="hidden justify-self-end md:block">
           <a
             href="mailto:nico@belaugure.studio"
-            className="nav-link text-[12px] tracking-[0.08em] text-encre/80 transition-colors duration-500 hover:text-encre"
+            className={`nav-link text-[12px] tracking-[0.08em] transition-colors duration-700 ${
+              dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
+            }`}
           >
             <span className="nav-label">nico@belaugure.studio</span>
           </a>
@@ -92,19 +101,26 @@ export default function Navbar({ activeView, onNavigate }) {
         <div className="menu-panel-inner">
           <nav
             aria-label="Navigation mobile"
-            className="border-b border-encre/10 bg-creme/95 px-6 pb-8 pt-2 backdrop-blur-sm"
+            className={`border-b px-6 pb-8 pt-2 backdrop-blur-sm ${
+              dark ? 'border-creme/10 bg-encre/95' : 'border-encre/10 bg-creme/95'
+            }`}
           >
             <ul className="flex flex-col gap-5">
               {LINKS.map((link) => (
                 <li key={link.view}>
-                  <NavLink {...link} active={activeView === link.view} onNavigate={navigate} />
+                  <NavLink
+                    {...link}
+                    active={activeView === link.view}
+                    onNavigate={navigate}
+                    dark={dark}
+                  />
                 </li>
               ))}
             </ul>
-            <div className="mt-8 border-t border-encre/10 pt-6">
+            <div className={`mt-8 border-t pt-6 ${dark ? 'border-creme/10' : 'border-encre/10'}`}>
               <a
                 href="mailto:nico@belaugure.studio"
-                className="text-[12px] tracking-[0.08em] text-encre/80"
+                className={`text-[12px] tracking-[0.08em] ${dark ? 'text-creme/75' : 'text-encre/80'}`}
               >
                 nico@belaugure.studio
               </a>

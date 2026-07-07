@@ -23,14 +23,13 @@ export default function Studio() {
             Le studio
           </p>
 
-          <h2 className="mt-8 font-serif text-[clamp(1.9rem,3.4vw,3rem)] font-semibold leading-[1.25] tracking-[-0.01em] text-encre">
+          <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
             <span className="mask" style={{ '--d': '0.25s' }}>
               <span>Ceux qui vendent le film</span>
             </span>
             <span className="mask" style={{ '--d': '0.4s' }}>
               <span>
-                sont ceux qui le <span className="italic">fabriquent</span>
-                <span className="text-or">.</span>
+                sont ceux qui le fabriquent<span className="text-or">.</span>
               </span>
             </span>
           </h2>

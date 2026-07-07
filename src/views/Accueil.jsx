@@ -55,7 +55,7 @@ export default function Accueil({ onNavigate }) {
       </h1>
 
       <p
-        className="reveal-up relative mt-7 max-w-[34ch] font-serif text-[clamp(1.1rem,1.7vw,1.5rem)] font-medium italic leading-[1.5] text-encre/75"
+        className="reveal-up relative mt-7 max-w-[36ch] font-display text-[clamp(1.15rem,1.8vw,1.6rem)] leading-[1.5] text-encre/80"
         style={{ '--d': '0.7s' }}
       >
         Les films signatures du bien-être d'exception
@@ -64,7 +64,7 @@ export default function Accueil({ onNavigate }) {
       <button
         type="button"
         onClick={() => onNavigate('films')}
-        className="cta reveal-up relative mt-12 cursor-pointer px-10 py-4 text-[11px] font-normal uppercase tracking-[0.2em]"
+        className="cta reveal-up relative mt-12 cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
         style={{ '--d': '1s' }}
       >
         Découvrir nos films

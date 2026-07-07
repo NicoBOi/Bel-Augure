@@ -24,7 +24,15 @@ const TITLES = {
 
 export default function App() {
   const [view, setView] = useState('accueil')
+  // La lecture d'un film plonge tout le site dans l'encre : le fond, le
+  // header et le contenu transitionnent ensemble, sans overlay.
+  const [dark, setDark] = useState(false)
   const View = VIEWS[view]
+
+  const navigate = (next) => {
+    setDark(false)
+    setView(next)
+  }
 
   // La page ne navigue jamais : le titre du document reflète la vue active
   // pour l'historique mental et les lecteurs d'écran.
@@ -33,11 +41,15 @@ export default function App() {
   }, [view])
 
   return (
-    <div className="relative h-[100dvh] overflow-hidden bg-creme text-encre">
-      <Navbar activeView={view} onNavigate={setView} />
+    <div
+      className={`relative h-[100dvh] overflow-hidden transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        dark ? 'bg-encre text-creme' : 'bg-creme text-encre'
+      }`}
+    >
+      <Navbar activeView={view} onNavigate={navigate} dark={dark} />
       <main className="relative z-[1] h-full">
         <div key={view} className="view-enter h-full">
-          <View onNavigate={setView} />
+          <View onNavigate={navigate} setDark={setDark} />
         </div>
       </main>
     </div>
