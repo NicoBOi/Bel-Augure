@@ -83,6 +83,16 @@ const TIERS = [
 
 // Chaque format a sa matière, déclinée de la charte : du crème léger à
 // l'encre profonde, l'or au centre de la gamme.
+// Silhouette en escalier : la rangée culmine sur Héritage, au centre,
+// et redescend doucement vers les bords. Base commune, sommets étagés.
+const LIFTS = {
+  light: 'xl:mt-10',
+  gold: 'xl:mt-4',
+  dark: 'xl:mt-0',
+  greige: 'xl:mt-4',
+  dashed: 'xl:mt-10',
+}
+
 const TONES = {
   light: 'border-encre/10 hover:border-encre/20 hover:bg-sable/40',
   gold: 'border-or bg-or/45 shadow-[0_24px_60px_-36px_rgb(217_198_166)] hover:bg-or/60',
@@ -226,7 +236,7 @@ export default function Offres() {
         style={{ '--d': '0.3s' }}
       >
         {TIERS.map((tier) => (
-          <li key={tier.name} className="flex">
+          <li key={tier.name} className={`flex ${LIFTS[tier.tone]}`}>
             <button
               type="button"
               onClick={() => setActive(tier)}
