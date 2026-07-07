@@ -289,21 +289,6 @@ textarea.field {
   animation: wordRise 1.25s var(--ease-augure) var(--d, 0s) both;
 }
 
-/* ---------- Galerie films : pan horizontal, barre de défilement masquée ---------- */
-
-.no-scrollbar {
-  scrollbar-width: none;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* L'overlay projet vit sur fond encre : le focus doit rester visible */
-.film-overlay :focus-visible {
-  outline-color: var(--color-creme);
-}
-
 /* ---------- Transition entre vues (pas de scroll, la page se transforme) ---------- */
 
 @keyframes viewEnter {

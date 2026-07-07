@@ -83,7 +83,7 @@ export default function Offres() {
       <section
         key={active.name}
         aria-label={`Offre ${active.name}`}
-        className="view-enter flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
+        className="view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-center md:px-16"
       >
         <BackLink label="Toutes les offres" onClick={() => setActive(null)} />
 
@@ -155,7 +155,7 @@ export default function Offres() {
     <section
       ref={ref}
       aria-label="Offres"
-      className="flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
+      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-center md:px-16"
     >
       <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-6">
@@ -198,7 +198,7 @@ export default function Offres() {
                   onClick={() => setActive(tier)}
                   className={`group relative w-full cursor-pointer border-t border-encre/10 py-4 text-left transition-colors duration-500 ${
                     tier.featured
-                      ? 'border-l-2 border-l-or bg-sable/70 pl-5 pr-4 hover:bg-sable'
+                      ? 'border-l-2 border-l-or bg-sable/70 pl-[14px] pr-4 hover:bg-sable'
                       : 'px-4 hover:bg-sable/40'
                   }`}
                 >

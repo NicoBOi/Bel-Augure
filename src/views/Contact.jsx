@@ -25,7 +25,7 @@ export default function Contact() {
     <section
       ref={ref}
       aria-label="Contact"
-      className="flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
+      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-center md:px-16"
     >
       <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-5">

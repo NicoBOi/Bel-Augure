@@ -36,7 +36,11 @@ export default function Navbar({ activeView, onNavigate, dark }) {
 
   return (
     <header className="absolute inset-x-0 top-0 z-10">
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 md:px-16 md:py-10">
+      <div
+        className={`grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 transition-colors duration-1000 max-md:backdrop-blur-sm md:px-16 md:py-10 ${
+          dark ? 'max-md:bg-encre/85' : 'max-md:bg-creme/85'
+        }`}
+      >
         <nav aria-label="Navigation principale" className="hidden md:block">
           <ul className="flex items-center gap-12">
             {LINKS.map((link) => (

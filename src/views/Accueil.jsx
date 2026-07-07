@@ -22,7 +22,7 @@ export default function Accueil({ onNavigate }) {
 
   // Le scroll ne bascule pas d'un état à l'autre : il scrute la transition.
   // Une boucle rAF lisse la progression (lerp) et n'écrit que des transforms
-  // et des opacités ; à fond de course, continuer mène aux films.
+  // et des opacités. Molette au bureau, glissement au doigt sur mobile.
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
@@ -51,6 +51,8 @@ export default function Accueil({ onNavigate }) {
         infoRef.current.style.opacity = String(q)
         infoRef.current.style.transform = `translateX(${(1 - q) * 26}px)`
         infoRef.current.style.pointerEvents = q > 0.6 ? 'auto' : 'none'
+        // Invisible = hors du parcours clavier
+        infoRef.current.inert = q < 0.5
       }
     }
 
@@ -69,6 +71,26 @@ export default function Accueil({ onNavigate }) {
     }
     section.addEventListener('wheel', onWheel, { passive: true })
 
+    // Au doigt : le glissement pilote la même progression
+    let touchY = null
+    const onTouchStart = (e) => {
+      touchY = e.touches[0].clientY
+    }
+    const onTouchMove = (e) => {
+      if (touchY === null) return
+      const delta = touchY - e.touches[0].clientY
+      touchY = e.touches[0].clientY
+      target.current = Math.min(Math.max(target.current + delta / 500, 0), 1)
+    }
+    const onTouchEnd = () => {
+      touchY = null
+      // La carte se pose sur l'état le plus proche
+      target.current = target.current > 0.5 ? 1 : 0
+    }
+    section.addEventListener('touchstart', onTouchStart, { passive: true })
+    section.addEventListener('touchmove', onTouchMove, { passive: true })
+    section.addEventListener('touchend', onTouchEnd, { passive: true })
+
     const onKey = (e) => {
       if (e.key === 'Escape') target.current = 0
     }
@@ -77,6 +99,9 @@ export default function Accueil({ onNavigate }) {
     return () => {
       cancelAnimationFrame(raf)
       section.removeEventListener('wheel', onWheel)
+      section.removeEventListener('touchstart', onTouchStart)
+      section.removeEventListener('touchmove', onTouchMove)
+      section.removeEventListener('touchend', onTouchEnd)
       window.removeEventListener('keydown', onKey)
     }
   }, [onNavigate])
