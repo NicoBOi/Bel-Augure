@@ -32,11 +32,11 @@ export default function Studio() {
 
         <h2 className="mt-7 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.14] text-encre">
           <span className="mask" style={{ '--d': '0.12s' }}>
-            <span>Ceux qui vous écoutent</span>
+            <span>Nous sommes deux.</span>
           </span>
           <span className="mask md:ml-[10vw]" style={{ '--d': '0.2s' }}>
             <span>
-              sont ceux qui vous filment<span className="text-or">.</span>
+              Nous restons deux<span className="text-or">.</span>
             </span>
           </span>
         </h2>
@@ -48,16 +48,15 @@ export default function Studio() {
         style={{ '--d': '0.3s' }}
       >
         <p>
-          Bel Augure est né d'une amitié d'enfance et d'une conviction : le
-          bien-être d'exception mérite du cinéma. Nous avons fondé le studio
-          à Bordeaux pour donner aux plus belles maisons des films à la
-          hauteur de leurs lieux.
+          Nico et Corentin. Amis depuis l'enfance, associés aujourd'hui.
+          Celui qui vous serre la main est celui qui fera le film — au
+          studio, il n'y a personne d'autre, et c'est voulu.
         </p>
         <p>
-          Nous sommes deux, et nous restons deux. Celui qui vous rencontre
-          est celui qui cadre, qui monte et qui étalonne. Nous tournons à la
-          lumière naturelle, au rythme des lieux : une caméra qui respire,
-          des plans qui durent, un montage qui laisse la maison parler.
+          Nous avons créé Bel Augure à Bordeaux parce que le bien-être
+          d'exception méritait du cinéma, et que personne ne lui en faisait.
+          Nous tournons à la lumière du jour. Nous prenons le temps. Le film
+          se regarde encore dans trois ans.
         </p>
       </div>
 

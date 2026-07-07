@@ -11,8 +11,8 @@ const TIERS = [
   {
     name: 'Prélude',
     price: '7 000 €',
-    tagline: 'Un premier film court, pour poser une image juste.',
-    desc: "Le format d'entrée. Un film court qui installe une image juste, sans engager la maison au-delà du nécessaire.",
+    tagline: 'Un premier film, pour commencer.',
+    desc: "Une journée de tournage, un film d'une minute. Assez pour voir ce que votre maison donne à l'écran.",
     includes: [
       'Film de 45 à 60 secondes',
       'Une journée de tournage',
@@ -25,8 +25,8 @@ const TIERS = [
   {
     name: 'Signature',
     price: '12 000 €',
-    tagline: "Le film central d'une maison, pensé pour durer.",
-    desc: "Le cœur de notre travail. Le film que l'on montre d'abord, partout, longtemps : site, accueil, salons, réseaux.",
+    tagline: 'Le film que vous montrerez partout.',
+    desc: "Deux journées de tournage. Le film central d'une maison : site, accueil, salons. C'est le cœur de notre métier, et la raison du nom.",
     includes: [
       'Film de 90 secondes à 2 minutes',
       'Deux journées de tournage',
@@ -41,8 +41,8 @@ const TIERS = [
   {
     name: 'Héritage',
     price: '18 000 €',
-    tagline: "Le grand récit d'origine, pour les maisons qui transmettent.",
-    desc: "Le format long. Entretiens, archives, saisons : le film raconte d'où vient la maison et ce qu'elle devient.",
+    tagline: "Trois minutes pour dire d'où vous venez.",
+    desc: 'Trois journées, des entretiens, vos archives. Pour les maisons qui se transmettent.',
     includes: [
       'Film de 3 minutes',
       'Trois journées de tournage',
@@ -56,8 +56,8 @@ const TIERS = [
   {
     name: 'Saisons',
     price: '16 000 € / an',
-    tagline: "Quatre rendez-vous par an pour faire vivre l'image.",
-    desc: "L'image de la maison au fil de l'année. Quatre films courts, un par saison, dans une même écriture.",
+    tagline: 'Votre image, quatre fois par an.',
+    desc: "Quatre films courts, un par saison, dans la même écriture. Un seul interlocuteur, toute l'année.",
     includes: [
       'Quatre films courts, un par saison',
       "Tournages répartis sur l'année",
@@ -70,8 +70,8 @@ const TIERS = [
   {
     name: 'Sur Mesure',
     price: 'dès 25 000 €',
-    tagline: "Au-delà, tout s'écrit ensemble.",
-    desc: 'Certains projets ne tiennent dans aucune grille : plusieurs lieux, plusieurs films, une saison entière de tournage.',
+    tagline: 'Ce qui ne tient pas dans une grille.',
+    desc: 'Plusieurs lieux, plusieurs films, une saison entière de tournage. Nous écrivons le périmètre ensemble, puis nous le tenons.',
     includes: [
       'Périmètre défini ensemble',
       'Plusieurs lieux ou plusieurs films',
@@ -260,11 +260,11 @@ export default function Offres({ setDark }) {
 
           <h2 className="mt-6 max-w-[34ch] font-display text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.3] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>Cinq formats,</span>
+              <span>Formats, prix, délais :</span>
             </span>
             <span className="mask md:ml-[4vw]" style={{ '--d': '0.18s' }}>
               <span>
-                une même exigence<span className="text-or">.</span>
+                tout est écrit<span className="text-or">.</span>
               </span>
             </span>
           </h2>
@@ -274,8 +274,8 @@ export default function Offres({ setDark }) {
           className="reveal-up hidden max-w-[34ch] text-right text-[12px] font-light leading-[1.8] text-grege lg:block"
           style={{ '--d': '0.25s' }}
         >
-          Des films pensés pour l'hôtellerie rare, les maisons de soin, les
-          grands domaines et la cosmétique.
+          Nous tournons pour les hôtels rares, les maisons de soin, les
+          domaines et la cosmétique.
         </p>
       </div>
 

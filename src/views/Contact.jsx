@@ -42,11 +42,11 @@ export default function Contact() {
           <div>
           <h2 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>Parlez-nous</span>
+              <span>Un email</span>
             </span>
             <span className="mask md:ml-[3vw]" style={{ '--d': '0.2s' }}>
               <span>
-                de votre maison<span className="text-or">.</span>
+                suffit<span className="text-or">.</span>
               </span>
             </span>
           </h2>
@@ -55,9 +55,8 @@ export default function Contact() {
             className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
             style={{ '--d': '0.12s' }}
           >
-            Racontez-nous vos lieux, votre lumière, ce que vos hôtes viennent
-            y chercher. Nous lisons chaque message, et nous répondons sous
-            deux jours.
+            Dites-nous qui vous êtes, où vous êtes, ce que vous voulez
+            montrer. Nico lit chaque message et répond sous deux jours.
           </p>
 
           <p
