@@ -262,7 +262,7 @@ export default function Offres({ setDark }) {
             <span className="mask" style={{ '--d': '0.12s' }}>
               <span>Un film signature s'amortit sur des années,</span>
             </span>
-            <span className="mask" style={{ '--d': '0.18s' }}>
+            <span className="mask md:ml-[4vw]" style={{ '--d': '0.18s' }}>
               <span>
                 pas sur une campagne<span className="text-or">.</span>
               </span>

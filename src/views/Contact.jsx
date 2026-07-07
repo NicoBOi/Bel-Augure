@@ -42,8 +42,11 @@ export default function Contact() {
           <div>
           <h2 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
+              <span>Parlez-nous</span>
+            </span>
+            <span className="mask md:ml-[3vw]" style={{ '--d': '0.2s' }}>
               <span>
-                Parlez-nous de votre maison<span className="text-or">.</span>
+                de votre maison<span className="text-or">.</span>
               </span>
             </span>
           </h2>

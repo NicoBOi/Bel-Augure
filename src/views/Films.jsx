@@ -134,18 +134,21 @@ export default function Films({ setDark }) {
         </p>
 
         <ul className="reveal-up mt-8" style={{ '--d': '0.08s' }} onMouseLeave={leave}>
-          {PROJECTS.map((project) => {
+          {PROJECTS.map((project, index) => {
             const isHovered = hovered === project.id
             const dimmed = hovered !== null && !isHovered
             return (
               <li key={project.id}>
+                {/* Chaque titre se décale d'un cran : l'escalier éditorial
+                    de la page Studio, décliné en filmographie */}
                 <button
                   type="button"
                   onMouseEnter={() => enter(project)}
                   onFocus={() => enter(project)}
                   onBlur={leave}
                   onClick={() => openProject(project)}
-                  className={`flex w-full cursor-pointer items-baseline gap-6 py-3 text-left font-display text-[clamp(2rem,4.6vw,4rem)] leading-[1.12] transition-colors duration-300 md:py-4 ${
+                  style={{ '--indent': `${index * 4}vw` }}
+                  className={`flex w-full cursor-pointer items-baseline gap-6 py-3 text-left font-display text-[clamp(2rem,4.6vw,4rem)] leading-[1.12] transition-colors duration-300 md:py-4 md:pl-[var(--indent)] ${
                     isHovered ? 'text-creme' : dimmed ? 'text-creme/25' : 'text-encre'
                   }`}
                 >
