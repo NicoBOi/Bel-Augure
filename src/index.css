@@ -1,10 +1,10 @@
 @import 'tailwindcss';
 
-/* Giflika : police commerciale, fichier à déposer dans public/fonts/ (voir README).
-   Fallback Didone tant que le woff2 est absent. */
 @font-face {
   font-family: 'Giflika';
-  src: url('/fonts/Giflika.woff2') format('woff2');
+  src:
+    url('/fonts/giflika.woff2') format('woff2'),
+    url('/fonts/giflika.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -54,8 +54,8 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 90% 65% at 22% 12%, rgb(217 198 166 / 0.08), transparent 62%),
-    radial-gradient(ellipse 70% 55% at 85% 90%, rgb(217 198 166 / 0.04), transparent 60%);
+    radial-gradient(ellipse 110% 80% at 25% 8%, rgb(217 198 166 / 0.065), transparent 65%),
+    radial-gradient(ellipse 85% 65% at 88% 95%, rgb(217 198 166 / 0.035), transparent 62%);
 }
 
 .grain {
@@ -114,7 +114,7 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  border: 1px solid rgb(217 198 166 / 0.55);
+  border: 1px solid rgb(217 198 166 / 0.4);
   color: var(--color-or);
   transition:
     color 0.5s var(--ease-augure),
@@ -147,7 +147,7 @@ body {
 @keyframes revealUp {
   from {
     opacity: 0;
-    transform: translateY(26px);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
@@ -158,7 +158,7 @@ body {
 @keyframes revealRight {
   from {
     opacity: 0;
-    transform: translateX(36px);
+    transform: translateX(22px);
   }
   to {
     opacity: 1;
@@ -175,34 +175,34 @@ body {
   }
 }
 
+/* Respiration lente, organique — pas d'onde radar */
 @keyframes dotPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgb(217 198 166 / 0.45);
+  from {
+    opacity: 0.35;
+    transform: scale(0.88);
   }
-  70% {
-    box-shadow: 0 0 0 9px rgb(217 198 166 / 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgb(217 198 166 / 0);
+  to {
+    opacity: 1;
+    transform: scale(1.1);
   }
 }
 
 .reveal-up {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(18px);
 }
 
 .reveal-right {
   opacity: 0;
-  transform: translateX(36px);
+  transform: translateX(22px);
 }
 
 .is-visible .reveal-up {
-  animation: revealUp 0.85s var(--ease-augure) var(--d, 0s) both;
+  animation: revealUp 1.15s var(--ease-augure) var(--d, 0s) both;
 }
 
 .is-visible .reveal-right {
-  animation: revealRight 0.9s var(--ease-augure) var(--d, 0s) both;
+  animation: revealRight 1.2s var(--ease-augure) var(--d, 0s) both;
 }
 
 /* Mot-symbole : masque + montée */
@@ -219,11 +219,11 @@ body {
 }
 
 .is-visible .mask > span {
-  animation: wordRise 0.95s var(--ease-augure) var(--d, 0s) both;
+  animation: wordRise 1.25s var(--ease-augure) var(--d, 0s) both;
 }
 
 .dot-pulse {
-  animation: dotPulse 2.6s var(--ease-augure) infinite;
+  animation: dotPulse 4.8s ease-in-out infinite alternate;
 }
 
 /* ---------- prefers-reduced-motion : tout est coupé ---------- */
