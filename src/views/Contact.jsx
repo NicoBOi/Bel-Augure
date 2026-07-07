@@ -17,6 +17,14 @@ export default function Contact() {
           Contact
         </p>
 
+        <p
+          className="reveal-up mt-8 max-w-[48ch] text-[14px] font-light leading-[1.9] text-encre/80"
+          style={{ '--d': '0.2s' }}
+        >
+          Une demi-heure d'échange suffit pour savoir si nous sommes le bon
+          studio pour votre maison.
+        </p>
+
         <h2 className="mt-8 font-display text-[clamp(1.7rem,4.2vw,3.8rem)] leading-[1.2] text-encre">
           <span className="mask" style={{ '--d': '0.25s' }}>
             <span>

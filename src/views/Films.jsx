@@ -10,7 +10,7 @@ const PROJECTS = [
     title: 'Maison Itsasoa',
     world: 'Hôtellerie · Côte basque',
     format: 'Film signature, 2 min',
-    desc: "Un film tourné entre l'océan et la pierre blonde, à la lumière du matin. La maison filmée comme un personnage, sans une seule ligne de discours commercial.",
+    desc: "Tourné au lever du jour, quand l'océan tient encore la maison dans son silence. Le film suit ce que vos hôtes viennent chercher ici sans toujours savoir le nommer.",
     tile: 'wide',
   },
   {
@@ -18,7 +18,7 @@ const PROJECTS = [
     title: 'Thermes de Salies',
     world: 'Thalasso · Béarn',
     format: 'Film signature et saisons',
-    desc: "L'eau, la vapeur, le geste du soin. Un film central et quatre déclinaisons saisonnières qui font vivre l'image de la maison toute l'année.",
+    desc: "Un film central autour de l'eau et du geste, puis quatre variations qui accompagnent la maison au fil de l'année. L'image reste la même. La lumière change.",
     tile: 'tall',
   },
   {
@@ -26,7 +26,7 @@ const PROJECTS = [
     title: 'Domaine de Lisle',
     world: 'Vin · Médoc',
     format: 'Film héritage, 3 min',
-    desc: "Trois générations, un chai, le temps long. Le film raconte l'origine du domaine et rend visible ce que l'étiquette ne dit pas.",
+    desc: "Le domaine se transmet depuis trois générations. Le film prend le temps d'aller chercher ce que l'étiquette ne dira jamais : la main, le chai, l'hiver.",
     tile: 'wide',
   },
   {
@@ -34,7 +34,7 @@ const PROJECTS = [
     title: 'Maison Almae',
     world: 'Cosmétique · Bordeaux',
     format: 'Film signature, 45 s',
-    desc: 'La matière première avant le produit : plantes, mains, atelier. Un format court, dense, pensé pour durer.',
+    desc: "Quarante-cinq secondes sur la matière première, avant le produit. Un format court qui se place partout et ne s'use pas.",
     tile: 'tall',
   },
   {
@@ -42,7 +42,7 @@ const PROJECTS = [
     title: 'Villa Ondine',
     world: 'Longévité · Genève',
     format: 'Film signature, 90 s',
-    desc: "Un lieu silencieux filmé au rythme de la respiration. L'image rajeunit le regard porté sur la maison sans jamais la travestir.",
+    desc: 'Une villa où l\'on vient ralentir. Le film respire au même rythme qu\'elle, et rajeunit le regard que l\'on porte sur la maison.',
     tile: 'wide',
   },
 ]
@@ -140,6 +140,13 @@ export default function Films() {
         style={{ '--d': '0.1s' }}
       >
         Films
+      </p>
+
+      <p
+        className="reveal-up mt-6 px-6 font-display text-[clamp(1.3rem,1.8vw,1.7rem)] leading-[1.4] text-encre md:px-16"
+        style={{ '--d': '0.2s' }}
+      >
+        Chaque maison a une lumière. Nos films la trouvent.
       </p>
 
       <div

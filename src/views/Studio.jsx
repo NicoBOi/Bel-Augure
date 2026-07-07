@@ -37,9 +37,11 @@ export default function Studio() {
 
         <div className="reveal-right lg:col-span-5 lg:col-start-8" style={{ '--d': '0.6s' }}>
           <p className="max-w-[46ch] text-[14px] font-light leading-[1.9] text-encre/80">
-            Studio de films de marque fondé à Bordeaux. Deux artisans, zéro
-            intermédiaire. Lumière naturelle, caméra qui respire, temps long.
-            Rien qui ressemble à de la pub.
+            Bel Augure est un studio fondé à Bordeaux par deux artisans de
+            l'image. Nous travaillons en lumière naturelle, sans artifice, au
+            rythme des lieux que nous filmons. Votre interlocuteur tient la
+            caméra, et ce qu'il vous promet, il le tourne lui-même. Rien, dans
+            nos films, ne ressemble à de la publicité.
           </p>
 
           <ul className="mt-10" aria-label="L'équipe">

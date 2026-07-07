@@ -28,20 +28,22 @@ export default function Offres() {
 
           <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
             <span className="mask" style={{ '--d': '0.25s' }}>
-              <span>Un film signature n'est pas</span>
+              <span>Un film signature s'amortit</span>
             </span>
             <span className="mask" style={{ '--d': '0.4s' }}>
               <span>
-                une vidéo. C'est un actif<span className="text-or">.</span>
+                sur des années, pas sur une campagne
+                <span className="text-or">.</span>
               </span>
             </span>
           </h2>
 
           <p
-            className="reveal-up mt-8 text-[13px] font-light tracking-[0.04em] text-grege"
+            className="reveal-up mt-8 max-w-[44ch] text-[13px] font-light leading-[1.8] text-grege"
             style={{ '--d': '0.55s' }}
           >
-            On ne baisse jamais un prix. On réduit un périmètre.
+            La grille est publique et ne varie pas. Quand un budget se
+            resserre, nous ajustons le périmètre, jamais l'exigence.
           </p>
         </div>
 
