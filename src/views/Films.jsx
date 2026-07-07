@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
+import BackLink from '../components/BackLink.jsx'
 
 // Projets fictifs en attendant les films fondateurs : les cases encre
 // reçoivent les stills étalonnés, la structure ne bouge pas.
@@ -11,6 +12,7 @@ const PROJECTS = [
     format: 'Film signature, 2 min',
     desc: "Tourné au lever du jour, quand l'océan tient encore la maison dans son silence. Le film suit ce que vos hôtes viennent chercher ici sans toujours savoir le nommer.",
     tile: 'wide',
+    offset: 'mt-0',
   },
   {
     id: 'salies',
@@ -19,6 +21,7 @@ const PROJECTS = [
     format: 'Film signature et saisons',
     desc: "Un film central autour de l'eau et du geste, puis quatre variations qui accompagnent la maison au fil de l'année. L'image reste la même. La lumière change.",
     tile: 'tall',
+    offset: 'mt-10 md:mt-16',
   },
   {
     id: 'lisle',
@@ -27,6 +30,7 @@ const PROJECTS = [
     format: 'Film héritage, 3 min',
     desc: "Le domaine se transmet depuis trois générations. Le film prend le temps d'aller chercher ce que l'étiquette ne dira jamais : la main, le chai, l'hiver.",
     tile: 'wide',
+    offset: 'mt-6 md:mt-8',
   },
   {
     id: 'almae',
@@ -35,6 +39,7 @@ const PROJECTS = [
     format: 'Film signature, 45 s',
     desc: "Quarante-cinq secondes sur la matière première, avant le produit. Un format court qui se place partout et ne s'use pas.",
     tile: 'tall',
+    offset: 'mt-12 md:mt-20',
   },
   {
     id: 'ondine',
@@ -43,11 +48,12 @@ const PROJECTS = [
     format: 'Film signature, 90 s',
     desc: 'Une villa où l\'on vient ralentir. Le film respire au même rythme qu\'elle, et rajeunit le regard que l\'on porte sur la maison.',
     tile: 'wide',
+    offset: 'mt-2 md:mt-4',
   },
 ]
 
 export default function Films({ setDark }) {
-  const ref = useReveal(0.35)
+  const reveal = useReveal(0.35)
   const sectionRef = useRef(null)
   const trackRef = useRef(null)
   const [selected, setSelected] = useState(null)
@@ -103,25 +109,19 @@ export default function Films({ setDark }) {
         aria-label={selected.title}
         className="view-enter flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
       >
-        <button
-          type="button"
-          onClick={closeProject}
-          className="nav-link w-max cursor-pointer text-[11px] font-normal uppercase tracking-[0.22em] text-creme/70 transition-colors duration-500 hover:text-creme"
-        >
-          <span className="nav-label">Tous les films</span>
-        </button>
+        <BackLink label="Tous les films" onClick={closeProject} light />
 
         <div className="mt-10 grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
           {/* Zone média : reçoit le film ou le still étalonné */}
           <div className="lg:col-span-7">
-            <div className="aspect-video w-full border border-creme/15 bg-creme/5" />
+            <div className="aspect-video w-full rounded-2xl border border-creme/15 bg-creme/5" />
           </div>
 
           <div className="lg:col-span-4 lg:col-start-9">
             <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
               {selected.world}
             </p>
-            <h3 className="mt-6 font-display text-[clamp(1.8rem,3vw,2.8rem)] leading-[1.2] text-creme">
+            <h3 className="mt-6 font-title text-[clamp(1.7rem,2.8vw,2.5rem)] font-normal leading-[1.2] text-creme">
               {selected.title}
               <span className="text-or">.</span>
             </h3>
@@ -140,7 +140,7 @@ export default function Films({ setDark }) {
   return (
     <section
       ref={(el) => {
-        ref.current = el
+        reveal(el)
         sectionRef.current = el
       }}
       aria-label="Films"
@@ -156,7 +156,7 @@ export default function Films({ setDark }) {
           </p>
 
           <p
-            className="reveal-up mt-6 font-display text-[clamp(1.3rem,1.8vw,1.7rem)] leading-[1.4] text-encre"
+            className="reveal-up mt-6 font-title text-[clamp(1.2rem,1.7vw,1.55rem)] font-normal tracking-[0.02em] text-encre"
             style={{ '--d': '0.2s' }}
           >
             Chaque maison a une lumière. Nos films la trouvent.
@@ -181,11 +181,11 @@ export default function Films({ setDark }) {
         </div>
       </div>
 
-      {/* Tuiles à hauteur commune : la rangée reste calme, seuls les ratios varient */}
+      {/* Disposition décalée façon Pinterest : offsets et hauteurs varient */}
       <div
         ref={trackRef}
         onScroll={onTrackScroll}
-        className="reveal-up no-scrollbar mt-10 flex items-start gap-8 overflow-x-auto px-6 md:gap-12 md:px-16"
+        className="reveal-up no-scrollbar mt-8 flex items-start gap-6 overflow-x-auto px-6 md:gap-10 md:px-16"
         style={{ '--d': '0.3s' }}
       >
         {PROJECTS.map((project) => (
@@ -193,17 +193,21 @@ export default function Films({ setDark }) {
             key={project.id}
             type="button"
             onClick={() => openProject(project)}
-            className="group shrink-0 cursor-pointer text-left transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5"
+            className={`group shrink-0 cursor-pointer text-left transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 ${project.offset}`}
             aria-label={`Voir le projet ${project.title}`}
           >
-            <div className="overflow-hidden">
+            <div className="overflow-hidden rounded-2xl">
               <div
-                className={`h-[38vh] max-h-[400px] w-auto bg-encre transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] md:h-[44vh] ${
-                  project.tile === 'wide' ? 'aspect-[16/10]' : 'aspect-[3/4]'
+                className={`bg-encre transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] ${
+                  project.tile === 'wide'
+                    ? 'aspect-[16/10] w-[74vw] md:w-[420px]'
+                    : 'aspect-[3/4] w-[50vw] md:w-[265px]'
                 }`}
               />
             </div>
-            <p className="mt-4 font-display text-[16px] text-encre">{project.title}</p>
+            <p className="mt-4 font-title text-[15px] font-medium tracking-[0.02em] text-encre">
+              {project.title}
+            </p>
             <p className="mt-1 text-[10.5px] font-normal uppercase tracking-[0.18em] text-grege">
               {project.world}
             </p>

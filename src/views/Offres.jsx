@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
+import BackLink from '../components/BackLink.jsx'
 
 const TIERS = [
   {
@@ -84,17 +85,11 @@ export default function Offres() {
         aria-label={`Offre ${active.name}`}
         className="view-enter flex h-full flex-col justify-center px-6 pb-14 pt-28 md:px-16"
       >
-        <button
-          type="button"
-          onClick={() => setActive(null)}
-          className="nav-link w-max cursor-pointer text-[11px] font-normal uppercase tracking-[0.22em] text-grege transition-colors duration-500 hover:text-encre"
-        >
-          <span className="nav-label">Toutes les offres</span>
-        </button>
+        <BackLink label="Toutes les offres" onClick={() => setActive(null)} />
 
         <div className="mt-10 grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
-            <h2 className="font-display text-[clamp(2.6rem,6vw,5.2rem)] leading-[1.05] text-encre">
+            <h2 className="font-title text-[clamp(2.4rem,5.4vw,4.6rem)] font-normal leading-[1.05] tracking-[0.02em] text-encre">
               {active.name}
               <span className="text-or">.</span>
             </h2>
@@ -171,7 +166,7 @@ export default function Offres() {
             Offres
           </p>
 
-          <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
+          <h2 className="mt-8 font-title text-[clamp(1.8rem,3.2vw,2.8rem)] font-normal leading-[1.35] tracking-[0.02em] text-encre">
             <span className="mask" style={{ '--d': '0.25s' }}>
               <span>Un film signature s'amortit</span>
             </span>
@@ -207,7 +202,7 @@ export default function Offres() {
                 >
                   <span className="flex items-baseline justify-between gap-4">
                     <span className="flex items-baseline gap-3">
-                      <span className="font-display text-[19px] text-encre">{tier.name}</span>
+                      <span className="font-title text-[17px] font-medium tracking-[0.02em] text-encre">{tier.name}</span>
                       {tier.featured && (
                         <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
                           Format central

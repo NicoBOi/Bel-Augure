@@ -18,6 +18,7 @@
   --color-creme: #f2ede4;
 
   --font-display: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;
+  --font-title: 'Jost', 'Futura', 'Century Gothic', 'Montserrat', sans-serif;
   --font-sans: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
 
   --ease-augure: cubic-bezier(0.16, 1, 0.3, 1);
@@ -207,6 +208,22 @@ textarea.field {
   animation: dotBreathe 5s ease-in-out infinite alternate;
 }
 
+/* Bouts de projets qui dépassent en bas du héros : flottement lent */
+
+@keyframes cardFloat {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+.hero-card {
+  animation: cardFloat 6.5s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i, 0) * 0.9s);
+}
+
 /* ---------- Animations de révélation ---------- */
 
 @keyframes revealUp {
@@ -330,7 +347,8 @@ textarea.field {
   .rings,
   .ring-a,
   .ring-b,
-  .dot-breathe {
+  .dot-breathe,
+  .hero-card {
     animation: none !important;
   }
 
