@@ -33,8 +33,7 @@ export default function App() {
   }, [view])
 
   return (
-    <div className="relative h-[100dvh] overflow-hidden bg-encre text-creme">
-      <div aria-hidden="true" className="grain" />
+    <div className="relative h-[100dvh] overflow-hidden bg-creme text-encre">
       <Navbar activeView={view} onNavigate={setView} />
       <main className="relative z-[1] h-full">
         <div key={view} className="view-enter h-full">

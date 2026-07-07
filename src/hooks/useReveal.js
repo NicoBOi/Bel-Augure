@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react'
 
 /**
  * Ajoute la classe `is-visible` au conteneur observé quand 35 % de sa surface
- * entre dans le viewport. Les descendants `.reveal-up`, `.reveal-right` et
- * `.mask > span` déclenchent alors leurs animations (voir index.css).
+ * entre dans le viewport. Les descendants `.reveal-up` et `.mask > span`
+ * déclenchent alors leurs animations (voir index.css).
  * Si l'utilisateur préfère un mouvement réduit, tout est révélé immédiatement.
  */
 export function useReveal(threshold = 0.35) {

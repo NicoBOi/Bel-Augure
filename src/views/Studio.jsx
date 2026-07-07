@@ -7,30 +7,35 @@ export default function Studio() {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="flex h-full flex-col justify-end px-6 pb-16 pt-32 md:px-16 md:pb-24"
+      className="flex h-full flex-col items-center justify-center px-6 text-center"
     >
-      <div className="max-w-3xl">
-        <h2 className="font-display text-[clamp(2.2rem,4.5vw,4.2rem)] leading-[1.15] text-creme">
-          <span className="mask" style={{ '--d': '0.15s' }}>
-            <span>Un film signature</span>
-          </span>
-          <span className="mask" style={{ '--d': '0.3s' }}>
-            <span>
-              n'est pas une vidéo<span className="text-or">.</span>
-            </span>
-          </span>
-        </h2>
+      <p
+        className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
+        style={{ '--d': '0.1s' }}
+      >
+        Le studio
+      </p>
 
-        <p
-          className="reveal-up mt-10 max-w-[48ch] text-[14px] font-light leading-[1.9] text-grege"
-          style={{ '--d': '0.6s' }}
-        >
-          C'est un actif, qui travaille pour votre maison saison après saison.
-          Bel Augure conçoit des films de patrimoine pour le bien-être
-          d'exception : peu de projets chaque année, un regard d'auteur, des
-          images faites pour durer.
-        </p>
-      </div>
+      <h2 className="mt-10 max-w-[26ch] font-display text-[clamp(1.9rem,3.6vw,3.2rem)] leading-[1.35] text-encre">
+        <span className="mask" style={{ '--d': '0.25s' }}>
+          <span>Ceux qui vendent le film</span>
+        </span>
+        <span className="mask" style={{ '--d': '0.4s' }}>
+          <span>
+            sont ceux qui le fabriquent<span className="text-or">.</span>
+          </span>
+        </span>
+      </h2>
+
+      <p
+        className="reveal-up mt-10 max-w-[52ch] text-[14px] font-light leading-[1.9] text-grege"
+        style={{ '--d': '0.65s' }}
+      >
+        Studio de films de marque fondé à Bordeaux, deux artisans, zéro
+        intermédiaire. Nico : direction, image, étalonnage. Corentin :
+        montage, motion design. Lumière naturelle, caméra qui respire,
+        temps long. Rien qui ressemble à de la pub.
+      </p>
     </section>
   )
 }
