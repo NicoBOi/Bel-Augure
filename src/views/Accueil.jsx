@@ -155,14 +155,16 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         </p>
 
         <h2 className="mt-7 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.25] text-encre">
-          Le film central de votre maison<span className="text-or">.</span>
+          Nous faisons des films.
+          <br />
+          Pas des vidéos<span className="text-or">.</span>
         </h2>
 
         <p className="mx-auto mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
-          Bel Augure est un studio de films de marque fondé à Bordeaux. Nous
-          concevons la pièce maîtresse de l'image d'une maison : un film
-          signature en lumière naturelle, étalonné comme au cinéma, décliné
-          pour vivre partout, des années.
+          Bel Augure est un studio fondé à Bordeaux. Nous réalisons les
+          films signatures des maisons du bien-être d'exception —
+          hôtellerie rare, maisons de soin, grands domaines, cosmétique.
+          Des films en lumière naturelle, pensés pour durer des années.
         </p>
 
         {/* Le portefeuille de films : trois vignettes qui s'éventaillent */}

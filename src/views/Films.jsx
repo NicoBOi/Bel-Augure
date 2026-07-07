@@ -10,28 +10,28 @@ const PROJECTS = [
     title: 'Maison Itsasoa',
     world: 'Hôtellerie · Côte basque',
     format: 'Film signature, 2 min',
-    desc: "Tourné au lever du jour, quand l'océan tient encore la maison dans son silence. Le film suit ce que vos hôtes viennent chercher ici sans toujours savoir le nommer.",
+    desc: "Une maison face à l'océan, tournée au lever du jour. Le film retient ce que les hôtes emportent d'ici : la lumière rasante sur l'eau, le calme des chambres, le temps rendu.",
   },
   {
     id: 'salies',
     title: 'Thermes de Salies',
     world: 'Thalasso · Béarn',
     format: 'Film signature et saisons',
-    desc: "Un film central autour de l'eau et du geste, puis quatre variations qui accompagnent la maison au fil de l'année. L'image reste la même. La lumière change.",
+    desc: "L'eau y est le personnage principal : les bassins, la vapeur, le geste précis des soigneuses. Un film central, puis quatre variations qui suivent la maison au fil des saisons.",
   },
   {
     id: 'lisle',
     title: 'Domaine de Lisle',
     world: 'Vin · Médoc',
     format: 'Film héritage, 3 min',
-    desc: "Le domaine se transmet depuis trois générations. Le film prend le temps d'aller chercher ce que l'étiquette ne dira jamais : la main, le chai, l'hiver.",
+    desc: "Trois générations dans le même chai. Le film prend le temps des entretiens et des gestes, et va chercher ce que l'étiquette ne dira jamais : la main, l'hiver, la patience.",
   },
   {
     id: 'almae',
     title: 'Maison Almae',
     world: 'Cosmétique · Bordeaux',
     format: 'Film signature, 45 s',
-    desc: "Quarante-cinq secondes sur la matière première, avant le produit. Un format court qui se place partout et ne s'use pas.",
+    desc: "Quarante-cinq secondes au plus près de la matière : la plante, l'huile, la peau. Un format court qui se place partout et ne s'use pas.",
   },
 ]
 

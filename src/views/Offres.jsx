@@ -218,7 +218,7 @@ export default function Offres({ setDark }) {
                     ink ? 'cta-light' : ''
                   }`}
                 >
-                  Ouvrir un échange
+                  Écrire au studio
                 </a>
                 <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Autres offres">
                   {TIERS.filter((t) => t.name !== active.name).map((tier) => (
@@ -260,11 +260,11 @@ export default function Offres({ setDark }) {
 
           <h2 className="mt-6 max-w-[34ch] font-display text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.3] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>Un film signature s'amortit sur des années,</span>
+              <span>Cinq formats,</span>
             </span>
             <span className="mask md:ml-[4vw]" style={{ '--d': '0.18s' }}>
               <span>
-                pas sur une campagne<span className="text-or">.</span>
+                une même exigence<span className="text-or">.</span>
               </span>
             </span>
           </h2>
@@ -274,8 +274,8 @@ export default function Offres({ setDark }) {
           className="reveal-up hidden max-w-[34ch] text-right text-[12px] font-light leading-[1.8] text-grege lg:block"
           style={{ '--d': '0.25s' }}
         >
-          La grille est publique et ne varie pas. Quand un budget se resserre,
-          nous ajustons le périmètre, jamais l'exigence.
+          Des films pensés pour l'hôtellerie rare, les maisons de soin, les
+          grands domaines et la cosmétique.
         </p>
       </div>
 

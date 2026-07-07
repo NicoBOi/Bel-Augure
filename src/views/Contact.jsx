@@ -12,7 +12,7 @@ export default function Contact() {
   const submit = (e) => {
     e.preventDefault()
     const subject = encodeURIComponent(
-      form.maison ? `Échange · ${form.maison}` : 'Ouvrir un échange',
+      form.maison ? `Échange · ${form.maison}` : 'Échange',
     )
     const body = encodeURIComponent(
       `${form.message}\n\n${form.nom}${form.maison ? `\n${form.maison}` : ''}${
@@ -55,8 +55,9 @@ export default function Contact() {
             className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
             style={{ '--d': '0.12s' }}
           >
-            Une demi-heure d'échange suffit pour savoir si nous sommes le bon
-            studio pour vous. Écrivez-nous, nous répondons sous deux jours.
+            Racontez-nous vos lieux, votre lumière, ce que vos hôtes viennent
+            y chercher. Nous lisons chaque message, et nous répondons sous
+            deux jours.
           </p>
 
           <p
@@ -157,7 +158,7 @@ export default function Contact() {
             type="submit"
             className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
           >
-            {sent ? 'Message prêt dans votre messagerie' : 'Ouvrir un échange'}
+            {sent ? 'Message prêt dans votre messagerie' : 'Écrire au studio'}
           </button>
           <p aria-live="polite" className="sr-only">
             {sent ? 'Votre messagerie s\'ouvre avec le message préparé.' : ''}

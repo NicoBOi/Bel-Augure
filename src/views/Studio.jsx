@@ -32,11 +32,11 @@ export default function Studio() {
 
         <h2 className="mt-7 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.14] text-encre">
           <span className="mask" style={{ '--d': '0.12s' }}>
-            <span>Ceux qui vendent le film</span>
+            <span>Ceux qui vous écoutent</span>
           </span>
           <span className="mask md:ml-[10vw]" style={{ '--d': '0.2s' }}>
             <span>
-              sont ceux qui le fabriquent<span className="text-or">.</span>
+              sont ceux qui vous filment<span className="text-or">.</span>
             </span>
           </span>
         </h2>
@@ -48,16 +48,16 @@ export default function Studio() {
         style={{ '--d': '0.3s' }}
       >
         <p>
-          Bel Augure est né à Bordeaux d'une conviction simple : les maisons
-          d'exception méritent des images qui leur ressemblent. Nous sommes
-          deux artisans, et nous restons deux. Celui qui écoute votre
-          histoire est celui qui cadrera votre lumière.
+          Bel Augure est né d'une amitié d'enfance et d'une conviction : le
+          bien-être d'exception mérite du cinéma. Nous avons fondé le studio
+          à Bordeaux pour donner aux plus belles maisons des films à la
+          hauteur de leurs lieux.
         </p>
         <p>
-          Nous filmons vos lieux comme on filme un visage : à la lumière du
-          jour, sans rien maquiller. Une caméra qui respire, le temps qu'il
-          faut, et un montage qui laisse la maison parler. C'est plus lent.
-          C'est aussi pour cela que ça dure.
+          Nous sommes deux, et nous restons deux. Celui qui vous rencontre
+          est celui qui cadre, qui monte et qui étalonne. Nous tournons à la
+          lumière naturelle, au rythme des lieux : une caméra qui respire,
+          des plans qui durent, un montage qui laisse la maison parler.
         </p>
       </div>
 
