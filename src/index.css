@@ -100,8 +100,8 @@ body {
   background-color: rgb(217 198 166 / 0.12);
   color: var(--color-encre);
   transition:
-    border-color 0.7s var(--ease-augure),
-    transform 0.7s var(--ease-augure);
+    border-color 0.5s var(--ease-augure),
+    transform 0.5s var(--ease-augure);
 }
 
 .cta::before {
@@ -112,7 +112,7 @@ body {
   background-color: var(--color-or);
   transform: translateY(101%);
   border-radius: 9999px;
-  transition: transform 0.65s var(--ease-augure);
+  transition: transform 0.5s var(--ease-augure);
 }
 
 .cta:hover,
@@ -218,7 +218,7 @@ textarea.field {
 }
 
 .fade-in {
-  animation: fadeIn 1.1s var(--ease-augure) var(--d, 0s) both;
+  animation: fadeIn 0.7s var(--ease-augure) var(--d, 0s) both;
 }
 
 /* ---------- Animations de révélation ---------- */
@@ -265,11 +265,11 @@ textarea.field {
 }
 
 .is-visible .reveal-up {
-  animation: revealUp 1.15s var(--ease-augure) var(--d, 0s) both;
+  animation: revealUp 0.75s var(--ease-augure) var(--d, 0s) both;
 }
 
 .is-visible .reveal-right {
-  animation: revealRight 1.2s var(--ease-augure) var(--d, 0s) both;
+  animation: revealRight 0.8s var(--ease-augure) var(--d, 0s) both;
 }
 
 /* Mot-symbole : masque + montée */
@@ -286,7 +286,7 @@ textarea.field {
 }
 
 .is-visible .mask > span {
-  animation: wordRise 1.25s var(--ease-augure) var(--d, 0s) both;
+  animation: wordRise 0.9s var(--ease-augure) var(--d, 0s) both;
 }
 
 /* ---------- Transition entre vues (pas de scroll, la page se transforme) ---------- */
@@ -303,7 +303,7 @@ textarea.field {
 }
 
 .view-enter {
-  animation: viewEnter 1.1s var(--ease-augure) both;
+  animation: viewEnter 0.7s var(--ease-augure) both;
 }
 
 /* Écrans très bas (mobile paysage) : le verrou anti-scroll céderait au clipping,

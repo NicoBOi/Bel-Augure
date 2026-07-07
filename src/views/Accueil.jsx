@@ -62,31 +62,38 @@ export default function Accueil({ onNavigate, setDark }) {
     const loop = () => {
       const t = target.current
       const c = current.current
-      const next = reduce ? t : c + (t - c) * 0.075
+      const next = reduce ? t : c + (t - c) * 0.11
       current.current = Math.abs(next - t) < 0.0005 ? t : next
       apply(current.current)
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
 
+    // Un geste décide de la destination, l'animation reste interruptible :
+    // scroller vers le bas lève le jour, remonter ramène la nuit.
     const onWheel = (e) => {
-      target.current = Math.min(Math.max(target.current + e.deltaY / 1100, 0), 1)
+      if (e.deltaY > 12) target.current = 1
+      else if (e.deltaY < -12) target.current = 0
     }
     section.addEventListener('wheel', onWheel, { passive: true })
 
-    // Au doigt : le glissement pilote la même progression
+    // Au doigt : le glissement scrute, le relâcher pose la scène dans le
+    // sens du geste
     let touchY = null
+    let touchDir = 0
     const onTouchStart = (e) => {
       touchY = e.touches[0].clientY
     }
     const onTouchMove = (e) => {
       if (touchY === null) return
       const delta = touchY - e.touches[0].clientY
+      touchDir = delta === 0 ? touchDir : delta > 0 ? 1 : -1
       touchY = e.touches[0].clientY
       target.current = Math.min(Math.max(target.current + delta / 500, 0), 1)
     }
     const onTouchEnd = () => {
       touchY = null
+      target.current = touchDir >= 0 ? (target.current > 0.12 ? 1 : 0) : target.current < 0.88 ? 0 : 1
     }
     section.addEventListener('touchstart', onTouchStart, { passive: true })
     section.addEventListener('touchmove', onTouchMove, { passive: true })
@@ -142,7 +149,7 @@ export default function Accueil({ onNavigate, setDark }) {
               id="hero-titre"
               className="font-display text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:whitespace-nowrap"
             >
-              <span className="mask" style={{ '--d': '0.2s' }}>
+              <span className="mask" style={{ '--d': '0.05s' }}>
                 <span>
                   Bel Augure<span className="dot-breathe text-or">.</span>
                 </span>
@@ -150,7 +157,7 @@ export default function Accueil({ onNavigate, setDark }) {
             </h1>
           </div>
 
-          <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.7s' }}>
+          <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.05s' }}>
             <p className="max-w-[22ch] font-display text-[clamp(1.2rem,1.7vw,1.7rem)] leading-[1.45] text-sable">
               Les films signatures du bien-être d'exception
             </p>
@@ -183,9 +190,9 @@ export default function Accueil({ onNavigate, setDark }) {
           className="group mx-auto mt-9 flex cursor-pointer items-center gap-5"
         >
           <span aria-hidden="true" className="relative block h-7 w-14">
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%+9px)] rotate-[10deg] rounded-[5px] bg-encre/85 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%+17px)] group-hover:rotate-[16deg]" />
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-encre/85 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%+9px)] rotate-[10deg] rounded-[5px] bg-encre/85 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%+17px)] group-hover:rotate-[16deg]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
           </span>
           <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 group-hover:text-encre">
             Découvrir les quatre films<span className="text-or">.</span>

@@ -31,13 +31,13 @@ export default function Contact() {
         <div className="lg:col-span-5">
           <p
             className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
-            style={{ '--d': '0.1s' }}
+            style={{ '--d': '0.05s' }}
           >
             Contact
           </p>
 
           <h2 className="mt-8 font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.3] text-encre">
-            <span className="mask" style={{ '--d': '0.25s' }}>
+            <span className="mask" style={{ '--d': '0.12s' }}>
               <span>
                 Parlez-nous de votre maison<span className="text-or">.</span>
               </span>
@@ -46,7 +46,7 @@ export default function Contact() {
 
           <p
             className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
-            style={{ '--d': '0.45s' }}
+            style={{ '--d': '0.12s' }}
           >
             Une demi-heure d'échange suffit pour savoir si nous sommes le bon
             studio pour vous. Écrivez-nous, nous répondons sous deux jours.
@@ -54,7 +54,7 @@ export default function Contact() {
 
           <p
             className="reveal-up mt-8 text-[13px] font-light tracking-[0.04em] text-grege"
-            style={{ '--d': '0.55s' }}
+            style={{ '--d': '0.08s' }}
           >
             <a
               href="mailto:nico@belaugure.studio"
@@ -63,14 +63,14 @@ export default function Contact() {
               <span className="nav-label">nico@belaugure.studio</span>
             </a>
           </p>
-          <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.6s' }}>
+          <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.32s' }}>
             Bordeaux · Nouvelle-Aquitaine
           </p>
         </div>
 
         <form
           className="reveal-right lg:col-span-6 lg:col-start-7"
-          style={{ '--d': '0.55s' }}
+          style={{ '--d': '0.08s' }}
           onSubmit={submit}
         >
           <div className="grid gap-x-8 gap-y-7 md:grid-cols-2">

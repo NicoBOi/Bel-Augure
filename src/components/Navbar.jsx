@@ -13,7 +13,7 @@ function NavLink({ view, label, active, onNavigate, dark }) {
       type="button"
       onClick={() => onNavigate(view)}
       aria-current={active ? 'page' : undefined}
-      className={`nav-link inline-block cursor-pointer py-1 text-[12px] font-normal tracking-[0.08em] transition-colors duration-700 ${
+      className={`nav-link inline-block cursor-pointer py-1 text-[12px] font-normal tracking-[0.08em] transition-colors duration-500 ${
         dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
       }`}
     >
@@ -37,7 +37,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
   return (
     <header className="absolute inset-x-0 top-0 z-10">
       <div
-        className={`grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 transition-colors duration-1000 max-md:backdrop-blur-sm md:px-16 md:py-10 ${
+        className={`grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 transition-colors duration-700 max-md:backdrop-blur-sm md:px-16 md:py-10 ${
           dark ? 'max-md:bg-encre/85' : 'max-md:bg-creme/85'
         }`}
       >
@@ -82,7 +82,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
           onClick={() => navigate('accueil')}
           aria-label="Bel Augure, retour à l'accueil"
           tabIndex={logoHidden ? -1 : 0}
-          className={`cursor-pointer justify-self-center font-display text-[19px] tracking-[0.02em] transition-opacity duration-700 ${
+          className={`cursor-pointer justify-self-center font-display text-[19px] tracking-[0.02em] transition-opacity duration-500 ${
             dark ? 'text-creme' : 'text-encre'
           } ${logoHidden ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
         >
@@ -92,7 +92,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
         <div className="hidden justify-self-end md:block">
           <a
             href="mailto:nico@belaugure.studio"
-            className={`nav-link text-[12px] tracking-[0.08em] transition-colors duration-700 ${
+            className={`nav-link text-[12px] tracking-[0.08em] transition-colors duration-500 ${
               dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
             }`}
           >

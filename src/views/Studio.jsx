@@ -18,16 +18,16 @@ export default function Studio() {
         <div className="lg:col-span-6">
           <p
             className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
-            style={{ '--d': '0.1s' }}
+            style={{ '--d': '0.05s' }}
           >
             Le studio
           </p>
 
           <h2 className="mt-8 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.3] text-encre">
-            <span className="mask" style={{ '--d': '0.25s' }}>
+            <span className="mask" style={{ '--d': '0.12s' }}>
               <span>Ceux qui vendent le film</span>
             </span>
-            <span className="mask" style={{ '--d': '0.4s' }}>
+            <span className="mask" style={{ '--d': '0.05s' }}>
               <span>
                 sont ceux qui le fabriquent<span className="text-or">.</span>
               </span>
@@ -35,7 +35,7 @@ export default function Studio() {
           </h2>
         </div>
 
-        <div className="reveal-right lg:col-span-5 lg:col-start-8" style={{ '--d': '0.6s' }}>
+        <div className="reveal-right lg:col-span-5 lg:col-start-8" style={{ '--d': '0.32s' }}>
           <p className="max-w-[46ch] text-[14px] font-light leading-[1.9] text-encre/80">
             Bel Augure est un studio fondé à Bordeaux par deux artisans de
             l'image. Nous travaillons en lumière naturelle, sans artifice, au

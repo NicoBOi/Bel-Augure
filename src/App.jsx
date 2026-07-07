@@ -42,7 +42,7 @@ export default function App() {
 
   return (
     <div
-      className={`relative h-[100dvh] overflow-hidden transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`relative h-[100dvh] overflow-hidden transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         dark ? 'bg-encre text-creme' : 'bg-creme text-encre'
       }`}
     >
