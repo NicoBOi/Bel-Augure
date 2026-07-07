@@ -1,15 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
-import VimeoBackground from '../components/VimeoBackground.jsx'
 
-// Vidéo de fond : identifiant Vimeo, lu en mode background (muet, en
-// boucle, sans contrôles). Vider la constante pour revenir au fond encre.
-const VIMEO_ID = '961941216'
-
-export default function Accueil({ onNavigate, setDark, onHeroReady }) {
+// Le film de fond vit dans App (calque persistant) : ici on ne fait que
+// scruter son opacité via mediaRef pendant la transition au scroll.
+export default function Accueil({ onNavigate, setDark, mediaRef }) {
   const reveal = useReveal(0.35)
   const sectionRef = useRef(null)
-  const mediaRef = useRef(null)
   const creamRef = useRef(null)
   const wordRef = useRef(null)
   const studioRef = useRef(null)
@@ -33,7 +29,7 @@ export default function Accueil({ onNavigate, setDark, onHeroReady }) {
     let raf
 
     const apply = (p) => {
-      if (mediaRef.current) {
+      if (mediaRef?.current) {
         mediaRef.current.style.opacity = String(Math.max(1 - p * 1.15, 0))
       }
       if (creamRef.current) {
@@ -124,18 +120,6 @@ export default function Accueil({ onNavigate, setDark, onHeroReady }) {
       aria-labelledby="hero-titre"
       className="relative h-full overflow-hidden"
     >
-      {/* La vidéo de fond, sous un voile d'encre pour la lisibilité */}
-      <div ref={mediaRef} aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden">
-        <div className="h-full w-full bg-encre" />
-        <VimeoBackground
-          id={VIMEO_ID}
-          title="Film de fond"
-          onPlaying={onHeroReady}
-          className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2"
-        />
-        <div className="absolute inset-0 bg-encre/40" />
-      </div>
-
       {/* Le jour se lève exactement au rythme du scroll */}
       <div ref={creamRef} aria-hidden="true" className="absolute inset-0 z-[1] bg-creme opacity-0" />
 

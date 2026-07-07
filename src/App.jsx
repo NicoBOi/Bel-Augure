@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import Navbar from './components/Navbar.jsx'
+import VimeoBackground from './components/VimeoBackground.jsx'
 import Accueil from './views/Accueil.jsx'
 import Films from './views/Films.jsx'
 import Studio from './views/Studio.jsx'
 import Offres from './views/Offres.jsx'
 import Contact from './views/Contact.jsx'
+
+// Film de fond du héros. Monté ici, au niveau de l'application : il ne se
+// démonte jamais quand on navigue, la lecture continue en coulisse et le
+// retour à l'accueil retrouve le film déjà lancé, sans rechargement.
+const HERO_VIMEO_ID = '961941216'
 
 const VIEWS = {
   accueil: Accueil,
@@ -34,6 +40,9 @@ export default function App() {
   const [veiled, setVeiled] = useState(true)
   const [heroReady, setHeroReady] = useState(false)
   const bootAt = useRef(performance.now())
+  // Calque média du héros : l'accueil en scrute l'opacité pendant le
+  // scroll, les autres vues le masquent sans arrêter la lecture.
+  const heroMediaRef = useRef(null)
   const View = VIEWS[view]
 
   const navigate = (next) => {
@@ -61,14 +70,28 @@ export default function App() {
         dark ? 'bg-encre text-creme' : 'bg-creme text-encre'
       }`}
     >
+      {/* Film de fond persistant : visible sur l'accueil, masqué ailleurs
+          (visibility préserve la lecture, contrairement à un démontage) */}
+      <div
+        aria-hidden="true"
+        className={`absolute inset-0 z-0 ${view === 'accueil' ? '' : 'invisible'}`}
+      >
+        <div ref={heroMediaRef} className="absolute inset-0 overflow-hidden">
+          <div className="h-full w-full bg-encre" />
+          <VimeoBackground
+            id={HERO_VIMEO_ID}
+            title="Film de fond"
+            onPlaying={() => setHeroReady(true)}
+            className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2"
+          />
+          <div className="absolute inset-0 bg-encre/40" />
+        </div>
+      </div>
+
       <Navbar activeView={view} onNavigate={navigate} dark={dark} />
       <main className="relative z-[1] h-full">
         <div key={view} className="view-enter h-full">
-          <View
-            onNavigate={navigate}
-            setDark={setDark}
-            onHeroReady={() => setHeroReady(true)}
-          />
+          <View onNavigate={navigate} setDark={setDark} mediaRef={heroMediaRef} />
         </div>
       </main>
 
