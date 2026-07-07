@@ -130,6 +130,21 @@ body {
   transform: scale(0.98);
 }
 
+/* Variante pour fonds sombres : texte crème, encre au survol quand l'or
+   remplit la pastille */
+.cta-light {
+  color: var(--color-creme);
+  transition:
+    color 0.5s var(--ease-augure),
+    border-color 0.5s var(--ease-augure),
+    transform 0.5s var(--ease-augure);
+}
+
+.cta-light:hover,
+.cta-light:focus-visible {
+  color: var(--color-encre);
+}
+
 /* ---------- Formulaire contact : champs en filets ---------- */
 
 .field {

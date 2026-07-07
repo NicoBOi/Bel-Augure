@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import BackLink from '../components/BackLink.jsx'
 
@@ -101,29 +101,58 @@ const TONES = {
   dashed: 'border-dashed border-encre/30 hover:border-encre/45 hover:bg-sable/30',
 }
 
-export default function Offres() {
+// Le détail reprend la matière de sa carte : Héritage plonge la page dans
+// l'encre, Saisons dans le grège, Signature dans l'or pâle.
+const DETAIL_BG = {
+  light: '',
+  gold: 'bg-or/45',
+  dark: 'bg-encre',
+  greige: 'bg-grege',
+  dashed: '',
+}
+
+export default function Offres({ setDark }) {
   const ref = useReveal(0.35)
   const [active, setActive] = useState(null)
 
+  // Le header suit la matière du détail : texte crème sur encre et grège
+  useEffect(() => {
+    setDark?.(active ? ['dark', 'greige'].includes(active.tone) : false)
+  }, [active, setDark])
+
   // Détail : la vidéo d'exemple prend la scène, le périmètre à côté.
+  // La page entière se teinte de la matière de la carte cliquée.
   if (active) {
+    const ink = ['dark', 'greige'].includes(active.tone)
     return (
       <section
         key={active.name}
         aria-label={`Offre ${active.name}`}
-        className="view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
+        className={`view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16 ${DETAIL_BG[active.tone]}`}
       >
-        <BackLink label="Toutes les offres" onClick={() => setActive(null)} />
+        <BackLink label="Toutes les offres" onClick={() => setActive(null)} light={ink} />
 
         <div className="mt-8 md:mt-auto">
-          <h2 className="font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] text-encre">
+          <h2
+            className={`font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] ${
+              ink ? 'text-creme' : 'text-encre'
+            }`}
+          >
             {active.name}
             <span className="text-or">.</span>
           </h2>
-          <p className="mt-3 text-[13px] font-light tracking-[0.08em] text-grege">
+          <p
+            className={`mt-3 text-[13px] font-light tracking-[0.08em] ${
+              ink ? 'text-sable/75' : 'text-grege'
+            }`}
+          >
             {active.price}
             {active.featured && (
-              <span className="ml-4 text-[9px] font-medium uppercase tracking-[0.2em] text-grege">
+              <span
+                className={`ml-4 text-[9px] font-medium uppercase tracking-[0.2em] ${
+                  ink ? 'text-sable/65' : 'text-grege'
+                }`}
+              >
                 Format central
               </span>
             )}
@@ -131,7 +160,11 @@ export default function Offres() {
 
           <div className="mt-8 grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-7">
-              <div className="relative aspect-video w-full overflow-hidden rounded-3xl bg-encre">
+              <div
+                className={`relative aspect-video w-full overflow-hidden rounded-3xl bg-encre ${
+                  ink ? 'border border-creme/15' : ''
+                }`}
+              >
                 <iframe
                   title={`Exemple de film ${active.name}`}
                   src={`https://player.vimeo.com/video/${VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`}
@@ -140,13 +173,21 @@ export default function Offres() {
                   className="pointer-events-none absolute inset-0 h-full w-full border-0"
                 />
               </div>
-              <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-grege">
+              <p
+                className={`mt-3 text-[11px] font-normal uppercase tracking-[0.2em] ${
+                  ink ? 'text-sable/70' : 'text-grege'
+                }`}
+              >
                 Exemple de réalisation
               </p>
             </div>
 
             <div className="lg:col-span-4 lg:col-start-9">
-              <p className="max-w-[44ch] text-[13.5px] font-light leading-[1.85] text-encre/80">
+              <p
+                className={`max-w-[44ch] text-[13.5px] font-light leading-[1.85] ${
+                  ink ? 'text-creme/80' : 'text-encre/80'
+                }`}
+              >
                 {active.desc}
               </p>
 
@@ -154,21 +195,29 @@ export default function Offres() {
                 {active.includes.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2.5 border-t border-encre/10 py-2.5 text-[13px] font-light text-encre/85"
+                    className={`flex items-start gap-2.5 border-t py-2.5 text-[13px] font-light ${
+                      ink ? 'border-creme/15 text-creme/85' : 'border-encre/10 text-encre/85'
+                    }`}
                   >
                     <span aria-hidden="true" className="mt-[0.6em] h-px w-3 shrink-0 bg-or" />
                     {item}
                   </li>
                 ))}
               </ul>
-              <p className="mt-4 text-[11px] font-normal uppercase tracking-[0.18em] text-grege">
+              <p
+                className={`mt-4 text-[11px] font-normal uppercase tracking-[0.18em] ${
+                  ink ? 'text-sable/65' : 'text-grege'
+                }`}
+              >
                 {active.meta}
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
                 <a
                   href={`mailto:nico@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
-                  className="cta inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
+                  className={`cta inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] ${
+                    ink ? 'cta-light' : ''
+                  }`}
                 >
                   Ouvrir un échange
                 </a>
@@ -178,7 +227,9 @@ export default function Offres() {
                       <button
                         type="button"
                         onClick={() => setActive(tier)}
-                        className="nav-link cursor-pointer py-2 text-[12px] font-light text-grege transition-colors duration-500 hover:text-encre"
+                        className={`nav-link cursor-pointer py-2 text-[12px] font-light transition-colors duration-500 ${
+                          ink ? 'text-sable/70 hover:text-creme' : 'text-grege hover:text-encre'
+                        }`}
                       >
                         <span className="nav-label">{tier.name}</span>
                       </button>

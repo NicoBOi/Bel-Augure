@@ -59,23 +59,21 @@ export default function Studio() {
         </p>
       </div>
 
-      {/* Les principes, en litanie contenue */}
-      <ul
-        className="reveal-up mt-10 flex flex-col flex-wrap items-center justify-center gap-x-8 gap-y-3 md:flex-row"
-        style={{ '--d': '0.42s' }}
-        aria-label="Les principes du studio"
-      >
-        {PRINCIPES.map((principe) => (
-          <li
-            key={principe}
-            className="flex items-center gap-2.5 text-[13px] font-normal text-encre/85"
-          >
-            <span aria-hidden="true" className="h-px w-4 shrink-0 bg-or" />
-            {principe}
-          </li>
-        ))}
-      </ul>
       </div>
+
+      {/* Les principes, en exergue avant la signature */}
+      <blockquote className="reveal-up mb-12" style={{ '--d': '0.42s' }}>
+        <p className="font-display text-[clamp(1.15rem,1.6vw,1.45rem)] leading-[1.75] text-encre/85">
+          <span aria-hidden="true" className="text-or">«&nbsp;</span>
+          {PRINCIPES.map((principe, i) => (
+            <span key={principe}>
+              {principe}
+              {i < PRINCIPES.length - 1 && <br />}
+            </span>
+          ))}
+          <span aria-hidden="true" className="text-or">&nbsp;»</span>
+        </p>
+      </blockquote>
 
       {/* Les deux artisans, assis sur la base */}
       <div className="reveal-up" style={{ '--d': '0.5s' }}>
