@@ -116,20 +116,28 @@ const DEROULE = [
 // Les questions qui reviennent : réponses courtes, sans renvoi.
 const QUESTIONS = [
   {
+    q: 'Combien ça coûte ?',
+    r: 'Chaque projet est devisé après un premier échange, selon le lieu et le format. Le devis est ferme : ce qui est écrit est tenu.',
+  },
+  {
+    q: 'Qu’attendez-vous de nous ?',
+    r: 'Très peu. Un échange au départ, un contact sur place le jour du tournage. Votre maison reste ouverte.',
+  },
+  {
+    q: 'Qui apparaît à l’écran ?',
+    r: 'Votre équipe, des silhouettes castées, ou personne. Nous composons selon votre image et gérons les autorisations.',
+  },
+  {
+    q: 'Vous déplacez-vous où ?',
+    r: 'En Nouvelle-Aquitaine d’abord. Plus loin, au cas par cas : parlons-en.',
+  },
+  {
+    q: 'Et si le résultat ne nous plaît pas ?',
+    r: 'Vous validez la direction avant le premier plan, et deux séries de retouches sont incluses.',
+  },
+  {
     q: 'À qui appartient le film ?',
     r: 'À vous. Les droits sont cédés pour votre site, vos réseaux et votre accueil. Les usages publicitaires étendus s’écrivent au devis.',
-  },
-  {
-    q: 'Et la musique ?',
-    r: 'Choisie avec vous, licenciée pour votre usage. Rien à gérer de votre côté.',
-  },
-  {
-    q: 'S’il pleut le jour du tournage ?',
-    r: 'Un jour de repli est posé ensemble au calendrier, sans surcoût.',
-  },
-  {
-    q: 'Peut-on ajuster le film après livraison ?',
-    r: 'Deux séries de retouches sont incluses dans chaque offre.',
   },
 ]
 
