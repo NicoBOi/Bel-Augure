@@ -57,10 +57,14 @@ export default function Navbar({ activeView, onNavigate, dark }) {
   const logoHidden = activeView === 'accueil' && dark
 
   return (
-    // Pas de z-index : le header peint au-dessus par ordre DOM sans créer
-    // de contexte d'empilement, condition pour que le mode de fusion de la
-    // rangée compose avec le contenu qui défile dessous.
-    <header className="absolute inset-x-0 top-0">
+    <header className="absolute inset-x-0 top-0 z-10">
+      {/* Halo sombre diffus derrière le bouton menu, uniquement sur fond vidéo */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute left-0 top-0 h-64 w-64 bg-[radial-gradient(circle_at_top_left,rgba(26,21,18,0.75),transparent_70%)] transition-opacity duration-700 md:hidden ${
+          dark ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
       {/* Voile givré couvrant tout le header (rangée + panneau) quand le menu est ouvert */}
       <div
         aria-hidden
@@ -68,10 +72,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
           dark ? 'bg-encre/25' : 'bg-creme/25'
         } ${open ? 'opacity-100' : 'opacity-0'}`}
       />
-      {/* Rangée en mode fusion : posée en crème, la différence l'inverse
-          d'elle-même contre ce qui passe dessous — encre sur crème, crème
-          sur encre, sans aucun état à gérer. */}
-      <div className="relative grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 text-creme mix-blend-difference md:px-16 md:py-10">
+      <div className="relative grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 md:px-16 md:py-10">
         <nav aria-label="Navigation principale" className="hidden md:block">
           <ul className="flex items-center gap-12">
             {LINKS.map((link) => (
@@ -80,7 +81,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
                   {...link}
                   active={activeView === link.view}
                   onNavigate={navigate}
-                  dark
+                  dark={dark}
                 />
               </li>
             ))}
@@ -113,9 +114,9 @@ export default function Navbar({ activeView, onNavigate, dark }) {
           onClick={() => navigate('accueil')}
           aria-label="Bel Augure, retour à l'accueil"
           tabIndex={logoHidden ? -1 : 0}
-          className={`cursor-pointer justify-self-center font-display text-[19px] tracking-[0.02em] text-creme transition-opacity duration-500 ${
-            logoHidden ? 'pointer-events-none opacity-0' : 'opacity-100'
-          }`}
+          className={`cursor-pointer justify-self-center font-display text-[19px] tracking-[0.02em] transition-opacity duration-500 ${
+            dark ? 'text-creme' : 'text-encre'
+          } ${logoHidden ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
         >
           Bel Augure<span className="text-or">.</span>
         </button>
@@ -123,7 +124,9 @@ export default function Navbar({ activeView, onNavigate, dark }) {
         <div className="hidden justify-self-end md:block">
           <a
             href="mailto:nico@belaugure.studio"
-            className="nav-link text-[12px] tracking-[0.08em] text-creme/75 transition-colors duration-500 hover:text-creme"
+            className={`nav-link text-[12px] tracking-[0.08em] transition-colors duration-500 ${
+              dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
+            }`}
           >
             <span className="nav-label">nico@belaugure.studio</span>
           </a>

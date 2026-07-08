@@ -132,16 +132,12 @@ export default function App() {
         </div>
       </div>
 
+      <Navbar activeView={view} onNavigate={navigate} dark={dark} />
       <main className="relative z-[1] h-full">
         <div key={view} className="view-enter h-full">
           <View onNavigate={navigate} setDark={setDark} mediaRef={heroMediaRef} />
         </div>
       </main>
-
-      {/* Navbar après le main : elle peint au-dessus sans z-index, donc
-          sans contexte d'empilement — le mode de fusion de la rangée peut
-          composer avec tout ce qui défile dessous. */}
-      <Navbar activeView={view} onNavigate={navigate} dark={dark} />
 
       {/* Voile d'ouverture : la salle obscure, le temps que le film démarre */}
       <div
