@@ -112,39 +112,50 @@ export default function Offres({ setDark }) {
       </p>
 
       {/* Le carton : cadre à double filet des intertitres de film muet.
-          Un seul carton en scène, les flèches et les chiffres font le
-          projecteur. */}
+          Le cadre est l'écran, il ne bouge pas — seul le contenu se
+          projette, avec la grammaire du site : titres qui montent sous
+          masque, révélations décalées, point d'or qui respire. */}
       <div className="reveal-up mx-auto flex min-h-[62vh] w-full max-w-3xl flex-col items-center justify-center" style={{ '--d': '0.2s' }}>
-        <div
-          key={offre.name}
-          className="fade-in w-full border border-creme/25 p-2"
-        >
+        <div className="w-full border border-creme/25 p-2 transition-colors duration-700">
           <div className="border border-creme/12 px-8 py-14 text-center md:px-16 md:py-20">
-            <p className="text-[10px] font-normal uppercase tracking-[0.32em] text-sable/60">
-              {offre.eyebrow}
-            </p>
-            <h3 className="mt-6 font-display text-[clamp(2.6rem,5.5vw,5rem)] leading-[1.05] text-creme">
-              {offre.name}
-              <span className="text-or">.</span>
-            </h3>
-            <p className="mx-auto mt-7 max-w-[46ch] text-[14px] font-light leading-[1.9] text-sable/90">
-              {offre.desc}
-            </p>
-            <p className="mt-5 text-[10px] font-normal uppercase tracking-[0.24em] text-sable/55">
-              {offre.detail}
-            </p>
+            <div key={offre.name}>
+              <p className="fade-in text-[10px] font-normal uppercase tracking-[0.32em] text-sable/60" style={{ '--d': '0.05s' }}>
+                {offre.eyebrow}
+              </p>
+              <h3 className="mt-6 font-display text-[clamp(2.6rem,5.5vw,5rem)] leading-[1.05] text-creme">
+                <span className="mask" style={{ '--d': '0.1s' }}>
+                  <span>
+                    {offre.name}
+                    <span className="dot-breathe text-or">.</span>
+                  </span>
+                </span>
+              </h3>
+              <p className="fade-in mx-auto mt-7 max-w-[46ch] text-[14px] font-light leading-[1.9] text-sable/90" style={{ '--d': '0.3s' }}>
+                {offre.desc}
+              </p>
+              <p className="fade-in mt-5 text-[10px] font-normal uppercase tracking-[0.24em] text-sable/55" style={{ '--d': '0.45s' }}>
+                {offre.detail}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Le projecteur : I · II · III */}
+        {/* Le projecteur : I · II · III, dans la langue des liens du site */}
         <div className="mt-10 flex items-center gap-8">
           <button
             type="button"
             aria-label="Offre précédente"
             onClick={() => setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)}
-            className="cursor-pointer p-2 text-sable/50 transition-colors duration-500 hover:text-creme"
+            className="group cursor-pointer p-2 text-sable/50 transition-colors duration-500 hover:text-creme"
           >
-            <svg width="26" height="10" viewBox="0 0 26 10" fill="none" aria-hidden="true">
+            <svg
+              width="26"
+              height="10"
+              viewBox="0 0 26 10"
+              fill="none"
+              aria-hidden="true"
+              className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1"
+            >
               <path d="M25 5H1M1 5L5.5 1M1 5L5.5 9" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
@@ -155,12 +166,12 @@ export default function Offres({ setDark }) {
                 type="button"
                 onClick={() => setIndex(i)}
                 aria-label={`Voir ${o.name}`}
-                aria-current={i === index ? 'true' : undefined}
-                className={`cursor-pointer p-1 font-display text-[17px] transition-colors duration-500 ${
+                aria-current={i === index ? 'page' : undefined}
+                className={`nav-link cursor-pointer p-1 font-display text-[17px] transition-colors duration-500 ${
                   i === index ? 'text-or' : 'text-sable/40 hover:text-sable/75'
                 }`}
               >
-                {o.numeral}
+                <span className="nav-label">{o.numeral}</span>
               </button>
             ))}
           </div>
@@ -168,9 +179,16 @@ export default function Offres({ setDark }) {
             type="button"
             aria-label="Offre suivante"
             onClick={() => setIndex((i) => (i + 1) % OFFRES.length)}
-            className="cursor-pointer p-2 text-sable/50 transition-colors duration-500 hover:text-creme"
+            className="group cursor-pointer p-2 text-sable/50 transition-colors duration-500 hover:text-creme"
           >
-            <svg width="26" height="10" viewBox="0 0 26 10" fill="none" aria-hidden="true" className="rotate-180">
+            <svg
+              width="26"
+              height="10"
+              viewBox="0 0 26 10"
+              fill="none"
+              aria-hidden="true"
+              className="rotate-180 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+            >
               <path d="M25 5H1M1 5L5.5 1M1 5L5.5 9" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
