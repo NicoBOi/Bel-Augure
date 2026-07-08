@@ -1,31 +1,30 @@
 import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-// Trois offres, trois natures, trois échelles : le film central d'une
-// maison, le rendez-vous des saisons, et ce qui sort du cadre. La page
-// les descend en cascade, comme l'escalier éditorial des pages Films et
-// Studio — la taille et l'indentation disent la hiérarchie.
+// Trois offres, trois cartons : la page Offres est une salle obscure et
+// chaque offre passe comme un intertitre de film muet, dans son cadre à
+// double filet. Un studio de cinéma présente ses offres comme un film.
 const OFFRES = [
   {
     name: 'Signature',
+    numeral: 'I',
     eyebrow: 'Le film central',
     desc: "Le film qui porte l'image d'une maison : son site, son accueil, ses salons. De 90 secondes à 2 minutes, écrit et tourné pour durer des années.",
     detail: 'Deux journées de tournage. Livré en six semaines.',
-    tint: 'bg-or/25',
   },
   {
     name: 'Saisons',
+    numeral: 'II',
     eyebrow: 'Le rendez-vous annuel',
     desc: 'Quatre films courts par an, un par saison, dans la même écriture. Un seul interlocuteur, toute l’année.',
     detail: 'Une demi-journée de tournage à chaque saison.',
-    tint: 'bg-grege/15',
   },
   {
     name: 'Sur Mesure',
+    numeral: 'III',
     eyebrow: "L'exception",
     desc: 'Campagnes de plusieurs films, formats longs, casting et décors, droits publicitaires étendus.',
     detail: 'Le périmètre s’écrit ensemble. Sur devis.',
-    tint: 'bg-sable/60',
   },
 ]
 
@@ -81,98 +80,107 @@ const QUESTIONS = [
 
 export default function Offres({ setDark }) {
   const ref = useReveal(0.35)
-  // Une seule offre déployée à la fois : Signature ouvre la page.
-  const [open, setOpen] = useState('Signature')
+  const [index, setIndex] = useState(0)
+  const offre = OFFRES[index]
 
+  // La salle obscure : toute la page vit dans l'encre, header compris.
   useEffect(() => {
-    setDark?.(false)
+    setDark?.(true)
   }, [setDark])
+
+  // Flèches clavier : on passe d'un carton à l'autre comme au projecteur.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % OFFRES.length)
+      if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   return (
     <section
       ref={ref}
       aria-label="Offres"
-      className="flex h-full flex-col justify-start overflow-y-auto px-6 pb-14 pt-28 md:pb-[9vh] md:px-16"
+      className="h-full overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[9vh]"
     >
       <p
-        className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
+        className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
         style={{ '--d': '0.05s' }}
       >
         Offres
       </p>
 
-      {/* L'accordéon éditorial : trois lignes nues. Celle qu'on ouvre se
-          déploie seule, dans sa matière — jamais plus d'une offre à lire. */}
-      <div className="reveal-up mt-10 md:mt-12" style={{ '--d': '0.15s' }}>
-        {OFFRES.map((offre) => {
-          const isOpen = open === offre.name
-          return (
-            <div key={offre.name} className="border-t border-encre/10 last:border-b">
-              <button
-                type="button"
-                onClick={() => setOpen(isOpen ? null : offre.name)}
-                aria-expanded={isOpen}
-                className="group flex w-full cursor-pointer items-baseline justify-between gap-6 py-7 text-left md:py-8"
-              >
-                <span className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
-                  <span
-                    className={`font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.05] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      isOpen ? 'text-encre' : 'text-encre/45 group-hover:text-encre/75'
-                    }`}
-                  >
-                    {offre.name}
-                    <span
-                      className={`text-or transition-opacity duration-300 ${
-                        isOpen ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    >
-                      .
-                    </span>
-                  </span>
-                  <span
-                    className={`text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
-                      isOpen ? 'text-grege' : 'text-grege/50'
-                    }`}
-                  >
-                    {offre.eyebrow}
-                  </span>
-                </span>
-                {/* Croix fine : + fermé, × ouvert */}
-                <span aria-hidden="true" className="relative block h-4 w-4 shrink-0 self-center">
-                  <span
-                    className={`absolute left-0 top-1/2 h-px w-4 bg-encre/60 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      isOpen ? 'rotate-45' : ''
-                    }`}
-                  />
-                  <span
-                    className={`absolute left-0 top-1/2 h-px w-4 bg-encre/60 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      isOpen ? 'rotate-[135deg]' : 'rotate-90'
-                    }`}
-                  />
-                </span>
-              </button>
+      {/* Le carton : cadre à double filet des intertitres de film muet.
+          Un seul carton en scène, les flèches et les chiffres font le
+          projecteur. */}
+      <div className="reveal-up mx-auto flex min-h-[62vh] w-full max-w-3xl flex-col items-center justify-center" style={{ '--d': '0.2s' }}>
+        <div
+          key={offre.name}
+          className="fade-in w-full border border-creme/25 p-2"
+        >
+          <div className="border border-creme/12 px-8 py-14 text-center md:px-16 md:py-20">
+            <p className="text-[10px] font-normal uppercase tracking-[0.32em] text-sable/60">
+              {offre.eyebrow}
+            </p>
+            <h3 className="mt-6 font-display text-[clamp(2.6rem,5.5vw,5rem)] leading-[1.05] text-creme">
+              {offre.name}
+              <span className="text-or">.</span>
+            </h3>
+            <p className="mx-auto mt-7 max-w-[46ch] text-[14px] font-light leading-[1.9] text-sable/90">
+              {offre.desc}
+            </p>
+            <p className="mt-5 text-[10px] font-normal uppercase tracking-[0.24em] text-sable/55">
+              {offre.detail}
+            </p>
+          </div>
+        </div>
 
-              <div className="offer-panel" data-open={isOpen}>
-                <div className="offer-panel-inner">
-                  <div className={`mb-8 rounded-2xl p-7 md:p-9 ${offre.tint}`}>
-                    <p className="max-w-[56ch] text-[14.5px] font-light leading-[1.9] text-encre/85">
-                      {offre.desc}
-                    </p>
-                    <p className="mt-4 text-[10.5px] font-normal uppercase tracking-[0.2em] text-encre/60">
-                      {offre.detail}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
-        })}
+        {/* Le projecteur : I · II · III */}
+        <div className="mt-10 flex items-center gap-8">
+          <button
+            type="button"
+            aria-label="Offre précédente"
+            onClick={() => setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)}
+            className="cursor-pointer p-2 text-sable/50 transition-colors duration-500 hover:text-creme"
+          >
+            <svg width="26" height="10" viewBox="0 0 26 10" fill="none" aria-hidden="true">
+              <path d="M25 5H1M1 5L5.5 1M1 5L5.5 9" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <div className="flex items-baseline gap-6">
+            {OFFRES.map((o, i) => (
+              <button
+                key={o.name}
+                type="button"
+                onClick={() => setIndex(i)}
+                aria-label={`Voir ${o.name}`}
+                aria-current={i === index ? 'true' : undefined}
+                className={`cursor-pointer p-1 font-display text-[17px] transition-colors duration-500 ${
+                  i === index ? 'text-or' : 'text-sable/40 hover:text-sable/75'
+                }`}
+              >
+                {o.numeral}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            aria-label="Offre suivante"
+            onClick={() => setIndex((i) => (i + 1) % OFFRES.length)}
+            className="cursor-pointer p-2 text-sable/50 transition-colors duration-500 hover:text-creme"
+          >
+            <svg width="26" height="10" viewBox="0 0 26 10" fill="none" aria-hidden="true" className="rotate-180">
+              <path d="M25 5H1M1 5L5.5 1M1 5L5.5 9" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Le déroulé et les questions : rassurer l'hésitant avant l'email */}
-      <div className="mt-20 grid gap-14 border-t border-encre/10 pt-14 lg:grid-cols-12 lg:gap-8">
+      {/* Le déroulé et les questions : les coulisses, toujours dans la salle */}
+      <div className="mt-16 grid gap-14 border-t border-creme/12 pt-14 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
-          <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
+          <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60">
             Comment ça se passe
           </p>
           <div className="mt-8 space-y-8">
@@ -180,8 +188,8 @@ export default function Offres({ setDark }) {
               <div key={etape.n} className="flex gap-5">
                 <span className="font-display text-[15px] leading-[1.6] text-or">{etape.n}</span>
                 <div>
-                  <p className="font-display text-[17px] text-encre">{etape.titre}</p>
-                  <p className="mt-1.5 max-w-[38ch] text-[13px] font-light leading-[1.8] text-encre/75">
+                  <p className="font-display text-[17px] text-creme">{etape.titre}</p>
+                  <p className="mt-1.5 max-w-[38ch] text-[13px] font-light leading-[1.8] text-sable/75">
                     {etape.texte}
                   </p>
                 </div>
@@ -191,16 +199,16 @@ export default function Offres({ setDark }) {
         </div>
 
         <div className="lg:col-span-7 lg:col-start-6">
-          <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
+          <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60">
             Les questions qui reviennent
           </p>
           <dl className="mt-8 grid gap-x-8 gap-y-8 md:grid-cols-2">
             {QUESTIONS.map((item) => (
               <div key={item.q}>
-                <dt className="font-display text-[16px] leading-[1.4] text-encre">
+                <dt className="font-display text-[16px] leading-[1.4] text-creme">
                   {item.q}
                 </dt>
-                <dd className="mt-2 text-[13px] font-light leading-[1.8] text-encre/75">
+                <dd className="mt-2 text-[13px] font-light leading-[1.8] text-sable/75">
                   {item.r}
                 </dd>
               </div>
