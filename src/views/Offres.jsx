@@ -136,26 +136,6 @@ const QUESTIONS = [
   },
 ]
 
-// Chaque format a sa matière, déclinée de la charte : du crème léger à
-// l'encre profonde, l'or au centre de la gamme.
-// Silhouette en escalier : la rangée culmine sur Héritage, au centre,
-// et redescend doucement vers les bords. Base commune, sommets étagés.
-const LIFTS = {
-  light: 'xl:mt-10',
-  gold: 'xl:mt-4',
-  dark: 'xl:mt-0',
-  greige: 'xl:mt-4',
-  dashed: 'xl:mt-10',
-}
-
-const TONES = {
-  light: 'border-encre/10 hover:border-encre/20 hover:bg-sable/40',
-  gold: 'border-or bg-or/45 shadow-[0_24px_60px_-36px_rgb(217_198_166)] hover:bg-or/60',
-  dark: 'border-encre bg-encre shadow-[0_24px_60px_-36px_rgb(26_21_18/0.55)] hover:bg-[#251e18]',
-  greige: 'border-grege bg-grege shadow-[0_24px_60px_-36px_rgb(110_99_80/0.6)] hover:bg-[#7a6e59]',
-  dashed: 'border-dashed border-encre/30 hover:border-encre/45 hover:bg-sable/30',
-}
-
 // Le détail reprend la matière de sa carte : Héritage plonge la page dans
 // l'encre, Saisons dans le grège, Signature dans l'or pâle.
 const DETAIL_BG = {
@@ -342,77 +322,30 @@ export default function Offres({ setDark }) {
         </p>
       </div>
 
-      {/* Les cinq formats en cases : Héritage au centre, Signature en or */}
-      <ul
-        aria-label="Grille des offres"
-        className="reveal-up mt-8 grid gap-4 md:grid-cols-2 lg:mt-10 lg:flex-1 xl:grid-cols-5 xl:gap-5"
-        style={{ '--d': '0.3s' }}
-      >
+      {/* La carte de la maison : chaque format est une grande ligne,
+          nom en didone, l'essentiel en une phrase, le délai en marge.
+          Même geste éditorial que la filmographie. */}
+      <ul aria-label="Les offres" className="reveal-up mt-8 lg:mt-10" style={{ '--d': '0.25s' }}>
         {TIERS.map((tier) => (
-          <li key={tier.name} className={`flex ${LIFTS[tier.tone]}`}>
+          <li key={tier.name} className="border-b border-encre/10 first:border-t">
             <button
               type="button"
               onClick={() => setActive(tier)}
-              className={`group relative flex w-full cursor-pointer flex-col rounded-2xl border p-6 text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${TONES[tier.tone]}`}
+              className="group grid w-full cursor-pointer items-baseline gap-x-8 gap-y-2 py-6 text-left transition-colors duration-500 hover:bg-sable/30 md:grid-cols-12 md:py-7"
             >
-              <span
-                className={`font-display text-[clamp(1.4rem,1.8vw,1.8rem)] leading-tight tracking-[0.04em] ${
-                  ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
-                }`}
-              >
+              <span className="font-display text-[clamp(1.9rem,3.2vw,2.9rem)] leading-[1.1] tracking-[0.04em] text-encre transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 md:col-span-4">
                 {tier.name}
                 <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   .
                 </span>
               </span>
 
-              {/* L'essentiel — durée, tournage, déclinaisons — posé en
-                  exergue : petit label, valeur en didone */}
-              {tier.specs && (
-                <span
-                  className={`mt-5 block space-y-4 border-t pt-5 ${
-                    ['dark', 'greige'].includes(tier.tone) ? 'border-creme/15' : 'border-encre/10'
-                  }`}
-                >
-                  {tier.specs.map(([label, value]) => (
-                    <span key={label} className="block">
-                      <span
-                        className={`block text-[9px] font-normal uppercase tracking-[0.28em] ${
-                          ['dark', 'greige'].includes(tier.tone) ? 'text-sable/60' : 'text-grege'
-                        }`}
-                      >
-                        {label}
-                      </span>
-                      <span
-                        className={`mt-1.5 block text-[13px] font-normal leading-[1.5] ${
-                          ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
-                        }`}
-                      >
-                        {value}
-                      </span>
-                    </span>
-                  ))}
-                </span>
-              )}
-
-              {/* Carte volontairement nue : le reste du périmètre se lit
-                  dans le détail de l'offre */}
-              <span aria-hidden="true" className="flex-1" />
-
-              <span
-                className={`mt-7 text-[10px] font-normal uppercase tracking-[0.18em] ${
-                  ['dark', 'greige'].includes(tier.tone) ? 'text-sable/65' : 'text-grege'
-                }`}
-              >
-                {tier.meta}
+              <span className="text-[13px] font-light leading-[1.8] text-encre/75 md:col-span-6">
+                {tier.specs.map(([, value]) => value).join(' · ')}
               </span>
 
-              <span
-                className={`mt-2 text-[10px] font-normal uppercase tracking-[0.18em] opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
-                  ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
-                }`}
-              >
-                Découvrir
+              <span className="text-[10px] font-normal uppercase tracking-[0.18em] text-grege md:col-span-2 md:justify-self-end md:text-right">
+                {tier.meta}
               </span>
             </button>
           </li>
