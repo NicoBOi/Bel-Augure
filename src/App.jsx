@@ -41,7 +41,7 @@ const DESCRIPTIONS = {
   studio:
     'Deux artisans, peu de films, bien faits. Bel Augure fait du cinéma pour le bien-être d’exception, depuis Bordeaux.',
   offres:
-    'Formats, prix, délais : tout est écrit. Films signature de 7 000 € à 25 000 € HT, livrés de quatre à huit semaines.',
+    'Formats et délais : tout est écrit. Films signature livrés de quatre à huit semaines.',
   contact:
     'Écrire à Bel Augure : un email suffit. Réponse sous deux jours, depuis Bordeaux.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',

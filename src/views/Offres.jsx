@@ -11,7 +11,6 @@ const VIMEO_ID = '961941216'
 const TIERS = [
   {
     name: 'Prélude',
-    price: 'à partir de 7 000 € HT',
     tagline: 'Un premier film, pour commencer.',
     desc: "Une journée de tournage, un film d'une minute. Assez pour voir ce que votre maison donne à l'écran.",
     specs: [
@@ -25,7 +24,6 @@ const TIERS = [
   },
   {
     name: 'Signature',
-    price: 'à partir de 12 000 € HT',
     tagline: 'Le film que vous montrerez partout.',
     desc: "Deux journées de tournage. Le film central d'une maison : site, accueil, salons. C'est le cœur de notre métier, et la raison du nom.",
     specs: [
@@ -43,7 +41,6 @@ const TIERS = [
   },
   {
     name: 'Héritage',
-    price: 'à partir de 18 000 € HT',
     tagline: "Trois minutes pour dire d'où vous venez.",
     desc: 'Trois journées, des entretiens, vos archives. Pour les maisons qui se transmettent.',
     specs: [
@@ -61,7 +58,6 @@ const TIERS = [
   },
   {
     name: 'Saisons',
-    price: '16 000 € HT / an',
     tagline: 'Votre image, quatre fois par an.',
     desc: "Quatre films courts, un par saison, dans la même écriture. Un seul interlocuteur, toute l'année.",
     specs: [
@@ -73,12 +69,11 @@ const TIERS = [
       'Design sonore immersif, sans musique : un parti pris',
       'Une série de retouches par film',
     ],
-    meta: 'Facturé 4 000 € HT par trimestre',
+    meta: 'Engagement annuel',
     tone: 'greige',
   },
   {
     name: 'Sur Mesure',
-    price: 'à partir de 25 000 € HT',
     tagline: 'Votre projet, écrit ensemble.',
     desc: 'Plusieurs lieux, plusieurs films, une saison entière de tournage. Nous écrivons le périmètre ensemble, puis nous le tenons.',
     specs: [
@@ -204,13 +199,6 @@ export default function Offres({ setDark }) {
             {active.name}
             <span className="text-or">.</span>
           </h2>
-          <p
-            className={`mt-3 text-[13px] font-light tracking-[0.08em] ${
-              ink ? 'text-sable/75' : 'text-grege'
-            }`}
-          >
-            {active.price}
-          </p>
 
           <div className="mt-8 grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-7">
@@ -373,14 +361,6 @@ export default function Offres({ setDark }) {
                 <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   .
                 </span>
-              </span>
-
-              <span
-                className={`mt-2 text-[14.5px] font-normal ${
-                  ['dark', 'greige'].includes(tier.tone) ? 'text-creme/85' : 'text-encre/85'
-                }`}
-              >
-                {tier.price}
               </span>
 
               <span
