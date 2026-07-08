@@ -128,6 +128,12 @@ const DETAIL_BG = {
 export default function Offres({ setDark }) {
   const ref = useReveal(0.35)
   const [active, setActive] = useState(null)
+  // Point d'or qui respire tant que la vidéo d'exemple n'a pas démarré
+  const [videoReady, setVideoReady] = useState(false)
+
+  useEffect(() => {
+    setVideoReady(false)
+  }, [active])
 
   // Le header suit la matière du détail : texte crème sur encre et grège
   useEffect(() => {
@@ -170,9 +176,15 @@ export default function Offres({ setDark }) {
                   ink ? 'border border-creme/15' : ''
                 }`}
               >
+                {!videoReady && (
+                  <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+                    <span className="dot-breathe block h-2 w-2 rounded-full bg-or" />
+                  </span>
+                )}
                 <VimeoBackground
                   id={VIMEO_ID}
                   title={`Exemple de film ${active.name}`}
+                  onPlaying={() => setVideoReady(true)}
                   className="absolute inset-0 h-full w-full"
                 />
               </div>

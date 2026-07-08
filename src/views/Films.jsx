@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import BackLink from '../components/BackLink.jsx'
+import VimeoBackground from '../components/VimeoBackground.jsx'
+
+// Boucle d'exemple montrée dans chaque film en attendant les boucles
+// propres à chaque projet.
+const VIMEO_ID = '961941216'
 
 // Trois à quatre films fondateurs. Les calques de fond par projet sont
 // prêts à recevoir la boucle vidéo ou le still étalonné de chacun.
@@ -39,6 +44,12 @@ export default function Films({ setDark }) {
   const reveal = useReveal(0.35)
   const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(null)
+  // Point d'or qui respire tant que la vidéo n'a pas démarré
+  const [videoReady, setVideoReady] = useState(false)
+
+  useEffect(() => {
+    setVideoReady(false)
+  }, [selected])
 
   // Survoler un nom fait monter le film en fond : tout le site glisse vers
   // l'encre (header compris), les noms passent en crème.
@@ -83,9 +94,21 @@ export default function Films({ setDark }) {
         <BackLink label="Tous les films" onClick={closeProject} light />
 
         <div className="mt-10 grid items-end gap-10 md:mt-auto lg:grid-cols-12 lg:gap-8">
-          {/* Zone média : reçoit le film ou le still étalonné */}
+          {/* Zone média : la boucle vidéo, point d'or en attendant qu'elle joue */}
           <div className="lg:col-span-7">
-            <div className="aspect-video w-full rounded-3xl border border-creme/15 bg-creme/5" />
+            <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-creme/5">
+              {!videoReady && (
+                <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+                  <span className="dot-breathe block h-2 w-2 rounded-full bg-or" />
+                </span>
+              )}
+              <VimeoBackground
+                id={VIMEO_ID}
+                title={`Film ${selected.title}`}
+                onPlaying={() => setVideoReady(true)}
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
           </div>
 
           <div className="lg:col-span-4 lg:col-start-9">
