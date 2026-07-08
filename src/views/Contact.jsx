@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-export default function Contact() {
+export default function Contact({ onNavigate }) {
   const ref = useReveal(0.35)
   const [form, setForm] = useState({ nom: '', maison: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
@@ -72,6 +72,15 @@ export default function Contact() {
           </p>
           <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.32s' }}>
             Bordeaux · Nouvelle-Aquitaine
+          </p>
+          <p className="reveal-up mt-6" style={{ '--d': '0.36s' }}>
+            <button
+              type="button"
+              onClick={() => onNavigate?.('mentions')}
+              className="cursor-pointer text-[10px] font-light uppercase tracking-[0.2em] text-grege/80 transition-colors duration-500 hover:text-encre"
+            >
+              Mentions légales
+            </button>
           </p>
           </div>
         </div>

@@ -96,6 +96,51 @@ const TIERS = [
   },
 ]
 
+// Rareté réelle du studio : à tenir à jour à la main au fil des signatures.
+const CRENEAUX_RESTANTS = 'Trois créneaux restants pour 2026'
+
+// Le déroulé, en trois temps : ce que le client veut savoir avant d'écrire.
+const DEROULE = [
+  {
+    n: '01',
+    titre: "L'écriture",
+    texte:
+      'Un échange, un repérage, une note d’intention. Vous savez ce qui sera filmé avant le premier plan.',
+  },
+  {
+    n: '02',
+    titre: 'Le tournage',
+    texte:
+      'À la lumière du jour, en équipe légère. Votre maison continue de vivre, vos hôtes ne sont pas dérangés.',
+  },
+  {
+    n: '03',
+    titre: 'La livraison',
+    texte:
+      'Le film, ses déclinaisons, les droits pour vos canaux. Deux séries de retouches sont incluses.',
+  },
+]
+
+// Les questions qui reviennent : réponses courtes, sans renvoi.
+const QUESTIONS = [
+  {
+    q: 'À qui appartient le film ?',
+    r: 'À vous. Les droits sont cédés pour votre site, vos réseaux et votre accueil. Les usages publicitaires étendus s’écrivent au devis.',
+  },
+  {
+    q: 'Et la musique ?',
+    r: 'Choisie avec vous, licenciée pour votre usage. Rien à gérer de votre côté.',
+  },
+  {
+    q: 'S’il pleut le jour du tournage ?',
+    r: 'Nous tournons à la lumière du jour : un jour de repli est posé ensemble au calendrier, sans surcoût.',
+  },
+  {
+    q: 'Peut-on ajuster le film après livraison ?',
+    r: 'Deux séries de retouches sont incluses dans chaque offre. Au-delà, nous chiffrons simplement.',
+  },
+]
+
 // Chaque format a sa matière, déclinée de la charte : du crème léger à
 // l'encre profonde, l'or au centre de la gamme.
 // Silhouette en escalier : la rangée culmine sur Héritage, au centre,
@@ -308,15 +353,25 @@ export default function Offres({ setDark }) {
               </span>
             </span>
           </h2>
+          <p
+            className="reveal-up mt-4 text-[11px] font-normal uppercase tracking-[0.2em] text-encre/70 lg:hidden"
+            style={{ '--d': '0.22s' }}
+          >
+            Neuf films par an — {CRENEAUX_RESTANTS.toLowerCase()}
+            <span className="text-or">.</span>
+          </p>
         </div>
 
-        <p
-          className="reveal-up hidden max-w-[34ch] text-right text-[12px] font-light leading-[1.8] text-grege lg:block"
-          style={{ '--d': '0.25s' }}
-        >
-          Nous tournons pour les hôtels rares, les maisons de soin, les
-          domaines et la cosmétique.
-        </p>
+        <div className="reveal-up hidden text-right lg:block" style={{ '--d': '0.25s' }}>
+          <p className="max-w-[34ch] text-[12px] font-light leading-[1.8] text-grege">
+            Nous tournons pour les hôtels rares, les maisons de soin, les
+            domaines et la cosmétique.
+          </p>
+          <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-encre/70">
+            Neuf films par an — {CRENEAUX_RESTANTS.toLowerCase()}
+            <span className="text-or">.</span>
+          </p>
+        </div>
       </div>
 
       {/* Les cinq formats en cases : Héritage au centre, Signature en or */}
@@ -411,6 +466,46 @@ export default function Offres({ setDark }) {
           </li>
         ))}
       </ul>
+
+      {/* Le déroulé et les questions : rassurer l'hésitant avant l'email */}
+      <div className="mt-20 grid gap-14 border-t border-encre/10 pt-14 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-4">
+          <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
+            Comment ça se passe
+          </p>
+          <div className="mt-8 space-y-8">
+            {DEROULE.map((etape) => (
+              <div key={etape.n} className="flex gap-5">
+                <span className="font-display text-[15px] leading-[1.6] text-or">{etape.n}</span>
+                <div>
+                  <p className="font-display text-[17px] text-encre">{etape.titre}</p>
+                  <p className="mt-1.5 max-w-[38ch] text-[13px] font-light leading-[1.8] text-encre/75">
+                    {etape.texte}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="lg:col-span-7 lg:col-start-6">
+          <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
+            Les questions qui reviennent
+          </p>
+          <dl className="mt-8 grid gap-x-8 gap-y-8 md:grid-cols-2">
+            {QUESTIONS.map((item) => (
+              <div key={item.q}>
+                <dt className="font-display text-[16px] leading-[1.4] text-encre">
+                  {item.q}
+                </dt>
+                <dd className="mt-2 text-[13px] font-light leading-[1.8] text-encre/75">
+                  {item.r}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
     </section>
   )
 }

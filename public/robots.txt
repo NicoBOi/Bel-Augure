@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://belaugure.studio/sitemap.xml

@@ -6,6 +6,7 @@ import Films from './views/Films.jsx'
 import Studio from './views/Studio.jsx'
 import Offres from './views/Offres.jsx'
 import Contact from './views/Contact.jsx'
+import Mentions from './views/Mentions.jsx'
 
 // Film de fond du héros. Monté ici, au niveau de l'application : il ne se
 // démonte jamais quand on navigue, la lecture continue en coulisse et le
@@ -18,6 +19,7 @@ const VIEWS = {
   studio: Studio,
   offres: Offres,
   contact: Contact,
+  mentions: Mentions,
 }
 
 const TITLES = {
@@ -26,6 +28,23 @@ const TITLES = {
   studio: 'Studio · Bel Augure',
   offres: 'Offres · Bel Augure',
   contact: 'Contact · Bel Augure',
+  mentions: 'Mentions légales · Bel Augure',
+}
+
+// La description suit la vue : chaque page raconte sa propre promesse
+// aux moteurs et aux aperçus de lien.
+const DESCRIPTIONS = {
+  accueil:
+    "Bel Augure, studio de films signature en Nouvelle-Aquitaine. Films pensés comme des actifs pour les maisons du bien-être d'exception.",
+  films:
+    'Les films de Bel Augure : hôtellerie rare, thermes, domaines, cosmétique. Tournés à la lumière du jour, depuis Bordeaux.',
+  studio:
+    'Deux artisans, neuf films par an. Bel Augure fait du cinéma pour le bien-être d’exception, depuis Bordeaux.',
+  offres:
+    'Formats, prix, délais : tout est écrit. Films signature de 7 000 € à 25 000 € HT, livrés de quatre à huit semaines.',
+  contact:
+    'Écrire à Bel Augure : un email suffit. Réponse sous deux jours, depuis Bordeaux.',
+  mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
 }
 
 // La vue vit dans le hash (#offres, #studio…) : un rafraîchissement ou un
@@ -84,6 +103,9 @@ export default function App() {
   // pour l'historique mental et les lecteurs d'écran.
   useEffect(() => {
     document.title = TITLES[view]
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute('content', DESCRIPTIONS[view])
   }, [view])
 
   return (
