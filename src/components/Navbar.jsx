@@ -37,11 +37,14 @@ export default function Navbar({ activeView, onNavigate, dark }) {
 
   return (
     <header className="absolute inset-x-0 top-0 z-10">
+      {/* Halo sombre diffus derrière le bouton menu, uniquement sur fond vidéo */}
       <div
-        className={`grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 transition-colors duration-700 max-md:backdrop-blur-sm md:px-16 md:py-10 ${
-          dark ? 'max-md:bg-encre/85' : 'max-md:bg-creme/85'
+        aria-hidden
+        className={`pointer-events-none absolute left-0 top-0 h-64 w-64 bg-[radial-gradient(circle_at_top_left,rgba(26,21,18,0.75),transparent_70%)] transition-opacity duration-700 md:hidden ${
+          dark ? 'opacity-100' : 'opacity-0'
         }`}
-      >
+      />
+      <div className="relative grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 md:px-16 md:py-10">
         <nav aria-label="Navigation principale" className="hidden md:block">
           <ul className="flex items-center gap-12">
             {LINKS.map((link) => (
