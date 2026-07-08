@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 // Trois offres, trois natures, trois échelles : le film central d'une
@@ -9,29 +9,23 @@ const OFFRES = [
   {
     name: 'Signature',
     eyebrow: 'Le film central',
-    desc: "Le film qui porte l'image d'une maison : son site, son accueil, ses salons. De 90 secondes à 2 minutes.",
+    desc: "Le film qui porte l'image d'une maison : son site, son accueil, ses salons. De 90 secondes à 2 minutes, écrit et tourné pour durer des années.",
     detail: 'Deux journées de tournage. Livré en six semaines.',
-    size: 'text-[clamp(3rem,6.5vw,6rem)]',
-    indent: '',
-    delay: '0.1s',
+    tint: 'bg-or/25',
   },
   {
     name: 'Saisons',
     eyebrow: 'Le rendez-vous annuel',
-    desc: 'Quatre films courts par an, un par saison, dans la même écriture.',
+    desc: 'Quatre films courts par an, un par saison, dans la même écriture. Un seul interlocuteur, toute l’année.',
     detail: 'Une demi-journée de tournage à chaque saison.',
-    size: 'text-[clamp(2.2rem,4vw,3.6rem)]',
-    indent: 'md:ml-[26vw]',
-    delay: '0.22s',
+    tint: 'bg-grege/15',
   },
   {
     name: 'Sur Mesure',
     eyebrow: "L'exception",
-    desc: 'Campagnes, formats longs, casting et décors.',
+    desc: 'Campagnes de plusieurs films, formats longs, casting et décors, droits publicitaires étendus.',
     detail: 'Le périmètre s’écrit ensemble. Sur devis.',
-    size: 'text-[clamp(1.7rem,2.9vw,2.7rem)]',
-    indent: 'md:ml-[10vw]',
-    delay: '0.34s',
+    tint: 'bg-sable/60',
   },
 ]
 
@@ -87,6 +81,8 @@ const QUESTIONS = [
 
 export default function Offres({ setDark }) {
   const ref = useReveal(0.35)
+  // Une seule offre déployée à la fois : Signature ouvre la page.
+  const [open, setOpen] = useState('Signature')
 
   useEffect(() => {
     setDark?.(false)
@@ -105,34 +101,72 @@ export default function Offres({ setDark }) {
         Offres
       </p>
 
-      {/* La cascade : chaque offre descend d'un cran et d'une taille.
-          Le nom en didone porte la scène, le texte se tient dans sa marge. */}
-      <div className="mt-10 space-y-14 md:mt-14 md:space-y-16">
-        {OFFRES.map((offre) => (
-          <div
-            key={offre.name}
-            className={`reveal-up ${offre.indent}`}
-            style={{ '--d': offre.delay }}
-          >
-            <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
-              {offre.eyebrow}
-            </p>
-            <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-baseline md:gap-10">
-              <h3 className={`font-display leading-[1.02] text-encre ${offre.size}`}>
-                {offre.name}
-                <span className="text-or">.</span>
-              </h3>
-              <div className="max-w-[46ch] md:pb-1">
-                <p className="text-[13.5px] font-light leading-[1.85] text-encre/80">
-                  {offre.desc}
-                </p>
-                <p className="mt-2 text-[10.5px] font-normal uppercase tracking-[0.2em] text-grege">
-                  {offre.detail}
-                </p>
+      {/* L'accordéon éditorial : trois lignes nues. Celle qu'on ouvre se
+          déploie seule, dans sa matière — jamais plus d'une offre à lire. */}
+      <div className="reveal-up mt-10 md:mt-12" style={{ '--d': '0.15s' }}>
+        {OFFRES.map((offre) => {
+          const isOpen = open === offre.name
+          return (
+            <div key={offre.name} className="border-t border-encre/10 last:border-b">
+              <button
+                type="button"
+                onClick={() => setOpen(isOpen ? null : offre.name)}
+                aria-expanded={isOpen}
+                className="group flex w-full cursor-pointer items-baseline justify-between gap-6 py-7 text-left md:py-8"
+              >
+                <span className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
+                  <span
+                    className={`font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.05] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen ? 'text-encre' : 'text-encre/45 group-hover:text-encre/75'
+                    }`}
+                  >
+                    {offre.name}
+                    <span
+                      className={`text-or transition-opacity duration-300 ${
+                        isOpen ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    >
+                      .
+                    </span>
+                  </span>
+                  <span
+                    className={`text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
+                      isOpen ? 'text-grege' : 'text-grege/50'
+                    }`}
+                  >
+                    {offre.eyebrow}
+                  </span>
+                </span>
+                {/* Croix fine : + fermé, × ouvert */}
+                <span aria-hidden="true" className="relative block h-4 w-4 shrink-0 self-center">
+                  <span
+                    className={`absolute left-0 top-1/2 h-px w-4 bg-encre/60 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen ? 'rotate-45' : ''
+                    }`}
+                  />
+                  <span
+                    className={`absolute left-0 top-1/2 h-px w-4 bg-encre/60 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen ? 'rotate-[135deg]' : 'rotate-90'
+                    }`}
+                  />
+                </span>
+              </button>
+
+              <div className="offer-panel" data-open={isOpen}>
+                <div className="offer-panel-inner">
+                  <div className={`mb-8 rounded-2xl p-7 md:p-9 ${offre.tint}`}>
+                    <p className="max-w-[56ch] text-[14.5px] font-light leading-[1.9] text-encre/85">
+                      {offre.desc}
+                    </p>
+                    <p className="mt-4 text-[10.5px] font-normal uppercase tracking-[0.2em] text-encre/60">
+                      {offre.detail}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       {/* Le déroulé et les questions : rassurer l'hésitant avant l'email */}
