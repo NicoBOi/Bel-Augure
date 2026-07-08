@@ -155,16 +155,20 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         </p>
 
         <h2 className="mt-7 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.25] text-encre">
-          Un studio. Deux artisans.
+          Un studio.
           <br />
-          Neuf films par an<span className="text-or">.</span>
+          Deux savoir-faire<span className="text-or">.</span>
         </h2>
 
         <p className="mx-auto mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
-          Bel Augure fait des films pour les maisons du bien-être : hôtels
-          rares, maisons de soin, domaines, cosmétique. Tournés à la lumière
-          du jour, depuis Bordeaux. Un film se garde des années. C'est toute
-          la différence avec une vidéo.
+          Bel Augure révèle l'histoire endormie au cœur de votre lieu
+          d'exception. Vous avez bâti un lieu rare et nous en ferons un film
+          inoubliable.
+        </p>
+
+        <p className="mx-auto mt-4 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
+          Un film n'est pas une vidéo. C'est ce qui porte votre nom, saison
+          après saison.
         </p>
 
         {/* Le portefeuille de films : trois vignettes qui s'éventaillent */}
