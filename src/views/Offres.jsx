@@ -8,15 +8,15 @@ const VIMEO_ID = '961941216'
 
 const TIERS = [
   {
-    name: 'Prélude',
-    desc: "Une journée de tournage, un film d'une minute. Assez pour voir ce que votre maison donne à l'écran.",
+    name: 'Héritage',
+    desc: 'Trois journées, des entretiens, vos archives. Pour les maisons qui se transmettent.',
     specs: [
-      ['Le film', '45 à 60 secondes'],
-      ['Le tournage', 'Une journée, un lieu'],
-      ['Les déclinaisons', 'Écran et mobile'],
+      ['Le film', 'Deux à trois minutes, écrit comme un récit'],
+      ['Le tournage', "Trois journées, jusqu'à trois lieux"],
+      ['Les déclinaisons', 'Des réseaux au master 4K cinéma'],
     ],
-    meta: 'Livré en quatre semaines',
-    tone: 'light',
+    meta: 'Livré en huit semaines',
+    tone: 'dark',
   },
   {
     name: 'Signature',
@@ -30,15 +30,15 @@ const TIERS = [
     tone: 'gold',
   },
   {
-    name: 'Héritage',
-    desc: 'Trois journées, des entretiens, vos archives. Pour les maisons qui se transmettent.',
+    name: 'Prélude',
+    desc: "Une journée de tournage, un film d'une minute. Assez pour voir ce que votre maison donne à l'écran.",
     specs: [
-      ['Le film', 'Deux à trois minutes, écrit comme un récit'],
-      ['Le tournage', "Trois journées, jusqu'à trois lieux"],
-      ['Les déclinaisons', 'Des réseaux au master 4K cinéma'],
+      ['Le film', '45 à 60 secondes'],
+      ['Le tournage', 'Une journée, un lieu'],
+      ['Les déclinaisons', 'Écran et mobile'],
     ],
-    meta: 'Livré en huit semaines',
-    tone: 'dark',
+    meta: 'Livré en quatre semaines',
+    tone: 'light',
   },
   {
     name: 'Saisons',
@@ -49,6 +49,7 @@ const TIERS = [
       ['Les déclinaisons', 'Deux formats par film'],
     ],
     meta: 'Engagement annuel',
+    minor: true,
     tone: 'greige',
   },
   {
@@ -59,6 +60,7 @@ const TIERS = [
       ['La production', 'Casting, décors, droits étendus'],
     ],
     meta: 'Sur devis',
+    minor: true,
     tone: 'dashed',
   },
 ]
@@ -201,20 +203,26 @@ export default function Offres({ setDark }) {
                   type="button"
                   onMouseEnter={() => focusOn(tier)}
                   onFocus={() => focusOn(tier)}
-                  className="group block w-full cursor-default py-5 text-left md:py-6"
+                  className={`group block w-full cursor-default text-left ${
+                    tier.minor ? 'py-3.5 md:py-4' : 'py-5 md:py-6'
+                  }`}
                 >
                   <span className="flex items-center gap-4">
                     {/* Cartouche de gamme : il s'étire quand l'offre est en focus */}
                     <span
                       aria-hidden="true"
-                      className={`block h-3 shrink-0 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        focused ? 'w-9' : 'w-5 opacity-70'
+                      className={`block shrink-0 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        tier.minor
+                          ? `h-2.5 ${focused ? 'w-7' : 'w-4 opacity-70'}`
+                          : `h-3 ${focused ? 'w-9' : 'w-5 opacity-70'}`
                       } ${CHIPS[tier.tone]}`}
                     />
                     <span
-                      className={`block font-display text-[clamp(1.7rem,2.4vw,2.3rem)] leading-[1.1] tracking-[0.04em] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        focused ? 'translate-x-1 text-encre' : 'text-encre/55'
-                      }`}
+                      className={`block font-display leading-[1.1] tracking-[0.04em] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        tier.minor
+                          ? 'text-[clamp(1.15rem,1.5vw,1.45rem)]'
+                          : 'text-[clamp(1.7rem,2.4vw,2.3rem)]'
+                      } ${focused ? 'translate-x-1 text-encre' : 'text-encre/55'}`}
                     >
                       {tier.name}
                       <span
