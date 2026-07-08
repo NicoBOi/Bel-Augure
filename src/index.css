@@ -80,6 +80,14 @@ body {
   transition: grid-template-rows 0.55s var(--ease-augure);
 }
 
+/* Cette règle est hors layer : elle gagne sur l'utilitaire md:hidden de
+   Tailwind (layered). Le masquage desktop doit donc être explicite ici. */
+@media (min-width: 48rem) {
+  .menu-panel {
+    display: none;
+  }
+}
+
 .menu-panel[data-open='true'] {
   grid-template-rows: 1fr;
 }
@@ -87,6 +95,15 @@ body {
 .menu-panel-inner {
   min-height: 0;
   overflow: hidden;
+  /* Panneau replié : sorti du parcours clavier et des lecteurs d'écran,
+     une fois l'animation de fermeture achevée */
+  visibility: hidden;
+  transition: visibility 0s 0.55s;
+}
+
+.menu-panel[data-open='true'] .menu-panel-inner {
+  visibility: visible;
+  transition: none;
 }
 
 /* ---------- CTA : pilule douce, remplissage or ---------- */

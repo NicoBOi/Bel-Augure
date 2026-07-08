@@ -46,7 +46,9 @@ export default function App() {
   const View = VIEWS[view]
 
   const navigate = (next) => {
-    setDark(false)
+    // L'accueil vit dans l'encre : y revenir sans repasser par un éclair
+    // de crème (l'effet de la vue remettrait dark ensuite, trop tard).
+    setDark(next === 'accueil')
     setView(next)
   }
 

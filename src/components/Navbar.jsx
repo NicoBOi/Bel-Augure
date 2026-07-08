@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const LINKS = [
   { view: 'films', label: 'Films' },
@@ -29,6 +29,27 @@ export default function Navbar({ activeView, onNavigate, dark }) {
     onNavigate(view)
     setOpen(false)
   }
+
+  // Menu ouvert : Échap le referme, et le passage au format desktop le
+  // referme aussi — sinon l'état "ouvert" survit au redimensionnement et
+  // le panneau réapparaît déplié au retour en mobile.
+  useEffect(() => {
+    if (!open) return
+    const mq = window.matchMedia('(min-width: 48rem)')
+    const closeOnDesktop = () => {
+      if (mq.matches) setOpen(false)
+    }
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    closeOnDesktop()
+    mq.addEventListener('change', closeOnDesktop)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      mq.removeEventListener('change', closeOnDesktop)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [open])
 
   // Sur la scène d'ouverture le mot-symbole géant occupe l'écran : le logo
   // s'efface. Dès que le scroll lève le jour (dark tombe), il apparaît
