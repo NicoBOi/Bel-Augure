@@ -49,7 +49,7 @@ export default function Studio() {
       >
         <p>
           Nico et Corentin. Amis depuis l'enfance, associés aujourd'hui.
-          Celui qui vous serre la main est celui qui fera le film — au
+          Celui qui vous serre la main est celui qui fera le film : au
           studio, il n'y a personne d'autre, et c'est voulu.
         </p>
         <p>

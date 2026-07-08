@@ -70,7 +70,7 @@ const TIERS = [
       ['Les déclinaisons', 'Deux formats par film'],
     ],
     includes: [
-      'Design sonore immersif, sans musique — un parti pris',
+      'Design sonore immersif, sans musique : un parti pris',
       'Une série de retouches par film',
     ],
     meta: 'Facturé 4 000 € HT par trimestre',
@@ -108,7 +108,7 @@ const DEROULE = [
     n: '02',
     titre: 'Le tournage',
     texte:
-      "De l'équipement cinéma, une équipe à taille humaine — et qui sait se faire oublier.",
+      "De l'équipement cinéma, une équipe à taille humaine, qui sait se faire oublier.",
   },
   {
     n: '03',

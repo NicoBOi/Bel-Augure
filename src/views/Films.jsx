@@ -37,7 +37,7 @@ const PROJECTS = [
     title: 'Maison Almae',
     world: 'Cosmétique · Bordeaux',
     format: 'Film signature, 45 s',
-    desc: "Une maison de cosmétique à Bordeaux. Quarante-cinq secondes sur la matière — plante, huile, peau. Le format se place partout.",
+    desc: "Une maison de cosmétique à Bordeaux. Quarante-cinq secondes sur la matière : plante, huile, peau. Le format se place partout.",
   },
 ]
 

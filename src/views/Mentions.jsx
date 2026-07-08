@@ -5,9 +5,9 @@ const BLOCS = [
   {
     titre: 'Éditeur',
     lignes: [
-      'Bel Augure — [forme juridique et capital à compléter]',
+      'Bel Augure, [forme juridique et capital à compléter]',
       '[SIRET à compléter] · [adresse du siège à compléter], Bordeaux',
-      'Directeur de la publication : Nico — nico@belaugure.studio',
+      'Directeur de la publication : Nico (nico@belaugure.studio)',
     ],
   },
   {
@@ -17,7 +17,7 @@ const BLOCS = [
   {
     titre: 'Propriété intellectuelle',
     lignes: [
-      'L’ensemble du site — textes, films, photographies, identité — est la propriété de Bel Augure ou de ses clients pour les œuvres qui leur ont été cédées. Toute reproduction sans accord écrit est interdite.',
+      'L’ensemble du site (textes, films, photographies, identité) est la propriété de Bel Augure ou de ses clients pour les œuvres qui leur ont été cédées. Toute reproduction sans accord écrit est interdite.',
     ],
   },
   {
