@@ -13,13 +13,12 @@ const TIERS = [
     price: 'à partir de 7 000 € HT',
     tagline: 'Un premier film, pour commencer.',
     desc: "Une journée de tournage, un film d'une minute. Assez pour voir ce que votre maison donne à l'écran.",
-    includes: [
-      'Un film de 45 à 60 secondes',
-      'Une journée de tournage, un lieu',
-      'Deux formats : écran et mobile',
-      'Une musique choisie et licenciée',
-      'Deux séries de retouches incluses',
+    specs: [
+      ['Le film', '45 à 60 secondes'],
+      ['Le tournage', 'Une journée, un lieu'],
+      ['Les déclinaisons', 'Écran et mobile'],
     ],
+    includes: ['Une musique choisie et licenciée', 'Deux séries de retouches incluses'],
     meta: 'Livré en quatre semaines',
     tone: 'light',
   },
@@ -28,11 +27,13 @@ const TIERS = [
     price: 'à partir de 12 000 € HT',
     tagline: 'Le film que vous montrerez partout.',
     desc: "Deux journées de tournage. Le film central d'une maison : site, accueil, salons. C'est le cœur de notre métier, et la raison du nom.",
+    specs: [
+      ['Le film', '90 secondes à 2 minutes'],
+      ['Le tournage', "Deux journées, jusqu'à deux lieux"],
+      ['Les déclinaisons', 'Écran, mobile et réseaux'],
+    ],
     includes: [
-      "Un film de 90 secondes à 2 minutes",
       'Direction artistique et repérages',
-      "Deux journées de tournage, jusqu'à deux lieux",
-      'Trois formats : écran, mobile et réseaux',
       'Design sonore et musique licenciée',
       'Deux séries de retouches incluses',
     ],
@@ -44,11 +45,13 @@ const TIERS = [
     price: 'à partir de 18 000 € HT',
     tagline: "Trois minutes pour dire d'où vous venez.",
     desc: 'Trois journées, des entretiens, vos archives. Pour les maisons qui se transmettent.',
+    specs: [
+      ['Le film', 'Deux à trois minutes, écrit comme un récit'],
+      ['Le tournage', "Trois journées, jusqu'à trois lieux"],
+      ['Les déclinaisons', 'Des réseaux au master 4K cinéma'],
+    ],
     includes: [
-      'Un film de deux à trois minutes, écrit comme un récit',
-      "Trois journées de tournage, jusqu'à trois lieux",
       'Étalonnage cinéma',
-      'Cinq formats, des réseaux au master 4K cinéma',
       'Design sonore et musique licenciée',
       'Deux séries de retouches incluses',
     ],
@@ -60,10 +63,12 @@ const TIERS = [
     price: '16 000 € HT / an',
     tagline: 'Votre image, quatre fois par an.',
     desc: "Quatre films courts, un par saison, dans la même écriture. Un seul interlocuteur, toute l'année.",
+    specs: [
+      ['Les films', 'Quatre par an, 15 à 30 secondes'],
+      ['Le tournage', 'Une demi-journée par saison'],
+      ['Les déclinaisons', 'Deux formats par film'],
+    ],
     includes: [
-      'Quatre films de 15 à 30 secondes, un par saison',
-      'Un tournage léger à chaque saison, une demi-journée sur place',
-      'Deux formats par film',
       'Design sonore immersif, sans musique — un parti pris',
       'Une série de retouches par film',
     ],
@@ -185,6 +190,33 @@ export default function Offres({ setDark }) {
                 {active.desc}
               </p>
 
+              {active.specs && (
+                <div
+                  className={`mt-6 space-y-4 border-t pt-6 ${
+                    ink ? 'border-creme/15' : 'border-encre/10'
+                  }`}
+                >
+                  {active.specs.map(([label, value]) => (
+                    <div key={label}>
+                      <p
+                        className={`text-[9px] font-normal uppercase tracking-[0.28em] ${
+                          ink ? 'text-sable/60' : 'text-grege'
+                        }`}
+                      >
+                        {label}
+                      </p>
+                      <p
+                        className={`mt-1 font-display text-[17px] leading-[1.35] ${
+                          ink ? 'text-creme' : 'text-encre'
+                        }`}
+                      >
+                        {value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <ul className="mt-5">
                 {active.includes.map((item) => (
                   <li
@@ -242,7 +274,7 @@ export default function Offres({ setDark }) {
     <section
       ref={ref}
       aria-label="Offres"
-      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
+      className="flex h-full flex-col justify-start overflow-y-auto px-6 pb-14 pt-28 md:pb-[9vh] md:px-16"
     >
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
         <div>
@@ -313,6 +345,35 @@ export default function Offres({ setDark }) {
               >
                 {tier.tagline}
               </span>
+
+              {/* L'essentiel — durée, tournage, déclinaisons — posé en
+                  exergue : petit label, valeur en didone */}
+              {tier.specs && (
+                <span
+                  className={`mt-5 block space-y-4 border-t pt-5 ${
+                    ['dark', 'greige'].includes(tier.tone) ? 'border-creme/15' : 'border-encre/10'
+                  }`}
+                >
+                  {tier.specs.map(([label, value]) => (
+                    <span key={label} className="block">
+                      <span
+                        className={`block text-[9px] font-normal uppercase tracking-[0.28em] ${
+                          ['dark', 'greige'].includes(tier.tone) ? 'text-sable/60' : 'text-grege'
+                        }`}
+                      >
+                        {label}
+                      </span>
+                      <span
+                        className={`mt-1 block font-display text-[15.5px] leading-[1.35] ${
+                          ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
+                        }`}
+                      >
+                        {value}
+                      </span>
+                    </span>
+                  ))}
+                </span>
+              )}
 
               <span
                 aria-hidden="true"
