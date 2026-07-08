@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import BackLink from '../components/BackLink.jsx'
 import VimeoBackground from '../components/VimeoBackground.jsx'
+import VideoLoader from '../components/VideoLoader.jsx'
 
 // Boucle d'exemple montrée dans chaque film en attendant les boucles
 // propres à chaque projet.
@@ -108,11 +109,7 @@ export default function Films({ setDark }) {
             {/* Zone média : la boucle vidéo, point d'or en attendant qu'elle joue */}
             <div className="lg:col-span-7">
               <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre">
-                {!videoReady && (
-                  <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
-                    <span className="dot-breathe block h-2 w-2 rounded-full bg-or" />
-                  </span>
-                )}
+                {!videoReady && <VideoLoader />}
                 <VimeoBackground
                   id={VIMEO_ID}
                   title={`Film ${selected.title}`}

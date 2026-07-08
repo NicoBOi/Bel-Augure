@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import BackLink from '../components/BackLink.jsx'
 import VimeoBackground from '../components/VimeoBackground.jsx'
+import VideoLoader from '../components/VideoLoader.jsx'
 
 // Vidéo d'exemple montrée dans chaque offre en attendant les films du
 // studio : identifiant Vimeo, lu en mode background.
@@ -176,11 +177,7 @@ export default function Offres({ setDark }) {
                   ink ? 'border border-creme/15' : ''
                 }`}
               >
-                {!videoReady && (
-                  <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
-                    <span className="dot-breathe block h-2 w-2 rounded-full bg-or" />
-                  </span>
-                )}
+                {!videoReady && <VideoLoader />}
                 <VimeoBackground
                   id={VIMEO_ID}
                   title={`Exemple de film ${active.name}`}

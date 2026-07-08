@@ -365,6 +365,20 @@ textarea.field {
   animation: veilLoad 2.4s var(--ease-augure) 0.2s both;
 }
 
+/* Attente vidéo : segment d'or qui balaye le filet, en boucle */
+@keyframes loadSweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+.load-sweep {
+  animation: loadSweep 1.8s var(--ease-augure) infinite;
+}
+
 /* ---------- prefers-reduced-motion : tout est coupé ---------- */
 
 @media (prefers-reduced-motion: reduce) {
