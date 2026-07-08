@@ -47,6 +47,14 @@ body {
   outline-offset: 4px;
 }
 
+/* La didone est crénée très serré : les titres respirent un peu plus.
+   Le mot-symbole « Bel Augure » (logo, héros, voile) garde son crénage
+   d'origine : il n'est jamais posé en h2/h3. */
+h2,
+h3 {
+  letter-spacing: 0.04em;
+}
+
 /* ---------- Navigation : underline slide-in ---------- */
 
 .nav-label {

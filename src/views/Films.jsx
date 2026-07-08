@@ -194,7 +194,7 @@ export default function Films({ setDark }) {
                   onBlur={leave}
                   onClick={() => openProject(project)}
                   style={{ '--indent': `${index * 4}vw` }}
-                  className={`flex w-full cursor-pointer items-baseline gap-6 py-3 text-left font-display text-[clamp(2rem,4.6vw,4rem)] leading-[1.12] transition-colors duration-300 md:py-4 md:pl-[var(--indent)] ${
+                  className={`flex w-full cursor-pointer items-baseline gap-6 py-3 text-left font-display text-[clamp(2rem,4.6vw,4rem)] leading-[1.12] tracking-[0.04em] transition-colors duration-300 md:py-4 md:pl-[var(--indent)] ${
                     isHovered ? 'text-creme' : dimmed ? 'text-creme/25' : 'text-encre'
                   }`}
                 >

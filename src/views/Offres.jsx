@@ -361,7 +361,7 @@ export default function Offres({ setDark }) {
               className={`group relative flex w-full cursor-pointer flex-col rounded-2xl border p-6 text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${TONES[tier.tone]}`}
             >
               <span
-                className={`font-display text-[clamp(1.4rem,1.8vw,1.8rem)] leading-tight ${
+                className={`font-display text-[clamp(1.4rem,1.8vw,1.8rem)] leading-tight tracking-[0.04em] ${
                   ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
                 }`}
               >
