@@ -80,6 +80,10 @@ const TIERS = [
     price: 'à partir de 25 000 € HT',
     tagline: 'Votre projet, écrit ensemble.',
     desc: 'Plusieurs lieux, plusieurs films, une saison entière de tournage. Nous écrivons le périmètre ensemble, puis nous le tenons.',
+    specs: [
+      ['Le projet', 'Plusieurs films, formats longs'],
+      ['La production', 'Casting, décors, droits étendus'],
+    ],
     includes: [
       'Campagnes de plusieurs films',
       'Formats longs',
@@ -375,29 +379,12 @@ export default function Offres({ setDark }) {
                 </span>
               )}
 
-              <span
-                aria-hidden="true"
-                className={`mb-4 mt-5 block h-px w-full ${
-                  ['dark', 'greige'].includes(tier.tone) ? 'bg-creme/15' : 'bg-encre/10'
-                }`}
-              />
-
-              <ul className="flex-1 space-y-2.5">
-                {tier.includes.map((item) => (
-                  <li
-                    key={item}
-                    className={`flex items-start gap-2.5 text-[12px] font-light leading-[1.55] ${
-                      ['dark', 'greige'].includes(tier.tone) ? 'text-creme/80' : 'text-encre/80'
-                    }`}
-                  >
-                    <span aria-hidden="true" className="mt-[0.55em] h-px w-3 shrink-0 bg-or" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              {/* Carte volontairement nue : le reste du périmètre se lit
+                  dans le détail de l'offre */}
+              <span aria-hidden="true" className="flex-1" />
 
               <span
-                className={`mt-5 text-[10px] font-normal uppercase tracking-[0.18em] ${
+                className={`mt-7 text-[10px] font-normal uppercase tracking-[0.18em] ${
                   ['dark', 'greige'].includes(tier.tone) ? 'text-sable/65' : 'text-grege'
                 }`}
               >
