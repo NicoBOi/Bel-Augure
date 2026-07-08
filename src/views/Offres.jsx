@@ -75,7 +75,7 @@ const TIERS = [
   {
     name: 'Sur Mesure',
     tagline: 'Votre projet, écrit ensemble.',
-    desc: 'Plusieurs lieux, plusieurs films, une saison entière de tournage. Nous écrivons le périmètre ensemble, puis nous le tenons.',
+    desc: 'Plusieurs lieux, plusieurs films, une saison entière de tournage. Nous écrivons le périmètre ensemble.',
     specs: [
       ['Le projet', 'Plusieurs films, formats longs'],
       ['La production', 'Casting, décors, droits étendus'],
@@ -117,7 +117,7 @@ const DEROULE = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Chaque projet est devisé après un premier échange, selon le lieu et le format. Le devis est ferme : ce qui est écrit est tenu.',
+    r: 'Chaque projet est devisé après un premier échange, selon le lieu et le format. Le devis est ferme, sans surprise ensuite.',
   },
   {
     q: 'Qu’attendez-vous de nous ?',
