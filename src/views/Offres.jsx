@@ -134,7 +134,7 @@ const QUESTIONS = [
   },
   {
     q: 'Peut-on ajuster le film après livraison ?',
-    r: 'Deux séries de retouches sont incluses dans chaque offre. Au-delà, nous chiffrons simplement.',
+    r: 'Deux séries de retouches sont incluses dans chaque offre.',
   },
 ]
 
