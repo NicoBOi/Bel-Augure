@@ -146,11 +146,41 @@ const DETAIL_BG = {
   dashed: '',
 }
 
+// Planches : en attendant les stills étalonnés de chaque format, une
+// matière cinéma sombre propre à chaque offre, teintée de sa gamme.
+const STILLS = {
+  light: 'bg-[linear-gradient(135deg,#3a322a,#1a1512_62%)]',
+  gold: 'bg-[linear-gradient(135deg,#4a3d28,#1a1512_66%)]',
+  dark: 'bg-[linear-gradient(135deg,#241d17,#0e0b09_72%)]',
+  greige: 'bg-[linear-gradient(135deg,#4c4436,#1a1512_66%)]',
+  dashed: 'bg-[linear-gradient(135deg,#2e2820,#1a1512_62%)]',
+}
+
+// Mosaïque éditoriale : rangées asymétriques, Sur Mesure centrée en pied.
+const SPANS = {
+  'Prélude': 'md:col-span-5',
+  'Signature': 'md:col-span-7',
+  'Héritage': 'md:col-span-7',
+  'Saisons': 'md:col-span-5',
+  'Sur Mesure': 'md:col-span-6 md:col-start-4',
+}
+
 export default function Offres({ setDark }) {
   const ref = useReveal(0.35)
   const [active, setActive] = useState(null)
   // Point d'or qui respire tant que la vidéo d'exemple n'a pas démarré
   const [videoReady, setVideoReady] = useState(false)
+  // Planches éveillées : la boucle vidéo d'une planche se monte au premier
+  // survol et reste en place, elle fond par-dessus le still.
+  const [awake, setAwake] = useState(() => new Set())
+
+  const wake = (name) =>
+    setAwake((prev) => {
+      if (prev.has(name)) return prev
+      const next = new Set(prev)
+      next.add(name)
+      return next
+    })
 
   useEffect(() => {
     setVideoReady(false)
@@ -322,30 +352,54 @@ export default function Offres({ setDark }) {
         </p>
       </div>
 
-      {/* La carte de la maison : chaque format est une grande ligne,
-          nom en didone, l'essentiel en une phrase, le délai en marge.
-          Même geste éditorial que la filmographie. */}
-      <ul aria-label="Les offres" className="reveal-up mt-8 lg:mt-10" style={{ '--d': '0.25s' }}>
+      {/* Les planches : une image 16:9 par format, le nom gravé dessus.
+          Le survol éveille la boucle vidéo, qui fond par-dessus le still. */}
+      <ul
+        aria-label="Les offres"
+        className="reveal-up mt-8 grid gap-5 md:grid-cols-12 lg:mt-10"
+        style={{ '--d': '0.25s' }}
+      >
         {TIERS.map((tier) => (
-          <li key={tier.name} className="border-b border-encre/10 first:border-t">
+          <li key={tier.name} className={SPANS[tier.name]}>
             <button
               type="button"
               onClick={() => setActive(tier)}
-              className="group grid w-full cursor-pointer items-baseline gap-x-8 gap-y-2 py-6 text-left transition-colors duration-500 hover:bg-sable/30 md:grid-cols-12 md:py-7"
+              onMouseEnter={() => wake(tier.name)}
+              onFocus={() => wake(tier.name)}
+              className="group relative block aspect-[16/9] w-full cursor-pointer overflow-hidden rounded-3xl text-left"
             >
-              <span className="font-display text-[clamp(1.9rem,3.2vw,2.9rem)] leading-[1.1] tracking-[0.04em] text-encre transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 md:col-span-4">
-                {tier.name}
-                <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  .
-                </span>
-              </span>
+              {/* Still étalonné (matière d'attente) : respire au survol */}
+              <span
+                aria-hidden="true"
+                className={`absolute inset-0 transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${STILLS[tier.tone]}`}
+              />
+              {awake.has(tier.name) && (
+                <VimeoBackground
+                  id={VIMEO_ID}
+                  title={`Boucle ${tier.name}`}
+                  className="absolute inset-0 h-full w-full"
+                />
+              )}
+              {/* Voile bas : assied le nom sur l'image */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-encre/75 via-encre/10 to-transparent"
+              />
 
-              <span className="text-[13px] font-light leading-[1.8] text-encre/75 md:col-span-6">
-                {tier.specs.map(([, value]) => value).join(' · ')}
-              </span>
-
-              <span className="text-[10px] font-normal uppercase tracking-[0.18em] text-grege md:col-span-2 md:justify-self-end md:text-right">
+              <span className="absolute right-6 top-5 text-[9px] font-normal uppercase tracking-[0.22em] text-sable/65">
                 {tier.meta}
+              </span>
+
+              <span className="absolute inset-x-0 bottom-0 p-6 md:p-7">
+                <span className="block font-display text-[clamp(1.7rem,2.6vw,2.5rem)] leading-[1.08] tracking-[0.04em] text-creme">
+                  {tier.name}
+                  <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    .
+                  </span>
+                </span>
+                <span className="mt-2 block text-[11.5px] font-light leading-[1.7] text-sable/85">
+                  {tier.specs.map(([, value]) => value).join(' · ')}
+                </span>
               </span>
             </button>
           </li>
