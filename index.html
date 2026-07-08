@@ -93,7 +93,9 @@
             veil.style.display = 'none'
           } else {
             requestAnimationFrame(function () {
-              document.getElementById('veil-static-bar').style.transform = 'scaleX(1)'
+              // React peut avoir déjà remplacé le voile statique par le sien
+              var bar = document.getElementById('veil-static-bar')
+              if (bar) bar.style.transform = 'scaleX(1)'
             })
           }
         })()
