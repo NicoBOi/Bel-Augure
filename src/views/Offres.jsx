@@ -115,15 +115,16 @@ const QUESTIONS = [
   },
 ]
 
-// Chaque offre garde la couleur de gamme de ses anciennes cartes, portée
-// par un cartouche devant le nom : sable, or, encre, grège, et le trait
-// pointillé pour Sur Mesure. Le nom reste en encre, pleine lisibilité.
-const CHIPS = {
-  light: 'bg-sable border border-encre/15',
-  gold: 'bg-or',
-  dark: 'bg-encre',
-  greige: 'bg-grege',
-  dashed: 'border border-dashed border-encre/50',
+// Chaque nom porte la couleur de sa gamme, assombrie pour rester pleine
+// sur le crème : encre pour Héritage, or profond pour Signature, bronze
+// doux pour Prélude, grège pour Saisons. Sur Mesure se signale par son
+// filet pointillé.
+const NAME_COLORS = {
+  dark: 'text-encre',
+  gold: 'text-[#9c7f4e]',
+  light: 'text-[#8f7d5f]',
+  greige: 'text-grege',
+  dashed: 'text-encre/75',
 }
 
 // Planches : en attendant les stills étalonnés de chaque format, une
@@ -207,22 +208,17 @@ export default function Offres({ setDark }) {
                     tier.minor ? 'py-3.5 md:py-4' : 'py-5 md:py-6'
                   }`}
                 >
-                  <span className="flex items-center gap-4">
-                    {/* Cartouche de gamme : il s'étire quand l'offre est en focus */}
-                    <span
-                      aria-hidden="true"
-                      className={`block shrink-0 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        tier.minor
-                          ? `h-2.5 ${focused ? 'w-7' : 'w-4 opacity-70'}`
-                          : `h-3 ${focused ? 'w-9' : 'w-5 opacity-70'}`
-                      } ${CHIPS[tier.tone]}`}
-                    />
+                  <span className="flex items-baseline">
                     <span
                       className={`block font-display leading-[1.1] tracking-[0.04em] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                         tier.minor
                           ? 'text-[clamp(1.15rem,1.5vw,1.45rem)]'
                           : 'text-[clamp(1.7rem,2.4vw,2.3rem)]'
-                      } ${focused ? 'translate-x-1 text-encre' : 'text-encre/55'}`}
+                      } ${NAME_COLORS[tier.tone]} ${
+                        tier.tone === 'dashed'
+                          ? 'underline decoration-encre/40 decoration-dashed decoration-1 underline-offset-8'
+                          : ''
+                      } ${focused ? 'translate-x-2 opacity-100' : 'opacity-65'}`}
                     >
                       {tier.name}
                       <span
