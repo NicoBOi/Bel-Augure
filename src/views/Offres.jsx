@@ -97,7 +97,7 @@ const TIERS = [
 ]
 
 // Rareté réelle du studio : à tenir à jour à la main au fil des signatures.
-const CRENEAUX_RESTANTS = 'Trois créneaux restants pour 2026'
+const CRENEAUX_RESTANTS = 'Trois créneaux restent pour 2026'
 
 // Le déroulé, en trois temps : ce que le client veut savoir avant d'écrire.
 const DEROULE = [
@@ -353,25 +353,15 @@ export default function Offres({ setDark }) {
               </span>
             </span>
           </h2>
-          <p
-            className="reveal-up mt-4 text-[11px] font-normal uppercase tracking-[0.2em] text-encre/70 lg:hidden"
-            style={{ '--d': '0.22s' }}
-          >
-            Neuf films par an — {CRENEAUX_RESTANTS.toLowerCase()}
-            <span className="text-or">.</span>
-          </p>
         </div>
 
-        <div className="reveal-up hidden text-right lg:block" style={{ '--d': '0.25s' }}>
-          <p className="max-w-[34ch] text-[12px] font-light leading-[1.8] text-grege">
-            Nous tournons pour les hôtels rares, les maisons de soin, les
-            domaines et la cosmétique.
-          </p>
-          <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-encre/70">
-            Neuf films par an — {CRENEAUX_RESTANTS.toLowerCase()}
-            <span className="text-or">.</span>
-          </p>
-        </div>
+        <p
+          className="reveal-up hidden max-w-[34ch] text-right text-[12px] font-light leading-[1.8] text-grege lg:block"
+          style={{ '--d': '0.25s' }}
+        >
+          Nous tournons pour les hôtels rares, les maisons de soin, les
+          domaines et la cosmétique.
+        </p>
       </div>
 
       {/* Les cinq formats en cases : Héritage au centre, Signature en or */}
@@ -467,8 +457,16 @@ export default function Offres({ setDark }) {
         ))}
       </ul>
 
+      {/* La rareté, posée comme une déclaration — pas comme un badge */}
+      <p className="reveal-up mx-auto mt-20 max-w-3xl text-center font-display text-[clamp(1.4rem,2.2vw,2rem)] leading-[1.5] text-encre">
+        Neuf films par an, pas un de plus.
+        <br />
+        {CRENEAUX_RESTANTS}
+        <span className="text-or">.</span>
+      </p>
+
       {/* Le déroulé et les questions : rassurer l'hésitant avant l'email */}
-      <div className="mt-20 grid gap-14 border-t border-encre/10 pt-14 lg:grid-cols-12 lg:gap-8">
+      <div className="mt-16 grid gap-14 border-t border-encre/10 pt-14 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
           <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
             Comment ça se passe
