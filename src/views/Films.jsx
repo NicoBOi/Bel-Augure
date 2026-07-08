@@ -84,47 +84,74 @@ export default function Films({ setDark }) {
   }, [selected])
 
   // Lecture d'un projet : le détail se déploie dans la page, sur l'encre.
+  // Lecture d'un projet : même architecture que le détail d'une offre —
+  // grand titre, vidéo légendée à gauche, récit et navigation à droite.
   if (selected) {
     return (
       <section
         key={selected.id}
         aria-label={selected.title}
-        className="view-enter flex h-full flex-col justify-center px-6 pb-14 pt-28 max-md:overflow-y-auto md:justify-start md:pb-[9vh] md:px-16"
+        className="view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
       >
         <BackLink label="Tous les films" onClick={closeProject} light />
 
-        <div className="mt-10 grid items-end gap-10 md:mt-auto lg:grid-cols-12 lg:gap-8">
-          {/* Zone média : la boucle vidéo, point d'or en attendant qu'elle joue */}
-          <div className="lg:col-span-7">
-            <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-creme/5">
-              {!videoReady && (
-                <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
-                  <span className="dot-breathe block h-2 w-2 rounded-full bg-or" />
-                </span>
-              )}
-              <VimeoBackground
-                id={VIMEO_ID}
-                title={`Film ${selected.title}`}
-                onPlaying={() => setVideoReady(true)}
-                className="absolute inset-0 h-full w-full"
-              />
-            </div>
-          </div>
+        <div className="mt-8 md:mt-auto">
+          <h2 className="font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] text-creme">
+            {selected.title}
+            <span className="text-or">.</span>
+          </h2>
+          <p className="mt-3 text-[13px] font-light tracking-[0.08em] text-sable/75">
+            {selected.world}
+          </p>
 
-          <div className="lg:col-span-4 lg:col-start-9">
-            <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-sable/75">
-              {selected.world}
-            </p>
-            <h3 className="mt-6 font-display text-[clamp(1.8rem,3vw,2.8rem)] leading-[1.2] text-creme">
-              {selected.title}
-              <span className="text-or">.</span>
-            </h3>
-            <p className="mt-3 text-[12px] font-light tracking-[0.08em] text-sable/75">
-              {selected.format}
-            </p>
-            <p className="mt-8 max-w-[44ch] text-[14px] font-light leading-[1.9] text-sable">
-              {selected.desc}
-            </p>
+          <div className="mt-8 grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
+            {/* Zone média : la boucle vidéo, point d'or en attendant qu'elle joue */}
+            <div className="lg:col-span-7">
+              <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre">
+                {!videoReady && (
+                  <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+                    <span className="dot-breathe block h-2 w-2 rounded-full bg-or" />
+                  </span>
+                )}
+                <VimeoBackground
+                  id={VIMEO_ID}
+                  title={`Film ${selected.title}`}
+                  onPlaying={() => setVideoReady(true)}
+                  className="absolute inset-0 h-full w-full"
+                />
+              </div>
+              <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-sable/70">
+                {selected.format}
+              </p>
+            </div>
+
+            <div className="lg:col-span-4 lg:col-start-9">
+              <p className="max-w-[44ch] text-[13.5px] font-light leading-[1.85] text-creme/80">
+                {selected.desc}
+              </p>
+
+              <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 border-t border-creme/15 pt-6">
+                <a
+                  href={`mailto:nico@belaugure.studio?subject=${encodeURIComponent(`Échange · ${selected.title}`)}`}
+                  className="cta cta-light inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
+                >
+                  Écrire au studio
+                </a>
+                <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Autres films">
+                  {PROJECTS.filter((p) => p.id !== selected.id).map((project) => (
+                    <li key={project.id}>
+                      <button
+                        type="button"
+                        onClick={() => openProject(project)}
+                        className="nav-link cursor-pointer py-2 text-[12px] font-light text-sable/70 transition-colors duration-500 hover:text-creme"
+                      >
+                        <span className="nav-label">{project.title}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
