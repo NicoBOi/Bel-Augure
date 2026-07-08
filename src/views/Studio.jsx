@@ -60,7 +60,7 @@ export default function Studio() {
           className="reveal-up font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:col-span-7"
           style={{ '--d': '0.42s' }}
         >
-          Neuf films par an. Nous préférons en faire peu, et bien
+          Nous préférons faire peu de films, et les faire bien
           <span className="text-or">.</span>
         </p>
 

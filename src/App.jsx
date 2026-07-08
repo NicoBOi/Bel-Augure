@@ -39,7 +39,7 @@ const DESCRIPTIONS = {
   films:
     'Les films de Bel Augure : hôtellerie rare, thermes, domaines, cosmétique. Tournés à la lumière du jour, depuis Bordeaux.',
   studio:
-    'Deux artisans, neuf films par an. Bel Augure fait du cinéma pour le bien-être d’exception, depuis Bordeaux.',
+    'Deux artisans, peu de films, bien faits. Bel Augure fait du cinéma pour le bien-être d’exception, depuis Bordeaux.',
   offres:
     'Formats, prix, délais : tout est écrit. Films signature de 7 000 € à 25 000 € HT, livrés de quatre à huit semaines.',
   contact:
