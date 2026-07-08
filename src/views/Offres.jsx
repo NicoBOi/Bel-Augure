@@ -349,8 +349,8 @@ export default function Offres({ setDark }) {
           className="reveal-up hidden max-w-[34ch] text-right text-[12px] font-light leading-[1.8] text-grege lg:block"
           style={{ '--d': '0.25s' }}
         >
-          Du sanctuaire intimiste à la grande maison bien-être, chaque lieu a
-          son exigence.
+          Du sanctuaire intimiste à la grande maison du bien-être, chaque
+          lieu a son exigence.
         </p>
       </div>
 
