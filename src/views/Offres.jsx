@@ -108,7 +108,7 @@ const DEROULE = [
     n: '02',
     titre: 'Le tournage',
     texte:
-      "De l'équipement cinéma, une équipe à taille humaine. Votre maison continue de vivre, vos hôtes ne sont pas dérangés.",
+      "De l'équipement cinéma, une équipe à taille humaine. Chaque plan est composé sur place, à votre rythme.",
   },
   {
     n: '03',
