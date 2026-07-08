@@ -1,67 +1,42 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
-import VimeoBackground from '../components/VimeoBackground.jsx'
 
-// Vidéo d'exemple montrée dans chaque offre en attendant les films du
-// studio : identifiant Vimeo, lu en mode background.
-const VIMEO_ID = '961941216'
-
-const TIERS = [
+// La carte de la maison : cinq formats, deux lignes chacun, rien d'autre.
+// Les trois grands d'abord, les deux formats complémentaires en retrait.
+const OFFRES = [
   {
     name: 'Héritage',
-    desc: 'Trois journées, des entretiens, vos archives. Pour les maisons qui se transmettent.',
-    specs: [
-      ['Le film', 'Deux à trois minutes, écrit comme un récit'],
-      ['Le tournage', "Trois journées, jusqu'à trois lieux"],
-      ['Les déclinaisons', 'Des réseaux au master 4K cinéma'],
+    lines: [
+      'Un film de deux à trois minutes, écrit comme un récit.',
+      'Trois journées de tournage. Livré en huit semaines.',
     ],
-    meta: 'Livré en huit semaines',
-    tone: 'dark',
   },
   {
     name: 'Signature',
-    desc: "Deux journées de tournage. Le film central d'une maison : site, accueil, salons. C'est le cœur de notre métier, et la raison du nom.",
-    specs: [
-      ['Le film', '90 secondes à 2 minutes'],
-      ['Le tournage', "Deux journées, jusqu'à deux lieux"],
-      ['Les déclinaisons', 'Écran, mobile et réseaux'],
+    lines: [
+      "Le film central d'une maison, de 90 secondes à 2 minutes.",
+      'Deux journées de tournage. Livré en six semaines.',
     ],
-    meta: 'Livré en six semaines',
-    tone: 'gold',
   },
   {
     name: 'Prélude',
-    desc: "Une journée de tournage, un film d'une minute. Assez pour voir ce que votre maison donne à l'écran.",
-    specs: [
-      ['Le film', '45 à 60 secondes'],
-      ['Le tournage', 'Une journée, un lieu'],
-      ['Les déclinaisons', 'Écran et mobile'],
+    lines: [
+      'Un premier film, de 45 à 60 secondes.',
+      'Une journée de tournage. Livré en quatre semaines.',
     ],
-    meta: 'Livré en quatre semaines',
-    tone: 'light',
   },
   {
     name: 'Saisons',
-    desc: "Quatre films courts, un par saison, dans la même écriture. Un seul interlocuteur, toute l'année.",
-    specs: [
-      ['Les films', 'Quatre par an, 15 à 30 secondes'],
-      ['Le tournage', 'Une demi-journée par saison'],
-      ['Les déclinaisons', 'Deux formats par film'],
-    ],
-    meta: 'Engagement annuel',
     minor: true,
-    tone: 'greige',
+    lines: [
+      'Quatre films courts par an, un par saison.',
+      'Une demi-journée de tournage à chaque saison.',
+    ],
   },
   {
     name: 'Sur Mesure',
-    desc: 'Plusieurs lieux, plusieurs films, une saison entière de tournage. Nous écrivons le périmètre ensemble.',
-    specs: [
-      ['Le projet', 'Plusieurs films, formats longs'],
-      ['La production', 'Casting, décors, droits étendus'],
-    ],
-    meta: 'Sur devis',
     minor: true,
-    tone: 'dashed',
+    lines: ['Campagnes, formats longs, casting et décors.', 'Sur devis.'],
   },
 ]
 
@@ -140,23 +115,6 @@ const STILLS = {
 
 export default function Offres({ setDark }) {
   const ref = useReveal(0.35)
-  // Diptyque : l'offre survolée à gauche habite le panneau de droite.
-  // Sa boucle vidéo se monte au premier passage et reste en place.
-  const [focusTier, setFocusTier] = useState(TIERS[0])
-  const [awake, setAwake] = useState(() => new Set([TIERS[0].name]))
-
-  const wake = (name) =>
-    setAwake((prev) => {
-      if (prev.has(name)) return prev
-      const next = new Set(prev)
-      next.add(name)
-      return next
-    })
-
-  const focusOn = (tier) => {
-    setFocusTier(tier)
-    wake(tier.name)
-  }
 
   useEffect(() => {
     setDark?.(false)
@@ -185,104 +143,36 @@ export default function Offres({ setDark }) {
         </p>
       </div>
 
-      {/* Le diptyque : les noms à gauche comme un sommaire, et à droite un
-          grand panneau qui prend la matière de l'offre survolée — boucle
-          vidéo, specs posées dessus. On choisit comme en galerie. */}
-      <div
-        className="reveal-up mt-8 grid items-stretch gap-10 lg:mt-10 lg:grid-cols-12 lg:gap-8"
-        style={{ '--d': '0.25s' }}
-      >
-        <ul aria-label="Les offres" className="flex flex-col justify-center lg:col-span-4">
-          {TIERS.map((tier) => {
-            const focused = focusTier.name === tier.name
-            return (
-              <li key={tier.name} className="border-b border-encre/10 first:border-t">
-                <button
-                  type="button"
-                  onMouseEnter={() => focusOn(tier)}
-                  onFocus={() => focusOn(tier)}
-                  className={`group block w-full cursor-default text-left ${
-                    tier.minor ? 'py-3.5 md:py-4' : 'py-5 md:py-6'
-                  }`}
-                >
-                  <span className="flex items-baseline">
-                    <span
-                      className={`block font-display leading-[1.1] tracking-[0.04em] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        tier.minor
-                          ? 'text-[clamp(1.15rem,1.5vw,1.45rem)]'
-                          : 'text-[clamp(1.7rem,2.4vw,2.3rem)]'
-                      } ${NAME_COLORS[tier.tone]} ${
-                        tier.tone === 'dashed'
-                          ? 'underline decoration-encre/40 decoration-dashed decoration-1 underline-offset-8'
-                          : ''
-                      } ${focused ? 'translate-x-2 opacity-100' : 'opacity-65'}`}
-                    >
-                      {tier.name}
-                      <span
-                        className={`text-or transition-opacity duration-300 ${
-                          focused ? 'opacity-100' : 'opacity-0'
-                        }`}
-                      >
-                        .
-                      </span>
-                    </span>
-                  </span>
-                  {/* Sur mobile, pas de panneau : l'essentiel vit sous le nom */}
-                  <span className="mt-1.5 block text-[12px] font-light leading-[1.7] text-grege lg:hidden">
-                    {tier.specs.map(([, value]) => value).join(' · ')}
-                  </span>
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-
-        <div
-          aria-hidden="true"
-          className="relative hidden min-h-[460px] overflow-hidden rounded-3xl lg:col-span-8 lg:block"
-        >
-          {/* Matières et boucles : toutes montées, seule celle en focus est visible */}
-          {TIERS.map((tier) => (
-            <div
-              key={tier.name}
-              className={`absolute inset-0 transition-opacity duration-700 ${
-                focusTier.name === tier.name ? 'opacity-100' : 'opacity-0'
-              } ${STILLS[tier.tone]}`}
+      {/* La carte du soir : tout centré, un nom, deux lignes, un filet
+          d'or entre chaque service. Rien à survoler, rien à ouvrir. */}
+      <ul aria-label="Les offres" className="mx-auto mt-14 w-full max-w-2xl text-center lg:mt-16">
+        {OFFRES.map((offre, i) => (
+          <li
+            key={offre.name}
+            className="reveal-up"
+            style={{ '--d': `${0.15 + i * 0.08}s` }}
+          >
+            {i > 0 && (
+              <span aria-hidden="true" className="mx-auto my-9 block h-px w-12 bg-or/70 md:my-10" />
+            )}
+            <h3
+              className={`font-display leading-[1.15] ${
+                offre.minor
+                  ? 'text-[clamp(1.35rem,1.9vw,1.8rem)] text-encre/80'
+                  : 'text-[clamp(1.9rem,3vw,2.8rem)] text-encre'
+              }`}
             >
-              {awake.has(tier.name) && (
-                <VimeoBackground
-                  id={VIMEO_ID}
-                  title={`Boucle ${tier.name}`}
-                  className="absolute inset-0 h-full w-full"
-                />
-              )}
-            </div>
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-t from-encre/80 via-encre/15 to-transparent" />
-
-          <div key={focusTier.name} className="fade-in absolute inset-x-0 bottom-0 p-10">
-            <p className="max-w-[52ch] text-[13.5px] font-light leading-[1.85] text-creme/90">
-              {focusTier.desc}
+              {offre.name}
+              <span className="text-or">.</span>
+            </h3>
+            <p className="mx-auto mt-3 max-w-[52ch] text-[13.5px] font-light leading-[1.9] text-encre/75">
+              {offre.lines[0]}
+              <br />
+              {offre.lines[1]}
             </p>
-            <div className="mt-6">
-              {focusTier.specs.map(([label, value]) => (
-                <div
-                  key={label}
-                  className="flex items-baseline gap-6 border-t border-creme/12 py-3 first:border-t-0"
-                >
-                  <span className="w-40 shrink-0 text-[9px] font-normal uppercase tracking-[0.28em] text-sable/60">
-                    {label}
-                  </span>
-                  <span className="text-[14px] font-light text-creme">{value}</span>
-                </div>
-              ))}
-            </div>
-            <p className="mt-6 text-[10px] font-normal uppercase tracking-[0.2em] text-sable/65">
-              {focusTier.meta}
-            </p>
-          </div>
-        </div>
-      </div>
+          </li>
+        ))}
+      </ul>
 
       {/* Le déroulé et les questions : rassurer l'hésitant avant l'email */}
       <div className="mt-16 grid gap-14 border-t border-encre/10 pt-14 lg:grid-cols-12 lg:gap-8">
