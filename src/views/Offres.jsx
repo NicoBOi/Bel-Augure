@@ -96,9 +96,6 @@ const TIERS = [
   },
 ]
 
-// Rareté réelle du studio : à tenir à jour à la main au fil des signatures.
-const CRENEAUX_RESTANTS = 'Trois créneaux restent pour 2026'
-
 // Le déroulé, en trois temps : ce que le client veut savoir avant d'écrire.
 const DEROULE = [
   {
@@ -111,7 +108,7 @@ const DEROULE = [
     n: '02',
     titre: 'Le tournage',
     texte:
-      'À la lumière du jour, en équipe légère. Votre maison continue de vivre, vos hôtes ne sont pas dérangés.',
+      "De l'équipement cinéma, une équipe à taille humaine. Votre maison continue de vivre, vos hôtes ne sont pas dérangés.",
   },
   {
     n: '03',
@@ -133,7 +130,7 @@ const QUESTIONS = [
   },
   {
     q: 'S’il pleut le jour du tournage ?',
-    r: 'Nous tournons à la lumière du jour : un jour de repli est posé ensemble au calendrier, sans surcoût.',
+    r: 'Un jour de repli est posé ensemble au calendrier, sans surcoût.',
   },
   {
     q: 'Peut-on ajuster le film après livraison ?',
@@ -446,14 +443,6 @@ export default function Offres({ setDark }) {
           </li>
         ))}
       </ul>
-
-      {/* La rareté, posée comme une déclaration — pas comme un badge */}
-      <p className="reveal-up mx-auto mt-20 max-w-3xl text-center font-display text-[clamp(1.4rem,2.2vw,2rem)] leading-[1.5] text-encre">
-        Neuf films par an, pas un de plus.
-        <br />
-        {CRENEAUX_RESTANTS}
-        <span className="text-or">.</span>
-      </p>
 
       {/* Le déroulé et les questions : rassurer l'hésitant avant l'email */}
       <div className="mt-16 grid gap-14 border-t border-encre/10 pt-14 lg:grid-cols-12 lg:gap-8">
