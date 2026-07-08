@@ -210,7 +210,7 @@ export default function Offres({ setDark }) {
                         {label}
                       </p>
                       <p
-                        className={`mt-1 font-display text-[17px] leading-[1.35] ${
+                        className={`mt-1.5 text-[14px] font-normal leading-[1.5] ${
                           ink ? 'text-creme' : 'text-encre'
                         }`}
                       >
@@ -368,7 +368,7 @@ export default function Offres({ setDark }) {
                         {label}
                       </span>
                       <span
-                        className={`mt-1 block font-display text-[15.5px] leading-[1.35] ${
+                        className={`mt-1.5 block text-[13px] font-normal leading-[1.5] ${
                           ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
                         }`}
                       >
