@@ -28,16 +28,24 @@ const TITLES = {
   contact: 'Contact · Bel Augure',
 }
 
+// La vue vit dans le hash (#offres, #studio…) : un rafraîchissement ou un
+// lien partagé retombe sur la même page, pas sur l'accueil.
+const viewFromHash = () => {
+  const h = window.location.hash.slice(1)
+  return VIEWS[h] ? h : 'accueil'
+}
+
 export default function App() {
-  const [view, setView] = useState('accueil')
+  const [view, setView] = useState(viewFromHash)
   // L'accueil et la lecture d'un film vivent dans l'encre : le fond, le
   // header et le contenu transitionnent ensemble, sans overlay.
-  const [dark, setDark] = useState(true)
+  const [dark, setDark] = useState(() => viewFromHash() === 'accueil')
   // Voile d'ouverture : l'encre porte le logo le temps que le film de
   // fond démarre. Il se lève dès que la vidéo joue (minimum une seconde
   // de présence), ou au bout de 2,6 s si elle tarde — jamais d'attente
-  // infinie, jamais de player à moitié chargé à l'écran.
-  const [veiled, setVeiled] = useState(true)
+  // infinie, jamais de player à moitié chargé à l'écran. Il n'a de sens
+  // que sur l'accueil : ailleurs, la page arrive sans attente.
+  const [veiled, setVeiled] = useState(() => viewFromHash() === 'accueil')
   const [heroReady, setHeroReady] = useState(false)
   const bootAt = useRef(performance.now())
   // Calque média du héros : l'accueil en scrute l'opacité pendant le
@@ -50,7 +58,19 @@ export default function App() {
     // de crème (l'effet de la vue remettrait dark ensuite, trop tard).
     setDark(next === 'accueil')
     setView(next)
+    window.history.replaceState(null, '', next === 'accueil' ? window.location.pathname : `#${next}`)
   }
+
+  // Hash modifié à la main ou navigation historique : on suit.
+  useEffect(() => {
+    const onHash = () => {
+      const next = viewFromHash()
+      setDark(next === 'accueil')
+      setView(next)
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
 
   useEffect(() => {
     if (!veiled) return
