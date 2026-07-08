@@ -19,7 +19,7 @@ export default function Contact({ onNavigate }) {
         form.email ? `\n${form.email}` : ''
       }`,
     )
-    window.location.href = `mailto:nico@belaugure.studio?subject=${subject}&body=${body}`
+    window.location.href = `mailto:nicolas@belaugure.studio?subject=${subject}&body=${body}`
     setSent(true)
     setTimeout(() => setSent(false), 5000)
   }
@@ -56,7 +56,7 @@ export default function Contact({ onNavigate }) {
             style={{ '--d': '0.12s' }}
           >
             Dites-nous qui vous êtes, où vous êtes, ce que vous voulez
-            montrer. Nico lit chaque message et répond sous deux jours.
+            montrer. Nicolas lit chaque message et répond sous deux jours.
           </p>
 
           <p
@@ -64,10 +64,10 @@ export default function Contact({ onNavigate }) {
             style={{ '--d': '0.08s' }}
           >
             <a
-              href="mailto:nico@belaugure.studio"
+              href="mailto:nicolas@belaugure.studio"
               className="nav-link text-encre/80 transition-colors duration-500 hover:text-encre"
             >
-              <span className="nav-label">nico@belaugure.studio</span>
+              <span className="nav-label">nicolas@belaugure.studio</span>
             </a>
           </p>
           <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.32s' }}>

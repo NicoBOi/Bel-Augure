@@ -1,13 +1,7 @@
 import { useReveal } from '../hooks/useReveal.js'
 
-const PRINCIPES = [
-  'La lumière naturelle, jamais les projecteurs.',
-  "Le son travaillé au niveau de l'image.",
-  'Neuf films par an, pas un de plus.',
-]
-
 const ARTISANS = [
-  { name: 'Nico', role: 'Direction, image, étalonnage' },
+  { name: 'Nicolas', role: 'Direction, image, étalonnage' },
   { name: 'Corentin', role: 'Montage, motion design' },
 ]
 
@@ -48,32 +42,27 @@ export default function Studio() {
         style={{ '--d': '0.3s' }}
       >
         <p>
-          Nico et Corentin. Amis depuis l'enfance, associés aujourd'hui.
-          Celui qui vous serre la main est celui qui fera le film : au
-          studio, il n'y a personne d'autre, et c'est voulu.
+          Nicolas et Corentin. Nicolas à l'image, Corentin au montage et au
+          son. Pas d'intermédiaire. Vous travaillez avec nous, du début à la
+          fin.
         </p>
         <p>
-          Nous avons créé Bel Augure à Bordeaux parce que le bien-être
-          d'exception méritait du cinéma, et que personne ne lui en faisait.
-          Nous tournons à la lumière du jour. Nous prenons le temps. Le film
-          se regarde encore dans trois ans.
+          Nous avons fondé Bel Augure à Bordeaux pour filmer le bien-être
+          d'exception comme il le mérite. Nous repérons les lieux avant de
+          tourner. Nous attendons la bonne lumière. Nous soignons le son
+          autant que l'image.
         </p>
       </div>
 
-      {/* La base partagée : les principes en exergue, les artisans en face */}
+      {/* La base partagée : le credo en exergue, les artisans en face */}
       <div className="grid gap-10 md:grid-cols-12 md:items-end">
-        <blockquote className="reveal-up md:col-span-7" style={{ '--d': '0.42s' }}>
-          <p className="font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85">
-            <span aria-hidden="true" className="text-or">«&nbsp;</span>
-            {PRINCIPES.map((principe, i) => (
-              <span key={principe}>
-                {principe}
-                {i < PRINCIPES.length - 1 && <br />}
-              </span>
-            ))}
-            <span aria-hidden="true" className="text-or">&nbsp;»</span>
-          </p>
-        </blockquote>
+        <p
+          className="reveal-up font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:col-span-7"
+          style={{ '--d': '0.42s' }}
+        >
+          Neuf films par an. Nous préférons en faire peu, et bien
+          <span className="text-or">.</span>
+        </p>
 
         <div className="reveal-up md:col-span-4 md:col-start-9" style={{ '--d': '0.5s' }}>
           <span aria-hidden="true" className="mb-6 block h-px w-10 bg-or" />

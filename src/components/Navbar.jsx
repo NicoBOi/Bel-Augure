@@ -123,12 +123,12 @@ export default function Navbar({ activeView, onNavigate, dark }) {
 
         <div className="hidden justify-self-end md:block">
           <a
-            href="mailto:nico@belaugure.studio"
+            href="mailto:nicolas@belaugure.studio"
             className={`nav-link text-[12px] tracking-[0.08em] transition-colors duration-500 ${
               dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
             }`}
           >
-            <span className="nav-label">nico@belaugure.studio</span>
+            <span className="nav-label">nicolas@belaugure.studio</span>
           </a>
         </div>
       </div>
@@ -155,10 +155,10 @@ export default function Navbar({ activeView, onNavigate, dark }) {
             </ul>
             <div className={`mt-8 border-t pt-6 ${dark ? 'border-creme/10' : 'border-encre/10'}`}>
               <a
-                href="mailto:nico@belaugure.studio"
+                href="mailto:nicolas@belaugure.studio"
                 className={`text-[12px] tracking-[0.08em] ${dark ? 'text-creme/75' : 'text-encre/80'}`}
               >
-                nico@belaugure.studio
+                nicolas@belaugure.studio
               </a>
             </div>
           </nav>

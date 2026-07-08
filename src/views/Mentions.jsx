@@ -7,7 +7,7 @@ const BLOCS = [
     lignes: [
       'Bel Augure, [forme juridique et capital à compléter]',
       '[SIRET à compléter] · [adresse du siège à compléter], Bordeaux',
-      'Directeur de la publication : Nico (nico@belaugure.studio)',
+      'Directeur de la publication : Nicolas (nicolas@belaugure.studio)',
     ],
   },
   {
@@ -25,7 +25,7 @@ const BLOCS = [
     lignes: [
       'Le formulaire de contact compose un email dans votre messagerie : aucune donnée n’est enregistrée sur un serveur du site. Les emails reçus servent uniquement à répondre à votre demande et ne sont jamais transmis à des tiers.',
       'Ce site ne dépose aucun cookie de suivi.',
-      'Pour exercer vos droits (accès, rectification, suppression) : nico@belaugure.studio.',
+      'Pour exercer vos droits (accès, rectification, suppression) : nicolas@belaugure.studio.',
     ],
   },
 ]

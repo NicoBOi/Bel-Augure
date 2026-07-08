@@ -295,7 +295,7 @@ export default function Offres({ setDark }) {
 
               <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
                 <a
-                  href={`mailto:nico@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
+                  href={`mailto:nicolas@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
                   className={`cta inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] ${
                     ink ? 'cta-light' : ''
                   }`}
