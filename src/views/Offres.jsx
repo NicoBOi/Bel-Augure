@@ -113,15 +113,15 @@ const QUESTIONS = [
   },
 ]
 
-// Chaque offre garde la couleur de gamme de ses anciennes cartes : l'or
-// pour Signature, l'encre pleine pour Héritage, le grège pour Saisons,
-// le trait pointillé pour Sur Mesure. Le nom la porte.
-const NAME_TONES = {
-  light: { focus: 'text-encre/70', idle: 'text-encre/35' },
-  gold: { focus: 'text-or', idle: 'text-or/50' },
-  dark: { focus: 'text-encre', idle: 'text-encre/40' },
-  greige: { focus: 'text-grege', idle: 'text-grege/50' },
-  dashed: { focus: 'text-encre/70', idle: 'text-encre/35' },
+// Chaque offre garde la couleur de gamme de ses anciennes cartes, portée
+// par un cartouche devant le nom : sable, or, encre, grège, et le trait
+// pointillé pour Sur Mesure. Le nom reste en encre, pleine lisibilité.
+const CHIPS = {
+  light: 'bg-sable border border-encre/15',
+  gold: 'bg-or',
+  dark: 'bg-encre',
+  greige: 'bg-grege',
+  dashed: 'border border-dashed border-encre/50',
 }
 
 // Planches : en attendant les stills étalonnés de chaque format, une
@@ -203,24 +203,27 @@ export default function Offres({ setDark }) {
                   onFocus={() => focusOn(tier)}
                   className="group block w-full cursor-default py-5 text-left md:py-6"
                 >
-                  <span
-                    className={`block font-display text-[clamp(1.7rem,2.4vw,2.3rem)] leading-[1.1] tracking-[0.04em] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      focused
-                        ? `translate-x-2 ${NAME_TONES[tier.tone].focus}`
-                        : NAME_TONES[tier.tone].idle
-                    } ${
-                      tier.tone === 'dashed'
-                        ? 'underline decoration-encre/30 decoration-dashed decoration-1 underline-offset-8'
-                        : ''
-                    }`}
-                  >
-                    {tier.name}
+                  <span className="flex items-center gap-4">
+                    {/* Cartouche de gamme : il s'étire quand l'offre est en focus */}
                     <span
-                      className={`text-or transition-opacity duration-300 ${
-                        focused ? 'opacity-100' : 'opacity-0'
+                      aria-hidden="true"
+                      className={`block h-3 shrink-0 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        focused ? 'w-9' : 'w-5 opacity-70'
+                      } ${CHIPS[tier.tone]}`}
+                    />
+                    <span
+                      className={`block font-display text-[clamp(1.7rem,2.4vw,2.3rem)] leading-[1.1] tracking-[0.04em] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        focused ? 'translate-x-1 text-encre' : 'text-encre/55'
                       }`}
                     >
-                      .
+                      {tier.name}
+                      <span
+                        className={`text-or transition-opacity duration-300 ${
+                          focused ? 'opacity-100' : 'opacity-0'
+                        }`}
+                      >
+                        .
+                      </span>
                     </span>
                   </span>
                   {/* Sur mobile, pas de panneau : l'essentiel vit sous le nom */}
@@ -273,11 +276,8 @@ export default function Offres({ setDark }) {
                 </div>
               ))}
             </div>
-            <p className="mt-6 flex items-baseline justify-between text-[10px] font-normal uppercase tracking-[0.2em] text-sable/65">
-              <span>{focusTier.meta}</span>
-              <span className="text-creme/80">
-                Découvrir<span className="text-or">.</span>
-              </span>
+            <p className="mt-6 text-[10px] font-normal uppercase tracking-[0.2em] text-sable/65">
+              {focusTier.meta}
             </p>
           </div>
         </div>
