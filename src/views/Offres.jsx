@@ -11,7 +11,6 @@ const VIMEO_ID = '961941216'
 const TIERS = [
   {
     name: 'Prélude',
-    tagline: 'Un premier film, pour commencer.',
     desc: "Une journée de tournage, un film d'une minute. Assez pour voir ce que votre maison donne à l'écran.",
     specs: [
       ['Le film', '45 à 60 secondes'],
@@ -24,7 +23,6 @@ const TIERS = [
   },
   {
     name: 'Signature',
-    tagline: 'Le film que vous montrerez partout.',
     desc: "Deux journées de tournage. Le film central d'une maison : site, accueil, salons. C'est le cœur de notre métier, et la raison du nom.",
     specs: [
       ['Le film', '90 secondes à 2 minutes'],
@@ -41,7 +39,6 @@ const TIERS = [
   },
   {
     name: 'Héritage',
-    tagline: "Trois minutes pour dire d'où vous venez.",
     desc: 'Trois journées, des entretiens, vos archives. Pour les maisons qui se transmettent.',
     specs: [
       ['Le film', 'Deux à trois minutes, écrit comme un récit'],
@@ -58,7 +55,6 @@ const TIERS = [
   },
   {
     name: 'Saisons',
-    tagline: 'Votre image, quatre fois par an.',
     desc: "Quatre films courts, un par saison, dans la même écriture. Un seul interlocuteur, toute l'année.",
     specs: [
       ['Les films', 'Quatre par an, 15 à 30 secondes'],
@@ -74,7 +70,6 @@ const TIERS = [
   },
   {
     name: 'Sur Mesure',
-    tagline: 'Votre projet, écrit ensemble.',
     desc: 'Plusieurs lieux, plusieurs films, une saison entière de tournage. Nous écrivons le périmètre ensemble.',
     specs: [
       ['Le projet', 'Plusieurs films, formats longs'],
@@ -369,14 +364,6 @@ export default function Offres({ setDark }) {
                 <span className="text-or opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   .
                 </span>
-              </span>
-
-              <span
-                className={`mt-3 text-[12px] font-light leading-[1.7] ${
-                  ['dark', 'greige'].includes(tier.tone) ? 'text-sable/75' : 'text-grege'
-                }`}
-              >
-                {tier.tagline}
               </span>
 
               {/* L'essentiel — durée, tournage, déclinaisons — posé en
