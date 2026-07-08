@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
-import BackLink from '../components/BackLink.jsx'
 import VimeoBackground from '../components/VimeoBackground.jsx'
-import VideoLoader from '../components/VideoLoader.jsx'
 
 // Vidéo d'exemple montrée dans chaque offre en attendant les films du
 // studio : identifiant Vimeo, lu en mode background.
@@ -17,7 +15,6 @@ const TIERS = [
       ['Le tournage', 'Une journée, un lieu'],
       ['Les déclinaisons', 'Écran et mobile'],
     ],
-    includes: ['Une musique choisie et licenciée', 'Deux séries de retouches incluses'],
     meta: 'Livré en quatre semaines',
     tone: 'light',
   },
@@ -28,11 +25,6 @@ const TIERS = [
       ['Le film', '90 secondes à 2 minutes'],
       ['Le tournage', "Deux journées, jusqu'à deux lieux"],
       ['Les déclinaisons', 'Écran, mobile et réseaux'],
-    ],
-    includes: [
-      'Direction artistique et repérages',
-      'Design sonore et musique licenciée',
-      'Deux séries de retouches incluses',
     ],
     meta: 'Livré en six semaines',
     tone: 'gold',
@@ -45,11 +37,6 @@ const TIERS = [
       ['Le tournage', "Trois journées, jusqu'à trois lieux"],
       ['Les déclinaisons', 'Des réseaux au master 4K cinéma'],
     ],
-    includes: [
-      'Étalonnage cinéma',
-      'Design sonore et musique licenciée',
-      'Deux séries de retouches incluses',
-    ],
     meta: 'Livré en huit semaines',
     tone: 'dark',
   },
@@ -61,10 +48,6 @@ const TIERS = [
       ['Le tournage', 'Une demi-journée par saison'],
       ['Les déclinaisons', 'Deux formats par film'],
     ],
-    includes: [
-      'Design sonore immersif, sans musique : un parti pris',
-      'Une série de retouches par film',
-    ],
     meta: 'Engagement annuel',
     tone: 'greige',
   },
@@ -74,12 +57,6 @@ const TIERS = [
     specs: [
       ['Le projet', 'Plusieurs films, formats longs'],
       ['La production', 'Casting, décors, droits étendus'],
-    ],
-    includes: [
-      'Campagnes de plusieurs films',
-      'Formats longs',
-      'Casting et décors',
-      'Droits publicitaires étendus',
     ],
     meta: 'Sur devis',
     tone: 'dashed',
@@ -136,14 +113,15 @@ const QUESTIONS = [
   },
 ]
 
-// Le détail reprend la matière de sa carte : Héritage plonge la page dans
-// l'encre, Saisons dans le grège, Signature dans l'or pâle.
-const DETAIL_BG = {
-  light: '',
-  gold: 'bg-or/45',
-  dark: 'bg-encre',
-  greige: 'bg-grege',
-  dashed: '',
+// Chaque offre garde la couleur de gamme de ses anciennes cartes : l'or
+// pour Signature, l'encre pleine pour Héritage, le grège pour Saisons,
+// le trait pointillé pour Sur Mesure. Le nom la porte.
+const NAME_TONES = {
+  light: { focus: 'text-encre/70', idle: 'text-encre/35' },
+  gold: { focus: 'text-or', idle: 'text-or/50' },
+  dark: { focus: 'text-encre', idle: 'text-encre/40' },
+  greige: { focus: 'text-grege', idle: 'text-grege/50' },
+  dashed: { focus: 'text-encre/70', idle: 'text-encre/35' },
 }
 
 // Planches : en attendant les stills étalonnés de chaque format, une
@@ -159,9 +137,6 @@ const STILLS = {
 
 export default function Offres({ setDark }) {
   const ref = useReveal(0.35)
-  const [active, setActive] = useState(null)
-  // Point d'or qui respire tant que la vidéo d'exemple n'a pas démarré
-  const [videoReady, setVideoReady] = useState(false)
   // Diptyque : l'offre survolée à gauche habite le panneau de droite.
   // Sa boucle vidéo se monte au premier passage et reste en place.
   const [focusTier, setFocusTier] = useState(TIERS[0])
@@ -181,148 +156,8 @@ export default function Offres({ setDark }) {
   }
 
   useEffect(() => {
-    setVideoReady(false)
-  }, [active])
-
-  // Le header suit la matière du détail : texte crème sur encre et grège
-  useEffect(() => {
-    setDark?.(active ? ['dark', 'greige'].includes(active.tone) : false)
-  }, [active, setDark])
-
-  // Détail : la vidéo d'exemple prend la scène, le périmètre à côté.
-  // La page entière se teinte de la matière de la carte cliquée.
-  if (active) {
-    const ink = ['dark', 'greige'].includes(active.tone)
-    return (
-      <section
-        key={active.name}
-        aria-label={`Offre ${active.name}`}
-        className={`view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16 ${DETAIL_BG[active.tone]}`}
-      >
-        <BackLink label="Toutes les offres" onClick={() => setActive(null)} light={ink} />
-
-        <div className="mt-8 md:mt-auto">
-          <h2
-            className={`font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] ${
-              ink ? 'text-creme' : 'text-encre'
-            }`}
-          >
-            {active.name}
-            <span className="text-or">.</span>
-          </h2>
-
-          <div className="mt-8 grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-7">
-              <div
-                className={`relative aspect-video w-full overflow-hidden rounded-3xl bg-encre ${
-                  ink ? 'border border-creme/15' : ''
-                }`}
-              >
-                {!videoReady && <VideoLoader />}
-                <VimeoBackground
-                  id={VIMEO_ID}
-                  title={`Exemple de film ${active.name}`}
-                  onPlaying={() => setVideoReady(true)}
-                  className="absolute inset-0 h-full w-full"
-                />
-              </div>
-              <p
-                className={`mt-3 text-[11px] font-normal uppercase tracking-[0.2em] ${
-                  ink ? 'text-sable/70' : 'text-grege'
-                }`}
-              >
-                Exemple de réalisation
-              </p>
-            </div>
-
-            <div className="lg:col-span-4 lg:col-start-9">
-              <p
-                className={`max-w-[44ch] text-[13.5px] font-light leading-[1.85] ${
-                  ink ? 'text-creme/80' : 'text-encre/80'
-                }`}
-              >
-                {active.desc}
-              </p>
-
-              {active.specs && (
-                <div
-                  className={`mt-6 space-y-4 border-t pt-6 ${
-                    ink ? 'border-creme/15' : 'border-encre/10'
-                  }`}
-                >
-                  {active.specs.map(([label, value]) => (
-                    <div key={label}>
-                      <p
-                        className={`text-[9px] font-normal uppercase tracking-[0.28em] ${
-                          ink ? 'text-sable/60' : 'text-grege'
-                        }`}
-                      >
-                        {label}
-                      </p>
-                      <p
-                        className={`mt-1.5 text-[14px] font-normal leading-[1.5] ${
-                          ink ? 'text-creme' : 'text-encre'
-                        }`}
-                      >
-                        {value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <ul className="mt-5">
-                {active.includes.map((item) => (
-                  <li
-                    key={item}
-                    className={`flex items-start gap-2.5 border-t py-2.5 text-[13px] font-light ${
-                      ink ? 'border-creme/15 text-creme/85' : 'border-encre/10 text-encre/85'
-                    }`}
-                  >
-                    <span aria-hidden="true" className="mt-[0.6em] h-px w-3 shrink-0 bg-or" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <p
-                className={`mt-4 text-[11px] font-normal uppercase tracking-[0.18em] ${
-                  ink ? 'text-sable/65' : 'text-grege'
-                }`}
-              >
-                {active.meta}
-              </p>
-
-              <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
-                <a
-                  href={`mailto:nicolas@belaugure.studio?subject=${encodeURIComponent(`Échange · ${active.name}`)}`}
-                  className={`cta inline-block px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] ${
-                    ink ? 'cta-light' : ''
-                  }`}
-                >
-                  Écrire au studio
-                </a>
-                <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Autres offres">
-                  {TIERS.filter((t) => t.name !== active.name).map((tier) => (
-                    <li key={tier.name}>
-                      <button
-                        type="button"
-                        onClick={() => setActive(tier)}
-                        className={`nav-link cursor-pointer py-2 text-[12px] font-light transition-colors duration-500 ${
-                          ink ? 'text-sable/70 hover:text-creme' : 'text-grege hover:text-encre'
-                        }`}
-                      >
-                        <span className="nav-label">{tier.name}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
+    setDark?.(false)
+  }, [setDark])
 
   return (
     <section
@@ -364,14 +199,19 @@ export default function Offres({ setDark }) {
               <li key={tier.name} className="border-b border-encre/10 first:border-t">
                 <button
                   type="button"
-                  onClick={() => setActive(tier)}
                   onMouseEnter={() => focusOn(tier)}
                   onFocus={() => focusOn(tier)}
-                  className="group block w-full cursor-pointer py-5 text-left md:py-6"
+                  className="group block w-full cursor-default py-5 text-left md:py-6"
                 >
                   <span
                     className={`block font-display text-[clamp(1.7rem,2.4vw,2.3rem)] leading-[1.1] tracking-[0.04em] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      focused ? 'translate-x-2 text-encre' : 'text-encre/50'
+                      focused
+                        ? `translate-x-2 ${NAME_TONES[tier.tone].focus}`
+                        : NAME_TONES[tier.tone].idle
+                    } ${
+                      tier.tone === 'dashed'
+                        ? 'underline decoration-encre/30 decoration-dashed decoration-1 underline-offset-8'
+                        : ''
                     }`}
                   >
                     {tier.name}
