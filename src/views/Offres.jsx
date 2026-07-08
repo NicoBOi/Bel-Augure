@@ -10,7 +10,7 @@ const VIMEO_ID = '961941216'
 const TIERS = [
   {
     name: 'Prélude',
-    price: '7 000 €',
+    price: 'à partir de 7 000 €',
     tagline: 'Un premier film, pour commencer.',
     desc: "Une journée de tournage, un film d'une minute. Assez pour voir ce que votre maison donne à l'écran.",
     includes: [
@@ -24,7 +24,7 @@ const TIERS = [
   },
   {
     name: 'Signature',
-    price: '12 000 €',
+    price: 'à partir de 12 000 €',
     tagline: 'Le film que vous montrerez partout.',
     desc: "Deux journées de tournage. Le film central d'une maison : site, accueil, salons. C'est le cœur de notre métier, et la raison du nom.",
     includes: [
@@ -35,12 +35,11 @@ const TIERS = [
       'Photographies de tournage',
     ],
     meta: 'Livraison sous cinq semaines',
-    featured: true,
     tone: 'gold',
   },
   {
     name: 'Héritage',
-    price: '18 000 €',
+    price: 'à partir de 18 000 €',
     tagline: "Trois minutes pour dire d'où vous venez.",
     desc: 'Trois journées, des entretiens, vos archives. Pour les maisons qui se transmettent.',
     includes: [
@@ -55,7 +54,7 @@ const TIERS = [
   },
   {
     name: 'Saisons',
-    price: '16 000 € / an',
+    price: 'à partir de 16 000 € / an',
     tagline: 'Votre image, quatre fois par an.',
     desc: "Quatre films courts, un par saison, dans la même écriture. Un seul interlocuteur, toute l'année.",
     includes: [
@@ -69,8 +68,8 @@ const TIERS = [
   },
   {
     name: 'Sur Mesure',
-    price: 'dès 25 000 €',
-    tagline: 'Ce qui ne tient pas dans une grille.',
+    price: 'à partir de 25 000 €',
+    tagline: 'Votre projet, écrit ensemble.',
     desc: 'Plusieurs lieux, plusieurs films, une saison entière de tournage. Nous écrivons le périmètre ensemble, puis nous le tenons.',
     includes: [
       'Périmètre défini ensemble',
@@ -148,15 +147,6 @@ export default function Offres({ setDark }) {
             }`}
           >
             {active.price}
-            {active.featured && (
-              <span
-                className={`ml-4 text-[9px] font-medium uppercase tracking-[0.2em] ${
-                  ink ? 'text-sable/65' : 'text-grege'
-                }`}
-              >
-                Format central
-              </span>
-            )}
           </p>
 
           <div className="mt-8 grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
@@ -292,12 +282,6 @@ export default function Offres({ setDark }) {
               onClick={() => setActive(tier)}
               className={`group relative flex w-full cursor-pointer flex-col rounded-2xl border p-6 text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${TONES[tier.tone]}`}
             >
-              {tier.featured && (
-                <span className="absolute right-5 top-5 text-[8.5px] font-medium uppercase tracking-[0.22em] text-encre/60">
-                  Format central
-                </span>
-              )}
-
               <span
                 className={`font-display text-[clamp(1.4rem,1.8vw,1.8rem)] leading-tight ${
                   ['dark', 'greige'].includes(tier.tone) ? 'text-creme' : 'text-encre'
