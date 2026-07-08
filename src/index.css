@@ -321,54 +321,6 @@ textarea.field {
   animation: wordRise 0.9s var(--ease-augure) var(--d, 0s) both;
 }
 
-/* ---------- Voile progressif sous le menu ----------
-   Verre dépoli qui s'intensifie vers le haut : trois couches de flou
-   étagées par masques, plus une teinte du fond pour asseoir les liens.
-   Le contenu reste visible, il perd sa netteté en montant — jamais de
-   ligne de coupure. */
-
-.top-veil {
-  position: absolute;
-  inset-inline: 0;
-  top: 0;
-  height: 190px;
-  pointer-events: none;
-}
-
-.top-veil > span {
-  position: absolute;
-  inset: 0;
-}
-
-.top-veil-blur-a {
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  mask-image: linear-gradient(to bottom, black 0, black 44px, transparent 108px);
-  -webkit-mask-image: linear-gradient(to bottom, black 0, black 44px, transparent 108px);
-}
-
-.top-veil-blur-b {
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
-  mask-image: linear-gradient(to bottom, transparent 24px, black 72px, black 104px, transparent 158px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 24px, black 72px, black 104px, transparent 158px);
-}
-
-.top-veil-blur-c {
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  mask-image: linear-gradient(to bottom, transparent 92px, black 134px, black 152px, transparent 190px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 92px, black 134px, black 152px, transparent 190px);
-}
-
-.top-veil-tint-light {
-  background: linear-gradient(to bottom, rgb(242 237 228 / 0.72), rgb(242 237 228 / 0) 78%);
-}
-
-.top-veil-tint-dark {
-  background: linear-gradient(to bottom, rgb(26 21 18 / 0.72), rgb(26 21 18 / 0) 78%);
-}
-
 /* ---------- Transition entre vues (pas de scroll, la page se transforme) ---------- */
 
 @keyframes viewEnter {

@@ -132,32 +132,16 @@ export default function App() {
         </div>
       </div>
 
-      <Navbar activeView={view} onNavigate={navigate} dark={dark} />
       <main className="relative z-[1] h-full">
         <div key={view} className="view-enter h-full">
           <View onNavigate={navigate} setDark={setDark} mediaRef={heroMediaRef} />
         </div>
       </main>
 
-      {/* Voile progressif : le contenu perd sa netteté en passant sous le
-          menu. Pas sur l'accueil — rien n'y défile et le film reste pur. */}
-      {view !== 'accueil' && (
-        <div aria-hidden="true" className="top-veil z-[5]">
-          <span
-            className={`top-veil-tint-light transition-opacity duration-700 ${
-              dark ? 'opacity-0' : 'opacity-100'
-            }`}
-          />
-          <span
-            className={`top-veil-tint-dark transition-opacity duration-700 ${
-              dark ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-          <span className="top-veil-blur-c" />
-          <span className="top-veil-blur-b" />
-          <span className="top-veil-blur-a" />
-        </div>
-      )}
+      {/* Navbar après le main : elle peint au-dessus sans z-index, donc
+          sans contexte d'empilement — le mode de fusion de la rangée peut
+          composer avec tout ce qui défile dessous. */}
+      <Navbar activeView={view} onNavigate={navigate} dark={dark} />
 
       {/* Voile d'ouverture : la salle obscure, le temps que le film démarre */}
       <div
