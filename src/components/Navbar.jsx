@@ -44,6 +44,13 @@ export default function Navbar({ activeView, onNavigate, dark }) {
           dark ? 'opacity-100' : 'opacity-0'
         }`}
       />
+      {/* Voile givré couvrant tout le header (rangée + panneau) quand le menu est ouvert */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 backdrop-blur-xl transition-opacity duration-500 md:hidden ${
+          dark ? 'bg-encre/25' : 'bg-creme/25'
+        } ${open ? 'opacity-100' : 'opacity-0'}`}
+      />
       <div className="relative grid grid-cols-[1fr_auto_1fr] items-center px-6 py-7 md:px-16 md:py-10">
         <nav aria-label="Navigation principale" className="hidden md:block">
           <ul className="flex items-center gap-12">
@@ -105,12 +112,12 @@ export default function Navbar({ activeView, onNavigate, dark }) {
         </div>
       </div>
 
-      <div id="menu-mobile" data-open={open} className="menu-panel md:hidden">
+      <div id="menu-mobile" data-open={open} className="menu-panel relative md:hidden">
         <div className="menu-panel-inner">
           <nav
             aria-label="Navigation mobile"
-            className={`border-b px-6 pb-8 pt-2 backdrop-blur-xl ${
-              dark ? 'border-creme/10 bg-encre/25' : 'border-encre/10 bg-creme/25'
+            className={`border-b px-6 pb-8 pt-2 ${
+              dark ? 'border-creme/10' : 'border-encre/10'
             }`}
           >
             <ul className="flex flex-col gap-5">
