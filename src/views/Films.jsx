@@ -91,7 +91,7 @@ export default function Films({ setDark }) {
       <section
         key={selected.id}
         aria-label={selected.title}
-        className="view-enter scroll-fade flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
+        className="view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
       >
         <BackLink label="Tous les films" onClick={closeProject} light />
 

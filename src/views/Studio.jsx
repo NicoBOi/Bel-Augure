@@ -18,7 +18,7 @@ export default function Studio() {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="scroll-fade flex h-full flex-col justify-between gap-10 px-6 pb-14 pt-28 max-md:overflow-y-auto md:px-16 md:pb-[9vh]"
+      className="flex h-full flex-col justify-between gap-10 px-6 pb-14 pt-28 max-md:overflow-y-auto md:px-16 md:pb-[9vh]"
     >
       {/* Le credo : grand, à gauche, la seconde ligne décalée comme un
           plan qui se recadre */}

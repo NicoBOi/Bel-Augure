@@ -139,6 +139,26 @@ export default function App() {
         </div>
       </main>
 
+      {/* Voile progressif : le contenu perd sa netteté en passant sous le
+          menu. Pas sur l'accueil — rien n'y défile et le film reste pur. */}
+      {view !== 'accueil' && (
+        <div aria-hidden="true" className="top-veil z-[5]">
+          <span
+            className={`top-veil-tint-light transition-opacity duration-700 ${
+              dark ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
+          <span
+            className={`top-veil-tint-dark transition-opacity duration-700 ${
+              dark ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+          <span className="top-veil-blur-c" />
+          <span className="top-veil-blur-b" />
+          <span className="top-veil-blur-a" />
+        </div>
+      )}
+
       {/* Voile d'ouverture : la salle obscure, le temps que le film démarre */}
       <div
         aria-hidden="true"
