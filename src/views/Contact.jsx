@@ -28,7 +28,7 @@ export default function Contact({ onNavigate }) {
     <section
       ref={ref}
       aria-label="Contact"
-      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
+      className="scroll-fade flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
     >
       <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-between">

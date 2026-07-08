@@ -321,6 +321,15 @@ textarea.field {
   animation: wordRise 0.9s var(--ease-augure) var(--d, 0s) both;
 }
 
+/* ---------- Sections défilantes : le contenu se dissout sous le menu ----------
+   Le haut de la zone de scroll est masqué en dégradé : ce qui remonte
+   s'efface progressivement dans le fond au lieu de chevaucher le menu. */
+
+.scroll-fade {
+  mask-image: linear-gradient(to bottom, transparent 28px, black 128px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 28px, black 128px);
+}
+
 /* ---------- Transition entre vues (pas de scroll, la page se transforme) ---------- */
 
 @keyframes viewEnter {

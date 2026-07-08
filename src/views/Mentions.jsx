@@ -34,7 +34,7 @@ export default function Mentions() {
   return (
     <section
       aria-label="Mentions légales"
-      className="h-full overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[9vh]"
+      className="scroll-fade h-full overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[9vh]"
     >
       <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
         Mentions légales

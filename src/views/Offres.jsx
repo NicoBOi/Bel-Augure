@@ -194,7 +194,7 @@ export default function Offres({ setDark }) {
       <section
         key={active.name}
         aria-label={`Offre ${active.name}`}
-        className={`view-enter flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16 ${DETAIL_BG[active.tone]}`}
+        className={`view-enter scroll-fade flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16 ${DETAIL_BG[active.tone]}`}
       >
         <BackLink label="Toutes les offres" onClick={() => setActive(null)} light={ink} />
 
@@ -332,7 +332,7 @@ export default function Offres({ setDark }) {
     <section
       ref={ref}
       aria-label="Offres"
-      className="flex h-full flex-col justify-start overflow-y-auto px-6 pb-14 pt-28 md:pb-[9vh] md:px-16"
+      className="scroll-fade flex h-full flex-col justify-start overflow-y-auto px-6 pb-14 pt-28 md:pb-[9vh] md:px-16"
     >
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
         <div>
