@@ -1,16 +1,22 @@
 import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
+// Endpoint du formulaire (Formspree ou équivalent). Tant qu'il est vide,
+// le formulaire compose un email dans la messagerie du visiteur. Pour
+// capturer les demandes côté studio : créer un formulaire sur
+// https://formspree.io pointant vers nicolas@belaugure.studio, puis coller
+// ici l'URL fournie (https://formspree.io/f/xxxx). Rien d'autre à changer.
+const FORM_ENDPOINT = ''
+
 export default function Contact({ onNavigate }) {
   const ref = useReveal(0.35)
   const [form, setForm] = useState({ nom: '', maison: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }))
 
-  // Pas de backend : le module compose un email prêt à partir.
-  const submit = (e) => {
-    e.preventDefault()
+  const mailtoFallback = () => {
     const subject = encodeURIComponent(
       form.maison ? `Échange · ${form.maison}` : 'Échange',
     )
@@ -20,8 +26,33 @@ export default function Contact({ onNavigate }) {
       }`,
     )
     window.location.href = `mailto:nicolas@belaugure.studio?subject=${subject}&body=${body}`
-    setSent(true)
-    setTimeout(() => setSent(false), 5000)
+  }
+
+  const submit = async (e) => {
+    e.preventDefault()
+    if (!FORM_ENDPOINT) {
+      mailtoFallback()
+      setSent(true)
+      setTimeout(() => setSent(false), 5000)
+      return
+    }
+    setSending(true)
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      setSent(true)
+      setForm({ nom: '', maison: '', email: '', message: '' })
+      setTimeout(() => setSent(false), 6000)
+    } catch {
+      // Le réseau ou le service faillit : l'email direct prend le relais
+      mailtoFallback()
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -166,10 +197,20 @@ export default function Contact({ onNavigate }) {
             type="submit"
             className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
           >
-            {sent ? 'Message prêt dans votre messagerie' : 'Écrire au studio'}
+            {sending
+              ? 'Envoi en cours'
+              : sent
+                ? FORM_ENDPOINT
+                  ? 'Message envoyé, à très vite'
+                  : 'Message prêt dans votre messagerie'
+                : 'Écrire au studio'}
           </button>
           <p aria-live="polite" className="sr-only">
-            {sent ? 'Votre messagerie s\'ouvre avec le message préparé.' : ''}
+            {sent
+              ? FORM_ENDPOINT
+                ? 'Votre message a bien été envoyé.'
+                : 'Votre messagerie s\'ouvre avec le message préparé.'
+              : ''}
           </p>
         </form>
       </div>
