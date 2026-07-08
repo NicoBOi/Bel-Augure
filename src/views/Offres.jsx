@@ -336,20 +336,10 @@ export default function Offres({ setDark }) {
     >
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
         <div>
-          <p
-            className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
-            style={{ '--d': '0.05s' }}
-          >
-            Offres
-          </p>
-
-          <h2 className="mt-6 max-w-[34ch] font-display text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.3] text-encre">
+          <h2 className="font-display text-[clamp(2.2rem,4vw,3.6rem)] leading-[1.15] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>Formats, prix, délais :</span>
-            </span>
-            <span className="mask md:ml-[4vw]" style={{ '--d': '0.18s' }}>
               <span>
-                tout est écrit<span className="text-or">.</span>
+                Offres<span className="text-or">.</span>
               </span>
             </span>
           </h2>
@@ -359,8 +349,8 @@ export default function Offres({ setDark }) {
           className="reveal-up hidden max-w-[34ch] text-right text-[12px] font-light leading-[1.8] text-grege lg:block"
           style={{ '--d': '0.25s' }}
         >
-          Nous tournons pour les hôtels rares, les maisons de soin, les
-          domaines et la cosmétique.
+          Du sanctuaire intimiste à la grande maison bien-être, chaque lieu a
+          son exigence.
         </p>
       </div>
 
