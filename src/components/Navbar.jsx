@@ -109,8 +109,8 @@ export default function Navbar({ activeView, onNavigate, dark }) {
         <div className="menu-panel-inner">
           <nav
             aria-label="Navigation mobile"
-            className={`border-b px-6 pb-8 pt-2 backdrop-blur-sm ${
-              dark ? 'border-creme/10 bg-encre/95' : 'border-encre/10 bg-creme/95'
+            className={`border-b px-6 pb-8 pt-2 backdrop-blur-xl ${
+              dark ? 'border-creme/10 bg-encre/25' : 'border-encre/10 bg-creme/25'
             }`}
           >
             <ul className="flex flex-col gap-5">
