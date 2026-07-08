@@ -169,15 +169,12 @@ export default function Offres({ setDark }) {
       className="flex h-full flex-col justify-start overflow-y-auto px-6 pb-14 pt-28 md:pb-[9vh] md:px-16"
     >
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
-        <div>
-          <h2 className="font-display text-[clamp(2.2rem,4vw,3.6rem)] leading-[1.15] text-encre">
-            <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>
-                Offres<span className="text-or">.</span>
-              </span>
-            </span>
-          </h2>
-        </div>
+        <p
+          className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
+          style={{ '--d': '0.05s' }}
+        >
+          Offres
+        </p>
 
         <p
           className="reveal-up hidden max-w-[34ch] text-right text-[12px] font-light leading-[1.8] text-grege lg:block"
