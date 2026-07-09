@@ -42,15 +42,15 @@ export default function Studio() {
         style={{ '--d': '0.3s' }}
       >
         <p>
-          Nicolas et Corentin. Nicolas à l'image, Corentin au montage et au
-          son. Pas d'intermédiaire. Vous travaillez avec nous, du début à la
-          fin.
+          Nicolas tient la caméra, Corentin monte et mixe. Il n'y a personne
+          d'autre, et c'est voulu : du premier appel à la livraison, vous
+          parlez à ceux qui font le film.
         </p>
         <p>
-          Nous avons fondé Bel Augure à Bordeaux pour filmer le bien-être
-          d'exception comme il le mérite. Nous repérons les lieux avant de
-          tourner. Nous attendons la bonne lumière. Nous soignons le son
-          autant que l'image.
+          Bel Augure est né à Bordeaux d'un constat simple : les belles
+          maisons du bien-être méritaient mieux que des vidéos pressées.
+          Alors on repère avant de tourner, on attend la bonne lumière, et
+          le son est travaillé comme l'image.
         </p>
       </div>
 
@@ -60,7 +60,7 @@ export default function Studio() {
           className="reveal-up font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:col-span-7"
           style={{ '--d': '0.42s' }}
         >
-          Nous préférons faire peu de films, et les faire bien
+          Peu de films par an. C'est ce qui nous permet de les faire bien
           <span className="text-or">.</span>
         </p>
 

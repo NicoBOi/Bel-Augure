@@ -86,8 +86,8 @@ export default function Contact({ onNavigate }) {
             className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
             style={{ '--d': '0.12s' }}
           >
-            Dites-nous qui vous êtes, où vous êtes, ce que vous voulez
-            montrer. Nicolas lit chaque message et répond sous deux jours.
+            Dites-nous où vous êtes et ce que vous aimeriez montrer. C'est
+            Nicolas qui lit, et il répond sous deux jours.
           </p>
 
           <p

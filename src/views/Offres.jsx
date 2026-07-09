@@ -12,7 +12,7 @@ const OFFRES = [
   {
     name: 'Signature',
     eyebrow: 'Le film central',
-    desc: "Le film qui porte l'image d'une maison : son site, son accueil, ses salons. De 90 secondes à 2 minutes, écrit et tourné pour durer des années.",
+    desc: "Le grand film de votre maison, celui qu'on met partout. Entre 90 secondes et 2 minutes, fait pour rester en ligne des années.",
     detail: 'Deux journées de tournage. Livré en six semaines.',
     bgColor: 'rgb(217 198 166 / 0.45)',
     ink: false,
@@ -20,7 +20,7 @@ const OFFRES = [
   {
     name: 'Saisons',
     eyebrow: 'Le rendez-vous annuel',
-    desc: 'Quatre films courts par an, un par saison, dans la même écriture. Un seul interlocuteur, toute l’année.',
+    desc: 'Un film court à chaque saison, quatre par an, toujours la même écriture. Et toujours la même personne en face de vous.',
     detail: 'Une demi-journée de tournage à chaque saison.',
     bgColor: '#6e6350',
     ink: true,
@@ -28,8 +28,8 @@ const OFFRES = [
   {
     name: 'Sur Mesure',
     eyebrow: "L'exception",
-    desc: 'Campagnes de plusieurs films, formats longs, casting et décors, droits publicitaires étendus.',
-    detail: 'Le périmètre s’écrit ensemble. Sur devis.',
+    desc: 'Plusieurs films, des formats longs, du casting, des décors. Ce qui ne rentre pas dans les cases.',
+    detail: 'On écrit le projet ensemble. Sur devis.',
     bgColor: '#1a1512',
     ink: true,
   },
@@ -41,19 +41,19 @@ const DEROULE = [
     n: '01',
     titre: "L'écriture",
     texte:
-      'Un échange, un repérage, une note d’intention. Vous savez ce qui sera filmé avant le premier plan.',
+      'On se parle, on vient voir le lieu, on écrit une note d’intention. Avant de tourner, vous savez déjà ce que vous verrez à l’écran.',
   },
   {
     n: '02',
     titre: 'Le tournage',
     texte:
-      "De l'équipement cinéma, une équipe à taille humaine, qui sait se faire oublier.",
+      "Du matériel de cinéma, une petite équipe. Vous nous oublierez vite.",
   },
   {
     n: '03',
     titre: 'La livraison',
     texte:
-      'Le film, ses déclinaisons, les droits pour vos canaux. Deux séries de retouches sont incluses.',
+      'Vous recevez le film, ses déclinaisons et les droits qui vont avec. Et s’il reste un détail qui vous chiffonne, deux séries de retouches sont comprises.',
   },
 ]
 
@@ -61,27 +61,27 @@ const DEROULE = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Chaque projet est devisé après un premier échange, selon le lieu et le format. Le devis est ferme, sans surprise ensuite.',
+    r: 'Ça dépend du lieu et du format, alors on préfère en parler d’abord. Le devis qui suit est ferme.',
   },
   {
     q: 'Qu’attendez-vous de nous ?',
-    r: 'Très peu. Un échange au départ, un contact sur place le jour du tournage. Votre maison reste ouverte.',
+    r: 'Pas grand-chose. Un échange au début, quelqu’un à joindre le jour du tournage. Votre maison reste ouverte.',
   },
   {
     q: 'Qui apparaît à l’écran ?',
-    r: 'Votre équipe, des silhouettes castées, ou personne. Nous composons selon votre image et gérons les autorisations.',
+    r: 'Votre équipe, des silhouettes qu’on caste, ou personne du tout. Les autorisations, on s’en occupe.',
   },
   {
     q: 'Vous déplacez-vous où ?',
-    r: 'En Nouvelle-Aquitaine d’abord. Plus loin, au cas par cas : parlons-en.',
+    r: 'Nous sommes à Bordeaux. La Nouvelle-Aquitaine sans hésiter, plus loin si le projet vaut le voyage.',
   },
   {
     q: 'Et si le résultat ne nous plaît pas ?',
-    r: 'Vous validez la direction avant le premier plan, et deux séries de retouches sont incluses.',
+    r: 'C’est rare, parce que tout est validé avant de tourner. Et il reste deux séries de retouches pour ajuster.',
   },
   {
     q: 'À qui appartient le film ?',
-    r: 'À vous. Les droits sont cédés pour votre site, vos réseaux et votre accueil. Les usages publicitaires étendus s’écrivent au devis.',
+    r: 'À vous. Site, réseaux, accueil : vous en faites ce que vous voulez. Seule la publicité payante se chiffre à part.',
   },
 ]
 

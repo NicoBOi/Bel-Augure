@@ -161,14 +161,12 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         </h2>
 
         <p className="mx-auto mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
-          Bel Augure révèle l'histoire endormie au cœur de votre lieu
-          d'exception. Vous avez bâti un lieu rare et nous en ferons un film
-          inoubliable.
+          Vous avez mis des années à faire de votre maison ce qu'elle est.
+          Nous venons la filmer comme elle le mérite.
         </p>
 
         <p className="mx-auto mt-4 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
-          Un film n'est pas une vidéo. C'est ce qui porte votre nom, saison
-          après saison.
+          Pas une vidéo de plus. Un film, qui portera votre nom longtemps.
         </p>
 
         {/* Le portefeuille de films : trois vignettes qui s'éventaillent */}
