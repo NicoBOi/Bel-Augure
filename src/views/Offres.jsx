@@ -125,7 +125,7 @@ export default function Offres({ setDark }) {
 
       {/* Le sélecteur : les trois noms, dans la langue des liens du site */}
       <nav aria-label="Choisir une offre" className="reveal-up mt-10 md:mt-12" style={{ '--d': '0.15s' }}>
-        <ul className="flex flex-wrap items-baseline gap-x-8 gap-y-2">
+        <ul className="flex flex-wrap items-baseline justify-center gap-x-8 gap-y-2">
           {OFFRES.map((o, i) => (
             <li key={o.name}>
               <button
@@ -158,9 +158,9 @@ export default function Offres({ setDark }) {
         </ul>
       </nav>
 
-      {/* La scène : grand titre sous masque, texte en colonnes, comme un
-          détail de film — mais la pièce entière a changé de lumière. */}
-      <div key={offre.name} className="mt-10 flex-1 md:mt-14">
+      {/* La scène : tout est centré, posé au milieu de la pièce — le
+          grand titre sous masque, le texte en colonne noble. */}
+      <div key={offre.name} className="flex flex-1 flex-col items-center justify-center py-14 text-center md:py-16">
         <p
           className={`fade-in text-[11px] font-normal uppercase tracking-[0.3em] ${
             ink ? 'text-sable/60' : 'text-grege'
@@ -170,7 +170,7 @@ export default function Offres({ setDark }) {
           {offre.eyebrow}
         </p>
         <h3
-          className={`mt-4 font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] ${
+          className={`mt-5 font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] ${
             ink ? 'text-creme' : 'text-encre'
           }`}
         >
@@ -182,24 +182,22 @@ export default function Offres({ setDark }) {
           </span>
         </h3>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-12">
-          <p
-            className={`fade-in max-w-[52ch] text-[14px] font-light leading-[1.9] lg:col-span-6 ${
-              ink ? 'text-sable/90' : 'text-encre/80'
-            }`}
-            style={{ '--d': '0.3s' }}
-          >
-            {offre.desc}
-          </p>
-          <p
-            className={`fade-in text-[10.5px] font-normal uppercase tracking-[0.22em] lg:col-span-4 lg:col-start-9 lg:self-end lg:text-right ${
-              ink ? 'text-sable/55' : 'text-grege'
-            }`}
-            style={{ '--d': '0.45s' }}
-          >
-            {offre.detail}
-          </p>
-        </div>
+        <p
+          className={`fade-in mx-auto mt-8 max-w-[52ch] text-[14px] font-light leading-[1.9] ${
+            ink ? 'text-sable/90' : 'text-encre/80'
+          }`}
+          style={{ '--d': '0.3s' }}
+        >
+          {offre.desc}
+        </p>
+        <p
+          className={`fade-in mt-6 text-[10.5px] font-normal uppercase tracking-[0.22em] ${
+            ink ? 'text-sable/55' : 'text-grege'
+          }`}
+          style={{ '--d': '0.45s' }}
+        >
+          {offre.detail}
+        </p>
       </div>
 
       {/* Le déroulé et les questions : dans la lumière de l'offre choisie */}
