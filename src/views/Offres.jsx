@@ -102,7 +102,7 @@ export default function Offres({ setDark }) {
     <section
       ref={ref}
       aria-label="Offres"
-      className="h-full overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[9vh]"
+      className="flex h-full flex-col justify-start overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[9vh]"
     >
       <p
         className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
@@ -111,87 +111,57 @@ export default function Offres({ setDark }) {
         Offres
       </p>
 
-      {/* Le carton : cadre à double filet des intertitres de film muet.
-          Le cadre est l'écran, il ne bouge pas — seul le contenu se
-          projette, avec la grammaire du site : titres qui montent sous
-          masque, révélations décalées, point d'or qui respire. */}
-      <div className="reveal-up mx-auto flex min-h-[62vh] w-full max-w-3xl flex-col items-center justify-center" style={{ '--d': '0.2s' }}>
-        <div className="w-full border border-creme/25 p-2 transition-colors duration-700">
-          <div className="border border-creme/12 px-8 py-14 text-center md:px-16 md:py-20">
-            <div key={offre.name}>
-              <p className="fade-in text-[10px] font-normal uppercase tracking-[0.32em] text-sable/60" style={{ '--d': '0.05s' }}>
-                {offre.eyebrow}
-              </p>
-              <h3 className="mt-6 font-display text-[clamp(2.6rem,5.5vw,5rem)] leading-[1.05] text-creme">
-                <span className="mask" style={{ '--d': '0.1s' }}>
-                  <span>
-                    {offre.name}
-                    <span className="dot-breathe text-or">.</span>
-                  </span>
-                </span>
-              </h3>
-              <p className="fade-in mx-auto mt-7 max-w-[46ch] text-[14px] font-light leading-[1.9] text-sable/90" style={{ '--d': '0.3s' }}>
-                {offre.desc}
-              </p>
-              <p className="fade-in mt-5 text-[10px] font-normal uppercase tracking-[0.24em] text-sable/55" style={{ '--d': '0.45s' }}>
-                {offre.detail}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Le projecteur : I · II · III, dans la langue des liens du site */}
-        <div className="mt-10 flex items-center gap-8">
-          <button
-            type="button"
-            aria-label="Offre précédente"
-            onClick={() => setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)}
-            className="group cursor-pointer p-2 text-sable/50 transition-colors duration-500 hover:text-creme"
-          >
-            <svg
-              width="26"
-              height="10"
-              viewBox="0 0 26 10"
-              fill="none"
-              aria-hidden="true"
-              className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1"
-            >
-              <path d="M25 5H1M1 5L5.5 1M1 5L5.5 9" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <div className="flex items-baseline gap-6">
-            {OFFRES.map((o, i) => (
+      {/* La scène : même architecture que le détail d'un film — grand
+          titre en didone sur l'encre, texte en colonne. Les trois noms
+          servent de sélecteur, dans la langue des liens du site. */}
+      <nav aria-label="Choisir une offre" className="reveal-up mt-10 md:mt-12" style={{ '--d': '0.15s' }}>
+        <ul className="flex flex-wrap items-baseline gap-x-8 gap-y-2">
+          {OFFRES.map((o, i) => (
+            <li key={o.name}>
               <button
-                key={o.name}
                 type="button"
                 onClick={() => setIndex(i)}
-                aria-label={`Voir ${o.name}`}
-                aria-current={i === index ? 'page' : undefined}
-                className={`nav-link cursor-pointer p-1 font-display text-[17px] transition-colors duration-500 ${
-                  i === index ? 'text-or' : 'text-sable/40 hover:text-sable/75'
+                aria-current={i === index ? 'true' : undefined}
+                className={`nav-link cursor-pointer py-2 font-display text-[clamp(1.15rem,1.6vw,1.5rem)] transition-colors duration-500 ${
+                  i === index ? 'text-creme' : 'text-sable/45 hover:text-sable/80'
                 }`}
               >
-                <span className="nav-label">{o.numeral}</span>
+                <span className="nav-label">
+                  {o.name}
+                  <span
+                    className={`text-or transition-opacity duration-300 ${
+                      i === index ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    .
+                  </span>
+                </span>
               </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            aria-label="Offre suivante"
-            onClick={() => setIndex((i) => (i + 1) % OFFRES.length)}
-            className="group cursor-pointer p-2 text-sable/50 transition-colors duration-500 hover:text-creme"
-          >
-            <svg
-              width="26"
-              height="10"
-              viewBox="0 0 26 10"
-              fill="none"
-              aria-hidden="true"
-              className="rotate-180 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
-            >
-              <path d="M25 5H1M1 5L5.5 1M1 5L5.5 9" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div key={offre.name} className="mt-10 flex-1 md:mt-14">
+        <p className="fade-in text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60" style={{ '--d': '0.05s' }}>
+          {offre.eyebrow}
+        </p>
+        <h3 className="mt-4 font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] text-creme">
+          <span className="mask" style={{ '--d': '0.1s' }}>
+            <span>
+              {offre.name}
+              <span className="dot-breathe text-or">.</span>
+            </span>
+          </span>
+        </h3>
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-12">
+          <p className="fade-in max-w-[52ch] text-[14px] font-light leading-[1.9] text-sable/90 lg:col-span-6" style={{ '--d': '0.3s' }}>
+            {offre.desc}
+          </p>
+          <p className="fade-in text-[10.5px] font-normal uppercase tracking-[0.22em] text-sable/55 lg:col-span-4 lg:col-start-9 lg:self-end lg:text-right" style={{ '--d': '0.45s' }}>
+            {offre.detail}
+          </p>
         </div>
       </div>
 
