@@ -35,7 +35,7 @@ const TITLES = {
 // aux moteurs et aux aperçus de lien.
 const DESCRIPTIONS = {
   accueil:
-    "Bel Augure, studio de films signature en Nouvelle-Aquitaine. Films pensés comme des actifs pour les grandes adresses du bien-être : spas, hôtels, cures thermales.",
+    "Bel Augure, studio de films signature en Nouvelle-Aquitaine. Films pensés comme des actifs pour les maisons du bien-être : hôtels, thermes, marques.",
   films:
     'Les films de Bel Augure : hôtellerie rare, thermes, domaines, cosmétique. Tournés à la lumière du jour, depuis Bordeaux.',
   studio:
