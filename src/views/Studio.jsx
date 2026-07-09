@@ -81,6 +81,10 @@ export default function Studio() {
           </div>
         </div>
       </div>
+
+      <p className="pt-4 text-[11px] font-light tracking-[0.04em] text-grege">
+        Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
+      </p>
     </section>
   )
 }

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 const LINKS = [
   { view: 'films', label: 'Films' },
-  { view: 'offres', label: 'Offres' },
   { view: 'studio', label: 'Studio' },
+  { view: 'offres', label: 'Offres' },
   { view: 'contact', label: 'Contact' },
 ]
 

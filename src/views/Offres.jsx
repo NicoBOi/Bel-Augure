@@ -243,6 +243,14 @@ export default function Offres({ setDark }) {
           </dl>
         </div>
       </div>
+
+      <p
+        className={`mt-14 text-[11px] font-light tracking-[0.04em] transition-colors duration-700 ${
+          ink ? 'text-sable/60' : 'text-grege'
+        }`}
+      >
+        Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
+      </p>
     </section>
   )
 }
