@@ -161,8 +161,8 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         </h2>
 
         <p className="mx-auto mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
-          Vous avez mis des années à faire de votre maison ce qu'elle est.
-          Nous venons la filmer comme elle le mérite.
+          Vous avez mis des années à faire de votre lieu ce qu'il est.
+          Nous venons le filmer comme il le mérite.
         </p>
 
         <p className="mx-auto mt-4 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">

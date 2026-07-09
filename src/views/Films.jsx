@@ -16,7 +16,7 @@ const PROJECTS = [
     title: 'Maison Itsasoa',
     world: 'Hôtellerie · Côte basque',
     format: 'Film signature, 2 min',
-    desc: "Un hôtel face à l'océan, côte basque. Trois matins de tournage, un film de deux minutes. Il ouvre le site de la maison et tourne à l'accueil.",
+    desc: "Un hôtel face à l'océan, côte basque. Trois matins de tournage, un film de deux minutes. Il ouvre le site de l'hôtel et tourne à l'accueil.",
   },
   {
     id: 'salies',
@@ -37,7 +37,7 @@ const PROJECTS = [
     title: 'Maison Almae',
     world: 'Cosmétique · Bordeaux',
     format: 'Film signature, 45 s',
-    desc: "Une maison de cosmétique à Bordeaux. Quarante-cinq secondes sur la matière : plante, huile, peau. Le format se place partout.",
+    desc: "Une marque de cosmétique à Bordeaux. Quarante-cinq secondes sur la matière : plante, huile, peau. Le format se place partout.",
   },
 ]
 

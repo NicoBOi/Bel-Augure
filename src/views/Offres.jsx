@@ -12,7 +12,7 @@ const OFFRES = [
   {
     name: 'Signature',
     eyebrow: 'Le film central',
-    desc: "Le grand film de votre maison, celui qu'on met partout. Entre 90 secondes et 2 minutes, fait pour rester en ligne des années.",
+    desc: "Le grand film de votre adresse, celui qu'on met partout. Entre 90 secondes et 2 minutes, fait pour rester en ligne des années.",
     detail: 'Deux journées de tournage. Livré en six semaines.',
     bgColor: 'rgb(217 198 166 / 0.45)',
     ink: false,
@@ -65,7 +65,7 @@ const QUESTIONS = [
   },
   {
     q: 'Qu’attendez-vous de nous ?',
-    r: 'Pas grand-chose. Un échange au début, quelqu’un à joindre le jour du tournage. Votre maison reste ouverte.',
+    r: 'Pas grand-chose. Un échange au début, quelqu’un à joindre le jour du tournage. Votre établissement reste ouvert.',
   },
   {
     q: 'Qui apparaît à l’écran ?',

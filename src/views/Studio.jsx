@@ -47,8 +47,8 @@ export default function Studio() {
           parlez à ceux qui font le film.
         </p>
         <p>
-          Bel Augure est né à Bordeaux d'un constat simple : les belles
-          maisons du bien-être méritaient mieux que des vidéos pressées.
+          Bel Augure est né à Bordeaux d'un constat simple : les grandes
+          adresses du bien-être méritaient mieux que des vidéos pressées.
           Alors on repère avant de tourner, on attend la bonne lumière, et
           le son est travaillé comme l'image.
         </p>

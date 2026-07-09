@@ -145,7 +145,7 @@ export default function Contact({ onNavigate }) {
                 htmlFor="contact-maison"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
               >
-                Votre maison
+                Votre établissement
               </label>
               <input
                 id="contact-maison"
