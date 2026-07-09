@@ -17,7 +17,7 @@ export default function BackLink({ label, onClick, light = false }) {
         viewBox="0 0 20 10"
         fill="none"
         aria-hidden="true"
-        className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1"
+        className="text-or transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1"
       >
         <path
           d="M19 5H1M1 5L5.2 1M1 5L5.2 9"

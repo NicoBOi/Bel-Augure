@@ -116,7 +116,7 @@ export default function Films({ setDark }) {
                   className="absolute inset-0 h-full w-full"
                 />
               </div>
-              <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-sable/70">
+              <p className="mt-3 text-[11px] font-normal uppercase tracking-[0.2em] text-or/85">
                 {selected.format}
               </p>
             </div>

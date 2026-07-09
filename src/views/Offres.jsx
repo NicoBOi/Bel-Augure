@@ -192,7 +192,7 @@ export default function Offres({ setDark }) {
         </p>
         <p
           className={`fade-in mt-6 text-[10.5px] font-normal uppercase tracking-[0.22em] ${
-            ink ? 'text-sable/55' : 'text-grege'
+            ink ? 'text-or/85' : 'text-[#8f7d5f]'
           }`}
           style={{ '--d': '0.45s' }}
         >
@@ -203,7 +203,7 @@ export default function Offres({ setDark }) {
       {/* Le déroulé et les questions : dans la lumière de l'offre choisie */}
       <div
         className={`mt-16 grid gap-14 border-t pt-14 transition-colors duration-700 lg:grid-cols-12 lg:gap-8 ${
-          ink ? 'border-creme/12' : 'border-encre/10'
+          ink ? 'border-or/30' : 'border-or/50'
         }`}
       >
         <div className="lg:col-span-4">

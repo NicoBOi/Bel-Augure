@@ -68,7 +68,7 @@ h3 {
   bottom: -5px;
   height: 1px;
   width: 100%;
-  background-color: currentColor;
+  background-color: var(--color-or);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 0.45s var(--ease-augure);
