@@ -143,9 +143,17 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             <p className="max-w-[22ch] font-display text-[clamp(1.2rem,1.7vw,1.7rem)] leading-[1.45] text-sable">
               Les films signatures du bien-être d'exception
             </p>
+            <p className="mt-4 max-w-[30ch] text-[13px] font-light leading-[1.8] text-sable/80">
+              On ne filme pas votre lieu. On filme ce que ça fait d'y être.
+            </p>
           </div>
         </div>
       </div>
+
+      <h2 className="sr-only">
+        Film spa, vidéo bien-être haut de gamme, film signature hôtel, film
+        thalasso
+      </h2>
 
       {/* Le studio se présente quand le jour se lève, au centre de la scène */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 px-6 text-center">
@@ -166,6 +174,16 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           mais un film gravé dans le temps.
         </p>
 
+        <p className="mx-auto mt-4 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
+          La plupart des vidéos font visiter. Les nôtres font entrer. Quand
+          quelqu'un regarde un de nos films, il doit avoir l'impression d'y
+          être déjà.
+        </p>
+
+        <p className="mx-auto mt-4 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
+          Un bel augure, c'est un bon présage. Votre film doit en être un.
+        </p>
+
         {/* Le portefeuille de films : trois vignettes qui s'éventaillent */}
         <button
           type="button"
@@ -178,7 +196,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
           </span>
           <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 group-hover:text-encre">
-            Découvrir les quatre films<span className="text-or">.</span>
+            Découvrir les films<span className="text-or">.</span>
           </span>
           </button>
         </div>

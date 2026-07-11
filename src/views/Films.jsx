@@ -19,15 +19,15 @@ const PROJECTS = [
     desc: "Un hôtel face à l'océan, côte basque. Trois matins de tournage, un film de deux minutes. Il ouvre le site de l'hôtel et tourne à l'accueil.",
   },
   {
-    id: 'salies',
-    title: 'Thermes de Salies',
-    world: 'Thalasso · Béarn',
+    id: 'aygue',
+    title: "Bains d'Aygue",
+    world: 'Thermal · Béarn',
     format: 'Film signature et saisons',
     desc: "Des thermes en Béarn. Un film central de quatre-vingt-dix secondes, puis quatre déclinaisons, une par saison. Tourné dans la vapeur, à hauteur de geste.",
   },
   {
-    id: 'lisle',
-    title: 'Domaine de Lisle',
+    id: 'estey',
+    title: "Domaine de l'Estey",
     world: 'Vin · Médoc',
     format: 'Film héritage, 3 min',
     desc: "Un domaine du Médoc, trois générations. Trois minutes d'entretiens, de chai et d'hiver. Ce que l'étiquette ne dit pas.",
@@ -177,6 +177,24 @@ export default function Films({ setDark }) {
           style={{ '--d': '0.05s' }}
         >
           Films
+        </p>
+
+        <h2
+          className={`reveal-up mt-6 font-display text-[clamp(1.6rem,2.4vw,2.2rem)] leading-[1.2] transition-colors duration-300 ${
+            hovered ? 'text-creme' : 'text-encre'
+          }`}
+          style={{ '--d': '0.07s' }}
+        >
+          Quatre études de style<span className="text-or">.</span>
+        </h2>
+        <p
+          className={`reveal-up mt-2 text-[12px] font-light leading-[1.8] transition-colors duration-300 ${
+            hovered ? 'text-sable/70' : 'text-grege'
+          }`}
+          style={{ '--d': '0.09s' }}
+        >
+          Films d'étude auto-produits. Les premières signatures clients
+          arrivent cette saison.
         </p>
 
         <ul className="reveal-up mt-8" style={{ '--d': '0.08s' }} onMouseLeave={leave}>

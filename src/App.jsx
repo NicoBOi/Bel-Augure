@@ -23,7 +23,7 @@ const VIEWS = {
 }
 
 const TITLES = {
-  accueil: 'Bel Augure · Studio de films signature',
+  accueil: 'Bel Augure · Films signatures pour spas, hôtels et maisons de bien-être · Bordeaux',
   films: 'Films · Bel Augure',
   studio: 'Studio · Bel Augure',
   offres: 'Offres · Bel Augure',
@@ -35,7 +35,7 @@ const TITLES = {
 // aux moteurs et aux aperçus de lien.
 const DESCRIPTIONS = {
   accueil:
-    'Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux.',
+    "Studio de films cinéma pour hôtels, spas, thermes et maisons de bien-être en Nouvelle-Aquitaine. On ne filme pas votre lieu, on filme ce que ça fait d'y être.",
   films:
     'Les films de Bel Augure : hôtellerie rare, thermes, domaines, cosmétique. Tournés à la lumière du jour, depuis Bordeaux.',
   studio:
