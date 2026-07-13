@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://belaugure.studio/sitemap.xml
+Sitemap: https://www.belaugure.studio/sitemap.xml

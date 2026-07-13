@@ -23,7 +23,7 @@ const VIEWS = {
 }
 
 const TITLES = {
-  accueil: 'Bel Augure · Studio de films signature',
+  accueil: 'Bel Augure · Films pour hôtels, spas et maisons de bien-être · Bordeaux',
   films: 'Films · Bel Augure',
   studio: 'Studio · Bel Augure',
   offres: 'Offres · Bel Augure',
@@ -47,24 +47,42 @@ const DESCRIPTIONS = {
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
 }
 
-// La vue vit dans le hash (#offres, #studio…) : un rafraîchissement ou un
-// lien partagé retombe sur la même page, pas sur l'accueil.
-const viewFromHash = () => {
+// Chaque vue vit à sa propre URL (/films, /offres…) : indexable,
+// partageable, pré-rendue au build. Les anciennes ancres #films sont
+// reconnues et réécrites en chemin.
+const VIEW_PATHS = {
+  accueil: '/',
+  films: '/films',
+  studio: '/studio',
+  offres: '/offres',
+  contact: '/contact',
+  mentions: '/mentions-legales',
+}
+
+const PATH_VIEWS = Object.fromEntries(
+  Object.entries(VIEW_PATHS).map(([view, path]) => [path, view]),
+)
+
+const SITE = 'https://www.belaugure.studio'
+
+const viewFromLocation = () => {
   const h = window.location.hash.slice(1)
-  return VIEWS[h] ? h : 'accueil'
+  if (VIEWS[h]) return h
+  const path = window.location.pathname.replace(/\/+$/, '') || '/'
+  return PATH_VIEWS[path] || 'accueil'
 }
 
 export default function App() {
-  const [view, setView] = useState(viewFromHash)
+  const [view, setView] = useState(viewFromLocation)
   // L'accueil et la lecture d'un film vivent dans l'encre : le fond, le
   // header et le contenu transitionnent ensemble, sans overlay.
-  const [dark, setDark] = useState(() => viewFromHash() === 'accueil')
+  const [dark, setDark] = useState(() => viewFromLocation() === 'accueil')
   // Voile d'ouverture : l'encre porte le logo le temps que le film de
   // fond démarre. Il se lève dès que la vidéo joue (minimum une seconde
   // de présence), ou au bout de 2,6 s si elle tarde — jamais d'attente
   // infinie, jamais de player à moitié chargé à l'écran. Il n'a de sens
   // que sur l'accueil : ailleurs, la page arrive sans attente.
-  const [veiled, setVeiled] = useState(() => viewFromHash() === 'accueil')
+  const [veiled, setVeiled] = useState(() => viewFromLocation() === 'accueil')
   const [heroReady, setHeroReady] = useState(false)
   const bootAt = useRef(performance.now())
   // Calque média du héros : l'accueil en scrute l'opacité pendant le
@@ -77,18 +95,26 @@ export default function App() {
     // de crème (l'effet de la vue remettrait dark ensuite, trop tard).
     setDark(next === 'accueil')
     setView(next)
-    window.history.replaceState(null, '', next === 'accueil' ? window.location.pathname : `#${next}`)
+    window.history.pushState(null, '', VIEW_PATHS[next])
   }
 
-  // Hash modifié à la main ou navigation historique : on suit.
+  // Ancien lien en #hash : réécrit une fois vers le chemin propre.
   useEffect(() => {
-    const onHash = () => {
-      const next = viewFromHash()
+    const h = window.location.hash.slice(1)
+    if (VIEWS[h]) {
+      window.history.replaceState(null, '', VIEW_PATHS[h])
+    }
+  }, [])
+
+  // Navigation historique (précédent/suivant) : on suit.
+  useEffect(() => {
+    const onPop = () => {
+      const next = viewFromLocation()
       setDark(next === 'accueil')
       setView(next)
     }
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
   }, [])
 
   useEffect(() => {
@@ -106,6 +132,9 @@ export default function App() {
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute('content', DESCRIPTIONS[view])
+    const url = SITE + (VIEW_PATHS[view] === '/' ? '/' : VIEW_PATHS[view])
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', url)
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', url)
   }, [view])
 
   return (

@@ -9,19 +9,19 @@
     />
     <meta name="theme-color" content="#f2ede4" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Bel Augure · Studio de films signature" />
+    <meta property="og:title" content="Bel Augure · Films pour hôtels, spas et maisons de bien-être · Bordeaux" />
     <meta
       property="og:description"
       content="Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux."
     />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:url" content="https://belaugure.studio/" />
-    <meta property="og:image" content="https://belaugure.studio/og.png" />
+    <meta property="og:url" content="https://www.belaugure.studio/" />
+    <meta property="og:image" content="https://www.belaugure.studio/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://belaugure.studio/og.png" />
-    <link rel="canonical" href="https://belaugure.studio/" />
+    <meta name="twitter:image" content="https://www.belaugure.studio/og.png" />
+    <link rel="canonical" href="https://www.belaugure.studio/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- Données structurées : le studio comme service local, offres bornées -->
     <script type="application/ld+json">
@@ -30,7 +30,7 @@
         "@type": "ProfessionalService",
         "name": "Bel Augure",
         "description": "Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux.",
-        "url": "https://belaugure.studio/",
+        "url": "https://www.belaugure.studio/",
         "email": "nicolas@belaugure.studio",
         "address": {
           "@type": "PostalAddress",
@@ -61,7 +61,7 @@
       type="font/woff2"
       crossorigin
     />
-    <title>Bel Augure · Studio de films signature</title>
+    <title>Bel Augure · Films pour hôtels, spas et maisons de bien-être · Bordeaux</title>
     <!-- Mesure d'audience : décommenter après avoir créé le site sur
          plausible.io (sans cookie, conforme à la politique de
          confidentialité annoncée dans les mentions légales).
@@ -99,8 +99,11 @@
       <script>
         ;(function () {
           var views = ['films', 'offres', 'studio', 'contact', 'mentions']
+          var path = location.pathname.replace(/\/+$/, '') || '/'
+          var deep =
+            path !== '/' || views.indexOf(location.hash.slice(1)) !== -1
           var veil = document.getElementById('veil-static')
-          if (views.indexOf(location.hash.slice(1)) !== -1) {
+          if (deep) {
             veil.style.display = 'none'
           } else {
             requestAnimationFrame(function () {
@@ -111,6 +114,7 @@
           }
         })()
       </script>
+      <!--seo-content-->
     </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

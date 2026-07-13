@@ -55,6 +55,43 @@ h3 {
   letter-spacing: 0.04em;
 }
 
+/* ---------- Fallback pré-rendu : lisible sans JavaScript ----------
+   Ce bloc n'existe que dans le HTML statique ; React le remplace au
+   montage. Style volontairement sobre, même palette. */
+
+.seo-fallback {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 7rem 1.5rem 4rem;
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+.seo-fallback h1,
+.seo-fallback h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 2.2rem 0 0.8rem;
+}
+
+.seo-fallback h1 {
+  font-size: 1.9rem;
+}
+
+.seo-fallback h2 {
+  font-size: 1.3rem;
+}
+
+.seo-fallback p {
+  margin: 0.6rem 0;
+}
+
+.seo-fallback a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 /* ---------- Navigation : underline slide-in ---------- */
 
 .nav-label {
