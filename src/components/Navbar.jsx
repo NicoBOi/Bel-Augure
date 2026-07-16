@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react'
 
-// Le moodboard : tableau Pinterest du studio. Tant que l'URL est vide,
-// le lien n'apparaît nulle part — coller l'adresse du tableau ici suffit.
-const MOODBOARD_URL = ''
-
 const LINKS = [
   { view: 'films', label: 'Films' },
   { view: 'studio', label: 'Studio' },
@@ -125,19 +121,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
           Bel Augure<span className="text-or">.</span>
         </button>
 
-        <div className="hidden items-center gap-10 justify-self-end md:flex">
-          {MOODBOARD_URL && (
-            <a
-              href={MOODBOARD_URL}
-              target="_blank"
-              rel="noreferrer"
-              className={`nav-link text-[12px] tracking-[0.08em] transition-colors duration-500 ${
-                dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
-              }`}
-            >
-              <span className="nav-label">Moodboard</span>
-            </a>
-          )}
+        <div className="hidden justify-self-end md:block">
           <a
             href="mailto:nicolas@belaugure.studio"
             className={`nav-link text-[12px] tracking-[0.08em] transition-colors duration-500 ${
@@ -170,18 +154,6 @@ export default function Navbar({ activeView, onNavigate, dark }) {
               ))}
             </ul>
             <div className={`mt-8 border-t pt-6 ${dark ? 'border-creme/10' : 'border-encre/10'}`}>
-              {MOODBOARD_URL && (
-                <a
-                  href={MOODBOARD_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`mb-4 block text-[12px] tracking-[0.08em] ${
-                    dark ? 'text-creme/75' : 'text-encre/80'
-                  }`}
-                >
-                  Moodboard
-                </a>
-              )}
               <a
                 href="mailto:nicolas@belaugure.studio"
                 className={`text-[12px] tracking-[0.08em] ${dark ? 'text-creme/75' : 'text-encre/80'}`}
