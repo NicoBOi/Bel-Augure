@@ -166,19 +166,17 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           mais un film gravé dans le temps.
         </p>
 
-        {/* Le portefeuille de films : trois vignettes qui s'éventaillent */}
+        {/* Une seule vignette, comme un photogramme posé sur la table */}
         <button
           type="button"
           onClick={() => onNavigate('films')}
           className="group mx-auto mt-9 flex cursor-pointer items-center gap-5"
         >
           <span aria-hidden="true" className="relative block h-7 w-14">
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%-9px)] rotate-[-10deg] rounded-[5px] bg-encre/85 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%-17px)] group-hover:rotate-[-16deg]" />
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-y-1/2 translate-x-[calc(-50%+9px)] rotate-[10deg] rounded-[5px] bg-encre/85 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[calc(-50%+17px)] group-hover:rotate-[16deg]" />
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[calc(-50%-3px)]" />
+            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-rotate-3 group-hover:translate-y-[calc(-50%-3px)]" />
           </span>
           <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 group-hover:text-encre">
-            Découvrir les quatre films<span className="text-or">.</span>
+            Découvrir le film<span className="text-or">.</span>
           </span>
           </button>
         </div>
