@@ -1,10 +1,30 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 // Le film de fond vit dans App (calque persistant) : ici on ne fait que
 // scruter son opacité via mediaRef pendant la transition au scroll.
+// La vignette du CTA : une frame du film, demandée à Vimeo (oEmbed, CORS
+// ouvert). Si la requête échoue, la pastille encre reste — rien ne casse.
+const FILM_VIMEO_URL = 'https://vimeo.com/1211391558'
+
 export default function Accueil({ onNavigate, setDark, mediaRef }) {
   const reveal = useReveal(0.35)
+  const [filmThumb, setFilmThumb] = useState(null)
+
+  useEffect(() => {
+    let alive = true
+    fetch(
+      `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(FILM_VIMEO_URL)}&width=320`,
+    )
+      .then((r) => r.json())
+      .then((d) => {
+        if (alive && d.thumbnail_url) setFilmThumb(d.thumbnail_url)
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [])
   const sectionRef = useRef(null)
   const creamRef = useRef(null)
   const wordRef = useRef(null)
@@ -172,8 +192,17 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           onClick={() => onNavigate('films')}
           className="group mx-auto mt-9 flex cursor-pointer items-center gap-5"
         >
-          <span aria-hidden="true" className="relative block h-7 w-14">
-            <span className="absolute left-1/2 top-1/2 h-6 w-10 -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-rotate-3 group-hover:translate-y-[calc(-50%-3px)]" />
+          <span aria-hidden="true" className="relative block h-9 w-16">
+            <span className="absolute left-1/2 top-1/2 h-9 w-16 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[6px] bg-encre shadow-[0_6px_16px_-6px_rgb(26_21_18/0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-rotate-3 group-hover:translate-y-[calc(-50%-3px)]">
+              {filmThumb && (
+                <img
+                  src={filmThumb}
+                  alt=""
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              )}
+            </span>
           </span>
           <span className="text-[11px] font-normal uppercase tracking-[0.22em] text-encre/80 transition-colors duration-500 group-hover:text-encre">
             Découvrir le film<span className="text-or">.</span>
