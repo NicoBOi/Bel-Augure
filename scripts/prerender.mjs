@@ -25,7 +25,7 @@ const ROUTES = [
       <p>Les films signatures du bien-être d'exception.</p>
       <h2>Un studio. Deux savoir-faire.</h2>
       <p>Vous avez mis des années à faire de votre lieu ce qu'il est. Nous venons le filmer comme il le mérite. Pas une vidéo de plus mais un film gravé dans le temps.</p>
-      <p><a href="/films">Découvrir les films</a></p>`,
+      <p><a href="/films">Découvrir le film</a></p>`,
   },
   {
     path: '/films',
