@@ -37,7 +37,7 @@ const DESCRIPTIONS = {
   accueil:
     'Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux.',
   films:
-    'Les films de Bel Augure : hôtellerie rare, thermes, domaines, cosmétique. Tournés à la lumière du jour, depuis Bordeaux.',
+    "Jetée d'Arès : film d'étude tourné sur le bassin d'Arcachon. L'écriture de Bel Augure, avant les premières signatures clients.",
   studio:
     'Deux artisans, peu de films, bien faits. Bel Augure fait du cinéma pour le bien-être d’exception, depuis Bordeaux.',
   offres:

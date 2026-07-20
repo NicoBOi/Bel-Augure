@@ -30,17 +30,12 @@ const ROUTES = [
   {
     path: '/films',
     title: 'Films · Bel Augure',
-    desc: 'Les films de Bel Augure : hôtellerie rare, thermes, domaines, cosmétique. Tournés à la lumière du jour, depuis Bordeaux.',
-    h1: 'Films — hôtels, thermes, domaines et cosmétique',
+    desc: "Jetée d'Arès : film d'étude tourné sur le bassin d'Arcachon. L'écriture de Bel Augure, avant les premières signatures clients.",
+    h1: "Films — Jetée d'Arès, film d'étude sur le bassin d'Arcachon",
     body: `
-      <h2>Maison Itsasoa — Hôtellerie, Côte basque</h2>
-      <p>Un hôtel face à l'océan, côte basque. Trois matins de tournage, un film de deux minutes. Il ouvre le site de l'hôtel et tourne à l'accueil.</p>
-      <h2>Thermes de Salies — Thalasso, Béarn</h2>
-      <p>Des thermes en Béarn. Un film central de quatre-vingt-dix secondes, puis quatre déclinaisons, une par saison. Tourné dans la vapeur, à hauteur de geste.</p>
-      <h2>Domaine de Lisle — Vin, Médoc</h2>
-      <p>Un domaine du Médoc, trois générations. Trois minutes d'entretiens, de chai et d'hiver. Ce que l'étiquette ne dit pas.</p>
-      <h2>Maison Almae — Cosmétique, Bordeaux</h2>
-      <p>Une marque de cosmétique à Bordeaux. Quarante-cinq secondes sur la matière : plante, huile, peau. Le format se place partout.</p>`,
+      <h2>Jetée d'Arès — film d'étude, bassin d'Arcachon</h2>
+      <p>La jetée d'Arès, sur le bassin d'Arcachon. Un matin de semaine, la marée qui remonte, presque personne. Film d'étude auto-produit, sans commande : juste notre écriture, posée sur un lieu qu'on aime. C'est ce regard que nous mettons au service des maisons du bien-être.</p>
+      <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a></p>`,
   },
   {
     path: '/studio',
