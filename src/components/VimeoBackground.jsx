@@ -4,10 +4,20 @@ import { useEffect, useRef, useState } from 'react'
 // réellement démarrée : avant cela, le fond encre reste seul en scène.
 // Évite la tuile grise ou noire du player pendant le chargement — le film
 // fond au travers de l'encre quand il joue, jamais avant.
-export default function VimeoBackground({ id, title, className = '', onPlaying }) {
+export default function VimeoBackground({ id, title, className = '', onPlaying, soundOn }) {
   const frameRef = useRef(null)
   const notified = useRef(false)
   const [playing, setPlaying] = useState(false)
+  // Dernière valeur du son : appliquée aussi au signal ready du player
+  const soundRef = useRef(soundOn)
+  soundRef.current = soundOn
+
+  const post = (method, value) => {
+    frameRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ method, value }),
+      'https://player.vimeo.com',
+    )
+  }
 
   useEffect(() => {
     const onMessage = (e) => {
@@ -27,6 +37,9 @@ export default function VimeoBackground({ id, title, className = '', onPlaying }
             'https://player.vimeo.com',
           )
         }
+        if (soundRef.current !== undefined) {
+          post('setVolume', soundRef.current ? 1 : 0)
+        }
       } else if (data.event === 'play' || data.event === 'playProgress') {
         setPlaying(true)
         if (!notified.current) {
@@ -38,6 +51,12 @@ export default function VimeoBackground({ id, title, className = '', onPlaying }
     window.addEventListener('message', onMessage)
     return () => window.removeEventListener('message', onMessage)
   }, [onPlaying])
+
+  // Le son suit la volonté du visiteur, sans recharger le player
+  useEffect(() => {
+    if (soundOn === undefined) return
+    post('setVolume', soundOn ? 1 : 0)
+  }, [soundOn])
 
   if (!id) return null
 
