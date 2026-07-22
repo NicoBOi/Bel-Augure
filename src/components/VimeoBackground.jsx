@@ -79,7 +79,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
       post('setVolume', 0)
       post('play')
     }
-    const gestures = ['touchend', 'pointerdown', 'click', 'scroll']
+    const gestures = ['touchstart', 'pointerdown', 'click']
     for (const g of gestures) {
       window.addEventListener(g, kick, { passive: true })
     }
