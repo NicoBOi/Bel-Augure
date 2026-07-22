@@ -39,9 +39,9 @@ export default function Films({ setDark }) {
     <section
       ref={ref}
       aria-label="Films"
-      className="flex h-full flex-col justify-center overflow-y-auto px-6 py-24 md:px-16"
+      className="flex h-full flex-col overflow-y-auto px-6 py-24 md:px-16"
     >
-      <div className="mx-auto w-full max-w-[1500px]">
+      <div className="mx-auto flex w-full max-w-[1500px] flex-1 flex-col justify-center">
         <p
           className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
           style={{ '--d': '0.05s' }}
@@ -65,24 +65,23 @@ export default function Films({ setDark }) {
               />
 
               {ready[film.id] && (
-                <div className="absolute bottom-4 right-6 z-[1] flex items-center gap-6">
+                <div className="absolute bottom-4 right-5 z-[1] flex items-center gap-3">
                   <button
                     type="button"
                     aria-pressed={!!sound[film.id]}
+                    aria-label={sound[film.id] ? 'Couper le son' : 'Activer le son'}
                     onClick={() => setSound((s) => ({ ...s, [film.id]: !s[film.id] }))}
-                    className="nav-link cursor-pointer py-1 text-[10px] font-normal uppercase tracking-[0.22em] text-creme/75 transition-colors duration-500 hover:text-creme"
+                    className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
                   >
-                    <span className="nav-label">
-                      {sound[film.id] ? 'Couper le son' : 'Activer le son'}
-                    </span>
+                    {sound[film.id] ? <IconSoundOn /> : <IconSoundOff />}
                   </button>
                   <button
                     type="button"
                     aria-label="Agrandir la vidéo en plein écran"
                     onClick={() => enlarge(film.id)}
-                    className="nav-link cursor-pointer py-1 text-[10px] font-normal uppercase tracking-[0.22em] text-creme/75 transition-colors duration-500 hover:text-creme"
+                    className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
                   >
-                    <span className="nav-label">Plein écran</span>
+                    <IconFullscreen />
                   </button>
                 </div>
               )}
@@ -113,6 +112,42 @@ export default function Films({ setDark }) {
           </div>
         ))}
       </div>
+
+      <p className="mx-auto mt-16 w-full max-w-[1500px] text-[11px] font-light tracking-[0.04em] text-sable/60">
+        Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
+      </p>
     </section>
+  )
+}
+
+// Icônes minces, dessinées à la charte : traits fins, couleur héritée du bouton.
+function IconSoundOn() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z" />
+      <path d="M16.5 8.5a5 5 0 0 1 0 7" />
+      <path d="M19 6a8 8 0 0 1 0 12" />
+    </svg>
+  )
+}
+
+function IconSoundOff() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z" />
+      <path d="M17 9.5l4 5" />
+      <path d="M21 9.5l-4 5" />
+    </svg>
+  )
+}
+
+function IconFullscreen() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M8 3H3v5" />
+      <path d="M16 3h5v5" />
+      <path d="M21 16v5h-5" />
+      <path d="M3 16v5h5" />
+    </svg>
   )
 }
