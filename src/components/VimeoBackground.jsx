@@ -7,6 +7,9 @@ import { useEffect, useRef, useState } from 'react'
 export default function VimeoBackground({ id, title, className = '', onPlaying, soundOn }) {
   const frameRef = useRef(null)
   const notified = useRef(false)
+  // Vrai uniquement quand Vimeo confirme la lecture (play/playProgress) :
+  // sert à cesser de relancer play() au moindre geste une fois le film lancé.
+  const playedRef = useRef(false)
   const [playing, setPlaying] = useState(false)
   // Dernière valeur du son : appliquée aussi au signal ready du player
   const soundRef = useRef(soundOn)
@@ -45,6 +48,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
           post('setVolume', soundRef.current ? 1 : 0)
         }
       } else if (data.event === 'play' || data.event === 'playProgress') {
+        playedRef.current = true
         setPlaying(true)
         if (!notified.current) {
           notified.current = true
@@ -66,9 +70,24 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
       }
     }, 2200)
 
+    // iOS (Safari, mode Économie d'énergie) refuse l'autoplay et laisse le
+    // player sur sa cover. On relance donc la lecture muette au tout premier
+    // geste du visiteur — le seul moment où iOS autorise play(). On réarme
+    // tant que le film n'a pas signalé qu'il tourne (playedRef).
+    const kick = () => {
+      if (playedRef.current) return
+      post('setVolume', 0)
+      post('play')
+    }
+    const gestures = ['touchend', 'pointerdown', 'click', 'scroll']
+    for (const g of gestures) {
+      window.addEventListener(g, kick, { passive: true })
+    }
+
     return () => {
       window.removeEventListener('message', onMessage)
       clearTimeout(reveal)
+      for (const g of gestures) window.removeEventListener(g, kick)
     }
   }, [onPlaying])
 
