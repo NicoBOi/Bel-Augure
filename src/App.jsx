@@ -135,7 +135,7 @@ export default function App() {
   useEffect(() => {
     if (!veiled) return
     const elapsed = performance.now() - bootAt.current
-    const delay = heroReady ? Math.max(1000 - elapsed, 0) : Math.max(2600 - elapsed, 0)
+    const delay = heroReady ? Math.max(800 - elapsed, 0) : Math.max(1800 - elapsed, 0)
     const t = setTimeout(() => setVeiled(false), delay)
     return () => clearTimeout(t)
   }, [heroReady, veiled])

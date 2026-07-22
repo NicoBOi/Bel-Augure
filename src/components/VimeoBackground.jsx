@@ -61,7 +61,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
         notified.current = true
         onPlaying?.()
       }
-    }, 2200)
+    }, 900)
 
     return () => {
       window.removeEventListener('message', onMessage)
