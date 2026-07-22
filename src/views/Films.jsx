@@ -53,7 +53,7 @@ export default function Films({ setDark }) {
           <div key={film.id} className="mt-10 grid items-center gap-8 md:mt-12 lg:grid-cols-12 lg:gap-10">
             <div
               ref={(el) => (stageRefs.current[film.id] = el)}
-              className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre lg:col-span-8"
+              className="film-stage relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre lg:col-span-8"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
@@ -113,7 +113,7 @@ export default function Films({ setDark }) {
         ))}
       </div>
 
-      <p className="mx-auto mt-16 w-full max-w-[1500px] text-[11px] font-light tracking-[0.04em] text-sable/60">
+      <p className="mx-auto mt-16 w-full max-w-[1500px] text-center text-[11px] font-light tracking-[0.04em] text-sable/60">
         Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
       </p>
     </section>

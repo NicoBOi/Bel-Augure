@@ -466,3 +466,22 @@ textarea.field {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Plein écran de la scène film : on garde le rapport 16:9 de la vidéo,
+   lettrage à l'encre autour au lieu d'étirer ou rogner l'image. */
+.film-stage:fullscreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  border: 0;
+  background: var(--color-encre);
+}
+.film-stage:fullscreen iframe {
+  position: static;
+  inset: auto;
+  width: 100vw;
+  height: 56.25vw;
+  max-width: 177.78vh;
+  max-height: 100vh;
+}
