@@ -49,7 +49,23 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
       }
     }
     window.addEventListener('message', onMessage)
-    return () => window.removeEventListener('message', onMessage)
+
+    // Filet de sécurité mobile : certains navigateurs ne renvoient pas les
+    // messages 'play'/'playProgress' de façon fiable pour un fond muet. Sans
+    // ce signal, l'iframe resterait invisible (opacity-0). On révèle donc le
+    // film après un court délai, la lecture muette inline étant permise.
+    const reveal = setTimeout(() => {
+      setPlaying(true)
+      if (!notified.current) {
+        notified.current = true
+        onPlaying?.()
+      }
+    }, 2200)
+
+    return () => {
+      window.removeEventListener('message', onMessage)
+      clearTimeout(reveal)
+    }
   }, [onPlaying])
 
   // Le son suit la volonté du visiteur, sans recharger le player

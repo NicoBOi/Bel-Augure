@@ -58,13 +58,6 @@ export default function Navbar({ activeView, onNavigate, dark }) {
 
   return (
     <header className="absolute inset-x-0 top-0 z-10">
-      {/* Halo sombre diffus derrière le bouton menu, uniquement sur fond vidéo */}
-      <div
-        aria-hidden
-        className={`pointer-events-none absolute left-0 top-0 h-64 w-64 bg-[radial-gradient(circle_at_top_left,rgba(26,21,18,0.75),transparent_70%)] transition-opacity duration-700 md:hidden ${
-          dark ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
       {/* Voile givré couvrant tout le header (rangée + panneau) quand le menu est ouvert */}
       <div
         aria-hidden
