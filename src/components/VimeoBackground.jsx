@@ -7,9 +7,6 @@ import { useEffect, useRef, useState } from 'react'
 export default function VimeoBackground({ id, title, className = '', onPlaying, soundOn }) {
   const frameRef = useRef(null)
   const notified = useRef(false)
-  // Vrai uniquement quand Vimeo confirme la lecture (play/playProgress) :
-  // sert à cesser de relancer play() au moindre geste une fois le film lancé.
-  const playedRef = useRef(false)
   const [playing, setPlaying] = useState(false)
   // Dernière valeur du son : appliquée aussi au signal ready du player
   const soundRef = useRef(soundOn)
@@ -40,15 +37,10 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
             'https://player.vimeo.com',
           )
         }
-        // iOS/Safari n'honore pas toujours l'autoplay du paramètre d'URL :
-        // on force la lecture muette, seule autorisée sans geste utilisateur.
-        post('setVolume', 0)
-        post('play')
         if (soundRef.current !== undefined) {
           post('setVolume', soundRef.current ? 1 : 0)
         }
       } else if (data.event === 'play' || data.event === 'playProgress') {
-        playedRef.current = true
         setPlaying(true)
         if (!notified.current) {
           notified.current = true
@@ -57,38 +49,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
       }
     }
     window.addEventListener('message', onMessage)
-
-    // Filet de sécurité mobile : certains navigateurs ne renvoient pas les
-    // messages 'play'/'playProgress' de façon fiable pour un fond muet. Sans
-    // ce signal, l'iframe resterait invisible (opacity-0). On révèle donc le
-    // film après un court délai, la lecture muette inline étant permise.
-    const reveal = setTimeout(() => {
-      setPlaying(true)
-      if (!notified.current) {
-        notified.current = true
-        onPlaying?.()
-      }
-    }, 2200)
-
-    // iOS (Safari, mode Économie d'énergie) refuse l'autoplay et laisse le
-    // player sur sa cover. On relance donc la lecture muette au tout premier
-    // geste du visiteur — le seul moment où iOS autorise play(). On réarme
-    // tant que le film n'a pas signalé qu'il tourne (playedRef).
-    const kick = () => {
-      if (playedRef.current) return
-      post('setVolume', 0)
-      post('play')
-    }
-    const gestures = ['touchstart', 'pointerdown', 'click']
-    for (const g of gestures) {
-      window.addEventListener(g, kick, { passive: true })
-    }
-
-    return () => {
-      window.removeEventListener('message', onMessage)
-      clearTimeout(reveal)
-      for (const g of gestures) window.removeEventListener(g, kick)
-    }
+    return () => window.removeEventListener('message', onMessage)
   }, [onPlaying])
 
   // Le son suit la volonté du visiteur, sans recharger le player
@@ -102,7 +63,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
   // Fond pur : le film joue sans aucune UI Vimeo, non cliquable. Les seuls
   // contrôles sont ceux, dessinés main, que la page Films pose par-dessus
   // (son + plein écran) — la charte reste maîtresse de chaque pixel.
-  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&playsinline=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
+  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
 
   return (
     <iframe
