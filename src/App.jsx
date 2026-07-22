@@ -12,6 +12,10 @@ import Mentions from './views/Mentions.jsx'
 // démonte jamais quand on navigue, la lecture continue en coulisse et le
 // retour à l'accueil retrouve le film déjà lancé, sans rechargement.
 const HERO_VIMEO_ID = '1211391558'
+// Fond du héros décliné pour le mobile : montage vertical, chargé
+// uniquement sous 768px. Le desktop garde la version paysage ci-dessus.
+const HERO_VIMEO_ID_MOBILE = '1212142686'
+const MOBILE_QUERY = '(max-width: 767px)'
 
 const VIEWS = {
   accueil: Accueil,
@@ -88,6 +92,17 @@ export default function App() {
   // Calque média du héros : l'accueil en scrute l'opacité pendant le
   // scroll, les autres vues le masquent sans arrêter la lecture.
   const heroMediaRef = useRef(null)
+  // Choix de la déclinaison du fond selon la largeur d'écran. On suit les
+  // changements (rotation, redimensionnement) pour recharger la bonne vidéo.
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
+  )
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY)
+    const onChange = (e) => setIsMobile(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
   const View = VIEWS[view]
 
   const navigate = (next) => {
@@ -152,10 +167,15 @@ export default function App() {
         <div ref={heroMediaRef} className="absolute inset-0 overflow-hidden">
           <div className="h-full w-full bg-encre" />
           <VimeoBackground
-            id={HERO_VIMEO_ID}
+            key={isMobile ? 'mobile' : 'desktop'}
+            id={isMobile ? HERO_VIMEO_ID_MOBILE : HERO_VIMEO_ID}
             title="Film de fond"
             onPlaying={() => setHeroReady(true)}
-            className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2"
+            className={
+              isMobile
+                ? 'absolute left-1/2 top-1/2 h-[177.78vw] min-h-full w-screen min-w-[56.25vh] -translate-x-1/2 -translate-y-1/2'
+                : 'absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2'
+            }
           />
           <div className="absolute inset-0 bg-encre/40" />
         </div>
