@@ -174,7 +174,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           Notre film devient votre signature<span className="text-or">.</span>
         </h2>
 
-        <p className="mx-auto mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
+        <p className="mx-auto mt-7 max-w-[64ch] text-[14px] font-light leading-[1.9] text-encre/80">
           Il existe des lieux dont on se souvient longtemps après en être
           sorti. Un parfum, une lumière, un instant. Ces lieux méritent
           mieux qu'une vidéo qui disparaît en trois secondes sous votre
