@@ -11,7 +11,7 @@ const FILMS = [
     vimeoId: '1211391558',
     title: "Les Pieds Dans L'eau",
     world: "Bassin d'Arcachon",
-    desc: "Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, un matin de marée montante. Rien à vendre, juste notre regard. C'est ce même regard qu'on pose sur votre lieu.",
+    desc: "Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
   },
 ]
 
