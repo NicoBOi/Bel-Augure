@@ -39,30 +39,8 @@ export default function Films({ setDark }) {
       </p>
 
       {FILMS.map((film) => (
-        <div key={film.id} className="mt-10 md:mt-12">
-          <p
-            className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
-            style={{ '--d': '0.1s' }}
-          >
-            {film.world}
-          </p>
-          <h2 className="mt-4 font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] text-creme">
-            <span className="mask" style={{ '--d': '0.15s' }}>
-              <span>
-                {film.title}
-                <span className="dot-breathe text-or">.</span>
-              </span>
-            </span>
-          </h2>
-
-          <p
-            className="reveal-up mt-6 max-w-[60ch] text-[13.5px] font-light leading-[1.9] text-sable/90"
-            style={{ '--d': '0.3s' }}
-          >
-            {film.desc}
-          </p>
-
-          <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre">
+        <div key={film.id} className="mt-10 grid items-center gap-8 md:mt-12 lg:grid-cols-12 lg:gap-10">
+          <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre lg:col-span-7">
             {!ready[film.id] && <VideoLoader />}
             <VimeoBackground
               id={film.vimeoId}
@@ -83,6 +61,29 @@ export default function Films({ setDark }) {
                 </span>
               </button>
             )}
+          </div>
+
+          <div className="lg:col-span-5">
+            <p
+              className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
+              style={{ '--d': '0.1s' }}
+            >
+              {film.world}
+            </p>
+            <h2 className="mt-4 font-display text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.05] text-creme">
+              <span className="mask" style={{ '--d': '0.15s' }}>
+                <span>
+                  {film.title}
+                  <span className="dot-breathe text-or">.</span>
+                </span>
+              </span>
+            </h2>
+            <p
+              className="reveal-up mt-6 max-w-[46ch] text-[13.5px] font-light leading-[1.9] text-sable/90"
+              style={{ '--d': '0.3s' }}
+            >
+              {film.desc}
+            </p>
           </div>
         </div>
       ))}
