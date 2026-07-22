@@ -55,40 +55,34 @@ export default function Films({ setDark }) {
             </span>
           </h2>
 
-          <div className="mt-8 grid items-end gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre">
-                {!ready[film.id] && <VideoLoader />}
-                <VimeoBackground
-                  id={film.vimeoId}
-                  title={film.title}
-                  soundOn={!!sound[film.id]}
-                  onPlaying={() => setReady((s) => ({ ...s, [film.id]: true }))}
-                  className="absolute inset-0 h-full w-full"
-                />
-                {ready[film.id] && (
-                  <button
-                    type="button"
-                    aria-pressed={!!sound[film.id]}
-                    onClick={() => setSound((s) => ({ ...s, [film.id]: !s[film.id] }))}
-                    className="nav-link absolute bottom-4 right-6 z-[1] cursor-pointer py-1 text-[10px] font-normal uppercase tracking-[0.22em] text-creme/75 transition-colors duration-500 hover:text-creme"
-                  >
-                    <span className="nav-label">
-                      {sound[film.id] ? 'Couper le son' : 'Activer le son'}
-                    </span>
-                  </button>
-                )}
-              </div>
-            </div>
+          <p
+            className="reveal-up mt-6 max-w-[60ch] text-[13.5px] font-light leading-[1.9] text-sable/90"
+            style={{ '--d': '0.3s' }}
+          >
+            {film.desc}
+          </p>
 
-            <div className="lg:col-span-4">
-              <p
-                className="reveal-up max-w-[44ch] text-[13.5px] font-light leading-[1.9] text-sable/90"
-                style={{ '--d': '0.3s' }}
+          <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre">
+            {!ready[film.id] && <VideoLoader />}
+            <VimeoBackground
+              id={film.vimeoId}
+              title={film.title}
+              soundOn={!!sound[film.id]}
+              onPlaying={() => setReady((s) => ({ ...s, [film.id]: true }))}
+              className="absolute inset-0 h-full w-full"
+            />
+            {ready[film.id] && (
+              <button
+                type="button"
+                aria-pressed={!!sound[film.id]}
+                onClick={() => setSound((s) => ({ ...s, [film.id]: !s[film.id] }))}
+                className="nav-link absolute bottom-4 right-6 z-[1] cursor-pointer py-1 text-[10px] font-normal uppercase tracking-[0.22em] text-creme/75 transition-colors duration-500 hover:text-creme"
               >
-                {film.desc}
-              </p>
-            </div>
+                <span className="nav-label">
+                  {sound[film.id] ? 'Couper le son' : 'Activer le son'}
+                </span>
+              </button>
+            )}
           </div>
         </div>
       ))}
