@@ -34,7 +34,7 @@ const ROUTES = [
     h1: "Films — Les Pieds Dans L'eau, sur le bassin d'Arcachon",
     body: `
       <h2>Les Pieds Dans L'eau — bassin d'Arcachon</h2>
-      <p>Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, un matin de marée montante, pour donner à voir notre regard et notre écriture. Pas une commande : un showcase de ce que nous savons faire, le soin que nous mettons au service des maisons du bien-être.</p>
+      <p>Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, un matin de marée montante. Rien à vendre, juste notre regard. C'est ce même regard qu'on pose sur votre lieu.</p>
       <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a></p>`,
   },
   {
