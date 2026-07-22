@@ -30,11 +30,11 @@ const ROUTES = [
   {
     path: '/films',
     title: 'Films · Bel Augure',
-    desc: "Jetée d'Arès : film d'étude tourné sur le bassin d'Arcachon. L'écriture de Bel Augure, avant les premières signatures clients.",
-    h1: "Films — Jetée d'Arès, film d'étude sur le bassin d'Arcachon",
+    desc: "Les Pieds Dans L'eau : le premier film de Bel Augure, tourné sur le bassin d'Arcachon. Un showcase de notre regard, avant les premières signatures clients.",
+    h1: "Films — Les Pieds Dans L'eau, sur le bassin d'Arcachon",
     body: `
-      <h2>Jetée d'Arès — film d'étude, bassin d'Arcachon</h2>
-      <p>La jetée d'Arès, sur le bassin d'Arcachon. Un matin de semaine, la marée qui remonte, presque personne. Film d'étude auto-produit, sans commande : juste notre écriture, posée sur un lieu qu'on aime. C'est ce regard que nous mettons au service des maisons du bien-être.</p>
+      <h2>Les Pieds Dans L'eau — bassin d'Arcachon</h2>
+      <p>Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, un matin de marée montante, pour donner à voir notre regard et notre écriture. Pas une commande : un showcase de ce que nous savons faire, le soin que nous mettons au service des maisons du bien-être.</p>
       <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a></p>`,
   },
   {

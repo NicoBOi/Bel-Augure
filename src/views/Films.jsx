@@ -9,9 +9,9 @@ const FILMS = [
   {
     id: 'jetee-dares',
     vimeoId: '1211391558',
-    title: "Jetée d'Arès",
-    world: "Film d'étude · Bassin d'Arcachon",
-    desc: "La jetée d'Arès, sur le bassin d'Arcachon. Un matin de semaine, la marée qui remonte, presque personne. Film d'étude auto-produit, sans commande : juste notre écriture, posée sur un lieu qu'on aime. C'est ce regard que nous mettons au service des maisons du bien-être.",
+    title: "Les Pieds Dans L'eau",
+    world: "Bassin d'Arcachon",
+    desc: "Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, un matin de marée montante, pour donner à voir notre regard et notre écriture. Pas une commande : un showcase de ce que nous savons faire, le soin que nous mettons au service des maisons du bien-être.",
   },
 ]
 
