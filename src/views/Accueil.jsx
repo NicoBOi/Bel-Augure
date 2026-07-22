@@ -168,9 +168,9 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       </div>
 
       {/* Le studio se présente quand le jour se lève, au centre de la scène */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 px-6 text-center">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 px-6 text-center">
         <div ref={studioRef} className="opacity-0" style={{ pointerEvents: 'none' }}>
-        <h2 className="font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.25] text-encre">
+        <h2 className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.25] text-encre md:whitespace-nowrap">
           Notre film devient votre signature<span className="text-or">.</span>
         </h2>
 
