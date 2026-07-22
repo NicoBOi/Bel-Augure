@@ -18,7 +18,6 @@ const FILMS = [
 export default function Films({ setDark }) {
   const ref = useReveal(0.35)
   const [ready, setReady] = useState({})
-  const [sound, setSound] = useState({})
 
   // Le film se regarde dans l'encre, comme en salle.
   useEffect(() => {
@@ -45,22 +44,10 @@ export default function Films({ setDark }) {
             <VimeoBackground
               id={film.vimeoId}
               title={film.title}
-              soundOn={!!sound[film.id]}
+              controls
               onPlaying={() => setReady((s) => ({ ...s, [film.id]: true }))}
               className="absolute inset-0 h-full w-full"
             />
-            {ready[film.id] && (
-              <button
-                type="button"
-                aria-pressed={!!sound[film.id]}
-                onClick={() => setSound((s) => ({ ...s, [film.id]: !s[film.id] }))}
-                className="nav-link absolute bottom-4 right-6 z-[1] cursor-pointer py-1 text-[10px] font-normal uppercase tracking-[0.22em] text-creme/75 transition-colors duration-500 hover:text-creme"
-              >
-                <span className="nav-label">
-                  {sound[film.id] ? 'Couper le son' : 'Activer le son'}
-                </span>
-              </button>
-            )}
           </div>
 
           <div className="lg:col-span-5">
