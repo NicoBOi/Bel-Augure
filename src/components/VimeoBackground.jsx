@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 // réellement démarrée : avant cela, le fond encre reste seul en scène.
 // Évite la tuile grise ou noire du player pendant le chargement — le film
 // fond au travers de l'encre quand il joue, jamais avant.
-export default function VimeoBackground({ id, title, className = '', onPlaying, soundOn, controls = false }) {
+export default function VimeoBackground({ id, title, className = '', onPlaying, soundOn }) {
   const frameRef = useRef(null)
   const notified = useRef(false)
   const [playing, setPlaying] = useState(false)
@@ -60,12 +60,10 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
 
   if (!id) return null
 
-  // Deux modes : fond pur (background=1, sans aucune UI, non cliquable) pour
-  // le hero ; player interactif (contrôles Vimeo, plein écran, volume, barre
-  // de lecture) teinté à l'or de la charte pour la page Films.
-  const src = controls
-    ? `https://player.vimeo.com/video/${id}?autoplay=1&loop=1&muted=1&autopause=0&controls=1&color=d9c6a6&title=0&byline=0&portrait=0&pip=1&dnt=1`
-    : `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
+  // Fond pur : le film joue sans aucune UI Vimeo, non cliquable. Les seuls
+  // contrôles sont ceux, dessinés main, que la page Films pose par-dessus
+  // (son + plein écran) — la charte reste maîtresse de chaque pixel.
+  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
 
   return (
     <iframe
@@ -74,10 +72,10 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
       src={src}
       allow="autoplay; fullscreen; picture-in-picture"
       allowFullScreen
-      tabIndex={controls ? 0 : -1}
-      className={`border-0 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        controls ? '' : 'pointer-events-none'
-      } ${playing ? 'opacity-100' : 'opacity-0'} ${className}`}
+      tabIndex={-1}
+      className={`pointer-events-none border-0 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        playing ? 'opacity-100' : 'opacity-0'
+      } ${className}`}
     />
   )
 }
