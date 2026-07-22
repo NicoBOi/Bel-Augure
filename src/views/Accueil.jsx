@@ -175,10 +175,13 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         </h2>
 
         <p className="mx-auto mt-7 max-w-[64ch] text-[14px] font-light leading-[1.9] text-encre/80">
-          Il existe des lieux dont on se souvient longtemps après en être
-          sorti. Un parfum, une lumière, un instant. Ces lieux méritent
-          mieux qu'une simple vidéo, ils méritent un film signature réalisé
-          par Bel Augure.
+          Tout se décide sur une image, c'est le seul moyen de ressentir
+          avant d'expérimenter. Mais aujourd'hui la plupart des marques
+          confient la leur à du contenu jetable. Bel Augure travaille avec
+          les moyens du cinéma : de l'écriture au montage en passant par le
+          tournage, nous construisons chaque étape pour qu'on retrouve à
+          l'écran ce que l'on éprouve chez vous. Nos films sont la preuve
+          que votre enseigne est mémorable.
         </p>
 
         {/* Une seule vignette, comme un photogramme posé sur la table */}
