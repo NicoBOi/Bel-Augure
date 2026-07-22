@@ -161,7 +161,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
 
           <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.05s' }}>
             <p className="max-w-[22ch] font-display text-[clamp(1.2rem,1.7vw,1.7rem)] leading-[1.45] text-sable">
-              Les films signatures du bien-être d'exception
+              Les films signature du bien-être d'exception
             </p>
           </div>
         </div>
@@ -170,20 +170,16 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       {/* Le studio se présente quand le jour se lève, au centre de la scène */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 px-6 text-center">
         <div ref={studioRef} className="opacity-0" style={{ pointerEvents: 'none' }}>
-        <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
-          Le studio
-        </p>
-
-        <h2 className="mt-7 font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.25] text-encre">
-          Un studio.
-          <br />
-          Deux savoir-faire<span className="text-or">.</span>
+        <h2 className="font-display text-[clamp(2rem,3.8vw,3.4rem)] leading-[1.25] text-encre">
+          Notre film devient votre signature<span className="text-or">.</span>
         </h2>
 
         <p className="mx-auto mt-7 max-w-[50ch] text-[14px] font-light leading-[1.9] text-encre/80">
-          Vous avez mis des années à faire de votre lieu ce qu'il est.
-          Nous venons le filmer comme il le mérite. Pas une vidéo de plus
-          mais un film gravé dans le temps.
+          Il existe des lieux dont on se souvient longtemps après en être
+          sorti. Un parfum, une lumière, un instant. Ces lieux méritent
+          mieux qu'une vidéo qui disparaît en trois secondes sous votre
+          pouce. Bel Augure réalise des films d'exception pour faire de
+          votre nom une signature intemporelle.
         </p>
 
         {/* Une seule vignette, comme un photogramme posé sur la table */}
