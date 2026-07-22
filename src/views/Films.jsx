@@ -41,7 +41,7 @@ export default function Films({ setDark }) {
       aria-label="Films"
       className="flex h-full flex-col justify-center overflow-y-auto px-6 py-24 md:px-16"
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-[1500px]">
         <p
           className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
           style={{ '--d': '0.05s' }}
@@ -53,7 +53,7 @@ export default function Films({ setDark }) {
           <div key={film.id} className="mt-10 grid items-center gap-8 md:mt-12 lg:grid-cols-12 lg:gap-10">
             <div
               ref={(el) => (stageRefs.current[film.id] = el)}
-              className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre lg:col-span-7"
+              className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre lg:col-span-8"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
@@ -88,7 +88,7 @@ export default function Films({ setDark }) {
               )}
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-4">
               <p
                 className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
                 style={{ '--d': '0.1s' }}
