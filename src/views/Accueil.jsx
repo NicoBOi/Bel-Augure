@@ -160,7 +160,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           </div>
 
           <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.05s' }}>
-            <p className="max-w-[22ch] font-display text-[clamp(1.2rem,1.7vw,1.7rem)] leading-[1.45] text-sable">
+            <p className="max-w-[22ch] font-display text-[clamp(1.2rem,1.7vw,1.7rem)] leading-[1.45] text-or">
               Les films signature du bien-être d'exception
             </p>
           </div>

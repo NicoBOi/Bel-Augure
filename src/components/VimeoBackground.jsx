@@ -37,6 +37,10 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
             'https://player.vimeo.com',
           )
         }
+        // iOS/Safari n'honore pas toujours l'autoplay du paramètre d'URL :
+        // on force la lecture muette, seule autorisée sans geste utilisateur.
+        post('setVolume', 0)
+        post('play')
         if (soundRef.current !== undefined) {
           post('setVolume', soundRef.current ? 1 : 0)
         }
@@ -79,7 +83,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
   // Fond pur : le film joue sans aucune UI Vimeo, non cliquable. Les seuls
   // contrôles sont ceux, dessinés main, que la page Films pose par-dessus
   // (son + plein écran) — la charte reste maîtresse de chaque pixel.
-  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
+  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&playsinline=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
 
   return (
     <iframe
