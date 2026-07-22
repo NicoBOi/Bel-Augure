@@ -49,7 +49,24 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
       }
     }
     window.addEventListener('message', onMessage)
-    return () => window.removeEventListener('message', onMessage)
+
+    // Filet de sécurité mobile : sur iOS/Android l'autoplay muet ne renvoie
+    // pas toujours les événements 'play'/'playProgress'. Sans ce signal,
+    // l'iframe resterait à opacity-0 et rien ne s'afficherait. On révèle donc
+    // le film après un court délai. (Un simple setTimeout, aucun listener :
+    // ne touche pas au scroll.)
+    const reveal = setTimeout(() => {
+      setPlaying(true)
+      if (!notified.current) {
+        notified.current = true
+        onPlaying?.()
+      }
+    }, 2200)
+
+    return () => {
+      window.removeEventListener('message', onMessage)
+      clearTimeout(reveal)
+    }
   }, [onPlaying])
 
   // Le son suit la volonté du visiteur, sans recharger le player
