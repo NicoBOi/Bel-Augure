@@ -39,9 +39,9 @@ export default function Films({ setDark }) {
     <section
       ref={ref}
       aria-label="Films"
-      className="flex h-full flex-col items-center justify-center overflow-y-auto px-6 py-24 md:px-16"
+      className="flex h-full flex-col justify-center overflow-y-auto px-6 py-24 md:px-16"
     >
-      <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
+      <div className="mx-auto w-full max-w-6xl">
         <p
           className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
           style={{ '--d': '0.05s' }}
@@ -50,32 +50,10 @@ export default function Films({ setDark }) {
         </p>
 
         {FILMS.map((film) => (
-          <div key={film.id} className="mt-10 flex w-full flex-col items-center text-center">
-            <p
-              className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
-              style={{ '--d': '0.1s' }}
-            >
-              {film.world}
-            </p>
-            <h2 className="mt-4 font-display text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.05] text-creme">
-              <span className="mask" style={{ '--d': '0.15s' }}>
-                <span>
-                  {film.title}
-                  <span className="dot-breathe text-or">.</span>
-                </span>
-              </span>
-            </h2>
-            <p
-              className="reveal-up mx-auto mt-6 max-w-[52ch] text-[13.5px] font-light leading-[1.9] text-sable/90"
-              style={{ '--d': '0.3s' }}
-            >
-              {film.desc}
-            </p>
-
+          <div key={film.id} className="mt-10 grid items-center gap-8 md:mt-12 lg:grid-cols-12 lg:gap-10">
             <div
               ref={(el) => (stageRefs.current[film.id] = el)}
-              className="reveal-up group relative mt-10 aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre"
-              style={{ '--d': '0.45s' }}
+              className="relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre lg:col-span-7"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
@@ -109,12 +87,31 @@ export default function Films({ setDark }) {
                 </div>
               )}
             </div>
+
+            <div className="lg:col-span-5">
+              <p
+                className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
+                style={{ '--d': '0.1s' }}
+              >
+                {film.world}
+              </p>
+              <h2 className="mt-4 font-display text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.05] text-creme">
+                <span className="mask" style={{ '--d': '0.15s' }}>
+                  <span>
+                    {film.title}
+                    <span className="dot-breathe text-or">.</span>
+                  </span>
+                </span>
+              </h2>
+              <p
+                className="reveal-up mt-6 max-w-[46ch] text-[13.5px] font-light leading-[1.9] text-sable/90"
+                style={{ '--d': '0.3s' }}
+              >
+                {film.desc}
+              </p>
+            </div>
           </div>
         ))}
-
-        <p className="mt-14 text-[11px] font-light tracking-[0.04em] text-sable/60">
-          Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
-        </p>
       </div>
     </section>
   )
