@@ -145,7 +145,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
 
       {/* Mot-symbole en bas à gauche, catchline en face : la scène d'ouverture */}
       <div ref={wordRef} className="absolute inset-x-6 bottom-[9vh] z-[2] md:inset-x-16">
-        <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-8">
+        <div className="grid items-end gap-3 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-8">
             <h1
               id="hero-titre"
