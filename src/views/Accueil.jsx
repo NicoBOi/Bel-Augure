@@ -177,9 +177,8 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         <p className="mx-auto mt-7 max-w-[64ch] text-[14px] font-light leading-[1.9] text-encre/80">
           Il existe des lieux dont on se souvient longtemps après en être
           sorti. Un parfum, une lumière, un instant. Ces lieux méritent
-          mieux qu'une vidéo qui disparaît en trois secondes sous votre
-          pouce. Bel Augure réalise des films d'exception pour faire de
-          votre nom une signature intemporelle.
+          mieux qu'une simple vidéo, ils méritent un film signature réalisé
+          par Bel Augure.
         </p>
 
         {/* Une seule vignette, comme un photogramme posé sur la table */}
