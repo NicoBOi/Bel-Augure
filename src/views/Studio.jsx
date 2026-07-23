@@ -27,26 +27,22 @@ export default function Studio() {
         </h2>
 
         <div className="mt-12 grid gap-12 md:mt-14 md:grid-cols-12 md:items-start md:gap-8">
-          <p className="text-[14px] font-light leading-[1.95] text-encre/80 md:col-span-6">
-            {[
-              "Bel Augure c'est nous deux, Nicolas et Corentin.",
-              "Quinze ans qu'on se connaît.",
-              "L'un vient de l'événementiel,",
-              "l'autre du cinéma et de la mode.",
-              'On a longtemps travaillé chacun de son côté',
-              'avant de se décider à monter quelque chose ensemble,',
-              'à Bordeaux. Aujourd\'hui on filme vos enseignes',
-              'à deux pour continuer notre aventure.',
-            ].map((ligne, i) => (
-              <span
-                key={ligne}
-                className="reveal-up block"
-                style={{ paddingLeft: `${i * 0.95}rem`, '--d': `${0.28 + i * 0.06}s` }}
-              >
-                {ligne}
-              </span>
-            ))}
-          </p>
+          <div
+            className="reveal-up max-w-[64ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:col-span-7"
+            style={{ '--d': '0.3s' }}
+          >
+            <p>
+              Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans
+              qu'on se connaît. L'un vient de l'événementiel, l'autre du
+              cinéma et de la mode.
+            </p>
+            <p>
+              On a longtemps travaillé chacun de son côté avant de se
+              décider à monter quelque chose ensemble, à Bordeaux.
+              Aujourd'hui on filme vos enseignes à deux pour continuer notre
+              aventure.
+            </p>
+          </div>
 
           <div className="reveal-up md:col-span-4 md:col-start-9" style={{ '--d': '0.42s' }}>
             <span aria-hidden="true" className="mb-7 block h-px w-10 bg-or" />
