@@ -189,13 +189,17 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       </button>
 
       {/* Le studio se présente quand le jour se lève, au centre de la scène */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 px-6 text-center">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] w-full -translate-x-1/2 -translate-y-1/2 px-6 text-center">
         <div ref={studioRef} className="opacity-0" style={{ pointerEvents: 'none' }}>
+        {/* Le paragraphe épouse la largeur du titre : le conteneur prend la
+            largeur du titre (max-content, le titre étant sur une ligne), et
+            le paragraphe la remplit via w-0 + min-w-full. */}
+        <div className="mx-auto w-max max-w-full text-center">
         <h2 className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.25] text-encre md:whitespace-nowrap">
           Notre film devient votre signature<span className="text-or">.</span>
         </h2>
 
-        <p className="mx-auto mt-7 max-w-[64ch] text-[14px] font-light leading-[1.9] text-encre/80">
+        <p className="mt-7 w-0 min-w-full text-[14px] font-light leading-[1.9] text-encre/80">
           Tout se décide sur une image, c'est le seul moyen de ressentir
           avant d'expérimenter. Mais aujourd'hui la plupart des marques
           confient la leur à du contenu jetable. Bel Augure travaille avec
@@ -204,6 +208,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           l'écran ce que l'on éprouve chez vous. Nos films sont la preuve
           que votre enseigne est mémorable.
         </p>
+        </div>
 
         {/* Une seule vignette, comme un photogramme posé sur la table */}
         <button
