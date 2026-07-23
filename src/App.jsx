@@ -180,7 +180,7 @@ export default function App() {
           {/* Voile en fondu multiply : baisse les blancs du film sans
               remonter les noirs (noir × encre = noir). Un alpha simple,
               lui, décollait les noirs vers le gris-encre. */}
-          <div className="absolute inset-0 bg-encre/60 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-encre/25 mix-blend-multiply" />
         </div>
       </div>
 
