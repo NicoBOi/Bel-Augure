@@ -40,9 +40,9 @@ export default function Films({ setDark }) {
     <section
       ref={ref}
       aria-label="Films"
-      className="flex h-full flex-col overflow-y-auto py-24 lg:justify-center"
+      className="flex h-full flex-col overflow-y-auto py-24"
     >
-      <div className="mx-auto w-full lg:max-w-[1500px] lg:px-16">
+      <div className="mx-auto w-full lg:flex lg:max-w-[1500px] lg:flex-1 lg:flex-col lg:justify-center lg:px-16">
         <p
           className="reveal-up px-6 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60 lg:px-0"
           style={{ '--d': '0.05s' }}
@@ -135,8 +135,8 @@ export default function Films({ setDark }) {
         ))}
       </div>
 
-      <p className="mx-auto mt-16 w-full px-6 text-center text-[11px] font-light tracking-[0.04em] text-sable/60 lg:max-w-[1500px] lg:px-16">
-        Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
+      <p className="mx-auto mt-auto w-full px-6 pt-16 text-center text-[11px] font-light tracking-[0.04em] text-sable/60 lg:max-w-[1500px] lg:px-16">
+        Studio de production basé à Bordeaux
       </p>
     </section>
   )
