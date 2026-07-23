@@ -26,8 +26,14 @@ const OFFRES = [
   {
     name: 'Saisons',
     eyebrow: 'Le rendez-vous annuel',
-    desc: 'Un film court à chaque saison, quatre par an, toujours la même écriture. Et toujours la même personne en face de vous.',
-    detail: 'Une demi-journée de tournage à chaque saison.',
+    desc: 'Un film court à chaque saison, pour que vos clients vous suivent au fil du temps.',
+    inclus: [
+      'Quatre films de 15 à 30 s',
+      'Un jour de tournage par saison',
+      'Un acteur par film',
+      'Du matériel cinéma professionnel',
+      'Les déclinaisons pour deux réseaux sociaux au choix',
+    ],
     bgColor: '#6e6350',
     ink: true,
   },
@@ -202,7 +208,7 @@ export default function Offres({ setDark }) {
                     ink ? 'text-sable/85' : 'text-encre/80'
                   }`}
                 >
-                  <span aria-hidden="true" className="mt-[0.1em] text-[#8A7E68]">—</span>
+                  <span aria-hidden="true" className={`mt-[0.1em] ${ink ? 'text-or/75' : 'text-[#8A7E68]'}`}>—</span>
                   <span>{item}</span>
                 </li>
               ))}
