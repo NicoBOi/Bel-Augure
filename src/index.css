@@ -482,7 +482,8 @@ textarea.field {
 
 /* Plein écran de la scène film : on garde le rapport 16:9 de la vidéo,
    lettrage à l'encre autour au lieu d'étirer ou rogner l'image. */
-.film-stage:fullscreen {
+.film-stage:fullscreen,
+.film-stage:-webkit-full-screen {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -490,7 +491,8 @@ textarea.field {
   border: 0;
   background: var(--color-encre);
 }
-.film-stage:fullscreen iframe {
+.film-stage:fullscreen iframe,
+.film-stage:-webkit-full-screen iframe {
   position: static;
   inset: auto;
   width: 100vw;

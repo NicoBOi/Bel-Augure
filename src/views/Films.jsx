@@ -27,13 +27,23 @@ export default function Films({ setDark }) {
     setDark?.(true)
   }, [setDark])
 
-  // Plein écran natif du navigateur sur la scène du film : l'image emplit
-  // l'écran, l'encre disparaît, seul le film reste.
+  // Le plein écran natif n'existe pas sur iPhone (l'API Fullscreen n'y
+  // couvre pas les éléments) : on masque le bouton là où c'est impossible.
+  const canFullscreen =
+    typeof document !== 'undefined' &&
+    (document.fullscreenEnabled || document.webkitFullscreenEnabled)
+
+  // Plein écran de la scène du film : l'image emplit l'écran, l'encre
+  // disparaît, seul le film reste. Préfixe webkit pour Safari.
   const enlarge = (id) => {
     const el = stageRefs.current[id]
     if (!el) return
-    if (document.fullscreenElement) document.exitFullscreen?.()
-    else el.requestFullscreen?.()
+    const fsEl = document.fullscreenElement || document.webkitFullscreenElement
+    if (fsEl) {
+      ;(document.exitFullscreen || document.webkitExitFullscreen)?.call(document)
+    } else {
+      ;(el.requestFullscreen || el.webkitRequestFullscreen)?.call(el)
+    }
   }
 
   return (
@@ -99,14 +109,16 @@ export default function Films({ setDark }) {
                   >
                     {sound[film.id] ? <IconSoundOn /> : <IconSoundOff />}
                   </button>
-                  <button
-                    type="button"
-                    aria-label="Agrandir la vidéo en plein écran"
-                    onClick={() => enlarge(film.id)}
-                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
-                  >
-                    <IconFullscreen />
-                  </button>
+                  {canFullscreen && (
+                    <button
+                      type="button"
+                      aria-label="Agrandir la vidéo en plein écran"
+                      onClick={() => enlarge(film.id)}
+                      className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
+                    >
+                      <IconFullscreen />
+                    </button>
+                  )}
                 </div>
               )}
             </div>
