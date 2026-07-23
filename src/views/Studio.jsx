@@ -29,8 +29,8 @@ export default function Studio() {
             la mode.
           </p>
           <p>
-            On a longtemps travaillé chacun de son côté avant de se décider à
-            monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme
+            On a longtemps travaillé chacun de notre côté avant de se décider
+            à monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme
             vos enseignes à deux pour continuer notre aventure.
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function Studio() {
           className="reveal-up mt-12 max-w-[46ch] font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:mx-auto md:mt-14"
           style={{ '--d': '0.55s' }}
         >
-          Peu de films par an. C'est ce qui nous permet de les faire bien
+          Chaque film avec vous est un bout de notre histoire
           <span className="text-or">.</span>
         </p>
       </div>

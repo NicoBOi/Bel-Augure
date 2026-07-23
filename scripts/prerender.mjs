@@ -43,8 +43,8 @@ const ROUTES = [
     desc: "Nicolas et Corentin, deux réalisateurs à Bordeaux. Peu de films par an, faits main, pour le bien-être d'exception.",
     h1: 'Le studio — Nicolas & Corentin, à Bordeaux',
     body: `
-      <p>Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans qu'on se connaît. L'un vient de l'événementiel, l'autre du cinéma et de la mode. On a longtemps travaillé chacun de son côté avant de se décider à monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme vos enseignes à deux pour continuer notre aventure.</p>
-      <p>Peu de films par an. C'est ce qui nous permet de les faire bien.</p>
+      <p>Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans qu'on se connaît. L'un vient de l'événementiel, l'autre du cinéma et de la mode. On a longtemps travaillé chacun de notre côté avant de se décider à monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme vos enseignes à deux pour continuer notre aventure.</p>
+      <p>Chaque film avec vous est un bout de notre histoire.</p>
       <p>Nicolas — direction, image, étalonnage. Corentin — montage, motion design.</p>`,
   },
   {
