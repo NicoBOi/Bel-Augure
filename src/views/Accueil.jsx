@@ -181,10 +181,9 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         type="button"
         onClick={() => onNavigate('films')}
         aria-label="Voir le film"
-        className="hint-tab absolute right-0 top-[58%] z-[2] flex items-center gap-2.5 rounded-l-full border border-r-0 border-creme/15 bg-encre/85 py-2.5 pl-4 pr-5 md:hidden"
+        className="hint-tab absolute right-0 top-[58%] z-[2] flex items-center bg-sable px-4 py-3 shadow-[0_6px_22px_-8px_rgba(0,0,0,0.55)] md:hidden"
       >
-        <span aria-hidden="true" className="dot-breathe h-1.5 w-1.5 rounded-full bg-or" />
-        <span className="text-[10px] font-normal uppercase tracking-[0.22em] text-creme/85">
+        <span className="text-[10px] font-normal uppercase tracking-[0.22em] text-encre">
           Voir le film
         </span>
       </button>
