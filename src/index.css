@@ -465,6 +465,13 @@ textarea.field {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+
+  /* Sans le balayage, l'étiquette garde un texte plein et lisible */
+  .hint-shimmer {
+    background: none;
+    -webkit-text-fill-color: var(--color-sable);
+    color: var(--color-sable);
+  }
 }
 
 /* Plein écran de la scène film : on garde le rapport 16:9 de la vidéo,
@@ -486,19 +493,29 @@ textarea.field {
   max-height: 100vh;
 }
 
-/* Invite au film (hero mobile) : une étiquette ancrée au bord droit, dans
-   la zone du pouce, qui avance et recule doucement — comme un signet qui
-   dépasse pour attirer l'œil. translateY(-50%) reste présent à chaque image
-   pour garder le centrage vertical même sous reduced-motion. */
-@keyframes hintNudge {
-  0%,
-  100% {
-    transform: translateY(-50%) translateX(0);
+/* Invite au film (hero mobile) : le texte lui-même s'anime — un reflet
+   clair balaie les lettres en boucle, dans l'esprit du filet d'or qui
+   balaye le voile de chargement. Texte sable atténué, éclat crème qui
+   passe. Neutralisé par le bloc reduced-motion plus bas. */
+@keyframes hintShimmer {
+  0% {
+    background-position: 130% 0;
   }
-  50% {
-    transform: translateY(-50%) translateX(-11px);
+  100% {
+    background-position: -30% 0;
   }
 }
-.hint-tab {
-  animation: hintNudge 3.6s ease-in-out infinite;
+.hint-shimmer {
+  background: linear-gradient(
+    100deg,
+    rgba(240, 230, 216, 0.45) 30%,
+    rgba(242, 237, 228, 1) 50%,
+    rgba(240, 230, 216, 0.45) 70%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hintShimmer 3.4s ease-in-out infinite;
 }
