@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 // réellement démarrée : avant cela, le fond encre reste seul en scène.
 // Évite la tuile grise ou noire du player pendant le chargement — le film
 // fond au travers de l'encre quand il joue, jamais avant.
-export default function VimeoBackground({ id, title, className = '', onPlaying, soundOn }) {
+export default function VimeoBackground({ id, title, className = '', onPlaying, soundOn, paused }) {
   const frameRef = useRef(null)
   const notified = useRef(false)
   const [playing, setPlaying] = useState(false)
@@ -74,6 +74,12 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
     if (soundOn === undefined) return
     post('setVolume', soundOn ? 1 : 0)
   }, [soundOn])
+
+  // Pause / lecture au clic sur l'image (page Films)
+  useEffect(() => {
+    if (paused === undefined) return
+    post(paused ? 'pause' : 'play')
+  }, [paused])
 
   if (!id) return null
 

@@ -19,6 +19,7 @@ export default function Films({ setDark }) {
   const ref = useReveal(0.35)
   const [ready, setReady] = useState({})
   const [sound, setSound] = useState({})
+  const [paused, setPaused] = useState({})
   const stageRefs = useRef({})
 
   // Le film se regarde dans l'encre, comme en salle.
@@ -39,33 +40,51 @@ export default function Films({ setDark }) {
     <section
       ref={ref}
       aria-label="Films"
-      className="flex h-full flex-col overflow-y-auto px-6 py-24 md:px-16"
+      className="flex h-full flex-col overflow-y-auto py-24"
     >
-      <div className="mx-auto flex w-full max-w-[1500px] flex-1 flex-col justify-center">
+      <div className="mx-auto flex w-full max-w-[1700px] flex-1 flex-col justify-center">
         <p
-          className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
+          className="reveal-up px-6 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60 md:px-16"
           style={{ '--d': '0.05s' }}
         >
           Films
         </p>
 
         {FILMS.map((film) => (
-          <div key={film.id} className="mt-10 grid items-center gap-8 md:mt-12 lg:grid-cols-12 lg:gap-10">
+          <div key={film.id} className="mt-8">
             <div
               ref={(el) => (stageRefs.current[film.id] = el)}
-              className="film-stage relative aspect-video w-full overflow-hidden rounded-3xl border border-creme/15 bg-encre lg:col-span-8"
+              className="film-stage relative aspect-video w-full overflow-hidden border border-creme/15 bg-encre"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
                 id={film.vimeoId}
                 title={film.title}
                 soundOn={!!sound[film.id]}
+                paused={!!paused[film.id]}
                 onPlaying={() => setReady((s) => ({ ...s, [film.id]: true }))}
                 className="absolute inset-0 h-full w-full"
               />
 
+              {/* Toute la surface est cliquable : un clic met en pause ou
+                  relance. Les boutons (son, plein écran) passent au-dessus. */}
               {ready[film.id] && (
-                <div className="absolute bottom-4 right-5 z-[1] flex items-center gap-3">
+                <button
+                  type="button"
+                  aria-label={paused[film.id] ? 'Reprendre la lecture' : 'Mettre en pause'}
+                  onClick={() => setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))}
+                  className="absolute inset-0 z-[1] cursor-pointer"
+                >
+                  {paused[film.id] && (
+                    <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-encre/40 text-creme backdrop-blur-sm">
+                      <IconPlay />
+                    </span>
+                  )}
+                </button>
+              )}
+
+              {ready[film.id] && (
+                <div className="absolute bottom-4 right-5 z-[2] flex items-center gap-3">
                   <button
                     type="button"
                     aria-pressed={!!sound[film.id]}
@@ -87,9 +106,9 @@ export default function Films({ setDark }) {
               )}
             </div>
 
-            <div className="lg:col-span-4">
+            <div className="px-6 md:px-16">
               <p
-                className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
+                className="reveal-up mt-8 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
                 style={{ '--d': '0.1s' }}
               >
                 {film.world}
@@ -113,7 +132,7 @@ export default function Films({ setDark }) {
         ))}
       </div>
 
-      <p className="mx-auto mt-16 w-full max-w-[1500px] text-center text-[11px] font-light tracking-[0.04em] text-sable/60">
+      <p className="mx-auto mt-16 w-full max-w-[1700px] px-6 text-center text-[11px] font-light tracking-[0.04em] text-sable/60 md:px-16">
         Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
       </p>
     </section>
@@ -148,6 +167,14 @@ function IconFullscreen() {
       <path d="M16 3h5v5" />
       <path d="M21 16v5h-5" />
       <path d="M3 16v5h5" />
+    </svg>
+  )
+}
+
+function IconPlay() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7z" />
     </svg>
   )
 }
