@@ -236,11 +236,11 @@ export default function Offres({ setDark }) {
       </div>
 
       <p
-        className={`mt-14 text-[11px] font-light tracking-[0.04em] transition-colors duration-700 ${
+        className={`mt-auto pt-16 text-center text-[11px] font-light tracking-[0.04em] transition-colors duration-700 ${
           ink ? 'text-sable/60' : 'text-grege'
         }`}
       >
-        Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
+        Studio de production basé à Bordeaux
       </p>
     </section>
   )

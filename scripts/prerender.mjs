@@ -89,7 +89,7 @@ const ROUTES = [
   },
 ]
 
-const FOOTER = `<p>Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.</p>`
+const FOOTER = `<p>Studio de production basé à Bordeaux</p>`
 
 for (const route of ROUTES) {
   const url = SITE + (route.path === '/' ? '/' : route.path)

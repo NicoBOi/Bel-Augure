@@ -34,7 +34,7 @@ export default function Mentions() {
   return (
     <section
       aria-label="Mentions légales"
-      className="h-full overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[9vh]"
+      className="flex h-full flex-col overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[9vh]"
     >
       <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
         Mentions légales
@@ -61,8 +61,8 @@ export default function Mentions() {
         ))}
       </div>
 
-      <p className="mt-14 text-[11px] font-light tracking-[0.04em] text-grege">
-        Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
+      <p className="mt-auto pt-16 text-center text-[11px] font-light tracking-[0.04em] text-grege">
+        Studio de production basé à Bordeaux
       </p>
     </section>
   )
