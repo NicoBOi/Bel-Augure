@@ -66,11 +66,11 @@ export default function Contact({ onNavigate }) {
           <div>
           <h2 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>Un email</span>
+              <span>On discute de votre</span>
             </span>
             <span className="mask md:ml-[3vw]" style={{ '--d': '0.2s' }}>
               <span>
-                suffit<span className="text-or">.</span>
+                prochain film<span className="text-or"> ?</span>
               </span>
             </span>
           </h2>
@@ -79,8 +79,8 @@ export default function Contact({ onNavigate }) {
             className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
             style={{ '--d': '0.12s' }}
           >
-            Dites-nous où vous êtes et ce que vous aimeriez montrer. C'est
-            Nicolas qui lit, et il répond sous deux jours.
+            Un café, des idées, quelques notes et le projet commence
+            <span className="text-or"> !</span>
           </p>
 
           <p
