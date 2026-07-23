@@ -180,27 +180,30 @@ export default function Offres({ setDark }) {
         </h3>
 
         {offre.inclus ? (
-          // Sous le titre : le paragraphe d'explication, puis les inclus en
-          // tirets juste en dessous — le tout centré, sans ligne.
-          <div className="mx-auto mt-8 flex w-full max-w-[54ch] flex-col items-center gap-8 text-center">
+          // Sous le titre : un chapô centré, puis les inclus en grille deux
+          // colonnes — tirets alignés, blocs équilibrés. Pas de ligne.
+          <div className="mt-8 flex w-full flex-col items-center">
             <p
-              className={`fade-in text-[14px] font-light leading-[1.9] ${
+              className={`fade-in max-w-[44ch] text-center text-[15px] font-light leading-[1.85] ${
                 ink ? 'text-sable/90' : 'text-encre/80'
               }`}
               style={{ '--d': '0.3s' }}
             >
               {offre.desc}
             </p>
-            <ul className="fade-in space-y-2.5" style={{ '--d': '0.42s' }}>
+            <ul
+              className="fade-in mt-10 grid max-w-xl gap-x-12 gap-y-3.5 text-left sm:grid-cols-2"
+              style={{ '--d': '0.42s' }}
+            >
               {offre.inclus.map((item) => (
                 <li
                   key={item}
-                  className={`text-[13.5px] font-light leading-[1.6] ${
+                  className={`flex gap-3 text-[13px] font-light leading-[1.5] ${
                     ink ? 'text-sable/85' : 'text-encre/80'
                   }`}
                 >
-                  <span aria-hidden="true" className="text-[#8A7E68]">— </span>
-                  {item}
+                  <span aria-hidden="true" className="mt-[0.1em] text-[#8A7E68]">—</span>
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>
