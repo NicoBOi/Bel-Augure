@@ -41,7 +41,6 @@ const OFFRES = [
     name: 'Sur Mesure',
     eyebrow: "L'exception",
     desc: "La pièce maîtresse de votre enseigne est maintenant taillée sur mesure, plus de limite de temps, d'acteurs ou de décors. C'est vous qui donnez les limites et nous réalisons avec.",
-    detail: 'On écrit le projet ensemble. Sur devis.',
     bgColor: '#1a1512',
     ink: true,
   },
@@ -224,14 +223,16 @@ export default function Offres({ setDark }) {
             >
               {offre.desc}
             </p>
-            <p
-              className={`fade-in mt-6 text-[10.5px] font-normal uppercase tracking-[0.22em] ${
-                ink ? 'text-or/85' : 'text-[#8f7d5f]'
-              }`}
-              style={{ '--d': '0.45s' }}
-            >
-              {offre.detail}
-            </p>
+            {offre.detail && (
+              <p
+                className={`fade-in mt-6 text-[10.5px] font-normal uppercase tracking-[0.22em] ${
+                  ink ? 'text-or/85' : 'text-[#8f7d5f]'
+                }`}
+                style={{ '--d': '0.45s' }}
+              >
+                {offre.detail}
+              </p>
+            )}
           </>
         )}
       </div>
