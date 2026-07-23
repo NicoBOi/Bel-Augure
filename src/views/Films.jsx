@@ -40,21 +40,24 @@ export default function Films({ setDark }) {
     <section
       ref={ref}
       aria-label="Films"
-      className="flex h-full flex-col overflow-y-auto py-24"
+      className="flex h-full flex-col overflow-y-auto py-24 lg:justify-center"
     >
-      <div className="mx-auto flex w-full max-w-[1700px] flex-1 flex-col justify-center">
+      <div className="mx-auto w-full lg:max-w-[1500px] lg:px-16">
         <p
-          className="reveal-up px-6 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60 md:px-16"
+          className="reveal-up px-6 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60 lg:px-0"
           style={{ '--d': '0.05s' }}
         >
           Films
         </p>
 
         {FILMS.map((film) => (
-          <div key={film.id} className="mt-8">
+          <div
+            key={film.id}
+            className="mt-8 lg:mt-12 lg:grid lg:grid-cols-12 lg:items-center lg:gap-10"
+          >
             <div
               ref={(el) => (stageRefs.current[film.id] = el)}
-              className="film-stage relative aspect-video w-full overflow-hidden bg-encre"
+              className="film-stage relative aspect-video w-full overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl lg:border lg:border-creme/15"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
@@ -106,9 +109,9 @@ export default function Films({ setDark }) {
               )}
             </div>
 
-            <div className="px-6 md:px-16">
+            <div className="px-6 lg:col-span-4 lg:px-0">
               <p
-                className="reveal-up mt-8 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60"
+                className="reveal-up mt-8 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60 lg:mt-0"
                 style={{ '--d': '0.1s' }}
               >
                 {film.world}
@@ -132,7 +135,7 @@ export default function Films({ setDark }) {
         ))}
       </div>
 
-      <p className="mx-auto mt-16 w-full max-w-[1700px] px-6 text-center text-[11px] font-light tracking-[0.04em] text-sable/60 md:px-16">
+      <p className="mx-auto mt-16 w-full px-6 text-center text-[11px] font-light tracking-[0.04em] text-sable/60 lg:max-w-[1500px] lg:px-16">
         Bel Augure — films pour l'hôtellerie et le bien-être. Bordeaux.
       </p>
     </section>
