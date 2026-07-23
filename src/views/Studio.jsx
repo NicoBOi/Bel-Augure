@@ -12,36 +12,37 @@ export default function Studio() {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="flex h-full flex-col justify-between gap-10 px-6 pb-14 pt-28 max-md:overflow-y-auto md:px-16 md:pb-[9vh]"
+      className="flex h-full flex-col gap-10 px-6 pb-14 pt-28 max-md:overflow-y-auto md:px-16 md:pb-[9vh]"
     >
-      {/* Le credo : grand, à gauche, la seconde ligne décalée comme un
-          plan qui se recadre */}
-      <div>
-
-        <h2 className="mt-7 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.14] text-encre">
-          <span className="mask" style={{ '--d': '0.12s' }}>
-            <span>
-              Nicolas <span className="text-or">&amp;</span> Corentin
+      {/* Titre et récit groupés, posés au centre de la pièce en diagonale
+          douce : le nom en haut à gauche, le récit juste dessous, décalé
+          à droite. */}
+      <div className="flex flex-1 flex-col justify-center">
+        <div className="mx-auto w-full max-w-4xl">
+          <h2 className="font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.14] text-encre">
+            <span className="mask" style={{ '--d': '0.12s' }}>
+              <span>
+                Nicolas <span className="text-or">&amp;</span> Corentin
+              </span>
             </span>
-          </span>
-        </h2>
-      </div>
+          </h2>
 
-      {/* Le récit, posé à droite : la diagonale éditoriale */}
-      <div
-        className="reveal-up max-w-[54ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:mr-[4vw] md:self-end"
-        style={{ '--d': '0.3s' }}
-      >
-        <p>
-          Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans qu'on
-          se connaît. L'un vient de l'événementiel, l'autre du cinéma et de
-          la mode.
-        </p>
-        <p>
-          On a longtemps travaillé chacun de son côté avant de se décider à
-          monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme
-          vos enseignes à deux pour continuer notre aventure.
-        </p>
+          <div
+            className="reveal-up mt-9 max-w-[48ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:ml-auto"
+            style={{ '--d': '0.3s' }}
+          >
+            <p>
+              Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans
+              qu'on se connaît. L'un vient de l'événementiel, l'autre du
+              cinéma et de la mode.
+            </p>
+            <p>
+              On a longtemps travaillé chacun de son côté avant de se décider
+              à monter quelque chose ensemble, à Bordeaux. Aujourd'hui on
+              filme vos enseignes à deux pour continuer notre aventure.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* La base partagée : le credo en exergue, les artisans en face */}
