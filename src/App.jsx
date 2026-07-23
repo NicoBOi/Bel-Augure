@@ -164,7 +164,7 @@ export default function App() {
         aria-hidden="true"
         className={`absolute inset-0 z-0 ${view === 'accueil' ? '' : 'invisible'}`}
       >
-        <div ref={heroMediaRef} className="absolute inset-0 overflow-hidden">
+        <div ref={heroMediaRef} className="absolute inset-0 isolate overflow-hidden">
           <div className="h-full w-full bg-encre" />
           <VimeoBackground
             key={isMobile ? 'mobile' : 'desktop'}
@@ -177,7 +177,10 @@ export default function App() {
                 : 'absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2'
             }
           />
-          <div className="absolute inset-0 bg-encre/40" />
+          {/* Voile en fondu multiply : baisse les blancs du film sans
+              remonter les noirs (noir × encre = noir). Un alpha simple,
+              lui, décollait les noirs vers le gris-encre. */}
+          <div className="absolute inset-0 bg-encre/60 mix-blend-multiply" />
         </div>
       </div>
 
