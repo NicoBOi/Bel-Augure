@@ -181,18 +181,31 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         type="button"
         onClick={() => onNavigate('films')}
         aria-label="Voir le film"
-        className="absolute left-1/2 top-[62%] z-[2] -translate-x-1/2 md:hidden"
+        className="group absolute left-1/2 top-[62%] z-[2] flex -translate-x-1/2 flex-col items-center gap-4 md:hidden"
       >
-        <span className="relative flex h-16 w-16 items-center justify-center">
+        <span className="relative flex h-14 w-14 items-center justify-center">
           <span
             aria-hidden="true"
-            className="hint-pulse absolute inset-0 rounded-full border border-creme/40"
+            className="hint-halo absolute inset-0 rounded-full border border-or/40"
           />
-          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-creme/40 bg-encre/25 text-creme backdrop-blur-sm">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="ml-[3px]">
-              <path d="M8 5v14l11-7z" />
+          <span className="hint-breathe flex h-14 w-14 items-center justify-center rounded-full border border-creme/25 bg-encre/15">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.3"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className="ml-[3px] text-creme/90"
+            >
+              <path d="M8 6.5v11l9-5.5z" />
             </svg>
           </span>
+        </span>
+        <span className="nav-label text-[10px] font-normal uppercase tracking-[0.28em] text-creme/70">
+          Voir le film<span className="text-or">.</span>
         </span>
       </button>
 
