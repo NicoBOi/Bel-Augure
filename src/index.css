@@ -117,6 +117,11 @@ h3 {
   transform: scaleX(1);
 }
 
+/* Page active : le trait épouse la couleur du texte (au survol il reste or) */
+.nav-link[aria-current='page'] .nav-label::after {
+  background-color: currentColor;
+}
+
 /* ---------- Panneau mobile : grid-rows 0fr -> 1fr ---------- */
 
 .menu-panel {
