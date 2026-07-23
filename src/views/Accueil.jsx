@@ -181,7 +181,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         type="button"
         onClick={() => onNavigate('films')}
         aria-label="Voir le film"
-        className="hint-tab absolute right-0 top-[58%] z-[2] flex items-center bg-sable px-4 py-3 shadow-[0_6px_22px_-8px_rgba(0,0,0,0.55)] md:hidden"
+        className="hint-tab absolute right-[-26px] top-[58%] z-[2] flex items-center rounded-l-lg bg-or py-3 pl-5 pr-11 shadow-[0_6px_22px_-8px_rgba(0,0,0,0.55)] md:hidden"
       >
         <span className="text-[10px] font-normal uppercase tracking-[0.22em] text-encre">
           Voir le film

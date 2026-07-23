@@ -496,9 +496,9 @@ textarea.field {
     transform: translateY(-50%) translateX(0);
   }
   50% {
-    transform: translateY(-50%) translateX(-7px);
+    transform: translateY(-50%) translateX(-11px);
   }
 }
 .hint-tab {
-  animation: hintNudge 3.4s ease-in-out infinite;
+  animation: hintNudge 3.6s ease-in-out infinite;
 }
