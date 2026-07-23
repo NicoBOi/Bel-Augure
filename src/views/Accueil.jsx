@@ -28,6 +28,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
   const sectionRef = useRef(null)
   const creamRef = useRef(null)
   const wordRef = useRef(null)
+  const hintRef = useRef(null)
   const studioRef = useRef(null)
   const target = useRef(0)
   const current = useRef(0)
@@ -59,6 +60,12 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         wordRef.current.style.opacity = String(Math.max(1 - p * 1.6, 0))
         wordRef.current.style.transform = `translateY(${-p * 8}vh)`
         wordRef.current.inert = p > 0.5
+      }
+      if (hintRef.current) {
+        // L'invite au film ne vit que sur la scène d'ouverture : elle
+        // s'efface vite dès qu'un geste de scroll commence.
+        hintRef.current.style.opacity = String(Math.max(1 - p * 3, 0))
+        hintRef.current.inert = p > 0.15
       }
       if (studioRef.current) {
         const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
@@ -166,6 +173,28 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           </div>
         </div>
       </div>
+
+      {/* Invite discrète, mobile seulement : dans la zone du pouce, un
+          bouton lecture pulsé qui ouvre le film. Disparaît au scroll. */}
+      <button
+        ref={hintRef}
+        type="button"
+        onClick={() => onNavigate('films')}
+        aria-label="Voir le film"
+        className="absolute left-1/2 top-[62%] z-[2] -translate-x-1/2 md:hidden"
+      >
+        <span className="relative flex h-16 w-16 items-center justify-center">
+          <span
+            aria-hidden="true"
+            className="hint-pulse absolute inset-0 rounded-full border border-creme/40"
+          />
+          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-creme/40 bg-encre/25 text-creme backdrop-blur-sm">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="ml-[3px]">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+        </span>
+      </button>
 
       {/* Le studio se présente quand le jour se lève, au centre de la scène */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 px-6 text-center">
