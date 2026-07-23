@@ -12,8 +12,14 @@ const OFFRES = [
   {
     name: 'Signature',
     eyebrow: 'Le film central',
-    desc: "Le grand film de votre adresse, celui qu'on met partout. Entre 90 secondes et 2 minutes, fait pour rester en ligne des années.",
-    detail: 'Deux journées de tournage. Livré en six semaines.',
+    desc: "Un film court écrit, tourné et monté par nos soins. Il est la vitrine de l'émotion que l'on éprouve chez vous.",
+    inclus: [
+      'Un film de 45 à 90 s',
+      'Deux jours de tournage',
+      'Un acteur',
+      'Du matériel cinéma professionnel',
+      'Les teasers pour deux réseaux sociaux au choix',
+    ],
     bgColor: 'rgb(217 198 166 / 0.45)',
     ink: false,
   },
@@ -173,22 +179,58 @@ export default function Offres({ setDark }) {
           </span>
         </h3>
 
-        <p
-          className={`fade-in mx-auto mt-8 max-w-[52ch] text-[14px] font-light leading-[1.9] ${
-            ink ? 'text-sable/90' : 'text-encre/80'
-          }`}
-          style={{ '--d': '0.3s' }}
-        >
-          {offre.desc}
-        </p>
-        <p
-          className={`fade-in mt-6 text-[10.5px] font-normal uppercase tracking-[0.22em] ${
-            ink ? 'text-or/85' : 'text-[#8f7d5f]'
-          }`}
-          style={{ '--d': '0.45s' }}
-        >
-          {offre.detail}
-        </p>
+        {offre.inclus ? (
+          // Sous le titre : le paragraphe d'explication et ce qui est inclus,
+          // séparés par une ligne (verticale en desktop, horizontale en
+          // mobile). Les inclus se lisent en tirets.
+          <div className="mt-10 grid w-full max-w-4xl gap-x-12 gap-y-8 text-left md:grid-cols-2">
+            <p
+              className={`fade-in self-center text-[14px] font-light leading-[1.9] md:pr-2 ${
+                ink ? 'text-sable/90' : 'text-encre/80'
+              }`}
+              style={{ '--d': '0.3s' }}
+            >
+              {offre.desc}
+            </p>
+            <ul
+              className={`fade-in space-y-3 border-t pt-8 md:border-l md:border-t-0 md:pl-12 md:pt-0 ${
+                ink ? 'border-or/30' : 'border-or/45'
+              }`}
+              style={{ '--d': '0.42s' }}
+            >
+              {offre.inclus.map((item) => (
+                <li
+                  key={item}
+                  className={`flex gap-3 text-[13.5px] font-light leading-[1.5] ${
+                    ink ? 'text-sable/85' : 'text-encre/80'
+                  }`}
+                >
+                  <span aria-hidden="true" className="text-or">—</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <>
+            <p
+              className={`fade-in mx-auto mt-8 max-w-[52ch] text-[14px] font-light leading-[1.9] ${
+                ink ? 'text-sable/90' : 'text-encre/80'
+              }`}
+              style={{ '--d': '0.3s' }}
+            >
+              {offre.desc}
+            </p>
+            <p
+              className={`fade-in mt-6 text-[10.5px] font-normal uppercase tracking-[0.22em] ${
+                ink ? 'text-or/85' : 'text-[#8f7d5f]'
+              }`}
+              style={{ '--d': '0.45s' }}
+            >
+              {offre.detail}
+            </p>
+          </>
+        )}
       </div>
 
       {/* Le déroulé et les questions : dans la lumière de l'offre choisie */}
