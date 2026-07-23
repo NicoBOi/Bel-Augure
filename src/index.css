@@ -486,35 +486,13 @@ textarea.field {
   max-height: 100vh;
 }
 
-/* Invite au film (hero mobile), dans la grammaire de la charte : le cercle
-   respire au même rythme lent que le point (dotBreathe), et un fin halo or
-   s'ouvre puis s'efface pour attirer discrètement l'œil. Les deux sont
-   neutralisés par le bloc reduced-motion plus bas. */
-@keyframes hintBreathe {
-  from {
-    opacity: 0.72;
-    transform: scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-}
-.hint-breathe {
-  animation: hintBreathe 4.5s ease-in-out infinite alternate;
-}
-
-@keyframes hintHalo {
-  0% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  70%,
-  100% {
-    transform: scale(1.8);
-    opacity: 0;
-  }
-}
-.hint-halo {
-  animation: hintHalo 4.5s var(--ease-augure) infinite;
+/* Invite au film (hero mobile) : le motif signature du site — deux fins
+   arcs qui tournent lentement (mêmes vitesses que le loader, ring-a/ring-b)
+   autour du point d'or qui respire. Aucun libellé, aucune icône « player ».
+   Le point réutilise dotBreathe ; les arcs, ringSpin. Tout est neutralisé
+   par le bloc reduced-motion plus bas. */
+.hint-dot {
+  animation: dotBreathe 5s ease-in-out infinite alternate;
+  transform-box: fill-box;
+  transform-origin: center;
 }

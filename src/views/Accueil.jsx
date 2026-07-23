@@ -181,32 +181,13 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         type="button"
         onClick={() => onNavigate('films')}
         aria-label="Voir le film"
-        className="group absolute left-1/2 top-[62%] z-[2] flex -translate-x-1/2 flex-col items-center gap-4 md:hidden"
+        className="absolute left-1/2 top-[60%] z-[2] -translate-x-1/2 md:hidden"
       >
-        <span className="relative flex h-14 w-14 items-center justify-center">
-          <span
-            aria-hidden="true"
-            className="hint-halo absolute inset-0 rounded-full border border-or/40"
-          />
-          <span className="hint-breathe flex h-14 w-14 items-center justify-center rounded-full border border-creme/25 bg-encre/15">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.3"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              className="ml-[3px] text-creme/90"
-            >
-              <path d="M8 6.5v11l9-5.5z" />
-            </svg>
-          </span>
-        </span>
-        <span className="nav-label text-[10px] font-normal uppercase tracking-[0.28em] text-creme/70">
-          Voir le film<span className="text-or">.</span>
-        </span>
+        <svg className="rings" viewBox="0 0 100 100" width="74" height="74" fill="none" aria-hidden="true">
+          <circle cx="50" cy="50" r="47" stroke="var(--color-creme)" strokeOpacity="0.22" strokeWidth="0.6" />
+          <circle cx="50" cy="50" r="37" stroke="var(--color-or)" strokeOpacity="0.4" strokeWidth="0.6" />
+          <circle className="hint-dot" cx="50" cy="50" r="2.3" fill="var(--color-or)" />
+        </svg>
       </button>
 
       {/* Le studio se présente quand le jour se lève, au centre de la scène */}
