@@ -181,13 +181,12 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         type="button"
         onClick={() => onNavigate('films')}
         aria-label="Voir le film"
-        className="absolute left-1/2 top-[60%] z-[2] -translate-x-1/2 md:hidden"
+        className="hint-tab absolute right-0 top-[58%] z-[2] flex items-center gap-2.5 rounded-l-full border border-r-0 border-creme/15 bg-encre/85 py-2.5 pl-4 pr-5 md:hidden"
       >
-        <svg className="rings" viewBox="0 0 100 100" width="74" height="74" fill="none" aria-hidden="true">
-          <circle cx="50" cy="50" r="47" stroke="var(--color-creme)" strokeOpacity="0.22" strokeWidth="0.6" />
-          <circle cx="50" cy="50" r="37" stroke="var(--color-or)" strokeOpacity="0.4" strokeWidth="0.6" />
-          <circle className="hint-dot" cx="50" cy="50" r="2.3" fill="var(--color-or)" />
-        </svg>
+        <span aria-hidden="true" className="dot-breathe h-1.5 w-1.5 rounded-full bg-or" />
+        <span className="text-[10px] font-normal uppercase tracking-[0.22em] text-creme/85">
+          Voir le film
+        </span>
       </button>
 
       {/* Le studio se présente quand le jour se lève, au centre de la scène */}

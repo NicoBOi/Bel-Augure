@@ -486,13 +486,19 @@ textarea.field {
   max-height: 100vh;
 }
 
-/* Invite au film (hero mobile) : le motif signature du site — deux fins
-   arcs qui tournent lentement (mêmes vitesses que le loader, ring-a/ring-b)
-   autour du point d'or qui respire. Aucun libellé, aucune icône « player ».
-   Le point réutilise dotBreathe ; les arcs, ringSpin. Tout est neutralisé
-   par le bloc reduced-motion plus bas. */
-.hint-dot {
-  animation: dotBreathe 5s ease-in-out infinite alternate;
-  transform-box: fill-box;
-  transform-origin: center;
+/* Invite au film (hero mobile) : une étiquette ancrée au bord droit, dans
+   la zone du pouce, qui avance et recule doucement — comme un signet qui
+   dépasse pour attirer l'œil. translateY(-50%) reste présent à chaque image
+   pour garder le centrage vertical même sous reduced-motion. */
+@keyframes hintNudge {
+  0%,
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(-50%) translateX(-7px);
+  }
+}
+.hint-tab {
+  animation: hintNudge 3.4s ease-in-out infinite;
 }
