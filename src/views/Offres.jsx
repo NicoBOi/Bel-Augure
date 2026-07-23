@@ -52,19 +52,19 @@ const DEROULE = [
     n: '01',
     titre: "L'écriture",
     texte:
-      'On se parle, on vient voir le lieu, on écrit une note d’intention. Avant de tourner, vous savez déjà ce que vous verrez à l’écran.',
+      "Après un premier rendez-vous et quelques prises de notes, nous écrivons un script qui fera ressentir l'essence de votre enseigne.",
   },
   {
     n: '02',
     titre: 'Le tournage',
     texte:
-      "Du matériel de cinéma, une petite équipe. Vous nous oublierez vite.",
+      'Une petite équipe de tournage, du matériel léger et fiable : nous savons nous faire discrets.',
   },
   {
     n: '03',
     titre: 'La livraison',
     texte:
-      'Vous recevez le film, ses déclinaisons et les droits qui vont avec. Et s’il reste un détail qui vous chiffonne, deux séries de retouches sont comprises.',
+      "Vous recevez le film, ses déclinaisons et les droits qui vont avec. S'il reste un détail qui vous chiffonne, deux séries de retouches sont comprises.",
   },
 ]
 
