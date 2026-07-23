@@ -28,7 +28,7 @@ export default function Studio() {
           </h2>
 
           <div
-            className="reveal-up mt-9 max-w-[48ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:ml-auto"
+            className="reveal-up mt-9 max-w-2xl space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:ml-auto"
             style={{ '--d': '0.3s' }}
           >
             <p>
