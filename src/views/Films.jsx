@@ -9,7 +9,7 @@ const FILMS = [
   {
     id: 'jetee-dares',
     vimeoId: '1211391558',
-    title: "Les Pieds Dans L'eau",
+    title: "Les Pieds dans l'eau",
     world: "Bassin d'Arcachon",
     desc: "Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
   },

@@ -72,10 +72,10 @@ const DEROULE = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Nous avons 3 formules, Signature, Saisons et Sur Mesure. Chacune a sa gamme de prix, à vous de voir laquelle vous convient le mieux.',
+    r: 'Nous avons trois formules, Signature, Saisons et Sur Mesure. Chacune a sa gamme de prix, à vous de voir laquelle vous convient le mieux.',
   },
   {
-    q: 'Qui apparaît à l’écran ?',
+    q: "Qui apparaît à l'écran ?",
     r: 'Nous avons à cœur de travailler avec des acteurs pour rendre votre lieu vivant ! Nous nous occupons du casting.',
   },
   {
@@ -84,7 +84,7 @@ const QUESTIONS = [
   },
   {
     q: 'À qui appartient le film ?',
-    r: "Les droits de diffusion sont inclus dans l'offre pour 2 ans.",
+    r: "Les droits de diffusion sont inclus dans l'offre pour deux ans.",
   },
 ]
 

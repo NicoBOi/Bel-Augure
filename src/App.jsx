@@ -44,9 +44,9 @@ const DESCRIPTIONS = {
   accueil:
     'Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux.',
   films:
-    "Jetée d'Arès : film d'étude tourné sur le bassin d'Arcachon. L'écriture de Bel Augure, avant les premières signatures clients.",
+    "Les Pieds dans l'eau : le premier film de Bel Augure, tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
   studio:
-    'Deux artisans, peu de films, bien faits. Bel Augure fait du cinéma pour le bien-être d’exception, depuis Bordeaux.',
+    "Nicolas et Corentin, deux réalisateurs à Bordeaux. Peu de films par an, faits main, pour le bien-être d'exception.",
   offres:
     'Formats et délais : tout est écrit. Films signature livrés de quatre à huit semaines.',
   contact:

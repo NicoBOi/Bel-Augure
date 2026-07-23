@@ -12,18 +12,18 @@ const BLOCS = [
   },
   {
     titre: 'Hébergement',
-    lignes: ['[Nom de l’hébergeur à compléter]', '[Adresse et contact de l’hébergeur à compléter]'],
+    lignes: ["[Nom de l'hébergeur à compléter]", "[Adresse et contact de l'hébergeur à compléter]"],
   },
   {
     titre: 'Propriété intellectuelle',
     lignes: [
-      'L’ensemble du site (textes, films, photographies, identité) est la propriété de Bel Augure ou de ses clients pour les œuvres qui leur ont été cédées. Toute reproduction sans accord écrit est interdite.',
+      "L'ensemble du site (textes, films, photographies, identité) est la propriété de Bel Augure ou de ses clients pour les œuvres qui leur ont été cédées. Toute reproduction sans accord écrit est interdite.",
     ],
   },
   {
     titre: 'Données personnelles',
     lignes: [
-      'Le formulaire de contact compose un email dans votre messagerie : aucune donnée n’est enregistrée sur un serveur du site. Les emails reçus servent uniquement à répondre à votre demande et ne sont jamais transmis à des tiers.',
+      "Le formulaire de contact compose un email dans votre messagerie : aucune donnée n'est enregistrée sur un serveur du site. Les emails reçus servent uniquement à répondre à votre demande et ne sont jamais transmis à des tiers.",
       'Ce site ne dépose aucun cookie de suivi.',
       'Pour exercer vos droits (accès, rectification, suppression) : nicolas@belaugure.studio.',
     ],

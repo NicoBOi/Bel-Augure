@@ -22,29 +22,28 @@ const ROUTES = [
     desc: 'Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux.',
     h1: 'Bel Augure — studio de films pour hôtels, spas et maisons de bien-être à Bordeaux',
     body: `
-      <p>Les films signatures du bien-être d'exception.</p>
-      <h2>Un studio. Deux savoir-faire.</h2>
-      <p>Vous avez mis des années à faire de votre lieu ce qu'il est. Nous venons le filmer comme il le mérite. Pas une vidéo de plus mais un film gravé dans le temps.</p>
+      <p>Les films signature du bien-être d'exception.</p>
+      <h2>Notre film devient votre signature.</h2>
+      <p>Tout se décide sur une image, c'est le seul moyen de ressentir avant d'expérimenter. Mais aujourd'hui la plupart des marques confient la leur à du contenu jetable. Bel Augure travaille avec les moyens du cinéma : de l'écriture au montage en passant par le tournage, nous construisons chaque étape pour qu'on retrouve à l'écran ce que l'on éprouve chez vous. Nos films sont la preuve que votre enseigne est mémorable.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },
   {
     path: '/films',
     title: 'Films · Bel Augure',
-    desc: "Les Pieds Dans L'eau : le premier film de Bel Augure, tourné sur le bassin d'Arcachon. Un showcase de notre regard, avant les premières signatures clients.",
-    h1: "Films — Les Pieds Dans L'eau, sur le bassin d'Arcachon",
+    desc: "Les Pieds dans l'eau : le premier film de Bel Augure, tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
+    h1: "Films — Les Pieds dans l'eau, sur le bassin d'Arcachon",
     body: `
-      <h2>Les Pieds Dans L'eau — bassin d'Arcachon</h2>
+      <h2>Les Pieds dans l'eau — bassin d'Arcachon</h2>
       <p>Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, au crépuscule d'une marée montante.</p>
       <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a></p>`,
   },
   {
     path: '/studio',
     title: 'Studio · Bel Augure',
-    desc: 'Deux artisans, peu de films, bien faits. Bel Augure fait du cinéma pour le bien-être d’exception, depuis Bordeaux.',
-    h1: 'Le studio — nous sommes deux, nous restons deux',
+    desc: "Nicolas et Corentin, deux réalisateurs à Bordeaux. Peu de films par an, faits main, pour le bien-être d'exception.",
+    h1: 'Le studio — Nicolas & Corentin, à Bordeaux',
     body: `
-      <p>Nicolas tient la caméra, Corentin monte et mixe. Il n'y a personne d'autre, et c'est voulu : du premier appel à la livraison, vous parlez à ceux qui font le film.</p>
-      <p>Bel Augure est né à Bordeaux d'un constat simple : les hôtels, les thermes et les marques du bien-être méritaient mieux que des vidéos pressées. Alors on repère avant de tourner, on attend la bonne lumière, et le son est travaillé comme l'image.</p>
+      <p>Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans qu'on se connaît. L'un vient de l'événementiel, l'autre du cinéma et de la mode. On a longtemps travaillé chacun de son côté avant de se décider à monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme vos enseignes à deux pour continuer notre aventure.</p>
       <p>Peu de films par an. C'est ce qui nous permet de les faire bien.</p>
       <p>Nicolas — direction, image, étalonnage. Corentin — montage, motion design.</p>`,
   },
@@ -55,27 +54,28 @@ const ROUTES = [
     h1: 'Offres — film signature pour hôtel, spa et maison de bien-être',
     body: `
       <h2>Signature — le film central</h2>
-      <p>Le grand film de votre adresse, celui qu'on met partout. Entre 90 secondes et 2 minutes, fait pour rester en ligne des années. Deux journées de tournage, livré en six semaines.</p>
-      <h2>Saisons — le rendez-vous annuel</h2>
-      <p>Un film court à chaque saison, quatre par an, toujours la même écriture. Une demi-journée de tournage à chaque saison.</p>
+      <p>Un film court écrit, tourné et monté par nos soins. Il est la vitrine de l'émotion que l'on éprouve chez vous. Inclus : un film de 45 à 90 s, deux jours de tournage, un acteur, du matériel cinéma professionnel, les teasers pour deux réseaux sociaux au choix.</p>
+      <h2>Saisons — toute l'année</h2>
+      <p>Un film court à chaque saison, pour que vos clients vous suivent au fil du temps. Inclus : quatre films de 15 à 30 s, un jour de tournage par saison, un acteur par film, du matériel cinéma professionnel, les déclinaisons pour deux réseaux sociaux au choix.</p>
       <h2>Sur Mesure — l'exception</h2>
-      <p>Plusieurs films, des formats longs, du casting, des décors. Ce qui ne rentre pas dans les cases. On écrit le projet ensemble, sur devis.</p>
+      <p>La pièce maîtresse de votre enseigne est maintenant taillée sur mesure, plus de limite de temps, d'acteurs ou de décors. C'est vous qui donnez les limites et nous réalisons avec.</p>
       <h2>Comment ça se passe</h2>
-      <p>L'écriture : on se parle, on vient voir le lieu, on écrit une note d'intention. Avant de tourner, vous savez déjà ce que vous verrez à l'écran.</p>
-      <p>Le tournage : du matériel de cinéma, une petite équipe. Vous nous oublierez vite.</p>
-      <p>La livraison : vous recevez le film, ses déclinaisons et les droits qui vont avec. Deux séries de retouches sont comprises.</p>
+      <p>L'écriture : après un premier rendez-vous et quelques prises de notes, nous écrivons un script qui fera ressentir l'essence de votre enseigne.</p>
+      <p>Le tournage : une petite équipe de tournage, du matériel léger et fiable ; nous savons nous faire discrets.</p>
+      <p>La livraison : vous recevez le film, ses déclinaisons et les droits qui vont avec. S'il reste un détail qui vous chiffonne, deux séries de retouches sont comprises.</p>
       <h2>Les questions qui reviennent</h2>
-      <p>Combien ça coûte ? Ça dépend du lieu et du format, alors on préfère en parler d'abord. Le devis qui suit est ferme.</p>
-      <p>Vous déplacez-vous où ? Nous sommes à Bordeaux. La Nouvelle-Aquitaine sans hésiter, plus loin si le projet vaut le voyage.</p>
-      <p>À qui appartient le film ? À vous. Site, réseaux, accueil : vous en faites ce que vous voulez. Seule la publicité payante se chiffre à part.</p>`,
+      <p>Combien ça coûte ? Nous avons trois formules, Signature, Saisons et Sur Mesure. Chacune a sa gamme de prix.</p>
+      <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
+      <p>Partout en France ? Oui, partout en France.</p>
+      <p>À qui appartient le film ? Les droits de diffusion sont inclus dans l'offre pour deux ans.</p>`,
   },
   {
     path: '/contact',
     title: 'Contact · Bel Augure',
     desc: 'Écrire à Bel Augure : un email suffit. Réponse sous deux jours, depuis Bordeaux.',
-    h1: 'Contact — un email suffit',
+    h1: 'Contact — on discute de votre prochain film ?',
     body: `
-      <p>Dites-nous où vous êtes et ce que vous aimeriez montrer. C'est Nicolas qui lit, et il répond sous deux jours.</p>
+      <p>Un café, des idées, quelques notes et le projet commence. Dites-nous où vous êtes et ce que vous aimeriez montrer. C'est Nicolas qui lit, et il répond sous deux jours.</p>
       <p><a href="mailto:nicolas@belaugure.studio">nicolas@belaugure.studio</a> · Bordeaux · Nouvelle-Aquitaine</p>`,
   },
   {
