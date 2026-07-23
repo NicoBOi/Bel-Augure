@@ -54,7 +54,7 @@ export default function Films({ setDark }) {
           <div key={film.id} className="mt-8">
             <div
               ref={(el) => (stageRefs.current[film.id] = el)}
-              className="film-stage relative aspect-video w-full overflow-hidden border border-creme/15 bg-encre"
+              className="film-stage relative aspect-video w-full overflow-hidden bg-encre"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
