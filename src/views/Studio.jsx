@@ -34,7 +34,12 @@ export default function Studio() {
                     <span>{artisan.name}</span>
                   </span>
                 </p>
-                <p className="reveal-up mt-4 text-[11px] font-normal uppercase tracking-[0.22em] text-grege" style={{ '--d': `${0.3 + i * 0.08}s` }}>
+                <p
+                  className={`reveal-up mt-4 text-[11px] font-normal uppercase tracking-[0.22em] text-grege ${
+                    i === 0 ? 'text-right' : 'text-left'
+                  }`}
+                  style={{ '--d': `${0.3 + i * 0.08}s` }}
+                >
                   {artisan.role}
                 </p>
               </div>
