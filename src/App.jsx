@@ -1,12 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Navbar from './components/Navbar.jsx'
 import VimeoBackground from './components/VimeoBackground.jsx'
+// L'accueil (le héros) est critique : chargé d'emblée. Les autres vues,
+// surtout textuelles, sont découpées en fragments à part et ne sont
+// téléchargées qu'à la première visite — le bundle initial fond d'autant.
 import Accueil from './views/Accueil.jsx'
-import Films from './views/Films.jsx'
-import Studio from './views/Studio.jsx'
-import Offres from './views/Offres.jsx'
-import Contact from './views/Contact.jsx'
-import Mentions from './views/Mentions.jsx'
+const Films = lazy(() => import('./views/Films.jsx'))
+const Studio = lazy(() => import('./views/Studio.jsx'))
+const Offres = lazy(() => import('./views/Offres.jsx'))
+const Contact = lazy(() => import('./views/Contact.jsx'))
+const Mentions = lazy(() => import('./views/Mentions.jsx'))
 
 // Film de fond du héros. Monté ici, au niveau de l'application : il ne se
 // démonte jamais quand on navigue, la lecture continue en coulisse et le
@@ -121,6 +124,23 @@ export default function App() {
     }
   }, [])
 
+  // Les vues découpées sont préchargées pendant un temps mort, une fois la
+  // scène d'ouverture posée : le bundle initial reste léger, mais la
+  // navigation vers Films/Offres/Studio… est ensuite instantanée.
+  useEffect(() => {
+    const warm = () => {
+      import('./views/Films.jsx')
+      import('./views/Offres.jsx')
+      import('./views/Studio.jsx')
+      import('./views/Contact.jsx')
+      import('./views/Mentions.jsx')
+    }
+    const ric = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500))
+    const cancel = window.cancelIdleCallback || clearTimeout
+    const id = ric(warm)
+    return () => cancel(id)
+  }, [])
+
   // Navigation historique (précédent/suivant) : on suit.
   useEffect(() => {
     const onPop = () => {
@@ -170,6 +190,7 @@ export default function App() {
             key={isMobile ? 'mobile' : 'desktop'}
             id={isMobile ? HERO_VIMEO_ID_MOBILE : HERO_VIMEO_ID}
             title="Film de fond"
+            paused={view !== 'accueil'}
             onPlaying={() => setHeroReady(true)}
             className={
               isMobile
@@ -187,7 +208,9 @@ export default function App() {
       <Navbar activeView={view} onNavigate={navigate} dark={dark} />
       <main className="relative z-[1] h-full">
         <div key={view} className="view-enter h-full">
-          <View onNavigate={navigate} setDark={setDark} mediaRef={heroMediaRef} />
+          <Suspense fallback={null}>
+            <View onNavigate={navigate} setDark={setDark} mediaRef={heroMediaRef} />
+          </Suspense>
         </div>
       </main>
 

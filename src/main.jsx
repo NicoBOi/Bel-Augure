@@ -1,8 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@fontsource/montserrat/300.css'
-import '@fontsource/montserrat/400.css'
-import '@fontsource/montserrat/500.css'
+// Site en français : on ne charge que les sous-ensembles latin et latin-ext
+// (é, è, ç, œ, guillemets…). Les jeux cyrillique et vietnamien de Montserrat
+// sont écartés — 18 fichiers de police et autant de blocs @font-face en moins.
+import '@fontsource/montserrat/latin-300.css'
+import '@fontsource/montserrat/latin-400.css'
+import '@fontsource/montserrat/latin-500.css'
+import '@fontsource/montserrat/latin-ext-300.css'
+import '@fontsource/montserrat/latin-ext-400.css'
+import '@fontsource/montserrat/latin-ext-500.css'
 import './index.css'
 import App from './App.jsx'
 
