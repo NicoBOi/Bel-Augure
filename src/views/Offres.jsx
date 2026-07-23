@@ -25,7 +25,7 @@ const OFFRES = [
   },
   {
     name: 'Saisons',
-    eyebrow: 'Le rendez-vous annuel',
+    eyebrow: "Toute l'année",
     desc: 'Un film court à chaque saison, pour que vos clients vous suivent au fil du temps.',
     inclus: [
       'Quatre films de 15 à 30 s',
