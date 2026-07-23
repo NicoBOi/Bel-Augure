@@ -117,10 +117,10 @@ h3 {
   transform: scaleX(1);
 }
 
-/* Page active : trait dans le grège de la charte (couleur secondaire,
-   sobre), plus discret que l'or. Au survol, le trait reste or. */
-.nav-link[aria-current='page'] .nav-label::after {
-  background-color: var(--color-grege);
+/* Page active : le libellé passe en gras (500, le poids le plus lourd
+   chargé), le trait or reste inchangé. */
+.nav-link[aria-current='page'] .nav-label {
+  font-weight: 500;
 }
 
 /* ---------- Panneau mobile : grid-rows 0fr -> 1fr ---------- */
