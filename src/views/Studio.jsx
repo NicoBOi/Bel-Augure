@@ -12,37 +12,36 @@ export default function Studio() {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="flex h-full flex-col gap-10 px-6 pb-14 pt-28 max-md:overflow-y-auto md:px-16 md:pb-[9vh]"
+      className="flex h-full flex-col px-6 pb-14 pt-28 max-md:overflow-y-auto md:px-16 md:pb-[9vh]"
     >
-      {/* Deux colonnes, tout ferré à gauche : le nom et le récit à gauche,
-          les deux artisans (nom + métier) posés à droite, en regard. */}
+      {/* Une seule composition, ferrée à gauche : le nom en bandeau, puis
+          le récit et les artisans alignés en haut, et le credo qui referme
+          le bloc — tout centré verticalement d'un seul tenant. */}
       <div className="flex flex-1 flex-col justify-center">
-        <div className="grid gap-12 md:grid-cols-12 md:items-center md:gap-8">
-          <div className="md:col-span-7">
-            <h2 className="font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.14] text-encre">
-              <span className="mask" style={{ '--d': '0.12s' }}>
-                <span>
-                  Nicolas <span className="text-or">&amp;</span> Corentin
-                </span>
-              </span>
-            </h2>
+        <h2 className="font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.14] text-encre">
+          <span className="mask" style={{ '--d': '0.12s' }}>
+            <span>
+              Nicolas <span className="text-or">&amp;</span> Corentin
+            </span>
+          </span>
+        </h2>
 
-            <div
-              className="reveal-up mt-9 max-w-[54ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80"
-              style={{ '--d': '0.3s' }}
-            >
-              <p>
-                Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans
-                qu'on se connaît. L'un vient de l'événementiel, l'autre du
-                cinéma et de la mode.
-              </p>
-              <p>
-                On a longtemps travaillé chacun de son côté avant de se
-                décider à monter quelque chose ensemble, à Bordeaux.
-                Aujourd'hui on filme vos enseignes à deux pour continuer
-                notre aventure.
-              </p>
-            </div>
+        <div className="mt-12 grid gap-12 md:mt-14 md:grid-cols-12 md:items-start md:gap-8">
+          <div
+            className="reveal-up max-w-[52ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:col-span-6"
+            style={{ '--d': '0.3s' }}
+          >
+            <p>
+              Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans
+              qu'on se connaît. L'un vient de l'événementiel, l'autre du
+              cinéma et de la mode.
+            </p>
+            <p>
+              On a longtemps travaillé chacun de son côté avant de se
+              décider à monter quelque chose ensemble, à Bordeaux.
+              Aujourd'hui on filme vos enseignes à deux pour continuer notre
+              aventure.
+            </p>
           </div>
 
           <div className="reveal-up md:col-span-4 md:col-start-9" style={{ '--d': '0.42s' }}>
@@ -61,18 +60,17 @@ export default function Studio() {
             </div>
           </div>
         </div>
+
+        <p
+          className="reveal-up mt-14 max-w-[42ch] font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:mt-16"
+          style={{ '--d': '0.5s' }}
+        >
+          Peu de films par an. C'est ce qui nous permet de les faire bien
+          <span className="text-or">.</span>
+        </p>
       </div>
 
-      {/* Le credo, en exergue tout en bas */}
-      <p
-        className="reveal-up max-w-[42ch] font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85"
-        style={{ '--d': '0.5s' }}
-      >
-        Peu de films par an. C'est ce qui nous permet de les faire bien
-        <span className="text-or">.</span>
-      </p>
-
-      <p className="pt-4 text-center text-[11px] font-light tracking-[0.04em] text-grege">
+      <p className="mt-10 text-center text-[11px] font-light tracking-[0.04em] text-grege">
         Studio de production basé à Bordeaux
       </p>
     </section>
