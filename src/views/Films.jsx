@@ -50,7 +50,22 @@ export default function Films({ setDark }) {
           >
             <div
               ref={(el) => (stageRefs.current[film.id] = el)}
-              className="film-stage relative aspect-video w-full overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl lg:border lg:border-creme/15"
+              role="button"
+              tabIndex={ready[film.id] ? 0 : -1}
+              aria-label={paused[film.id] ? 'Reprendre la lecture' : 'Mettre en pause'}
+              onClick={(e) => {
+                if (!ready[film.id]) return
+                // Un appui sur les contrôles (son, plein écran) ne met pas en pause.
+                if (e.target.closest('[data-ctrl]')) return
+                setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))
+              }}
+              onKeyDown={(e) => {
+                if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault()
+                  setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))
+                }
+              }}
+              className="film-stage relative aspect-video w-full cursor-pointer overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl lg:border lg:border-creme/15"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
@@ -62,31 +77,25 @@ export default function Films({ setDark }) {
                 className="absolute inset-0 h-full w-full"
               />
 
-              {/* Toute la surface est cliquable : un clic met en pause ou
-                  relance. Les boutons (son, plein écran) passent au-dessus. */}
-              {ready[film.id] && (
-                <button
-                  type="button"
-                  aria-label={paused[film.id] ? 'Reprendre la lecture' : 'Mettre en pause'}
-                  onClick={() => setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))}
-                  className="absolute inset-0 z-[1] cursor-pointer"
+              {/* Voyant lecture au centre quand la vidéo est en pause. */}
+              {ready[film.id] && paused[film.id] && (
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-1/2 top-1/2 z-[1] flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-encre/40 text-creme backdrop-blur-sm"
                 >
-                  {paused[film.id] && (
-                    <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-encre/40 text-creme backdrop-blur-sm">
-                      <IconPlay />
-                    </span>
-                  )}
-                </button>
+                  <IconPlay />
+                </span>
               )}
 
+              {/* data-ctrl : ces boutons sont ignorés par le clic-pause. */}
               {ready[film.id] && (
-                <div className="absolute bottom-4 right-5 z-[2] flex items-center gap-3">
+                <div data-ctrl className="absolute bottom-4 right-4 z-[2] flex items-center gap-1">
                   <button
                     type="button"
                     aria-pressed={!!sound[film.id]}
                     aria-label={sound[film.id] ? 'Couper le son' : 'Activer le son'}
                     onClick={() => setSound((s) => ({ ...s, [film.id]: !s[film.id] }))}
-                    className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
+                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
                   >
                     {sound[film.id] ? <IconSoundOn /> : <IconSoundOff />}
                   </button>
@@ -94,7 +103,7 @@ export default function Films({ setDark }) {
                     type="button"
                     aria-label="Agrandir la vidéo en plein écran"
                     onClick={() => enlarge(film.id)}
-                    className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
+                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
                   >
                     <IconFullscreen />
                   </button>
