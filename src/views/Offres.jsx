@@ -40,7 +40,7 @@ const OFFRES = [
   {
     name: 'Sur Mesure',
     eyebrow: "L'exception",
-    desc: "La pièce maîtresse de votre enseigne, taillée sur mesure : plus de limite de temps, d'acteurs ou de décors. C'est vous qui donnez les limites, et nous réalisons avec.",
+    desc: "La pièce maîtresse de votre enseigne est maintenant taillée sur mesure, plus de limite de temps, d'acteurs ou de décors. C'est vous qui donnez les limites et nous réalisons avec.",
     detail: 'On écrit le projet ensemble. Sur devis.',
     bgColor: '#1a1512',
     ink: true,
