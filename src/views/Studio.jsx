@@ -20,11 +20,8 @@ export default function Studio() {
 
         <h2 className="mt-7 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.14] text-encre">
           <span className="mask" style={{ '--d': '0.12s' }}>
-            <span>Nous sommes deux.</span>
-          </span>
-          <span className="mask md:ml-[10vw]" style={{ '--d': '0.2s' }}>
             <span>
-              Nous restons deux<span className="text-or">.</span>
+              Nicolas <span className="text-or">&amp;</span> Corentin
             </span>
           </span>
         </h2>
@@ -36,16 +33,14 @@ export default function Studio() {
         style={{ '--d': '0.3s' }}
       >
         <p>
-          Nicolas tient la caméra, Corentin monte et mixe. Il n'y a personne
-          d'autre, et c'est voulu : du premier appel à la livraison, vous
-          parlez à ceux qui font le film.
+          Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans qu'on
+          se connaît. L'un vient de l'événementiel, l'autre du cinéma et de
+          la mode.
         </p>
         <p>
-          Bel Augure est né à Bordeaux d'un constat simple : les hôtels, les
-          thermes et les marques du bien-être méritaient mieux que des
-          vidéos pressées.
-          Alors on repère avant de tourner, on attend la bonne lumière, et
-          le son est travaillé comme l'image.
+          On a longtemps travaillé chacun de son côté avant de se décider à
+          monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme
+          vos enseignes à deux pour continuer notre aventure.
         </p>
       </div>
 
