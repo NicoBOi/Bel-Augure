@@ -72,27 +72,19 @@ const DEROULE = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Ça dépend du lieu et du format, alors on préfère en parler d’abord. Le devis qui suit est ferme.',
-  },
-  {
-    q: 'Qu’attendez-vous de nous ?',
-    r: 'Pas grand-chose. Un échange au début, quelqu’un à joindre le jour du tournage. Votre établissement reste ouvert.',
+    r: 'Nous avons 3 formules, Signature, Saisons et Sur Mesure. Chacune a sa gamme de prix, à vous de voir laquelle vous convient le mieux.',
   },
   {
     q: 'Qui apparaît à l’écran ?',
-    r: 'Votre équipe, des silhouettes qu’on caste, ou personne du tout. Les autorisations, on s’en occupe.',
+    r: 'Nous avons à cœur de travailler avec des acteurs pour rendre votre lieu vivant ! Nous nous occupons du casting.',
   },
   {
-    q: 'Vous déplacez-vous où ?',
-    r: 'Nous sommes à Bordeaux. La Nouvelle-Aquitaine sans hésiter, plus loin si le projet vaut le voyage.',
-  },
-  {
-    q: 'Et si le résultat ne nous plaît pas ?',
-    r: 'C’est rare, parce que tout est validé avant de tourner. Et il reste deux séries de retouches pour ajuster.',
+    q: 'Partout en France ?',
+    r: 'Oui, partout en France ! Chaque projet est une occasion de découvrir de nouveaux décors et de faire naître de nouvelles idées.',
   },
   {
     q: 'À qui appartient le film ?',
-    r: 'À vous. Site, réseaux, accueil : vous en faites ce que vous voulez. Seule la publicité payante se chiffre à part.',
+    r: "Les droits de diffusion sont inclus dans l'offre pour 2 ans.",
   },
 ]
 
