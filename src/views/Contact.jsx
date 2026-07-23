@@ -61,8 +61,8 @@ export default function Contact({ onNavigate }) {
       aria-label="Contact"
       className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
     >
-      <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-between">
+      <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:items-center lg:gap-8">
+        <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-center">
           <div>
           <h2 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
@@ -110,7 +110,7 @@ export default function Contact({ onNavigate }) {
         </div>
 
         <form
-          className="reveal-right lg:col-span-6 lg:col-start-7 lg:flex lg:flex-col lg:justify-end"
+          className="reveal-right lg:col-span-6 lg:col-start-7 lg:flex lg:flex-col lg:justify-center"
           style={{ '--d': '0.08s' }}
           onSubmit={submit}
         >
