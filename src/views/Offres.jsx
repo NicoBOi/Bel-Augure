@@ -185,7 +185,7 @@ export default function Offres({ setDark }) {
           // mobile). Les inclus se lisent en tirets.
           <div className="mt-10 grid w-full max-w-4xl gap-x-12 gap-y-8 text-left md:grid-cols-2">
             <p
-              className={`fade-in self-center text-[14px] font-light leading-[1.9] md:pr-2 ${
+              className={`fade-in self-center text-right text-[14px] font-semibold leading-[1.9] md:pr-2 ${
                 ink ? 'text-sable/90' : 'text-encre/80'
               }`}
               style={{ '--d': '0.3s' }}
@@ -193,9 +193,7 @@ export default function Offres({ setDark }) {
               {offre.desc}
             </p>
             <ul
-              className={`fade-in space-y-3 border-t pt-8 md:border-l md:border-t-0 md:pl-12 md:pt-0 ${
-                ink ? 'border-or/30' : 'border-or/45'
-              }`}
+              className="fade-in space-y-3 border-t border-[#8A7E68] pt-8 md:border-l md:border-t-0 md:pl-12 md:pt-0"
               style={{ '--d': '0.42s' }}
             >
               {offre.inclus.map((item) => (
@@ -205,7 +203,7 @@ export default function Offres({ setDark }) {
                     ink ? 'text-sable/85' : 'text-encre/80'
                   }`}
                 >
-                  <span aria-hidden="true" className="text-or">—</span>
+                  <span aria-hidden="true" className="text-[#8A7E68]">—</span>
                   <span>{item}</span>
                 </li>
               ))}
