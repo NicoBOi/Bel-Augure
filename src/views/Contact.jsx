@@ -63,13 +63,6 @@ export default function Contact({ onNavigate }) {
     >
       <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-between">
-          <p
-            className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
-            style={{ '--d': '0.05s' }}
-          >
-            Contact
-          </p>
-
           <div>
           <h2 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>

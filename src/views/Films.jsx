@@ -43,13 +43,6 @@ export default function Films({ setDark }) {
       className="flex h-full flex-col overflow-y-auto py-24"
     >
       <div className="mx-auto w-full lg:flex lg:max-w-[1500px] lg:flex-1 lg:flex-col lg:justify-center lg:px-16">
-        <p
-          className="reveal-up px-6 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60 lg:px-0"
-          style={{ '--d': '0.05s' }}
-        >
-          Films
-        </p>
-
         {FILMS.map((film) => (
           <div
             key={film.id}

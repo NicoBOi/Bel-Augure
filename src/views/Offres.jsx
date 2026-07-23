@@ -114,15 +114,6 @@ export default function Offres({ setDark }) {
       className="flex h-full flex-col justify-start overflow-y-auto px-6 pb-14 pt-28 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:px-16 md:pb-[9vh]"
       style={{ backgroundColor: offre.bgColor }}
     >
-      <p
-        className={`reveal-up text-[11px] font-normal uppercase tracking-[0.3em] transition-colors duration-700 ${
-          ink ? 'text-sable/60' : 'text-grege'
-        }`}
-        style={{ '--d': '0.05s' }}
-      >
-        Offres
-      </p>
-
       {/* Le sélecteur : les trois noms, dans la langue des liens du site */}
       <nav aria-label="Choisir une offre" className="reveal-up mt-10 md:mt-12" style={{ '--d': '0.15s' }}>
         <ul className="flex flex-wrap items-baseline justify-center gap-x-8 gap-y-2">

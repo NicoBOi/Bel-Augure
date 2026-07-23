@@ -17,12 +17,6 @@ export default function Studio() {
       {/* Le credo : grand, à gauche, la seconde ligne décalée comme un
           plan qui se recadre */}
       <div>
-        <p
-          className="reveal-up text-[11px] font-normal uppercase tracking-[0.3em] text-grege"
-          style={{ '--d': '0.05s' }}
-        >
-          Le studio
-        </p>
 
         <h2 className="mt-7 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.14] text-encre">
           <span className="mask" style={{ '--d': '0.12s' }}>
