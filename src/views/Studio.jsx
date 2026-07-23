@@ -26,7 +26,7 @@ export default function Studio() {
           </span>
         </h2>
 
-        <div className="mt-12 grid gap-12 md:mt-14 md:grid-cols-12 md:items-start md:gap-8">
+        <div className="mt-8 grid gap-12 md:mt-9 md:grid-cols-12 md:items-start md:gap-8">
           <div
             className="reveal-up max-w-[64ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:col-span-7"
             style={{ '--d': '0.3s' }}
