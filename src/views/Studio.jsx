@@ -14,22 +14,22 @@ export default function Studio() {
       aria-label="Le studio"
       className="flex h-full flex-col px-6 pb-14 pt-28 max-md:overflow-y-auto md:px-16 md:pb-[9vh]"
     >
-      {/* Composition centrée : les deux prénoms en titre, le métier de
+      {/* Ferré à gauche : les deux prénoms sur une ligne, le métier de
           chacun juste dessous, puis le récit et le credo. */}
-      <div className="flex flex-1 flex-col justify-center text-center">
-        <div className="flex flex-wrap items-start justify-center gap-x-6 md:gap-x-10">
+      <div className="flex flex-1 flex-col justify-center">
+        <div className="flex flex-nowrap items-start gap-x-4 md:gap-x-10">
           {ARTISANS.map((artisan, i) => (
-            <div key={artisan.name} className="flex items-start gap-x-6 md:gap-x-10">
+            <div key={artisan.name} className="flex items-start gap-x-4 md:gap-x-10">
               {i > 0 && (
                 <span
                   aria-hidden="true"
-                  className="font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.05] text-or"
+                  className="font-display text-[clamp(1.75rem,6vw,4.6rem)] leading-[1.05] text-or"
                 >
                   &amp;
                 </span>
               )}
               <div>
-                <p className="font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.05] text-encre">
+                <p className="font-display text-[clamp(1.75rem,6vw,4.6rem)] leading-[1.05] text-encre">
                   <span className="mask" style={{ '--d': `${0.12 + i * 0.08}s` }}>
                     <span>{artisan.name}</span>
                   </span>
@@ -43,7 +43,7 @@ export default function Studio() {
         </div>
 
         <div
-          className="reveal-up mx-auto mt-12 max-w-[60ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:mt-14"
+          className="reveal-up mt-12 max-w-[60ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:mt-14"
           style={{ '--d': '0.42s' }}
         >
           <p>
@@ -59,7 +59,7 @@ export default function Studio() {
         </div>
 
         <p
-          className="reveal-up mx-auto mt-12 max-w-[46ch] font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:mt-14"
+          className="reveal-up mt-12 max-w-[46ch] font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:mt-14"
           style={{ '--d': '0.55s' }}
         >
           Peu de films par an. C'est ce qui nous permet de les faire bien

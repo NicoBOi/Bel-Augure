@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 // Trois offres, trois cartons : la page Offres est une salle obscure et
@@ -100,20 +100,41 @@ export default function Offres({ setDark }) {
     setDark?.(ink)
   }, [ink, setDark])
 
+  const next = () => setIndex((i) => (i + 1) % OFFRES.length)
+  const prev = () => setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)
+
   // Flèches clavier : on passe d'une offre à l'autre.
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % OFFRES.length)
-      if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)
+      if (e.key === 'ArrowRight') next()
+      if (e.key === 'ArrowLeft') prev()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
+  // Mobile : un glissement horizontal fait défiler les offres. On ne réagit
+  // qu'aux gestes nettement horizontaux, pour ne pas gêner le scroll vertical.
+  const touch = useRef(null)
+  const onTouchStart = (e) => {
+    touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  }
+  const onTouchEnd = (e) => {
+    if (!touch.current) return
+    const dx = e.changedTouches[0].clientX - touch.current.x
+    const dy = e.changedTouches[0].clientY - touch.current.y
+    touch.current = null
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      dx < 0 ? next() : prev()
+    }
+  }
+
   return (
     <section
       ref={ref}
       aria-label="Offres"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
       className="flex h-full flex-col justify-start overflow-y-auto px-6 pb-14 pt-28 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:px-16 md:pb-[9vh]"
       style={{ backgroundColor: offre.bgColor }}
     >
