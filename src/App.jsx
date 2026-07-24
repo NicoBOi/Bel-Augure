@@ -91,9 +91,11 @@ export default function App() {
   // que sur l'accueil : ailleurs, la page arrive sans attente.
   const [veiled, setVeiled] = useState(() => viewFromLocation() === 'accueil')
   const [heroReady, setHeroReady] = useState(false)
-  // Progression du chargement (0→100) : grimpe pendant que le film se prépare,
-  // n'atteint 100 % qu'une fois la vidéo prête.
-  const [progress, setProgress] = useState(0)
+  // Progression du chargement, pilotée hors React (ref + écriture directe de
+  // la largeur) pour ne pas re-rendre tout l'arbre à chaque frame pendant le
+  // moment le plus sensible (démarrage vidéo).
+  const progressRef = useRef(0)
+  const barRef = useRef(null)
   // Compteur de navigation : sert de clé de remontage des vues (voir navigate).
   const [navTick, setNavTick] = useState(0)
   const bootAt = useRef(performance.now())
@@ -164,27 +166,28 @@ export default function App() {
 
   // La barre file vite (approche 88 %) pendant que le film se prépare, puis
   // se complète d'un trait dès qu'il est prêt (heroReady) — aucun long palier,
-  // donc pas d'attente interminable. Plafond de sûreté à 3 s.
+  // donc pas d'attente interminable. Plafond de sûreté à 3 s. On écrit la
+  // largeur directement (pas de setState par frame), et le voile ne se lève
+  // qu'une fois, à 100 %.
   useEffect(() => {
     if (!veiled) return
     let raf
+    let lifted = false
     const loop = () => {
-      setProgress((p) => {
-        const done = heroReady || performance.now() - bootAt.current > 3000
-        return done ? Math.min(100, p + 7) : p + (88 - p) * 0.14
-      })
+      const p = progressRef.current
+      const done = heroReady || performance.now() - bootAt.current > 3000
+      progressRef.current = done ? Math.min(100, p + 7) : p + (88 - p) * 0.14
+      if (barRef.current) barRef.current.style.width = `${progressRef.current}%`
+      if (progressRef.current >= 100 && !lifted) {
+        lifted = true
+        setTimeout(() => setVeiled(false), 140)
+        return
+      }
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(raf)
   }, [veiled, heroReady])
-
-  // Barre pleine : le voile se lève aussitôt (bref temps plein).
-  useEffect(() => {
-    if (!veiled || progress < 100) return
-    const t = setTimeout(() => setVeiled(false), 140)
-    return () => clearTimeout(t)
-  }, [veiled, progress])
 
   // La page ne navigue jamais : le titre du document reflète la vue active
   // pour l'historique mental et les lecteurs d'écran.
@@ -253,7 +256,7 @@ export default function App() {
           </p>
           {/* Filet de chargement : l'or se remplit au rythme du film. */}
           <span className="mt-7 block h-px w-44 overflow-hidden bg-creme/12">
-            <span className="block h-full bg-or" style={{ width: `${progress}%` }} />
+            <span ref={barRef} className="block h-full bg-or" style={{ width: '0%' }} />
           </span>
         </div>
       </div>

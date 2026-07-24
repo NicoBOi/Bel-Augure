@@ -11,6 +11,12 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
   // Dernière valeur du son : appliquée aussi au signal ready du player
   const soundRef = useRef(soundOn)
   soundRef.current = soundOn
+  // onPlaying passé en ref : l'effet ne dépend plus de son identité (les
+  // parents passent une arrow inline), donc il ne se reconstruit pas à
+  // chaque rendu — sinon le timer de révélation 900 ms serait remis à zéro
+  // en boucle pendant le chargement et n'aboutirait jamais.
+  const onPlayingRef = useRef(onPlaying)
+  onPlayingRef.current = onPlaying
   // Vrai dès que Vimeo confirme la lecture — coupe les relances au geste.
   const playedRef = useRef(false)
   // Miroir de `paused` : ne pas relancer un film que le visiteur a mis en pause.
@@ -51,7 +57,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
         setPlaying(true)
         if (!notified.current) {
           notified.current = true
-          onPlaying?.()
+          onPlayingRef.current?.()
         }
       }
     }
@@ -66,7 +72,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
       setPlaying(true)
       if (!notified.current) {
         notified.current = true
-        onPlaying?.()
+        onPlayingRef.current?.()
       }
     }, 900)
 
@@ -87,7 +93,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
       clearTimeout(reveal)
       for (const g of gestures) window.removeEventListener(g, kick)
     }
-  }, [onPlaying])
+  }, [])
 
   // Le son suit la volonté du visiteur, sans recharger le player
   useEffect(() => {

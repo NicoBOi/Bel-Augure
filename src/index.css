@@ -254,42 +254,7 @@ textarea.field {
   resize: none;
 }
 
-/* ---------- Accueil : anneaux du signe favorable + point qui respire ---------- */
-
-@keyframes ringSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes ringSpinReverse {
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-@keyframes ringsBreathe {
-  from {
-    transform: scale(0.985);
-  }
-  to {
-    transform: scale(1.015);
-  }
-}
-
-.rings {
-  animation: ringsBreathe 12s ease-in-out infinite alternate;
-}
-
-.ring-a {
-  animation: ringSpin 95s linear infinite;
-  transform-origin: 50% 50%;
-}
-
-.ring-b {
-  animation: ringSpinReverse 150s linear infinite;
-  transform-origin: 50% 50%;
-}
+/* ---------- Accueil : point qui respire ---------- */
 
 @keyframes dotBreathe {
   from {
@@ -415,24 +380,6 @@ textarea.field {
   }
 }
 
-/* ---------- Voile d'ouverture : filet de chargement ---------- */
-
-/* Départ vif puis lente approche : la barre suggère l'activité sans
-   prétendre mesurer — calée sur la fenêtre max du voile (2,6 s) */
-@keyframes veilLoad {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-.veil-bar {
-  transform-origin: left;
-  animation: veilLoad 2.4s var(--ease-augure) 0.2s both;
-}
-
 /* Attente vidéo : segment d'or qui balaye le filet, en boucle */
 @keyframes loadSweep {
   from {
@@ -458,9 +405,6 @@ textarea.field {
     animation: none !important;
   }
 
-  .rings,
-  .ring-a,
-  .ring-b,
   .dot-breathe {
     animation: none !important;
   }

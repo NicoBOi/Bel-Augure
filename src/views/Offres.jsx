@@ -227,26 +227,14 @@ export default function Offres({ setDark }) {
             </ul>
           </div>
         ) : (
-          <>
-            <p
-              className={`fade-in mx-auto mt-8 max-w-[52ch] text-[14px] font-light leading-[1.9] ${
-                ink ? 'text-sable/90' : 'text-encre/80'
-              }`}
-              style={{ '--d': '0.3s' }}
-            >
-              {offre.desc}
-            </p>
-            {offre.detail && (
-              <p
-                className={`fade-in mt-6 text-[10.5px] font-normal uppercase tracking-[0.22em] ${
-                  ink ? 'text-or/85' : 'text-[#8f7d5f]'
-                }`}
-                style={{ '--d': '0.45s' }}
-              >
-                {offre.detail}
-              </p>
-            )}
-          </>
+          <p
+            className={`fade-in mx-auto mt-8 max-w-[52ch] text-[14px] font-light leading-[1.9] ${
+              ink ? 'text-sable/90' : 'text-encre/80'
+            }`}
+            style={{ '--d': '0.3s' }}
+          >
+            {offre.desc}
+          </p>
         )}
       </div>
 
