@@ -162,19 +162,16 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
-  // La barre se remplit en douceur, corrélée au chargement de la vidéo :
-  // elle approche 90 % tant que le film n'est pas prêt, puis file à 100 %
-  // dès qu'il l'est (heroReady). Un plafond de sûreté (4 s) évite tout
-  // blocage si l'événement de lecture ne remonte jamais.
+  // La barre file vite (approche 88 %) pendant que le film se prépare, puis
+  // se complète d'un trait dès qu'il est prêt (heroReady) — aucun long palier,
+  // donc pas d'attente interminable. Plafond de sûreté à 3 s.
   useEffect(() => {
     if (!veiled) return
     let raf
     const loop = () => {
       setProgress((p) => {
-        const capped = performance.now() - bootAt.current > 4000
-        const target = heroReady || capped ? 100 : 90
-        const next = p + (target - p) * 0.045
-        return target === 100 && next > 99.5 ? 100 : next
+        const done = heroReady || performance.now() - bootAt.current > 3000
+        return done ? Math.min(100, p + 7) : p + (88 - p) * 0.14
       })
       raf = requestAnimationFrame(loop)
     }
@@ -182,10 +179,10 @@ export default function App() {
     return () => cancelAnimationFrame(raf)
   }, [veiled, heroReady])
 
-  // À 100 %, on marque un très bref temps plein puis le voile se lève.
+  // Barre pleine : le voile se lève aussitôt (bref temps plein).
   useEffect(() => {
     if (!veiled || progress < 100) return
-    const t = setTimeout(() => setVeiled(false), 220)
+    const t = setTimeout(() => setVeiled(false), 140)
     return () => clearTimeout(t)
   }, [veiled, progress])
 
@@ -254,13 +251,9 @@ export default function App() {
           <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] text-creme">
             Bel Augure<span className="dot-breathe text-or">.</span>
           </p>
-          {/* Filet de chargement : l'or se remplit au rythme du chargement
-              de la vidéo, avec le pourcentage sous le filet. */}
+          {/* Filet de chargement : l'or se remplit au rythme du film. */}
           <span className="mt-7 block h-px w-44 overflow-hidden bg-creme/12">
             <span className="block h-full bg-or" style={{ width: `${progress}%` }} />
-          </span>
-          <span className="mt-3 text-[10px] font-light tabular-nums tracking-[0.25em] text-creme/45">
-            {Math.round(progress)} %
           </span>
         </div>
       </div>
