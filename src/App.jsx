@@ -91,6 +91,8 @@ export default function App() {
   // que sur l'accueil : ailleurs, la page arrive sans attente.
   const [veiled, setVeiled] = useState(() => viewFromLocation() === 'accueil')
   const [heroReady, setHeroReady] = useState(false)
+  // Compteur de navigation : sert de clé de remontage des vues (voir navigate).
+  const [navTick, setNavTick] = useState(0)
   const bootAt = useRef(performance.now())
   // Calque média du héros : l'accueil en scrute l'opacité pendant le
   // scroll, les autres vues le masquent sans arrêter la lecture.
@@ -113,6 +115,10 @@ export default function App() {
     // de crème (l'effet de la vue remettrait dark ensuite, trop tard).
     setDark(next === 'accueil')
     setView(next)
+    // Remonte : chaque navigation remonte la vue (clé qui change), même vers
+    // la vue déjà active — cliquer le logo depuis l'accueil scrollé remet
+    // donc bien la scène en haut au lieu de rester sur place.
+    setNavTick((t) => t + 1)
     window.history.pushState(null, '', VIEW_PATHS[next])
   }
 
@@ -147,6 +153,7 @@ export default function App() {
       const next = viewFromLocation()
       setDark(next === 'accueil')
       setView(next)
+      setNavTick((t) => t + 1)
     }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
@@ -155,7 +162,7 @@ export default function App() {
   useEffect(() => {
     if (!veiled) return
     const elapsed = performance.now() - bootAt.current
-    const delay = heroReady ? Math.max(800 - elapsed, 0) : Math.max(1800 - elapsed, 0)
+    const delay = heroReady ? Math.max(1600 - elapsed, 0) : Math.max(2800 - elapsed, 0)
     const t = setTimeout(() => setVeiled(false), delay)
     return () => clearTimeout(t)
   }, [heroReady, veiled])
@@ -207,7 +214,7 @@ export default function App() {
 
       <Navbar activeView={view} onNavigate={navigate} dark={dark} />
       <main className="relative z-[1] h-full">
-        <div key={view} className="view-enter h-full">
+        <div key={`${view}-${navTick}`} className="view-enter h-full">
           <Suspense fallback={null}>
             <View onNavigate={navigate} setDark={setDark} mediaRef={heroMediaRef} />
           </Suspense>
@@ -225,9 +232,11 @@ export default function App() {
           <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] text-creme">
             Bel Augure<span className="dot-breathe text-or">.</span>
           </p>
-          {/* Filet de chargement : l'or avance, vif puis patient */}
+          {/* Filet de chargement : un segment d'or balaie en boucle — une
+              attente indéterminée, jamais une barre qui "se remplit" (qui
+              paraissait boguée au passage voile statique → React). */}
           <span className="mt-7 block h-px w-44 overflow-hidden bg-creme/12">
-            <span className="veil-bar block h-full w-full bg-or" />
+            <span className="load-sweep block h-full w-1/2 bg-or" />
           </span>
         </div>
       </div>
