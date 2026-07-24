@@ -111,7 +111,10 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
 
   // Fond pur : le film joue sans aucune UI Vimeo, non cliquable. playsinline
   // garde la lecture dans la page sur iOS (pas de bascule plein écran forcée).
-  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&playsinline=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
+  // quality=auto : Vimeo démarre dans une résolution basse (lecture quasi
+  // instantanée) puis monte en qualité dès que le réseau suit — pas d'attente
+  // qu'une haute définition soit bufferisée avant la première image.
+  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&playsinline=1&autopause=0&controls=0&title=0&byline=0&portrait=0&quality=auto&dnt=1`
 
   return (
     <iframe

@@ -164,11 +164,12 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
-  // La barre file vite (approche 88 %) pendant que le film se prépare, puis
-  // se complète d'un trait dès qu'il est prêt (heroReady) — aucun long palier,
-  // donc pas d'attente interminable. Plafond de sûreté à 3 s. On écrit la
-  // largeur directement (pas de setState par frame), et le voile ne se lève
-  // qu'une fois, à 100 %.
+  // La barre progresse d'un seul mouvement continu : elle s'approche en
+  // douceur d'un plafond tant que le film se prépare (92 %), puis, dès qu'il
+  // joue (heroReady) ou après un plafond de sûreté, la même courbe la mène
+  // jusqu'au bout — pas de saut, pas de palier, un remplissage fluide.
+  // On écrit la largeur directement (pas de setState par frame) et le voile
+  // ne se lève qu'une fois, quand la barre est quasi pleine.
   useEffect(() => {
     if (!veiled) return
     let raf
@@ -176,11 +177,13 @@ export default function App() {
     const loop = () => {
       const p = progressRef.current
       const done = heroReady || performance.now() - bootAt.current > 3000
-      progressRef.current = done ? Math.min(100, p + 7) : p + (88 - p) * 0.14
+      const goal = done ? 100 : 92
+      progressRef.current = p + (goal - p) * 0.08
       if (barRef.current) barRef.current.style.width = `${progressRef.current}%`
-      if (progressRef.current >= 100 && !lifted) {
+      if (done && progressRef.current >= 99.3 && !lifted) {
         lifted = true
-        setTimeout(() => setVeiled(false), 140)
+        if (barRef.current) barRef.current.style.width = '100%'
+        setTimeout(() => setVeiled(false), 160)
         return
       }
       raf = requestAnimationFrame(loop)
