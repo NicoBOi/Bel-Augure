@@ -58,22 +58,17 @@ export default function Films({ setDark }) {
             key={film.id}
             className="mt-8 lg:mt-12 lg:grid lg:grid-cols-12 lg:items-center lg:gap-10"
           >
+            {/* La scène n'est pas un bouton (elle contiendrait des boutons —
+                anti-pattern ARIA) : le clic pour mettre en pause est un
+                confort pointeur. La pause au clavier passe par un bouton
+                dédié dans les contrôles ci-dessous. */}
             <div
               ref={(el) => (stageRefs.current[film.id] = el)}
-              role="button"
-              tabIndex={ready[film.id] ? 0 : -1}
-              aria-label={paused[film.id] ? 'Reprendre la lecture' : 'Mettre en pause'}
               onClick={(e) => {
                 if (!ready[film.id]) return
-                // Un appui sur les contrôles (son, plein écran) ne met pas en pause.
+                // Un appui sur les contrôles (pause, son, plein écran) est ignoré.
                 if (e.target.closest('[data-ctrl]')) return
                 setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))
-              }}
-              onKeyDown={(e) => {
-                if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) {
-                  e.preventDefault()
-                  setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))
-                }
               }}
               className="film-stage relative aspect-video w-full cursor-pointer overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl lg:border lg:border-creme/15"
             >
@@ -100,6 +95,15 @@ export default function Films({ setDark }) {
               {/* data-ctrl : ces boutons sont ignorés par le clic-pause. */}
               {ready[film.id] && (
                 <div data-ctrl className="absolute bottom-4 right-4 z-[2] flex items-center gap-1">
+                  <button
+                    type="button"
+                    aria-pressed={!!paused[film.id]}
+                    aria-label={paused[film.id] ? 'Reprendre la lecture' : 'Mettre en pause'}
+                    onClick={() => setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))}
+                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-creme/70 transition-colors duration-500 hover:bg-creme/10 hover:text-creme"
+                  >
+                    {paused[film.id] ? <IconPlaySmall /> : <IconPause />}
+                  </button>
                   <button
                     type="button"
                     aria-pressed={!!sound[film.id]}
@@ -130,14 +134,14 @@ export default function Films({ setDark }) {
               >
                 {film.world}
               </p>
-              <h2 className="mt-4 font-display text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.05] text-creme">
+              <h1 className="mt-4 font-display text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.05] text-creme">
                 <span className="mask" style={{ '--d': '0.15s' }}>
                   <span>
                     {film.title}
                     <span className="dot-breathe text-or">.</span>
                   </span>
                 </span>
-              </h2>
+              </h1>
               <p
                 className="reveal-up mt-6 max-w-[46ch] text-[13.5px] font-light leading-[1.9] text-sable/90"
                 style={{ '--d': '0.3s' }}
@@ -192,6 +196,23 @@ function IconPlay() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M8 5v14l11-7z" />
+    </svg>
+  )
+}
+
+// Petites icônes pour le bouton lecture/pause des contrôles.
+function IconPlaySmall() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  )
+}
+
+function IconPause() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
+      <path d="M9 5v14M15 5v14" />
     </svg>
   )
 }

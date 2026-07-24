@@ -83,21 +83,32 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       }
     }
 
+    // La boucle ne tourne que tant qu'il reste du chemin : arrivée à
+    // destination, elle s'arrête, et un geste (molette/doigt/clavier) la
+    // relance. Plus d'écritures de style à chaque frame en permanence.
     const loop = () => {
       const t = target.current
       const c = current.current
       const next = reduce ? t : c + (t - c) * 0.11
       current.current = Math.abs(next - t) < 0.0005 ? t : next
       apply(current.current)
+      if (current.current === t) {
+        raf = null
+        return
+      }
       raf = requestAnimationFrame(loop)
     }
-    raf = requestAnimationFrame(loop)
+    const ensure = () => {
+      if (raf == null) raf = requestAnimationFrame(loop)
+    }
+    ensure()
 
     // Un geste décide de la destination, l'animation reste interruptible :
     // scroller vers le bas lève le jour, remonter ramène la nuit.
     const onWheel = (e) => {
       if (e.deltaY > 12) target.current = 1
       else if (e.deltaY < -12) target.current = 0
+      ensure()
     }
     section.addEventListener('wheel', onWheel, { passive: true })
 
@@ -114,17 +125,29 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       touchDir = delta === 0 ? touchDir : delta > 0 ? 1 : -1
       touchY = e.touches[0].clientY
       target.current = Math.min(Math.max(target.current + delta / 500, 0), 1)
+      ensure()
     }
     const onTouchEnd = () => {
       touchY = null
       target.current = touchDir >= 0 ? (target.current > 0.12 ? 1 : 0) : target.current < 0.88 ? 0 : 1
+      ensure()
     }
     section.addEventListener('touchstart', onTouchStart, { passive: true })
     section.addEventListener('touchmove', onTouchMove, { passive: true })
     section.addEventListener('touchend', onTouchEnd, { passive: true })
 
+    // Clavier : le jour se lève / retombe sans dépendre de la molette
+    // (accessibilité). Bas/Fin/PageBas → jour ; Haut/Début/PageHaut/Échap → nuit.
     const onKey = (e) => {
-      if (e.key === 'Escape') target.current = 0
+      if (['ArrowDown', 'PageDown', 'End'].includes(e.key)) {
+        target.current = 1
+      } else if (['ArrowUp', 'PageUp', 'Home', 'Escape'].includes(e.key)) {
+        target.current = 0
+      } else {
+        return
+      }
+      e.preventDefault()
+      ensure()
     }
     window.addEventListener('keydown', onKey)
 

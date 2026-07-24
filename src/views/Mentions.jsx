@@ -40,9 +40,9 @@ export default function Mentions() {
         Mentions légales
       </p>
 
-      <h2 className="mt-7 font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
+      <h1 className="mt-7 font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
         Le cadre, posé<span className="text-or">.</span>
-      </h2>
+      </h1>
 
       <div className="mt-10 grid max-w-4xl gap-10 md:grid-cols-2">
         {BLOCS.map((bloc) => (

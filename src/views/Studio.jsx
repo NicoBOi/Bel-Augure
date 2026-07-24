@@ -7,17 +7,17 @@ export default function Studio() {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="flex h-full flex-col px-6 pb-14 pt-28 max-md:overflow-y-auto md:px-16 md:pb-[9vh]"
+      className="flex h-full flex-col px-6 pb-14 pt-28 overflow-y-auto md:px-16 md:pb-[9vh]"
     >
       {/* Le titre, ferré à gauche en mobile, centré en desktop, sur une ligne. */}
       <div className="flex flex-1 flex-col justify-center text-left md:text-center">
-        <h2 className="font-display text-[clamp(2rem,9vw,4.6rem)] leading-[1.1] text-encre">
+        <h1 className="font-display text-[clamp(2rem,9vw,4.6rem)] leading-[1.1] text-encre">
           <span className="mask" style={{ '--d': '0.12s' }}>
             <span className="whitespace-nowrap">
               Nicolas <span className="text-or">&amp;</span> Corentin
             </span>
           </span>
-        </h2>
+        </h1>
 
         <div
           className="reveal-up mt-12 max-w-[60ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:mx-auto md:mt-14"

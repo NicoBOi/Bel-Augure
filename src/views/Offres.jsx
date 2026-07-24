@@ -34,7 +34,7 @@ const OFFRES = [
       'Du matériel cinéma professionnel',
       'Les déclinaisons pour deux réseaux sociaux au choix',
     ],
-    bgColor: '#6e6350',
+    bgColor: '#5b5344',
     ink: true,
   },
   {
@@ -147,7 +147,7 @@ export default function Offres({ setDark }) {
                 type="button"
                 onClick={() => setIndex(i)}
                 aria-current={i === index ? 'true' : undefined}
-                className={`nav-link cursor-pointer py-2 font-display text-[clamp(1.15rem,1.6vw,1.5rem)] transition-colors duration-500 ${
+                className={`nav-link cursor-pointer py-3 font-display text-[clamp(1.15rem,1.6vw,1.5rem)] transition-colors duration-500 ${
                   i === index
                     ? ink
                       ? 'text-creme'
@@ -178,13 +178,13 @@ export default function Offres({ setDark }) {
       <div key={offre.name} className="flex flex-1 flex-col items-center justify-center py-14 text-center md:py-16">
         <p
           className={`fade-in text-[11px] font-normal uppercase tracking-[0.3em] ${
-            ink ? 'text-sable/60' : 'text-grege'
+            ink ? 'text-sable/75' : 'text-encre/70'
           }`}
           style={{ '--d': '0.05s' }}
         >
           {offre.eyebrow}
         </p>
-        <h3
+        <h1
           className={`mt-5 font-display text-[clamp(2.8rem,6.5vw,6rem)] leading-[1.02] ${
             ink ? 'text-creme' : 'text-encre'
           }`}
@@ -195,7 +195,7 @@ export default function Offres({ setDark }) {
               <span className="dot-breathe text-or">.</span>
             </span>
           </span>
-        </h3>
+        </h1>
 
         {offre.inclus ? (
           // Sous le titre : un chapô centré, puis les inclus en grille deux
@@ -245,13 +245,13 @@ export default function Offres({ setDark }) {
         }`}
       >
         <div className="lg:col-span-4">
-          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${ink ? 'text-sable/60' : 'text-grege'}`}>
+          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${ink ? 'text-sable/75' : 'text-encre/70'}`}>
             Comment ça se passe
           </p>
           <div className="mt-8 space-y-8">
             {DEROULE.map((etape) => (
               <div key={etape.n} className="flex gap-5">
-                <span className="font-display text-[15px] leading-[1.6] text-or">{etape.n}</span>
+                <span className={`font-display text-[15px] leading-[1.6] ${ink ? 'text-or' : 'text-[#8f7d5f]'}`}>{etape.n}</span>
                 <div>
                   <p className={`font-display text-[17px] ${ink ? 'text-creme' : 'text-encre'}`}>{etape.titre}</p>
                   <p className={`mt-1.5 max-w-[38ch] text-[13px] font-light leading-[1.8] ${ink ? 'text-sable/75' : 'text-encre/75'}`}>
@@ -264,7 +264,7 @@ export default function Offres({ setDark }) {
         </div>
 
         <div className="lg:col-span-7 lg:col-start-6">
-          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${ink ? 'text-sable/60' : 'text-grege'}`}>
+          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${ink ? 'text-sable/75' : 'text-encre/70'}`}>
             Les questions qui reviennent
           </p>
           <dl className="mt-8 grid gap-x-8 gap-y-8 md:grid-cols-2">
@@ -284,7 +284,7 @@ export default function Offres({ setDark }) {
 
       <p
         className={`mt-auto pt-16 text-center text-[11px] font-light tracking-[0.04em] transition-colors duration-700 ${
-          ink ? 'text-sable/60' : 'text-grege'
+          ink ? 'text-sable/75' : 'text-encre/70'
         }`}
       >
         Studio de production basé à Bordeaux

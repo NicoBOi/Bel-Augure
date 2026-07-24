@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 // Endpoint du formulaire (Formspree ou équivalent). Tant qu'il est vide,
@@ -13,6 +13,9 @@ export default function Contact({ onNavigate }) {
   const [form, setForm] = useState({ nom: '', maison: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
+  // Timer de remise à zéro du message de confirmation, nettoyé au démontage.
+  const sentTimer = useRef()
+  useEffect(() => () => clearTimeout(sentTimer.current), [])
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }))
 
@@ -33,7 +36,7 @@ export default function Contact({ onNavigate }) {
     if (!FORM_ENDPOINT) {
       mailtoFallback()
       setSent(true)
-      setTimeout(() => setSent(false), 5000)
+      sentTimer.current = setTimeout(() => setSent(false), 5000)
       return
     }
     setSending(true)
@@ -46,7 +49,7 @@ export default function Contact({ onNavigate }) {
       if (!res.ok) throw new Error(String(res.status))
       setSent(true)
       setForm({ nom: '', maison: '', email: '', message: '' })
-      setTimeout(() => setSent(false), 6000)
+      sentTimer.current = setTimeout(() => setSent(false), 6000)
     } catch {
       // Le réseau ou le service faillit : l'email direct prend le relais
       mailtoFallback()
@@ -59,12 +62,12 @@ export default function Contact({ onNavigate }) {
     <section
       ref={ref}
       aria-label="Contact"
-      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 max-md:overflow-y-auto md:pb-[9vh] md:px-16"
+      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 overflow-y-auto md:pb-[9vh] md:px-16"
     >
       <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:items-center lg:gap-8">
         <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-center">
           <div>
-          <h2 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
+          <h1 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
               <span>On discute de votre</span>
             </span>
@@ -73,7 +76,7 @@ export default function Contact({ onNavigate }) {
                 prochain film<span className="text-or"> ?</span>
               </span>
             </span>
-          </h2>
+          </h1>
 
           <p
             className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
@@ -101,7 +104,7 @@ export default function Contact({ onNavigate }) {
             <button
               type="button"
               onClick={() => onNavigate?.('mentions')}
-              className="cursor-pointer text-[10px] font-light uppercase tracking-[0.2em] text-grege/80 transition-colors duration-500 hover:text-encre"
+              className="cursor-pointer py-2 -my-2 text-[10px] font-light uppercase tracking-[0.2em] text-grege/80 transition-colors duration-500 hover:text-encre"
             >
               Mentions légales
             </button>
