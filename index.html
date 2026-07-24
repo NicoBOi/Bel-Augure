@@ -78,15 +78,17 @@
          masqué immédiatement : pas de voile hors accueil. -->
     <div id="root">
       <style>
-        /* Même balayage que le voile React (load-sweep) : une attente
-           indéterminée qui boucle, sans "remplissage" ni saut au passage
-           du voile statique au voile React. */
-        @keyframes belVeilSweep {
+        /* Le point d'or respire pendant l'attente (comme le voile React).
+           La barre reste à 0 % : React prend le relais dès son montage et la
+           remplit au rythme réel du chargement de la vidéo — pas de saut. */
+        @keyframes belDotBreathe {
           from {
-            transform: translateX(-100%);
+            opacity: 0.7;
+            transform: scale(0.96);
           }
           to {
-            transform: translateX(300%);
+            opacity: 1;
+            transform: scale(1.06);
           }
         }
       </style>
@@ -98,15 +100,20 @@
           <p
             style="margin: 0; font-family: 'Giflika', 'Didot', 'Bodoni MT', Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.4rem); color: #f2ede4"
           >
-            Bel Augure<span style="color: #d9c6a6">.</span>
+            Bel Augure<span
+              style="color: #d9c6a6; display: inline-block; animation: belDotBreathe 5s ease-in-out infinite alternate"
+              >.</span
+            >
           </p>
           <span
             style="margin-top: 1.75rem; display: block; height: 1px; width: 11rem; overflow: hidden; background: rgba(242, 237, 228, 0.12)"
           >
-            <span
-              style="display: block; height: 100%; width: 50%; background: #d9c6a6; animation: belVeilSweep 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite"
-            ></span>
+            <span style="display: block; height: 100%; width: 0%; background: #d9c6a6"></span>
           </span>
+          <span
+            style="margin-top: 0.75rem; font-family: system-ui, sans-serif; font-size: 10px; letter-spacing: 0.25em; color: rgba(242, 237, 228, 0.45)"
+            >0 %</span
+          >
         </div>
       </div>
       <script>

@@ -91,6 +91,9 @@ export default function App() {
   // que sur l'accueil : ailleurs, la page arrive sans attente.
   const [veiled, setVeiled] = useState(() => viewFromLocation() === 'accueil')
   const [heroReady, setHeroReady] = useState(false)
+  // Progression du chargement (0→100) : grimpe pendant que le film se prépare,
+  // n'atteint 100 % qu'une fois la vidéo prête.
+  const [progress, setProgress] = useState(0)
   // Compteur de navigation : sert de clé de remontage des vues (voir navigate).
   const [navTick, setNavTick] = useState(0)
   const bootAt = useRef(performance.now())
@@ -159,13 +162,32 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
+  // La barre se remplit en douceur, corrélée au chargement de la vidéo :
+  // elle approche 90 % tant que le film n'est pas prêt, puis file à 100 %
+  // dès qu'il l'est (heroReady). Un plafond de sûreté (4 s) évite tout
+  // blocage si l'événement de lecture ne remonte jamais.
   useEffect(() => {
     if (!veiled) return
-    const elapsed = performance.now() - bootAt.current
-    const delay = heroReady ? Math.max(1600 - elapsed, 0) : Math.max(2800 - elapsed, 0)
-    const t = setTimeout(() => setVeiled(false), delay)
+    let raf
+    const loop = () => {
+      setProgress((p) => {
+        const capped = performance.now() - bootAt.current > 4000
+        const target = heroReady || capped ? 100 : 90
+        const next = p + (target - p) * 0.045
+        return target === 100 && next > 99.5 ? 100 : next
+      })
+      raf = requestAnimationFrame(loop)
+    }
+    raf = requestAnimationFrame(loop)
+    return () => cancelAnimationFrame(raf)
+  }, [veiled, heroReady])
+
+  // À 100 %, on marque un très bref temps plein puis le voile se lève.
+  useEffect(() => {
+    if (!veiled || progress < 100) return
+    const t = setTimeout(() => setVeiled(false), 220)
     return () => clearTimeout(t)
-  }, [heroReady, veiled])
+  }, [veiled, progress])
 
   // La page ne navigue jamais : le titre du document reflète la vue active
   // pour l'historique mental et les lecteurs d'écran.
@@ -232,11 +254,13 @@ export default function App() {
           <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] text-creme">
             Bel Augure<span className="dot-breathe text-or">.</span>
           </p>
-          {/* Filet de chargement : un segment d'or balaie en boucle — une
-              attente indéterminée, jamais une barre qui "se remplit" (qui
-              paraissait boguée au passage voile statique → React). */}
+          {/* Filet de chargement : l'or se remplit au rythme du chargement
+              de la vidéo, avec le pourcentage sous le filet. */}
           <span className="mt-7 block h-px w-44 overflow-hidden bg-creme/12">
-            <span className="load-sweep block h-full w-1/2 bg-or" />
+            <span className="block h-full bg-or" style={{ width: `${progress}%` }} />
+          </span>
+          <span className="mt-3 text-[10px] font-light tabular-nums tracking-[0.25em] text-creme/45">
+            {Math.round(progress)} %
           </span>
         </div>
       </div>
