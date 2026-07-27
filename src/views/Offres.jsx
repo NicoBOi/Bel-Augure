@@ -6,11 +6,11 @@ import { useReveal } from '../hooks/useReveal.js'
 // (les options qu'on ajoute) et le devis se recompose en direct, comme un
 // panneau de stats. On emprunte la structure du loadout de jeu vidéo — slots,
 // états francs, un seul chiffre qui compte — jamais son esthétique (pas de HUD,
-// pas de néon). La pièce change de lumière selon l'offre : or pâle pour Les
-// Tableaux, encre pour Signature.
+// pas de néon). La pièce change de lumière selon l'offre : or pâle pour l'UGC
+// (films verticaux courts), encre pour le Film (le film central).
 const OFFRES = [
   {
-    name: 'Les Tableaux',
+    name: 'UGC',
     eyebrow: 'Un tableau par espace',
     base: 3500,
     priceLabel: '3 500 €',
@@ -61,7 +61,7 @@ const OFFRES = [
     ink: false,
   },
   {
-    name: 'Signature',
+    name: 'Film',
     eyebrow: 'Le film central',
     base: 9500,
     priceLabel: 'à partir de 9 500 €',
@@ -119,7 +119,7 @@ const OFFRES = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Deux offres : Les Tableaux à 3 500 € et Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
+    r: 'Deux offres : UGC à 3 500 € et Film à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
   },
   {
     q: "Qui apparaît à l'écran ?",
@@ -131,7 +131,7 @@ const QUESTIONS = [
   },
   {
     q: 'À qui appartient le film ?',
-    r: 'Les droits de diffusion sont inclus : sans limite de temps pour Les Tableaux, deux ans pour Signature.',
+    r: "Les droits de diffusion sont inclus : sans limite de temps pour l'UGC, deux ans pour le Film.",
   },
 ]
 

@@ -48,7 +48,7 @@ const DESCRIPTIONS = {
   studio:
     "Nicolas et Corentin, deux réalisateurs à Bordeaux. Peu de films par an, faits main, pour le bien-être d'exception.",
   offres:
-    'Deux offres claires : Les Tableaux, un film par espace dès 3 500 €, et Signature, le film central à partir de 9 500 €.',
+    'Deux offres claires : UGC, des films courts par espace dès 3 500 €, et Film, le film central à partir de 9 500 €.',
   contact:
     'Écrire à Bel Augure : un email suffit. Réponse sous deux jours, depuis Bordeaux.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
