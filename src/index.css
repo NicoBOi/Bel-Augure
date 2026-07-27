@@ -272,6 +272,36 @@ textarea.field {
   animation: dotBreathe 5s ease-in-out infinite alternate;
 }
 
+/* Prix du configurateur : une pulsation unique à chaque recalcul — précise
+   et courte (esprit console), jamais clignotante. Neutralisée en reduced-motion
+   (le prix, lui, reste à jour : c'est de l'information). */
+@keyframes pricePulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.045);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.price-pulse {
+  display: inline-block;
+  animation: pricePulse 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Filet or qui se trace sous une ligne d'option retenue */
+@keyframes lineTrace {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* Apparition sans transform : pour les éléments dont le transform est piloté en JS */
 @keyframes fadeIn {
   from {

@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-// Deux offres, deux lumières : Les Tableaux dans l'or pâle, Signature dans
-// l'encre. Chaque offre est un configurateur — un socle compris, des options
-// que l'on ajoute, et un devis qui se compose en direct sous les yeux. Ce qui
-// est compris apparaît coché et verrouillé ; les options se cochent à côté ;
-// chaque ajout s'inscrit dans le devis à droite (ou dans la barre du bas sur
-// mobile) et le total se met à jour aussitôt.
+// Page /offres — une console d'atelier, pas un panier. À GAUCHE on lit l'offre
+// (accroche, description, ce qui est déjà compris) ; à DROITE on la compose
+// (les options qu'on ajoute) et le devis se recompose en direct, comme un
+// panneau de stats. On emprunte la structure du loadout de jeu vidéo — slots,
+// états francs, un seul chiffre qui compte — jamais son esthétique (pas de HUD,
+// pas de néon). La pièce change de lumière selon l'offre : or pâle pour Les
+// Tableaux, encre pour Signature.
 const OFFRES = [
   {
     name: 'Les Tableaux',
@@ -118,7 +119,7 @@ const OFFRES = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Deux offres : Les Tableaux à 3 500 € et Signature à partir de 9 500 €. Vous composez ensuite avec les options ci-dessus, le prix se met à jour en direct.',
+    r: 'Deux offres : Les Tableaux à 3 500 € et Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
   },
   {
     q: "Qui apparaît à l'écran ?",
@@ -221,6 +222,8 @@ export default function Offres({ setDark }) {
   const quoteItems = offre.options.filter((o, i) => o.quote && sel[i]).map((o) => o.label)
   const items = [{ label: offre.name, amount: offre.base, base: true }, ...priced]
   const total = items.reduce((s, it) => s + it.amount, 0)
+  const hasQuote = quoteItems.length > 0
+  const fromPrice = offre.from || hasQuote
 
   // « Demander un devis » : la configuration retenue part par email, prête à
   // l'envoi. Aucun backend, aucun stockage — le récapitulatif se compose ici.
@@ -237,7 +240,7 @@ export default function Offres({ setDark }) {
       lines.length ? 'Options :' : 'Sans option.',
       ...lines,
       '',
-      `Estimation : ${offre.from ? 'à partir de ' : ''}${euros(total)} HT (TVA 20 % en sus)`,
+      `Estimation : ${fromPrice ? 'à partir de ' : ''}${euros(total)} HT (TVA 20 % en sus)`,
     ].join('\n')
     window.location.href = `mailto:nicolas@belaugure.studio?subject=${encodeURIComponent(
       `Devis · ${offre.name}`,
@@ -247,7 +250,7 @@ export default function Offres({ setDark }) {
   const label = ink ? 'text-sable/75' : 'text-encre/70'
   const dash = ink ? 'text-or/75' : 'text-[#8A7E68]'
   const priceText = ink ? 'text-or' : 'text-[#8f7d5f]'
-  const receipt = { items, quoteItems, total, offre, ink, requestQuote, label, priceText }
+  const lineParts = { items, quoteItems, ink, priceText, label }
 
   return (
     <section
@@ -293,10 +296,10 @@ export default function Offres({ setDark }) {
         </ul>
       </nav>
 
-      {/* Le contenu se rejoue à chaque changement d'offre (key) */}
+      {/* Tout le contenu se rejoue à chaque changement d'offre (key) */}
       <div key={offre.name} className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
-        {/* En-tête : surtitre, nom, prix de départ, accroche, description */}
-        <header className="mt-12 text-center md:mt-16">
+        {/* En-tête, ferré à gauche sur la colonne lecture */}
+        <header className="mt-12 md:mt-16">
           <p
             className={`fade-in text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}
             style={{ '--d': '0.05s' }}
@@ -304,7 +307,7 @@ export default function Offres({ setDark }) {
             {offre.eyebrow}
           </p>
           <h1
-            className={`mt-5 font-display text-[clamp(2.6rem,6vw,5.4rem)] leading-[1.02] ${
+            className={`mt-4 font-display text-[clamp(2.6rem,6vw,5.4rem)] leading-[1.02] ${
               ink ? 'text-creme' : 'text-encre'
             }`}
           >
@@ -322,39 +325,40 @@ export default function Offres({ setDark }) {
             {offre.from ? 'À partir de ' : ''}
             {offre.priceLabel.replace('à partir de ', '')} · HT
           </p>
-          <p
-            className={`fade-in mx-auto mt-7 max-w-[52ch] font-display text-[clamp(1.15rem,1.7vw,1.5rem)] leading-[1.55] ${
-              ink ? 'text-sable' : 'text-encre'
-            }`}
-            style={{ '--d': '0.26s' }}
-          >
-            {offre.accroche}
-          </p>
-          <div
-            className={`fade-in mx-auto mt-8 max-w-[60ch] space-y-4 text-[14px] font-light leading-[1.9] ${
-              ink ? 'text-sable/85' : 'text-encre/80'
-            }`}
-            style={{ '--d': '0.36s' }}
-          >
-            {offre.description.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
-          </div>
         </header>
 
-        {/* Le configurateur : à gauche on compose, à droite le devis se tient */}
+        {/* Le split : lire à gauche, composer à droite */}
         <div
-          className={`fade-in mt-16 grid gap-x-12 gap-y-14 border-t pt-14 lg:grid-cols-12 ${
+          className={`mt-12 grid gap-x-16 gap-y-12 border-t pt-12 lg:grid-cols-12 ${
             ink ? 'border-or/25' : 'border-or/45'
           }`}
-          style={{ '--d': '0.1s' }}
         >
-          <div className="lg:col-span-7">
+          {/* ── GAUCHE : lecture ───────────────────────────────── */}
+          <div className="lg:col-span-6">
+            <p
+              className={`fade-in max-w-[52ch] font-display text-[clamp(1.2rem,1.8vw,1.6rem)] leading-[1.5] ${
+                ink ? 'text-sable' : 'text-encre'
+              }`}
+              style={{ '--d': '0.24s' }}
+            >
+              {offre.accroche}
+            </p>
+            <div
+              className={`fade-in mt-8 max-w-[60ch] space-y-4 text-[14px] font-light leading-[1.9] ${
+                ink ? 'text-sable/85' : 'text-encre/80'
+              }`}
+              style={{ '--d': '0.34s' }}
+            >
+              {offre.description.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+
             {/* Compris : coché, verrouillé — la substance de l'offre */}
-            <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+            <p className={`mt-12 text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
               Compris dans l’offre
             </p>
-            <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+            <ul className="mt-6 space-y-3">
               {offre.inclus.map((item) => (
                 <li
                   key={item}
@@ -369,123 +373,183 @@ export default function Offres({ setDark }) {
                 </li>
               ))}
             </ul>
-
-            {/* Les options : cochables, certaines avec quantité */}
-            <p className={`mt-14 text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-              Ajoutez des options
-            </p>
-            <ul className="mt-4">
-              {offre.options.map((o, i) => {
-                const on = !!sel[i]
-                return (
-                  <li
-                    key={o.label}
-                    className={`flex items-center gap-4 border-b py-4 transition-colors ${
-                      ink ? 'border-creme/10' : 'border-encre/10'
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      role="checkbox"
-                      aria-checked={on}
-                      onClick={() => toggle(i)}
-                      className="group flex flex-1 cursor-pointer items-start gap-3.5 text-left"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
-                          on
-                            ? 'border-or bg-or text-encre'
-                            : ink
-                              ? 'border-creme/30 group-hover:border-creme/60'
-                              : 'border-encre/25 group-hover:border-encre/50'
-                        }`}
-                      >
-                        {on && <IconCheck />}
-                      </span>
-                      <span
-                        className={`text-[13.5px] font-light leading-[1.5] ${
-                          on
-                            ? ink
-                              ? 'text-creme'
-                              : 'text-encre'
-                            : ink
-                              ? 'text-sable/85'
-                              : 'text-encre/80'
-                        }`}
-                      >
-                        {o.label}
-                      </span>
-                    </button>
-
-                    <div className="flex shrink-0 items-center gap-3">
-                      {o.qty && on && (
-                        <span
-                          className={`flex items-center gap-2.5 rounded-full border px-2.5 py-1 ${
-                            ink ? 'border-creme/25' : 'border-encre/20'
-                          }`}
-                        >
-                          <button
-                            type="button"
-                            aria-label="Réduire la quantité"
-                            onClick={() => step(i, -1)}
-                            disabled={sel[i] <= o.qty[0]}
-                            className={`cursor-pointer text-[15px] leading-none transition-opacity disabled:cursor-default disabled:opacity-25 ${
-                              ink ? 'text-creme' : 'text-encre'
-                            }`}
-                          >
-                            −
-                          </button>
-                          <span
-                            aria-live="polite"
-                            className={`w-3 text-center text-[13px] tabular-nums ${
-                              ink ? 'text-creme' : 'text-encre'
-                            }`}
-                          >
-                            {sel[i]}
-                          </span>
-                          <button
-                            type="button"
-                            aria-label="Augmenter la quantité"
-                            onClick={() => step(i, 1)}
-                            disabled={sel[i] >= o.qty[1]}
-                            className={`cursor-pointer text-[15px] leading-none transition-opacity disabled:cursor-default disabled:opacity-25 ${
-                              ink ? 'text-creme' : 'text-encre'
-                            }`}
-                          >
-                            +
-                          </button>
-                        </span>
-                      )}
-                      <span
-                        className={`whitespace-nowrap text-[12.5px] tracking-[0.02em] ${
-                          o.quote ? (ink ? 'text-sable/55' : 'text-encre/55') : priceText
-                        }`}
-                      >
-                        {o.quote ? 'sur devis' : `+ ${euros(o.price)}`}
-                      </span>
-                    </div>
-                  </li>
-                )
-              })}
-            </ul>
-
-            {offre.note && (
-              <p className={`mt-5 text-[12px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
-                {offre.note}
-              </p>
-            )}
           </div>
 
-          {/* Le devis : à droite, il se tient à hauteur d'œil (desktop only) */}
-          <div className="hidden lg:col-span-5 lg:block">
-            <div className="sticky top-24">
-              <Receipt {...receipt} />
+          {/* ── DROITE : la console ────────────────────────────── */}
+          <div className="lg:col-span-6">
+            <div className="lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto lg:pr-1">
+              <div
+                className={`rounded-2xl border p-6 backdrop-blur-sm md:p-7 ${
+                  ink ? 'border-or/20 bg-[#221c17]/55' : 'border-or/35 bg-creme/45'
+                }`}
+              >
+                <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+                  Composez votre film
+                </p>
+                <p className={`mt-2 text-[12.5px] font-light leading-[1.6] ${ink ? 'text-sable/70' : 'text-encre/65'}`}>
+                  Le socle est compris. Ajoutez ce qui vous ressemble.
+                </p>
+
+                <ul className="mt-6">
+                  {offre.options.map((o, i) => {
+                    const on = !!sel[i]
+                    return (
+                      <li
+                        key={o.label}
+                        className={`flex items-center gap-4 border-b py-4 ${
+                          ink ? 'border-creme/10' : 'border-encre/10'
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          role="checkbox"
+                          aria-checked={on}
+                          onClick={() => toggle(i)}
+                          className="group flex flex-1 cursor-pointer items-start gap-3.5 text-left"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
+                              on
+                                ? 'border-or bg-or text-encre'
+                                : ink
+                                  ? 'border-creme/30 group-hover:border-creme/60'
+                                  : 'border-encre/25 group-hover:border-encre/55'
+                            }`}
+                          >
+                            {on && <IconCheck />}
+                          </span>
+                          <span className="min-w-0">
+                            <span
+                              className={`block text-[13.5px] font-light leading-[1.5] ${
+                                on
+                                  ? ink
+                                    ? 'text-creme'
+                                    : 'text-encre'
+                                  : ink
+                                    ? 'text-sable/85'
+                                    : 'text-encre/80'
+                              }`}
+                            >
+                              {o.label}
+                            </span>
+                            {/* Filet or qui se trace sous la ligne retenue */}
+                            <span
+                              aria-hidden="true"
+                              className="mt-1 block h-px origin-left bg-or/70"
+                              style={{
+                                transform: on ? 'scaleX(1)' : 'scaleX(0)',
+                                transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
+                              }}
+                            />
+                          </span>
+                        </button>
+
+                        <div className="flex shrink-0 items-center gap-3">
+                          {o.qty && on && (
+                            <span
+                              className={`flex items-center gap-2 rounded-full border px-2.5 py-1 ${
+                                ink ? 'border-creme/25' : 'border-encre/20'
+                              }`}
+                            >
+                              <button
+                                type="button"
+                                aria-label={`Réduire la quantité — ${o.label}`}
+                                onClick={() => step(i, -1)}
+                                disabled={sel[i] <= o.qty[0]}
+                                className={`-my-1 flex h-9 w-8 cursor-pointer items-center justify-center text-[16px] leading-none transition-transform active:scale-90 disabled:cursor-default disabled:opacity-25 ${
+                                  ink ? 'text-creme' : 'text-encre'
+                                }`}
+                              >
+                                −
+                              </button>
+                              <span
+                                aria-live="polite"
+                                className={`w-3 text-center text-[13px] tabular-nums ${
+                                  ink ? 'text-creme' : 'text-encre'
+                                }`}
+                              >
+                                {sel[i]}
+                              </span>
+                              <button
+                                type="button"
+                                aria-label={`Augmenter la quantité — ${o.label}`}
+                                onClick={() => step(i, 1)}
+                                disabled={sel[i] >= o.qty[1]}
+                                className={`-my-1 flex h-9 w-8 cursor-pointer items-center justify-center text-[16px] leading-none transition-transform active:scale-90 disabled:cursor-default disabled:opacity-25 ${
+                                  ink ? 'text-creme' : 'text-encre'
+                                }`}
+                              >
+                                +
+                              </button>
+                            </span>
+                          )}
+                          <span
+                            className={`whitespace-nowrap text-[12.5px] tracking-[0.02em] ${
+                              o.quote
+                                ? `italic ${ink ? 'text-sable/55' : 'text-encre/55'}`
+                                : priceText
+                            }`}
+                          >
+                            {o.quote ? 'sur devis' : `+ ${euros(o.price)}`}
+                          </span>
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ul>
+
+                {offre.note && (
+                  <p className={`mt-4 text-[12px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
+                    {offre.note}
+                  </p>
+                )}
+
+                {/* Le devis, en direct — desktop (sur mobile : barre du bas) */}
+                <div className={`mt-7 hidden border-t pt-6 lg:block ${ink ? 'border-or/25' : 'border-or/45'}`}>
+                  <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Votre devis</p>
+                  <div className="mt-5">
+                    <ReceiptLines {...lineParts} />
+                  </div>
+                  <div
+                    className={`mt-6 flex items-end justify-between border-t pt-5 ${ink ? 'border-creme/12' : 'border-encre/12'}`}
+                    aria-live="polite"
+                  >
+                    <span className={`text-[12px] font-light ${label}`}>Total{fromPrice ? ' estimé' : ''}</span>
+                    <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
+                      {fromPrice && (
+                        <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>
+                      )}
+                      <span key={total} className="price-pulse text-[clamp(1.8rem,2.4vw,2.3rem)] tabular-nums">
+                        {euros(total)}
+                      </span>
+                      <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
+                    </span>
+                  </div>
+                  {hasQuote && (
+                    <p className={`mt-2 text-[11.5px] font-light leading-[1.5] ${priceText}`}>
+                      + éléments sur devis, chiffrés avec vous
+                    </p>
+                  )}
+                  <p className={`mt-1.5 text-[11px] font-light ${ink ? 'text-sable/50' : 'text-encre/50'}`}>
+                    TVA 20 % en sus
+                  </p>
+                  <button
+                    type="button"
+                    onClick={requestQuote}
+                    className={`cta mt-6 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
+                      ink ? 'cta-light' : ''
+                    }`}
+                  >
+                    Demander un devis
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Les questions qui reviennent */}
+        {/* ── Épilogue pleine largeur : questions, non-inclus, conditions ── */}
         <div className={`mt-20 border-t pt-14 ${ink ? 'border-or/25' : 'border-or/45'}`}>
           <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Les questions qui reviennent
@@ -504,7 +568,6 @@ export default function Offres({ setDark }) {
           </dl>
         </div>
 
-        {/* Non inclus */}
         <div className="mt-16">
           <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Non inclus</p>
           <p
@@ -521,7 +584,6 @@ export default function Offres({ setDark }) {
           </p>
         </div>
 
-        {/* Conditions communes aux deux offres */}
         <div className={`mt-14 border-t pt-10 ${ink ? 'border-or/20' : 'border-or/40'}`}>
           <p className={`text-[10px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Conditions communes
@@ -550,7 +612,12 @@ export default function Offres({ setDark }) {
       >
         {openDetail && (
           <div className="max-h-[45vh] overflow-y-auto px-6 pt-5 md:px-16">
-            <ReceiptLines items={items} quoteItems={quoteItems} ink={ink} priceText={priceText} label={label} />
+            <ReceiptLines {...lineParts} />
+            {hasQuote && (
+              <p className={`mt-3 text-[11.5px] font-light ${priceText}`}>
+                + éléments sur devis, chiffrés avec vous
+              </p>
+            )}
           </div>
         )}
         <div className="flex items-center justify-between gap-4 px-6 py-4 md:px-16">
@@ -564,11 +631,11 @@ export default function Offres({ setDark }) {
               {openDetail ? 'Masquer le détail' : 'Votre devis'}
             </span>
             <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
-              {offre.from && (
-                <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>
-              )}
-              <span className="text-[clamp(1.5rem,7vw,1.9rem)] tabular-nums">{euros(total)}</span>
-              <span className={`ml-1 align-middle transition-transform ${openDetail ? 'inline-block rotate-180' : ''} ${label}`}>
+              {fromPrice && <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>}
+              <span key={total} className="price-pulse text-[clamp(1.5rem,7vw,1.9rem)] tabular-nums">
+                {euros(total)}
+              </span>
+              <span className={`ml-1 inline-block align-middle transition-transform ${openDetail ? 'rotate-180' : ''} ${label}`}>
                 <IconChevron />
               </span>
             </span>
@@ -588,56 +655,20 @@ export default function Offres({ setDark }) {
   )
 }
 
-// Le devis, en carton : socle, options chiffrées, sur-devis, total. Numéros
-// alignés (tabular-nums) comme sur une note.
-function Receipt({ items, quoteItems, total, offre, ink, requestQuote, label, priceText }) {
-  return (
-    <div
-      className={`rounded-2xl border p-7 backdrop-blur-sm ${
-        ink ? 'border-creme/12 bg-[#221c17]/70' : 'border-encre/10 bg-creme/55'
-      }`}
-    >
-      <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Votre devis</p>
-      <div className="mt-6">
-        <ReceiptLines items={items} quoteItems={quoteItems} ink={ink} priceText={priceText} label={label} />
-      </div>
-      <div className={`mt-6 flex items-end justify-between border-t pt-5 ${ink ? 'border-creme/12' : 'border-encre/12'}`}>
-        <span className={`text-[12px] font-light ${label}`}>
-          Total{offre.from && ' estimé'}
-        </span>
-        <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
-          <span className="text-[clamp(1.7rem,2.4vw,2.1rem)] tabular-nums">{euros(total)}</span>
-          <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
-        </span>
-      </div>
-      <p className={`mt-2 text-[11px] font-light ${ink ? 'text-sable/50' : 'text-encre/50'}`}>
-        {offre.from ? 'À partir de ce montant · ' : ''}TVA 20 % en sus
-      </p>
-      <button
-        type="button"
-        onClick={requestQuote}
-        className={`cta mt-6 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
-          ink ? 'cta-light' : ''
-        }`}
-      >
-        Demander un devis
-      </button>
-    </div>
-  )
-}
-
-// Les lignes du devis, partagées entre le carton (desktop) et la barre (mobile).
+// Les lignes du devis, partagées entre la console (desktop) et la barre (mobile).
+// Récap itémisé : socle, options chiffrées (× quantité, sous-total), sur-devis.
 function ReceiptLines({ items, quoteItems, ink, priceText, label }) {
   const rowText = ink ? 'text-sable/85' : 'text-encre/80'
+  const strong = ink ? 'text-creme' : 'text-encre'
   return (
     <ul className="space-y-3">
       {items.map((it, i) => (
         <li key={`${it.label}-${i}`} className="flex items-baseline justify-between gap-4">
-          <span className={`text-[13px] font-light leading-[1.4] ${it.base ? (ink ? 'text-creme' : 'text-encre') : rowText}`}>
+          <span className={`text-[13px] font-light leading-[1.4] ${it.base ? strong : rowText}`}>
             {it.label}
             {it.qty > 1 && <span className={label}> × {it.qty}</span>}
           </span>
-          <span className={`shrink-0 text-[13px] tabular-nums ${it.base ? (ink ? 'text-creme' : 'text-encre') : priceText}`}>
+          <span className={`shrink-0 text-[13px] tabular-nums ${it.base ? strong : priceText}`}>
             {it.base ? '' : '+ '}
             {euros(it.amount)}
           </span>
@@ -645,8 +676,10 @@ function ReceiptLines({ items, quoteItems, ink, priceText, label }) {
       ))}
       {quoteItems.map((l) => (
         <li key={l} className="flex items-baseline justify-between gap-4">
-          <span className={`text-[13px] font-light leading-[1.4] ${ink ? 'text-sable/85' : 'text-encre/80'}`}>{l}</span>
-          <span className={`shrink-0 text-[12px] italic ${ink ? 'text-sable/55' : 'text-encre/55'}`}>sur devis</span>
+          <span className={`text-[13px] font-light leading-[1.4] ${rowText}`}>{l}</span>
+          <span className={`shrink-0 text-[12px] italic ${ink ? 'text-sable/55' : 'text-encre/55'}`}>
+            sur devis
+          </span>
         </li>
       ))}
     </ul>
