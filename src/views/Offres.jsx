@@ -376,21 +376,26 @@ export default function Offres({ setDark }) {
           </div>
 
           {/* ── DROITE : la console ────────────────────────────── */}
-          <div className="lg:col-span-6">
-            <div className="lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto lg:pr-1">
+          <div className="lg:col-span-6 lg:self-start">
+            <div className="lg:sticky lg:top-24">
               <div
-                className={`rounded-2xl border p-6 backdrop-blur-sm md:p-7 ${
+                className={`flex flex-col rounded-2xl border p-6 backdrop-blur-sm md:p-7 lg:max-h-[calc(100dvh-7rem)] ${
                   ink ? 'border-or/20 bg-[#221c17]/55' : 'border-or/35 bg-creme/45'
                 }`}
               >
-                <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-                  Composez votre film
-                </p>
-                <p className={`mt-2 text-[12.5px] font-light leading-[1.6] ${ink ? 'text-sable/70' : 'text-encre/65'}`}>
-                  Le socle est compris. Ajoutez ce qui vous ressemble.
-                </p>
+                {/* En-tête de console — toujours visible */}
+                <div className="shrink-0">
+                  <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+                    Composez votre film
+                  </p>
+                  <p className={`mt-2 text-[12.5px] font-light leading-[1.6] ${ink ? 'text-sable/70' : 'text-encre/65'}`}>
+                    Le socle est compris. Ajoutez ce qui vous ressemble.
+                  </p>
+                </div>
 
-                <ul className="mt-6">
+                {/* Les options : seule zone qui défile en interne sur écran court —
+                    l'en-tête et le pied (total + devis) restent toujours en vue. */}
+                <ul className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
                   {offre.options.map((o, i) => {
                     const on = !!sel[i]
                     return (
@@ -499,50 +504,50 @@ export default function Offres({ setDark }) {
                   })}
                 </ul>
 
-                {offre.note && (
-                  <p className={`mt-4 text-[12px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
-                    {offre.note}
-                  </p>
-                )}
-
-                {/* Le devis, en direct — desktop (sur mobile : barre du bas) */}
-                <div className={`mt-7 hidden border-t pt-6 lg:block ${ink ? 'border-or/25' : 'border-or/45'}`}>
-                  <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Votre devis</p>
-                  <div className="mt-5">
-                    <ReceiptLines {...lineParts} />
-                  </div>
-                  <div
-                    className={`mt-6 flex items-end justify-between border-t pt-5 ${ink ? 'border-creme/12' : 'border-encre/12'}`}
-                    aria-live="polite"
-                  >
-                    <span className={`text-[12px] font-light ${label}`}>Total{fromPrice ? ' estimé' : ''}</span>
-                    <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
-                      {fromPrice && (
-                        <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>
-                      )}
-                      <span key={total} className="price-pulse text-[clamp(1.8rem,2.4vw,2.3rem)] tabular-nums">
-                        {euros(total)}
-                      </span>
-                      <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
-                    </span>
-                  </div>
-                  {hasQuote && (
-                    <p className={`mt-2 text-[11.5px] font-light leading-[1.5] ${priceText}`}>
-                      + éléments sur devis, chiffrés avec vous
+                {/* Pied de console — toujours visible : note, total, CTA */}
+                <div className="shrink-0">
+                  {offre.note && (
+                    <p className={`mt-4 text-[12px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
+                      {offre.note}
                     </p>
                   )}
-                  <p className={`mt-1.5 text-[11px] font-light ${ink ? 'text-sable/50' : 'text-encre/50'}`}>
-                    TVA 20 % en sus
-                  </p>
-                  <button
-                    type="button"
-                    onClick={requestQuote}
-                    className={`cta mt-6 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
-                      ink ? 'cta-light' : ''
-                    }`}
-                  >
-                    Demander un devis
-                  </button>
+
+                  {/* Devis desktop : total + CTA. Le détail itémisé vit dans la
+                      barre du bas sur mobile ; ici chaque option chiffrée est
+                      déjà lisible ligne à ligne juste au-dessus. */}
+                  <div className={`mt-6 hidden border-t pt-5 lg:block ${ink ? 'border-or/25' : 'border-or/45'}`}>
+                    <div className="flex items-end justify-between" aria-live="polite">
+                      <span className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
+                        Votre devis
+                      </span>
+                      <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
+                        {fromPrice && (
+                          <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>
+                        )}
+                        <span key={total} className="price-pulse text-[clamp(1.9rem,2.6vw,2.4rem)] tabular-nums">
+                          {euros(total)}
+                        </span>
+                        <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
+                      </span>
+                    </div>
+                    {hasQuote && (
+                      <p className={`mt-2 text-[11.5px] font-light leading-[1.5] ${priceText}`}>
+                        + éléments sur devis, chiffrés avec vous
+                      </p>
+                    )}
+                    <p className={`mt-1.5 text-[11px] font-light ${ink ? 'text-sable/50' : 'text-encre/50'}`}>
+                      TVA 20 % en sus
+                    </p>
+                    <button
+                      type="button"
+                      onClick={requestQuote}
+                      className={`cta mt-5 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
+                        ink ? 'cta-light' : ''
+                      }`}
+                    >
+                      Demander un devis
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
