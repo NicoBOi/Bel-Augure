@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 // Deux offres, deux lumières : Les Tableaux dans l'or pâle, Signature dans
-// l'encre. Choisir une offre change la matière de la page — la hiérarchie
-// n'est pas un style de texte, c'est la pièce qui change de lumière. Chaque
-// offre est un configurateur : socle fixe, options cochables (certaines avec
-// quantité), prix recalculé en direct, éléments sur devis mentionnés à part.
+// l'encre. Chaque offre est un configurateur — un socle compris, des options
+// que l'on ajoute, et un devis qui se compose en direct sous les yeux. Ce qui
+// est compris apparaît coché et verrouillé ; les options se cochent à côté ;
+// chaque ajout s'inscrit dans le devis à droite (ou dans la barre du bas sur
+// mobile) et le total se met à jour aussitôt.
 const OFFRES = [
   {
     name: 'Les Tableaux',
@@ -113,6 +114,26 @@ const OFFRES = [
   },
 ]
 
+// Les questions qui reviennent, gardées en bas de page. Réponses courtes.
+const QUESTIONS = [
+  {
+    q: 'Combien ça coûte ?',
+    r: 'Deux offres : Les Tableaux à 3 500 € et Signature à partir de 9 500 €. Vous composez ensuite avec les options ci-dessus, le prix se met à jour en direct.',
+  },
+  {
+    q: "Qui apparaît à l'écran ?",
+    r: 'Nous avons à cœur de travailler avec des acteurs pour rendre votre lieu vivant ! Nous nous occupons du casting.',
+  },
+  {
+    q: 'Partout en France ?',
+    r: 'Oui, partout en France ! Chaque projet est une occasion de découvrir de nouveaux décors et de faire naître de nouvelles idées.',
+  },
+  {
+    q: 'À qui appartient le film ?',
+    r: 'Les droits de diffusion sont inclus : sans limite de temps pour Les Tableaux, deux ans pour Signature.',
+  },
+]
+
 // Conditions communes aux deux offres, en pied de page.
 const CONDITIONS = [
   'Acompte 50 % à la commande, solde à la livraison',
@@ -130,6 +151,8 @@ export default function Offres({ setDark }) {
   const [index, setIndex] = useState(0)
   // sel : { [indexOption]: quantité }. Une entrée absente = option non cochée.
   const [sel, setSel] = useState({})
+  // Repli du récapitulatif sur mobile (barre du bas dépliable).
+  const [openDetail, setOpenDetail] = useState(false)
   const offre = OFFRES[index]
   const ink = offre.ink
 
@@ -141,6 +164,7 @@ export default function Offres({ setDark }) {
   // Changer d'offre remet toutes les options à zéro.
   useEffect(() => {
     setSel({})
+    setOpenDetail(false)
   }, [index])
 
   // Flèches clavier : on passe d'une offre à l'autre.
@@ -186,27 +210,27 @@ export default function Offres({ setDark }) {
       return { ...s, [i]: v }
     })
 
-  // Prix en direct : le socle plus les options chiffrées. Les options « sur
-  // devis » n'entrent jamais dans le calcul.
-  const optionsTotal = offre.options.reduce((sum, o, i) => {
-    if (!sel[i] || o.quote || !o.price) return sum
-    return sum + o.price * sel[i]
-  }, 0)
-  const total = offre.base + optionsTotal
-  const quoteSel = offre.options.filter((o, i) => o.quote && sel[i])
+  // Composition du devis : socle + options chiffrées, les « sur devis » à part.
+  const priced = offre.options
+    .map((o, i) =>
+      !sel[i] || o.quote || !o.price
+        ? null
+        : { label: o.label, qty: o.qty ? sel[i] : 1, hasQty: !!o.qty, amount: o.price * sel[i] },
+    )
+    .filter(Boolean)
+  const quoteItems = offre.options.filter((o, i) => o.quote && sel[i]).map((o) => o.label)
+  const items = [{ label: offre.name, amount: offre.base, base: true }, ...priced]
+  const total = items.reduce((s, it) => s + it.amount, 0)
 
   // « Demander un devis » : la configuration retenue part par email, prête à
   // l'envoi. Aucun backend, aucun stockage — le récapitulatif se compose ici.
   const requestQuote = () => {
-    const lines = offre.options
-      .map((o, i) => {
-        if (!sel[i]) return null
-        if (o.quote) return `— ${o.label} (sur devis)`
-        const qty = o.qty ? ` × ${sel[i]}` : ''
-        const amount = o.price ? ` · ${euros(o.price * sel[i])}` : ''
-        return `— ${o.label}${qty}${amount}`
-      })
-      .filter(Boolean)
+    const lines = [
+      ...priced.map(
+        (it) => `— ${it.label}${it.hasQty ? ` × ${it.qty}` : ''} · ${euros(it.amount)}`,
+      ),
+      ...quoteItems.map((l) => `— ${l} (sur devis)`),
+    ]
     const body = [
       `Offre retenue : ${offre.name} — ${offre.priceLabel}`,
       '',
@@ -223,6 +247,7 @@ export default function Offres({ setDark }) {
   const label = ink ? 'text-sable/75' : 'text-encre/70'
   const dash = ink ? 'text-or/75' : 'text-[#8A7E68]'
   const priceText = ink ? 'text-or' : 'text-[#8f7d5f]'
+  const receipt = { items, quoteItems, total, offre, ink, requestQuote, label, priceText }
 
   return (
     <section
@@ -268,10 +293,9 @@ export default function Offres({ setDark }) {
         </ul>
       </nav>
 
-      {/* Le contenu se rejoue à chaque changement d'offre (key) : titres et
-          textes réapparaissent en fondu. */}
-      <div key={offre.name} className="mx-auto w-full max-w-[1100px] pb-40">
-        {/* En-tête : surtitre, nom, accroche, description */}
+      {/* Le contenu se rejoue à chaque changement d'offre (key) */}
+      <div key={offre.name} className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
+        {/* En-tête : surtitre, nom, prix de départ, accroche, description */}
         <header className="mt-12 text-center md:mt-16">
           <p
             className={`fade-in text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}
@@ -292,10 +316,17 @@ export default function Offres({ setDark }) {
             </span>
           </h1>
           <p
+            className={`fade-in mt-4 text-[12px] font-normal uppercase tracking-[0.22em] ${priceText}`}
+            style={{ '--d': '0.18s' }}
+          >
+            {offre.from ? 'À partir de ' : ''}
+            {offre.priceLabel.replace('à partir de ', '')} · HT
+          </p>
+          <p
             className={`fade-in mx-auto mt-7 max-w-[52ch] font-display text-[clamp(1.15rem,1.7vw,1.5rem)] leading-[1.55] ${
               ink ? 'text-sable' : 'text-encre'
             }`}
-            style={{ '--d': '0.24s' }}
+            style={{ '--d': '0.26s' }}
           >
             {offre.accroche}
           </p>
@@ -303,7 +334,7 @@ export default function Offres({ setDark }) {
             className={`fade-in mx-auto mt-8 max-w-[60ch] space-y-4 text-[14px] font-light leading-[1.9] ${
               ink ? 'text-sable/85' : 'text-encre/80'
             }`}
-            style={{ '--d': '0.34s' }}
+            style={{ '--d': '0.36s' }}
           >
             {offre.description.map((p) => (
               <p key={p}>{p}</p>
@@ -311,47 +342,45 @@ export default function Offres({ setDark }) {
           </div>
         </header>
 
-        {/* Deux colonnes : ce qui est inclus, puis les options cochables */}
+        {/* Le configurateur : à gauche on compose, à droite le devis se tient */}
         <div
-          className={`fade-in mt-16 grid gap-14 border-t pt-14 lg:grid-cols-12 lg:gap-10 ${
+          className={`fade-in mt-16 grid gap-x-12 gap-y-14 border-t pt-14 lg:grid-cols-12 ${
             ink ? 'border-or/25' : 'border-or/45'
           }`}
           style={{ '--d': '0.1s' }}
         >
-          {/* Inclus — liste fixe */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-7">
+            {/* Compris : coché, verrouillé — la substance de l'offre */}
             <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-              Ce qui est inclus
+              Compris dans l’offre
             </p>
-            <ul className="mt-8 space-y-3.5">
+            <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
               {offre.inclus.map((item) => (
                 <li
                   key={item}
-                  className={`flex gap-3 text-[13.5px] font-light leading-[1.6] ${
-                    ink ? 'text-sable/85' : 'text-encre/80'
+                  className={`flex gap-3 text-[13px] font-light leading-[1.55] ${
+                    ink ? 'text-sable/80' : 'text-encre/75'
                   }`}
                 >
-                  <span aria-hidden="true" className={`mt-[0.15em] ${dash}`}>
-                    —
+                  <span aria-hidden="true" className="mt-[0.15em] shrink-0 text-or">
+                    <IconCheck />
                   </span>
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-          </div>
 
-          {/* Options — cochables, certaines avec quantité */}
-          <div className="lg:col-span-6 lg:col-start-7">
-            <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-              Les options
+            {/* Les options : cochables, certaines avec quantité */}
+            <p className={`mt-14 text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+              Ajoutez des options
             </p>
-            <ul className="mt-6">
+            <ul className="mt-4">
               {offre.options.map((o, i) => {
                 const on = !!sel[i]
                 return (
                   <li
                     key={o.label}
-                    className={`flex items-center gap-4 border-b py-4 ${
+                    className={`flex items-center gap-4 border-b py-4 transition-colors ${
                       ink ? 'border-creme/10' : 'border-encre/10'
                     }`}
                   >
@@ -364,7 +393,7 @@ export default function Offres({ setDark }) {
                     >
                       <span
                         aria-hidden="true"
-                        className={`mt-[0.1em] flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
+                        className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
                           on
                             ? 'border-or bg-or text-encre'
                             : ink
@@ -446,31 +475,54 @@ export default function Offres({ setDark }) {
                 {offre.note}
               </p>
             )}
+          </div>
 
-            {/* Non inclus — au ras de l'offre, en atténué */}
-            <div className="mt-12">
-              <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-                Non inclus
-              </p>
-              <ul className="mt-5 flex flex-wrap items-baseline gap-y-2">
-                {offre.nonInclus.map((item, i) => (
-                  <li
-                    key={item}
-                    className={`text-[12.5px] font-light leading-[1.5] ${
-                      ink ? 'text-sable/55' : 'text-encre/55'
-                    }`}
-                  >
-                    {i > 0 && <span className={`mx-2 ${dash}`}>·</span>}
-                    {item}
-                  </li>
-                ))}
-              </ul>
+          {/* Le devis : à droite, il se tient à hauteur d'œil (desktop only) */}
+          <div className="hidden lg:col-span-5 lg:block">
+            <div className="sticky top-24">
+              <Receipt {...receipt} />
             </div>
           </div>
         </div>
 
+        {/* Les questions qui reviennent */}
+        <div className={`mt-20 border-t pt-14 ${ink ? 'border-or/25' : 'border-or/45'}`}>
+          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+            Les questions qui reviennent
+          </p>
+          <dl className="mt-8 grid gap-x-12 gap-y-9 md:grid-cols-2">
+            {QUESTIONS.map((item) => (
+              <div key={item.q}>
+                <dt className={`font-display text-[16px] leading-[1.4] ${ink ? 'text-creme' : 'text-encre'}`}>
+                  {item.q}
+                </dt>
+                <dd className={`mt-2 text-[13px] font-light leading-[1.8] ${ink ? 'text-sable/75' : 'text-encre/75'}`}>
+                  {item.r}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* Non inclus */}
+        <div className="mt-16">
+          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Non inclus</p>
+          <p
+            className={`mt-4 max-w-[80ch] text-[12.5px] font-light leading-[1.9] ${
+              ink ? 'text-sable/55' : 'text-encre/55'
+            }`}
+          >
+            {offre.nonInclus.map((item, i) => (
+              <span key={item}>
+                {i > 0 && <span className={`mx-2 ${dash}`}>·</span>}
+                {item}
+              </span>
+            ))}
+          </p>
+        </div>
+
         {/* Conditions communes aux deux offres */}
-        <div className={`mt-16 border-t pt-10 ${ink ? 'border-or/20' : 'border-or/40'}`}>
+        <div className={`mt-14 border-t pt-10 ${ink ? 'border-or/20' : 'border-or/40'}`}>
           <p className={`text-[10px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Conditions communes
           </p>
@@ -489,41 +541,42 @@ export default function Offres({ setDark }) {
         </div>
       </div>
 
-      {/* Barre de prix : collée en bas, toujours visible pendant qu'on coche —
-          y compris sur mobile. Le montant se recalcule en direct. */}
+      {/* Mobile : le devis se glisse en barre du bas, toujours visible, et se
+          déplie pour montrer le détail ligne par ligne. */}
       <div
-        className={`sticky bottom-0 z-10 -mx-6 mt-auto border-t px-6 py-4 backdrop-blur-md md:-mx-16 md:px-16 ${
-          ink ? 'border-or/25 bg-encre/85' : 'border-or/45 bg-creme/85'
+        className={`sticky bottom-0 z-10 -mx-6 mt-auto border-t backdrop-blur-md md:-mx-16 lg:hidden ${
+          ink ? 'border-or/25 bg-encre/90' : 'border-or/45 bg-creme/90'
         }`}
       >
-        <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between gap-x-8 gap-y-3">
-          <div>
-            <p className={`text-[10px] font-normal uppercase tracking-[0.28em] ${label}`}>
-              Votre configuration
-            </p>
-            <p
-              className={`mt-1 font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}
-              aria-live="polite"
-            >
-              {offre.from && (
-                <span className={`font-sans text-[13px] font-light tracking-[0.02em] ${label}`}>
-                  à partir de{' '}
-                </span>
-              )}
-              <span className="text-[clamp(1.7rem,3vw,2.3rem)]">{euros(total)}</span>
-              <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
-            </p>
-            {quoteSel.length > 0 && (
-              <p className={`mt-1.5 text-[11.5px] font-light leading-[1.5] ${priceText}`}>
-                + sur devis : {quoteSel.map((o) => o.label).join(' · ')}
-              </p>
-            )}
+        {openDetail && (
+          <div className="max-h-[45vh] overflow-y-auto px-6 pt-5 md:px-16">
+            <ReceiptLines items={items} quoteItems={quoteItems} ink={ink} priceText={priceText} label={label} />
           </div>
-
+        )}
+        <div className="flex items-center justify-between gap-4 px-6 py-4 md:px-16">
+          <button
+            type="button"
+            onClick={() => setOpenDetail((v) => !v)}
+            aria-expanded={openDetail}
+            className="cursor-pointer text-left"
+          >
+            <span className={`block text-[10px] font-normal uppercase tracking-[0.25em] ${label}`}>
+              {openDetail ? 'Masquer le détail' : 'Votre devis'}
+            </span>
+            <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
+              {offre.from && (
+                <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>
+              )}
+              <span className="text-[clamp(1.5rem,7vw,1.9rem)] tabular-nums">{euros(total)}</span>
+              <span className={`ml-1 align-middle transition-transform ${openDetail ? 'inline-block rotate-180' : ''} ${label}`}>
+                <IconChevron />
+              </span>
+            </span>
+          </button>
           <button
             type="button"
             onClick={requestQuote}
-            className={`cta w-max shrink-0 cursor-pointer px-8 py-3 text-[13px] font-normal tracking-[0.06em] ${
+            className={`cta w-max shrink-0 cursor-pointer px-6 py-3 text-[13px] font-normal tracking-[0.06em] ${
               ink ? 'cta-light' : ''
             }`}
           >
@@ -532,6 +585,71 @@ export default function Offres({ setDark }) {
         </div>
       </div>
     </section>
+  )
+}
+
+// Le devis, en carton : socle, options chiffrées, sur-devis, total. Numéros
+// alignés (tabular-nums) comme sur une note.
+function Receipt({ items, quoteItems, total, offre, ink, requestQuote, label, priceText }) {
+  return (
+    <div
+      className={`rounded-2xl border p-7 backdrop-blur-sm ${
+        ink ? 'border-creme/12 bg-[#221c17]/70' : 'border-encre/10 bg-creme/55'
+      }`}
+    >
+      <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Votre devis</p>
+      <div className="mt-6">
+        <ReceiptLines items={items} quoteItems={quoteItems} ink={ink} priceText={priceText} label={label} />
+      </div>
+      <div className={`mt-6 flex items-end justify-between border-t pt-5 ${ink ? 'border-creme/12' : 'border-encre/12'}`}>
+        <span className={`text-[12px] font-light ${label}`}>
+          Total{offre.from && ' estimé'}
+        </span>
+        <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
+          <span className="text-[clamp(1.7rem,2.4vw,2.1rem)] tabular-nums">{euros(total)}</span>
+          <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
+        </span>
+      </div>
+      <p className={`mt-2 text-[11px] font-light ${ink ? 'text-sable/50' : 'text-encre/50'}`}>
+        {offre.from ? 'À partir de ce montant · ' : ''}TVA 20 % en sus
+      </p>
+      <button
+        type="button"
+        onClick={requestQuote}
+        className={`cta mt-6 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
+          ink ? 'cta-light' : ''
+        }`}
+      >
+        Demander un devis
+      </button>
+    </div>
+  )
+}
+
+// Les lignes du devis, partagées entre le carton (desktop) et la barre (mobile).
+function ReceiptLines({ items, quoteItems, ink, priceText, label }) {
+  const rowText = ink ? 'text-sable/85' : 'text-encre/80'
+  return (
+    <ul className="space-y-3">
+      {items.map((it, i) => (
+        <li key={`${it.label}-${i}`} className="flex items-baseline justify-between gap-4">
+          <span className={`text-[13px] font-light leading-[1.4] ${it.base ? (ink ? 'text-creme' : 'text-encre') : rowText}`}>
+            {it.label}
+            {it.qty > 1 && <span className={label}> × {it.qty}</span>}
+          </span>
+          <span className={`shrink-0 text-[13px] tabular-nums ${it.base ? (ink ? 'text-creme' : 'text-encre') : priceText}`}>
+            {it.base ? '' : '+ '}
+            {euros(it.amount)}
+          </span>
+        </li>
+      ))}
+      {quoteItems.map((l) => (
+        <li key={l} className="flex items-baseline justify-between gap-4">
+          <span className={`text-[13px] font-light leading-[1.4] ${ink ? 'text-sable/85' : 'text-encre/80'}`}>{l}</span>
+          <span className={`shrink-0 text-[12px] italic ${ink ? 'text-sable/55' : 'text-encre/55'}`}>sur devis</span>
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -550,6 +668,24 @@ function IconCheck() {
       aria-hidden="true"
     >
       <path d="M20 6 9 17l-5-5" />
+    </svg>
+  )
+}
+
+function IconChevron() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m6 9 6 6 6-6" />
     </svg>
   )
 }
