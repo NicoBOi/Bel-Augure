@@ -50,24 +50,15 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Formats et délais : tout est écrit. Films signature livrés de quatre à huit semaines.',
-    h1: 'Offres — film signature pour hôtel, spa et maison de bien-être',
+    desc: 'Deux offres claires : Les Tableaux, un film par espace, dès 3 500 €, et Signature, le film central, à partir de 9 500 €.',
+    h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: `
-      <h2>Signature — le film central</h2>
-      <p>Un film court écrit, tourné et monté par nos soins. Il est la vitrine de l'émotion que l'on éprouve chez vous. Inclus : un film de 45 à 90 s, deux jours de tournage, un acteur, du matériel cinéma professionnel, les teasers pour deux réseaux sociaux au choix.</p>
-      <h2>Saisons — toute l'année</h2>
-      <p>Un film court à chaque saison, pour que vos clients vous suivent au fil du temps. Inclus : quatre films de 15 à 30 s, un jour de tournage par saison, un acteur par film, du matériel cinéma professionnel, les déclinaisons pour deux réseaux sociaux au choix.</p>
-      <h2>Sur Mesure — l'exception</h2>
-      <p>La pièce maîtresse de votre enseigne est maintenant taillée sur mesure, plus de limite de temps, d'acteurs ou de décors. C'est vous qui donnez les limites et nous réalisons avec.</p>
-      <h2>Comment ça se passe</h2>
-      <p>L'écriture : après un premier rendez-vous et quelques prises de notes, nous écrivons un script qui fera ressentir l'essence de votre enseigne.</p>
-      <p>Le tournage : une petite équipe de tournage, du matériel léger et fiable ; nous savons nous faire discrets.</p>
-      <p>La livraison : vous recevez le film, ses déclinaisons et les droits qui vont avec. S'il reste un détail qui vous chiffonne, deux séries de retouches sont comprises.</p>
-      <h2>Les questions qui reviennent</h2>
-      <p>Combien ça coûte ? Nous avons trois formules, Signature, Saisons et Sur Mesure. Chacune a sa gamme de prix.</p>
-      <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
-      <p>Partout en France ? Oui, partout en France.</p>
-      <p>À qui appartient le film ? Les droits de diffusion sont inclus dans l'offre pour deux ans.</p>`,
+      <h2>Les Tableaux — 3 500 €</h2>
+      <p>Cinq films courts, un par espace de votre établissement. Une comédienne dirigée, une lumière construite, une journée chez vous. Inclus : écriture des textes, une journée de tournage avec deux opérateurs, une comédienne professionnelle déclarée, cinq films verticaux de 15 à 25 secondes, étalonnage et mixage, sous-titres incrustés, fichiers 4K 9:16 prêts à publier, cession de droits illimitée dans le temps en France, livraison sous 7 jours ouvrés. Options : espace supplémentaire, journée de tournage supplémentaire, comédienne supplémentaire, photographies, version anglaise.</p>
+      <h2>Signature — à partir de 9 500 €</h2>
+      <p>Un film écrit et joué. Trente secondes tenues, faites pour durer trois ans. Celui qu'on met en page d'accueil, qu'on envoie à la presse, qu'on projette en salon. Inclus : écriture du scénario et des dialogues, repérage, casting et direction d'acteur, une journée de tournage avec équipe complète déclarée, un film de 30 secondes et sa version longue de 60 secondes, deux déclinaisons 9:16 et 1:1, quinze photographies de plateau, étalonnage, création sonore et mixage, musique sous licence, cession de droits 2 ans en France, livraison sous 3 semaines. Options : journée de tournage supplémentaire, comédien supplémentaire, exploitation cinéma, voix off, version anglaise.</p>
+      <h2>Conditions communes</h2>
+      <p>Acompte 50 % à la commande, solde à la livraison. Journée de 8 heures, heures supplémentaires majorées. Déplacement au-delà de 80 km depuis Bordeaux, repas et hébergement en sus. Report sans frais jusqu'à 7 jours avant le tournage. Fichiers sources conservés 12 mois, non livrés. TVA 20 % en sus.</p>`,
   },
   {
     path: '/contact',
