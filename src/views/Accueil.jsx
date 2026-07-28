@@ -103,12 +103,19 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
     }
     ensure()
 
-    // Un geste décide de la destination, l'animation reste interruptible :
-    // scroller vers le bas lève le jour, remonter ramène la nuit.
+    // La molette agit proportionnellement (comme le doigt) plutôt que de
+    // basculer d'un coup : chaque cran fait avancer la lumière un peu, et à
+    // l'arrêt de la molette la scène se pose sur le jour ou la nuit le plus
+    // proche. Plus doux qu'un tout-ou-rien au moindre cran.
+    let wheelSettle
     const onWheel = (e) => {
-      if (e.deltaY > 12) target.current = 1
-      else if (e.deltaY < -12) target.current = 0
+      target.current = Math.min(Math.max(target.current + e.deltaY / 900, 0), 1)
       ensure()
+      clearTimeout(wheelSettle)
+      wheelSettle = setTimeout(() => {
+        target.current = target.current > 0.5 ? 1 : 0
+        ensure()
+      }, 150)
     }
     section.addEventListener('wheel', onWheel, { passive: true })
 
@@ -153,6 +160,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
 
     return () => {
       cancelAnimationFrame(raf)
+      clearTimeout(wheelSettle)
       section.removeEventListener('wheel', onWheel)
       section.removeEventListener('touchstart', onTouchStart)
       section.removeEventListener('touchmove', onTouchMove)
@@ -170,6 +178,14 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       aria-labelledby="hero-titre"
       className="relative h-full overflow-hidden"
     >
+      {/* Voile dégradé sous le texte : garantit la lisibilité du titre et de
+          la catchline quelle que soit la frame du film (indépendant de la
+          vidéo). Masqué par le calque crème dès que le jour se lève. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[60%] bg-gradient-to-t from-encre/65 via-encre/20 to-transparent"
+      />
+
       {/* Le jour se lève exactement au rythme du scroll */}
       <div ref={creamRef} aria-hidden="true" className="absolute inset-0 z-[1] bg-creme opacity-0" />
 
@@ -204,7 +220,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         type="button"
         onClick={() => onNavigate('films')}
         aria-label="Voir le film"
-        className="absolute right-[-26px] top-[58%] z-[2] flex -translate-y-1/2 items-center rounded-l-lg border border-r-0 border-creme/15 bg-encre/90 py-3 pl-5 pr-11 shadow-[0_6px_22px_-8px_rgba(0,0,0,0.55)] md:hidden"
+        className="absolute right-[-26px] top-[58%] z-[2] flex min-h-[44px] -translate-y-1/2 items-center rounded-l-lg border border-r-0 border-creme/15 bg-encre/90 py-3 pl-5 pr-11 shadow-[0_6px_22px_-8px_rgba(0,0,0,0.55)] md:hidden"
       >
         <span className="hint-shimmer text-[10px] font-normal uppercase tracking-[0.22em]">
           Voir le film
@@ -218,7 +234,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             largeur du titre (max-content, le titre étant sur une ligne), et
             le paragraphe la remplit via w-0 + min-w-full. */}
         <div className="mx-auto w-max max-w-full text-center">
-        <h2 className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.25] text-encre md:whitespace-nowrap">
+        <h2 className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.25] text-encre lg:whitespace-nowrap">
           Notre film devient votre signature<span className="text-or">.</span>
         </h2>
 

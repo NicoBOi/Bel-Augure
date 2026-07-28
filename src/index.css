@@ -13,6 +13,10 @@
 @theme {
   --color-encre: #1a1512;
   --color-or: #d9c6a6;
+  /* Or foncé : l'or clair (#d9c6a6) est illisible en texte sur fond clair.
+     Cette nuance sombre porte les prix et accents sur les fonds pâles en
+     respectant le contraste AA (≈ 5:1 sur l'or pâle des offres UGC). */
+  --color-orfonce: #655329;
   --color-sable: #f0e6d8;
   --color-grege: #6e6350;
   --color-creme: #f2ede4;

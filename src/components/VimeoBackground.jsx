@@ -4,7 +4,19 @@ import { useEffect, useRef, useState } from 'react'
 // réellement démarrée : avant cela, le fond encre reste seul en scène.
 // Évite la tuile grise ou noire du player pendant le chargement — le film
 // fond au travers de l'encre quand il joue, jamais avant.
-export default function VimeoBackground({ id, title, className = '', onPlaying, soundOn, paused }) {
+// background=true : décor pur, muet forcé (le mode « background » de Vimeo
+// ignore tout contrôle de volume). background=false : lecteur muet à
+// l'autoplay mais dont on peut rétablir le son (page Films) — le paramètre
+// background=1 est alors retiré pour que setVolume/setMuted répondent.
+export default function VimeoBackground({
+  id,
+  title,
+  className = '',
+  onPlaying,
+  soundOn,
+  paused,
+  background = true,
+}) {
   const frameRef = useRef(null)
   const notified = useRef(false)
   const [playing, setPlaying] = useState(false)
@@ -50,6 +62,7 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
             'https://player.vimeo.com',
           )
         }
+        post('setMuted', soundRef.current ? false : true)
         post('setVolume', soundRef.current ? 1 : 0)
         if (!pausedRef.current) post('play')
       } else if (data.event === 'play' || data.event === 'playProgress') {
@@ -95,9 +108,12 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
     }
   }, [])
 
-  // Le son suit la volonté du visiteur, sans recharger le player
+  // Le son suit la volonté du visiteur, sans recharger le player. On lève
+  // d'abord le muet (obligatoire pour qu'un son sorte), puis on règle le
+  // volume — le clic sur le bouton fournit le geste utilisateur exigé par iOS.
   useEffect(() => {
     if (soundOn === undefined) return
+    post('setMuted', soundOn ? false : true)
     post('setVolume', soundOn ? 1 : 0)
   }, [soundOn])
 
@@ -111,7 +127,9 @@ export default function VimeoBackground({ id, title, className = '', onPlaying, 
 
   // Fond pur : le film joue sans aucune UI Vimeo, non cliquable. playsinline
   // garde la lecture dans la page sur iOS (pas de bascule plein écran forcée).
-  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&muted=1&playsinline=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
+  const src = `https://player.vimeo.com/video/${id}?${
+    background ? 'background=1&' : ''
+  }autoplay=1&loop=1&muted=1&playsinline=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
 
   return (
     <iframe

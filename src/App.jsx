@@ -46,11 +46,11 @@ const DESCRIPTIONS = {
   films:
     "Les Pieds dans l'eau : le premier film de Bel Augure, tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
   studio:
-    "Nicolas et Corentin, deux réalisateurs à Bordeaux. Peu de films par an, faits main, pour le bien-être d'exception.",
+    "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
   offres:
-    'Deux offres claires : UGC, des films courts par espace dès 3 500 €, et Film, le film central à partir de 9 500 €.',
+    'Deux offres claires : UGC, des films courts par espace dès 3 500 €, et Film, le film central à partir de 9 500 €.',
   contact:
-    'Écrire à Bel Augure : un email suffit. Réponse sous deux jours, depuis Bordeaux.',
+    'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
 }
 
@@ -99,6 +99,10 @@ export default function App() {
   // Compteur de navigation : sert de clé de remontage des vues (voir navigate).
   const [navTick, setNavTick] = useState(0)
   const bootAt = useRef(performance.now())
+  // Zone de contenu principal : reçoit le focus après chaque navigation pour
+  // que les utilisateurs clavier / lecteur d'écran atterrissent dans la
+  // nouvelle vue plutôt que de rester sur le bouton de navigation.
+  const mainRef = useRef(null)
   // Calque média du héros : l'accueil en scrute l'opacité pendant le
   // scroll, les autres vues le masquent sans arrêter la lecture.
   const heroMediaRef = useRef(null)
@@ -204,6 +208,20 @@ export default function App() {
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', url)
   }, [view])
 
+  // La barre du navigateur (mobile) suit la lumière de la vue : encre sur les
+  // scènes sombres (accueil, films, offre Film), crème sur les vues claires.
+  useEffect(() => {
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', dark ? '#1a1512' : '#f2ede4')
+  }, [dark])
+
+  // Après une navigation, on déplace le focus dans la nouvelle vue (jamais au
+  // premier rendu, pour ne pas voler le focus au chargement).
+  useEffect(() => {
+    if (navTick > 0) mainRef.current?.focus()
+  }, [navTick])
+
   return (
     <div
       className={`relative h-[100dvh] overflow-hidden transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
@@ -239,7 +257,7 @@ export default function App() {
 
       <Navbar activeView={view} onNavigate={navigate} dark={dark} />
       <main className="relative z-[1] h-full">
-        <div key={`${view}-${navTick}`} className="view-enter h-full">
+        <div ref={mainRef} tabIndex={-1} key={`${view}-${navTick}`} className="view-enter h-full outline-none">
           <Suspense fallback={null}>
             <View onNavigate={navigate} setDark={setDark} mediaRef={heroMediaRef} />
           </Suspense>

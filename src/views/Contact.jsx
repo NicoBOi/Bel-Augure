@@ -1,62 +1,44 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-// Endpoint du formulaire (Formspree ou équivalent). Tant qu'il est vide,
-// le formulaire compose un email dans la messagerie du visiteur. Pour
-// capturer les demandes côté studio : créer un formulaire sur
-// https://formspree.io pointant vers nicolas@belaugure.studio, puis coller
-// ici l'URL fournie (https://formspree.io/f/xxxx). Rien d'autre à changer.
-const FORM_ENDPOINT = ''
+// Le message est envoyé côté serveur par la fonction /api/contact (voir
+// api/contact.js) : le studio reçoit un vrai email, sans ouvrir la messagerie
+// du visiteur. Aucun stockage. La configuration (clé Resend) se fait côté
+// Vercel — cf. commentaire de api/contact.js.
+const ENDPOINT = '/api/contact'
 
 export default function Contact({ onNavigate }) {
   const ref = useReveal(0.35)
-  const [form, setForm] = useState({ nom: '', maison: '', email: '', message: '' })
-  const [sent, setSent] = useState(false)
-  const [sending, setSending] = useState(false)
-  // Timer de remise à zéro du message de confirmation, nettoyé au démontage.
-  const sentTimer = useRef()
-  useEffect(() => () => clearTimeout(sentTimer.current), [])
+  const [form, setForm] = useState({ nom: '', maison: '', email: '', message: '', website: '' })
+  // status : 'idle' | 'sending' | 'sent' | 'error'
+  const [status, setStatus] = useState('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }))
 
-  const mailtoFallback = () => {
-    const subject = encodeURIComponent(
-      form.maison ? `Échange · ${form.maison}` : 'Échange',
-    )
-    const body = encodeURIComponent(
-      `${form.message}\n\n${form.nom}${form.maison ? `\n${form.maison}` : ''}${
-        form.email ? `\n${form.email}` : ''
-      }`,
-    )
-    window.location.href = `mailto:nicolas@belaugure.studio?subject=${subject}&body=${body}`
-  }
-
   const submit = async (e) => {
     e.preventDefault()
-    if (!FORM_ENDPOINT) {
-      mailtoFallback()
-      setSent(true)
-      sentTimer.current = setTimeout(() => setSent(false), 5000)
-      return
-    }
-    setSending(true)
+    if (status === 'sending') return
+    setStatus('sending')
+    setErrorMsg('')
     try {
-      const res = await fetch(FORM_ENDPOINT, {
+      const res = await fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(form),
       })
-      if (!res.ok) throw new Error(String(res.status))
-      setSent(true)
-      setForm({ nom: '', maison: '', email: '', message: '' })
-      sentTimer.current = setTimeout(() => setSent(false), 6000)
-    } catch {
-      // Le réseau ou le service faillit : l'email direct prend le relais
-      mailtoFallback()
-    } finally {
-      setSending(false)
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || 'Envoi impossible pour le moment.')
+      setStatus('sent')
+      setForm({ nom: '', maison: '', email: '', message: '', website: '' })
+    } catch (err) {
+      setErrorMsg(err.message || 'Envoi impossible pour le moment.')
+      setStatus('error')
     }
   }
+
+  const sending = status === 'sending'
+  const sent = status === 'sent'
 
   return (
     <section
@@ -73,7 +55,7 @@ export default function Contact({ onNavigate }) {
             </span>
             <span className="mask md:ml-[3vw]" style={{ '--d': '0.2s' }}>
               <span>
-                prochain film<span className="text-or"> ?</span>
+                prochain film<span className="text-or">{' '}?</span>
               </span>
             </span>
           </h1>
@@ -83,7 +65,7 @@ export default function Contact({ onNavigate }) {
             style={{ '--d': '0.12s' }}
           >
             Un café, des idées, quelques notes et le projet commence
-            <span className="text-or"> !</span>
+            <span className="text-or">{' '}!</span>
           </p>
 
           <p
@@ -189,24 +171,40 @@ export default function Contact({ onNavigate }) {
             </div>
           </div>
 
+          {/* Pot de miel anti-spam : hors écran, hors tabulation, ignoré des
+              humains. Rempli = message écarté côté serveur. */}
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="absolute left-[-9999px] h-0 w-0 opacity-0"
+            value={form.website}
+            onChange={update('website')}
+          />
+
           <button
             type="submit"
-            className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em]"
+            disabled={sending || sent}
+            className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
           >
-            {sending
-              ? 'Envoi en cours'
-              : sent
-                ? FORM_ENDPOINT
-                  ? 'Message envoyé, à très vite'
-                  : 'Message prêt dans votre messagerie'
-                : 'Écrire au studio'}
+            {sending ? 'Envoi en cours…' : sent ? 'Message envoyé, à très vite' : 'Écrire au studio'}
           </button>
-          <p aria-live="polite" className="sr-only">
-            {sent
-              ? FORM_ENDPOINT
-                ? 'Votre message a bien été envoyé.'
-                : 'Votre messagerie s\'ouvre avec le message préparé.'
-              : ''}
+
+          {/* Retour d'état, annoncé aux lecteurs d'écran (envoi / succès / erreur) */}
+          <p
+            aria-live="polite"
+            role="status"
+            className="mt-4 min-h-[1.3em] text-[12.5px] font-light leading-[1.6]"
+          >
+            {sending && <span className="text-grege">Envoi en cours…</span>}
+            {sent && (
+              <span className="text-encre/80">
+                Merci, votre message est parti. On vous répond très vite.
+              </span>
+            )}
+            {status === 'error' && <span className="text-encre/80">{errorMsg}</span>}
           </p>
         </form>
       </div>

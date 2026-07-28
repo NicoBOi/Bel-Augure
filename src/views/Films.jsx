@@ -76,6 +76,7 @@ export default function Films({ setDark }) {
               <VimeoBackground
                 id={film.vimeoId}
                 title={film.title}
+                background={false}
                 soundOn={!!sound[film.id]}
                 paused={!!paused[film.id]}
                 onPlaying={() => setReady((s) => ({ ...s, [film.id]: true }))}

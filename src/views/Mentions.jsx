@@ -23,7 +23,7 @@ const BLOCS = [
   {
     titre: 'Données personnelles',
     lignes: [
-      "Le formulaire de contact compose un email dans votre messagerie : aucune donnée n'est enregistrée sur un serveur du site. Les emails reçus servent uniquement à répondre à votre demande et ne sont jamais transmis à des tiers.",
+      "Le formulaire de contact transmet votre message par email au studio via notre prestataire d'envoi (Resend) ; aucune donnée n'est conservée dans une base de données du site. Les informations transmises servent uniquement à répondre à votre demande et ne sont jamais cédées à des tiers.",
       'Ce site ne dépose aucun cookie de suivi.',
       'Pour exercer vos droits (accès, rectification, suppression) : nicolas@belaugure.studio.',
     ],

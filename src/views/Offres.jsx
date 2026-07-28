@@ -13,8 +13,8 @@ const OFFRES = [
     name: 'UGC',
     eyebrow: 'Un tableau par espace',
     base: 3500,
-    priceLabel: '3 500 €',
     from: false,
+    compose: 'Composez vos tableaux',
     accroche:
       'Cinq films courts, un par espace de votre établissement. Une comédienne dirigée, une lumière construite, une journée chez vous.',
     description: [
@@ -37,7 +37,7 @@ const OFFRES = [
       'Livraison sous 7 jours ouvrés',
     ],
     options: [
-      { label: 'Le Film — un film de 45 secondes sans parole et 10 photographies', price: 1000 },
+      { label: 'Le film d’ambiance — 45 secondes sans parole et 10 photographies', price: 1000 },
       { label: 'Espace supplémentaire', price: 450, qty: [1, 3] },
       {
         label: 'Journée de tournage supplémentaire — jusqu’à cinq espaces de plus',
@@ -51,11 +51,11 @@ const OFFRES = [
     ],
     nonInclus: [
       'Stratégie éditoriale, rédaction de légendes, publication, community management',
-      "rapport d'audience",
-      'drone, machinerie, groupe électrogène',
-      'stylisme, accessoires',
-      'fichiers sources et rushes',
-      "achat d'espace publicitaire",
+      "Rapport d'audience",
+      'Drone, machinerie, groupe électrogène',
+      'Stylisme, accessoires',
+      'Fichiers sources et rushes',
+      "Achat d'espace publicitaire",
     ],
     bgColor: 'rgb(217 198 166 / 0.45)',
     ink: false,
@@ -64,8 +64,8 @@ const OFFRES = [
     name: 'Film',
     eyebrow: 'Le film central',
     base: 9500,
-    priceLabel: 'à partir de 9 500 €',
     from: true,
+    compose: 'Composez votre film',
     accroche:
       'Un film écrit et joué. Trente secondes tenues, faites pour durer trois ans.',
     description: [
@@ -102,13 +102,13 @@ const OFFRES = [
       { label: 'Aller-retour de montage supplémentaire', price: 350, qty: [1, 3] },
       { label: 'Extension télévision, affichage, presse imprimée', quote: true },
     ],
-    note: 'Renouvellement de licence à partir du 25ᵉ mois — 20 % du prix par an.',
+    note: 'Renouvellement de licence à partir du 25ᵉ mois — 20 % du prix par an.',
     nonInclus: [
       "Achat d'espace, en salle comme ailleurs",
-      'décors, stylisme, accessoires',
-      'autorisations de tournage payantes',
-      'figuration au-delà du comédien principal',
-      'fichiers sources et rushes',
+      'Décors, stylisme, accessoires',
+      'Autorisations de tournage payantes',
+      'Figuration au-delà du comédien principal',
+      'Fichiers sources et rushes',
     ],
     bgColor: '#1a1512',
     ink: true,
@@ -118,31 +118,31 @@ const OFFRES = [
 // Les questions qui reviennent, gardées en bas de page. Réponses courtes.
 const QUESTIONS = [
   {
-    q: 'Combien ça coûte ?',
-    r: 'Deux offres : UGC à 3 500 € et Film à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
+    q: 'Combien ça coûte ?',
+    r: 'Deux offres : UGC à 3 500 € et Film à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
   },
   {
-    q: "Qui apparaît à l'écran ?",
-    r: 'Nous avons à cœur de travailler avec des acteurs pour rendre votre lieu vivant ! Nous nous occupons du casting.',
+    q: "Qui apparaît à l'écran ?",
+    r: 'Nous avons à cœur de travailler avec des acteurs pour rendre votre lieu vivant ! Nous nous occupons du casting.',
   },
   {
-    q: 'Partout en France ?',
-    r: 'Oui, partout en France ! Chaque projet est une occasion de découvrir de nouveaux décors et de faire naître de nouvelles idées.',
+    q: 'Partout en France ?',
+    r: 'Oui, partout en France ! Chaque projet est une occasion de découvrir de nouveaux décors et de faire naître de nouvelles idées.',
   },
   {
-    q: 'À qui appartient le film ?',
+    q: 'À qui appartient le film ?',
     r: "Les droits de diffusion sont inclus : sans limite de temps pour l'UGC, deux ans pour le Film.",
   },
 ]
 
 // Conditions communes aux deux offres, en pied de page.
 const CONDITIONS = [
-  'Acompte 50 % à la commande, solde à la livraison',
+  'Acompte 50 % à la commande, solde à la livraison',
   'journée de 8 heures, heures supplémentaires majorées',
   'déplacement au-delà de 80 km depuis Bordeaux, repas et hébergement en sus',
   "report sans frais jusqu'à 7 jours avant le tournage",
   'fichiers sources conservés 12 mois, non livrés',
-  'TVA 20 % en sus',
+  'TVA 20 % en sus',
 ]
 
 const euros = (n) => `${n.toLocaleString('fr-FR')} €`
@@ -150,29 +150,33 @@ const euros = (n) => `${n.toLocaleString('fr-FR')} €`
 export default function Offres({ setDark }) {
   const ref = useReveal(0.35)
   const [index, setIndex] = useState(0)
-  // sel : { [indexOption]: quantité }. Une entrée absente = option non cochée.
-  const [sel, setSel] = useState({})
+  // Sélection conservée PAR offre : { [indexOffre]: { [indexOption]: quantité } }.
+  // Changer d'offre ne détruit plus la composition — on la retrouve en revenant.
+  const [selByOffer, setSelByOffer] = useState({})
   // Repli du récapitulatif sur mobile (barre du bas dépliable).
   const [openDetail, setOpenDetail] = useState(false)
   const offre = OFFRES[index]
   const ink = offre.ink
+  const sel = selByOffer[index] || {}
+  const priceLabel = (offre.from ? 'à partir de ' : '') + euros(offre.base)
 
   // Le header suit la lumière de la pièce : crème sur l'encre, encre sur l'or.
   useEffect(() => {
     setDark?.(ink)
   }, [ink, setDark])
 
-  // Changer d'offre remet toutes les options à zéro.
+  // Changer d'offre referme le détail mobile (la sélection, elle, est conservée).
   useEffect(() => {
-    setSel({})
     setOpenDetail(false)
   }, [index])
 
-  // Flèches clavier : on passe d'une offre à l'autre.
+  // Flèches clavier : on passe d'une offre à l'autre — sauf quand le focus est
+  // dans la console (steppers, cases), pour ne pas changer d'offre par mégarde.
   useEffect(() => {
     const onKey = (e) => {
+      if (document.activeElement?.closest('[data-console]')) return
       if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % OFFRES.length)
-      if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)
+      else if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -197,18 +201,19 @@ export default function Offres({ setDark }) {
   }
 
   const toggle = (i) =>
-    setSel((s) => {
-      const next = { ...s }
-      if (next[i]) delete next[i]
-      else next[i] = offre.options[i].qty ? offre.options[i].qty[0] : 1
-      return next
+    setSelByOffer((all) => {
+      const cur = { ...(all[index] || {}) }
+      if (cur[i]) delete cur[i]
+      else cur[i] = offre.options[i].qty ? offre.options[i].qty[0] : 1
+      return { ...all, [index]: cur }
     })
 
   const step = (i, delta) =>
-    setSel((s) => {
+    setSelByOffer((all) => {
+      const cur = { ...(all[index] || {}) }
       const [min, max] = offre.options[i].qty
-      const v = Math.min(max, Math.max(min, (s[i] || min) + delta))
-      return { ...s, [i]: v }
+      cur[i] = Math.min(max, Math.max(min, (cur[i] || min) + delta))
+      return { ...all, [index]: cur }
     })
 
   // Composition du devis : socle + options chiffrées, les « sur devis » à part.
@@ -235,12 +240,12 @@ export default function Offres({ setDark }) {
       ...quoteItems.map((l) => `— ${l} (sur devis)`),
     ]
     const body = [
-      `Offre retenue : ${offre.name} — ${offre.priceLabel}`,
+      `Offre retenue : ${offre.name} — ${priceLabel}`,
       '',
       lines.length ? 'Options :' : 'Sans option.',
       ...lines,
       '',
-      `Estimation : ${fromPrice ? 'à partir de ' : ''}${euros(total)} HT (TVA 20 % en sus)`,
+      `Estimation : ${fromPrice ? 'à partir de ' : ''}${euros(total)} HT (TVA 20 % en sus)`,
     ].join('\n')
     window.location.href = `mailto:nicolas@belaugure.studio?subject=${encodeURIComponent(
       `Devis · ${offre.name}`,
@@ -248,8 +253,10 @@ export default function Offres({ setDark }) {
   }
 
   const label = ink ? 'text-sable/75' : 'text-encre/70'
-  const dash = ink ? 'text-or/75' : 'text-[#8A7E68]'
-  const priceText = ink ? 'text-or' : 'text-[#8f7d5f]'
+  const dash = ink ? 'text-or/75' : 'text-grege'
+  // Sur fond clair, l'or pâle est illisible : on passe à l'or foncé (token),
+  // qui respecte le contraste AA pour les prix et accents.
+  const priceText = ink ? 'text-or' : 'text-orfonce'
   const lineParts = { items, quoteItems, ink, priceText, label }
 
   return (
@@ -323,7 +330,7 @@ export default function Offres({ setDark }) {
             style={{ '--d': '0.18s' }}
           >
             {offre.from ? 'À partir de ' : ''}
-            {offre.priceLabel.replace('à partir de ', '')} · HT
+            {euros(offre.base)} · HT
           </p>
         </header>
 
@@ -355,9 +362,9 @@ export default function Offres({ setDark }) {
             </div>
 
             {/* Compris : coché, verrouillé — la substance de l'offre */}
-            <p className={`mt-12 text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+            <h2 className={`mt-12 text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
               Compris dans l’offre
-            </p>
+            </h2>
             <ul className="mt-6 space-y-3">
               {offre.inclus.map((item) => (
                 <li
@@ -385,17 +392,18 @@ export default function Offres({ setDark }) {
               >
                 {/* En-tête de console — toujours visible */}
                 <div className="shrink-0">
-                  <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-                    Composez votre film
-                  </p>
+                  <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+                    {offre.compose}
+                  </h2>
                   <p className={`mt-2 text-[12.5px] font-light leading-[1.6] ${ink ? 'text-sable/70' : 'text-encre/65'}`}>
                     Le socle est compris. Ajoutez ce qui vous ressemble.
                   </p>
                 </div>
 
                 {/* Les options : seule zone qui défile en interne sur écran court —
-                    l'en-tête et le pied (total + devis) restent toujours en vue. */}
-                <ul className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
+                    l'en-tête et le pied (total + devis) restent toujours en vue.
+                    data-console : les flèches clavier n'y changent pas d'offre. */}
+                <ul data-console className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
                   {offre.options.map((o, i) => {
                     const on = !!sel[i]
                     return (
@@ -410,7 +418,7 @@ export default function Offres({ setDark }) {
                           role="checkbox"
                           aria-checked={on}
                           onClick={() => toggle(i)}
-                          className="group flex flex-1 cursor-pointer items-start gap-3.5 text-left"
+                          className="group flex flex-1 cursor-pointer items-start gap-3.5 rounded-md text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or"
                         >
                           <span
                             aria-hidden="true"
@@ -418,8 +426,8 @@ export default function Offres({ setDark }) {
                               on
                                 ? 'border-or bg-or text-encre'
                                 : ink
-                                  ? 'border-creme/30 group-hover:border-creme/60'
-                                  : 'border-encre/25 group-hover:border-encre/55'
+                                  ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70'
+                                  : 'border-encre/45 bg-encre/[0.04] group-hover:border-encre/70'
                             }`}
                           >
                             {on && <IconCheck />}
@@ -462,7 +470,7 @@ export default function Offres({ setDark }) {
                                 aria-label={`Réduire la quantité — ${o.label}`}
                                 onClick={() => step(i, -1)}
                                 disabled={sel[i] <= o.qty[0]}
-                                className={`-my-1 flex h-9 w-8 cursor-pointer items-center justify-center text-[16px] leading-none transition-transform active:scale-90 disabled:cursor-default disabled:opacity-25 ${
+                                className={`-my-2 flex h-11 w-9 cursor-pointer items-center justify-center text-[16px] leading-none transition-transform active:scale-90 disabled:cursor-default disabled:opacity-25 ${
                                   ink ? 'text-creme' : 'text-encre'
                                 }`}
                               >
@@ -481,7 +489,7 @@ export default function Offres({ setDark }) {
                                 aria-label={`Augmenter la quantité — ${o.label}`}
                                 onClick={() => step(i, 1)}
                                 disabled={sel[i] >= o.qty[1]}
-                                className={`-my-1 flex h-9 w-8 cursor-pointer items-center justify-center text-[16px] leading-none transition-transform active:scale-90 disabled:cursor-default disabled:opacity-25 ${
+                                className={`-my-2 flex h-11 w-9 cursor-pointer items-center justify-center text-[16px] leading-none transition-transform active:scale-90 disabled:cursor-default disabled:opacity-25 ${
                                   ink ? 'text-creme' : 'text-encre'
                                 }`}
                               >
@@ -536,7 +544,7 @@ export default function Offres({ setDark }) {
                       </p>
                     )}
                     <p className={`mt-1.5 text-[11px] font-light ${ink ? 'text-sable/50' : 'text-encre/50'}`}>
-                      TVA 20 % en sus
+                      TVA 20 % en sus
                     </p>
                     <button
                       type="button"
@@ -556,9 +564,9 @@ export default function Offres({ setDark }) {
 
         {/* ── Épilogue pleine largeur : questions, non-inclus, conditions ── */}
         <div className={`mt-20 border-t pt-14 ${ink ? 'border-or/25' : 'border-or/45'}`}>
-          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+          <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Les questions qui reviennent
-          </p>
+          </h2>
           <dl className="mt-8 grid gap-x-12 gap-y-9 md:grid-cols-2">
             {QUESTIONS.map((item) => (
               <div key={item.q}>
@@ -574,10 +582,10 @@ export default function Offres({ setDark }) {
         </div>
 
         <div className="mt-16">
-          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Non inclus</p>
+          <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Non inclus</h2>
           <p
             className={`mt-4 max-w-[80ch] text-[12.5px] font-light leading-[1.9] ${
-              ink ? 'text-sable/55' : 'text-encre/55'
+              ink ? 'text-sable/70' : 'text-encre/70'
             }`}
           >
             {offre.nonInclus.map((item, i) => (
@@ -590,12 +598,12 @@ export default function Offres({ setDark }) {
         </div>
 
         <div className={`mt-14 border-t pt-10 ${ink ? 'border-or/20' : 'border-or/40'}`}>
-          <p className={`text-[10px] font-normal uppercase tracking-[0.3em] ${label}`}>
+          <h2 className={`text-[10px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Conditions communes
-          </p>
+          </h2>
           <p
             className={`mt-4 max-w-[80ch] text-[12px] font-light leading-[1.9] ${
-              ink ? 'text-sable/55' : 'text-encre/55'
+              ink ? 'text-sable/70' : 'text-encre/70'
             }`}
           >
             {CONDITIONS.map((c, i) => (
@@ -625,12 +633,15 @@ export default function Offres({ setDark }) {
             )}
           </div>
         )}
-        <div className="flex items-center justify-between gap-4 px-6 py-4 md:px-16">
+        <div
+          className="flex items-center justify-between gap-4 px-6 pt-4 md:px-16"
+          style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
+        >
           <button
             type="button"
             onClick={() => setOpenDetail((v) => !v)}
             aria-expanded={openDetail}
-            className="cursor-pointer text-left"
+            className="min-h-[44px] cursor-pointer text-left"
           >
             <span className={`block text-[10px] font-normal uppercase tracking-[0.25em] ${label}`}>
               {openDetail ? 'Masquer le détail' : 'Votre devis'}

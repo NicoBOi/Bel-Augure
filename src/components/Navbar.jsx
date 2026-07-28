@@ -13,7 +13,7 @@ function NavLink({ view, label, active, onNavigate, dark }) {
       type="button"
       onClick={() => onNavigate(view)}
       aria-current={active ? 'page' : undefined}
-      className={`nav-link inline-block cursor-pointer py-3 -my-2 text-[12px] font-normal tracking-[0.08em] transition-colors duration-500 ${
+      className={`nav-link inline-flex min-h-[44px] cursor-pointer items-center py-2 -my-1 text-[12px] font-normal tracking-[0.08em] transition-colors duration-500 ${
         dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
       }`}
     >
@@ -57,7 +57,10 @@ export default function Navbar({ activeView, onNavigate, dark }) {
   const logoHidden = activeView === 'accueil' && dark
 
   return (
-    <header className="absolute inset-x-0 top-0 z-10">
+    <header
+      className="absolute inset-x-0 top-0 z-10"
+      style={{ paddingTop: 'env(safe-area-inset-top)' }}
+    >
       {/* Voile givré couvrant tout le header (rangée + panneau) quand le menu est ouvert */}
       <div
         aria-hidden

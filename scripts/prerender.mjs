@@ -40,38 +40,37 @@ const ROUTES = [
   {
     path: '/studio',
     title: 'Studio · Bel Augure',
-    desc: "Nicolas et Corentin, deux réalisateurs à Bordeaux. Peu de films par an, faits main, pour le bien-être d'exception.",
+    desc: "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
     h1: 'Le studio — Nicolas & Corentin, à Bordeaux',
     body: `
       <p>Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans qu'on se connaît. L'un vient de l'événementiel, l'autre du cinéma et de la mode. On a longtemps travaillé chacun de notre côté avant de se décider à monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme vos enseignes à deux pour continuer notre aventure.</p>
-      <p>Chaque film avec vous est un bout de notre histoire.</p>
-      <p>Nicolas — direction, image, étalonnage. Corentin — montage, motion design.</p>`,
+      <p>Chaque film avec vous est un bout de notre histoire.</p>`,
   },
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Deux offres claires : UGC, des films courts par espace dès 3 500 €, et Film, le film central à partir de 9 500 €.',
+    desc: 'Deux offres claires : UGC, des films courts par espace dès 3 500 €, et Film, le film central à partir de 9 500 €.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: `
-      <h2>UGC — 3 500 €</h2>
+      <h2>UGC — 3 500 €</h2>
       <p>Cinq films courts, un par espace de votre établissement. Une comédienne dirigée, une lumière construite, une journée chez vous. Inclus : écriture des textes, une journée de tournage avec deux opérateurs, une comédienne professionnelle déclarée, cinq films verticaux de 15 à 25 secondes, étalonnage et mixage, sous-titres incrustés, fichiers 4K 9:16 prêts à publier, cession de droits illimitée dans le temps en France, livraison sous 7 jours ouvrés. Options : espace supplémentaire, journée de tournage supplémentaire, comédienne supplémentaire, photographies, version anglaise.</p>
-      <h2>Film — à partir de 9 500 €</h2>
+      <h2>Film — à partir de 9 500 €</h2>
       <p>Un film écrit et joué. Trente secondes tenues, faites pour durer trois ans. Celui qu'on met en page d'accueil, qu'on envoie à la presse, qu'on projette en salon. Inclus : écriture du scénario et des dialogues, repérage, casting et direction d'acteur, une journée de tournage avec équipe complète déclarée, un film de 30 secondes et sa version longue de 60 secondes, deux déclinaisons 9:16 et 1:1, quinze photographies de plateau, étalonnage, création sonore et mixage, musique sous licence, cession de droits 2 ans en France, livraison sous 3 semaines. Options : journée de tournage supplémentaire, comédien supplémentaire, exploitation cinéma, voix off, version anglaise.</p>
       <h2>Les questions qui reviennent</h2>
-      <p>Combien ça coûte ? Deux offres : UGC à 3 500 € et Film à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.</p>
-      <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
-      <p>Partout en France ? Oui, partout en France.</p>
-      <p>À qui appartient le film ? Les droits de diffusion sont inclus : sans limite de temps pour l'UGC, deux ans pour le Film.</p>
+      <p>Combien ça coûte ? Deux offres : UGC à 3 500 € et Film à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.</p>
+      <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
+      <p>Partout en France ? Oui, partout en France.</p>
+      <p>À qui appartient le film ? Les droits de diffusion sont inclus : sans limite de temps pour l'UGC, deux ans pour le Film.</p>
       <h2>Conditions communes</h2>
-      <p>Acompte 50 % à la commande, solde à la livraison. Journée de 8 heures, heures supplémentaires majorées. Déplacement au-delà de 80 km depuis Bordeaux, repas et hébergement en sus. Report sans frais jusqu'à 7 jours avant le tournage. Fichiers sources conservés 12 mois, non livrés. TVA 20 % en sus.</p>`,
+      <p>Acompte 50 % à la commande, solde à la livraison. Journée de 8 heures, heures supplémentaires majorées. Déplacement au-delà de 80 km depuis Bordeaux, repas et hébergement en sus. Report sans frais jusqu'à 7 jours avant le tournage. Fichiers sources conservés 12 mois, non livrés. TVA 20 % en sus.</p>`,
   },
   {
     path: '/contact',
     title: 'Contact · Bel Augure',
-    desc: 'Écrire à Bel Augure : un email suffit. Réponse sous deux jours, depuis Bordeaux.',
+    desc: 'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
     h1: 'Contact — on discute de votre prochain film ?',
     body: `
-      <p>Un café, des idées, quelques notes et le projet commence. Dites-nous où vous êtes et ce que vous aimeriez montrer. C'est Nicolas qui lit, et il répond sous deux jours.</p>
+      <p>Un café, des idées, quelques notes et le projet commence. Dites-nous où vous êtes et ce que vous aimeriez montrer.</p>
       <p><a href="mailto:nicolas@belaugure.studio">nicolas@belaugure.studio</a> · Bordeaux · Nouvelle-Aquitaine</p>`,
   },
   {
@@ -81,7 +80,7 @@ const ROUTES = [
     h1: 'Mentions légales',
     body: `
       <p>Éditeur : Bel Augure, Bordeaux. Directeur de la publication : Nicolas (nicolas@belaugure.studio).</p>
-      <p>Le formulaire de contact compose un email dans votre messagerie : aucune donnée n'est enregistrée sur un serveur du site. Ce site ne dépose aucun cookie de suivi.</p>`,
+      <p>Le formulaire de contact transmet votre message par email au studio via notre prestataire d'envoi ; aucune donnée n'est conservée dans une base de données du site. Ce site ne dépose aucun cookie de suivi.</p>`,
   },
 ]
 
