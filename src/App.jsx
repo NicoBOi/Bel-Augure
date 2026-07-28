@@ -217,9 +217,10 @@ export default function App() {
   }, [dark])
 
   // Après une navigation, on déplace le focus dans la nouvelle vue (jamais au
-  // premier rendu, pour ne pas voler le focus au chargement).
+  // premier rendu). preventScroll : sans lui, le navigateur fait défiler pour
+  // amener l'élément focalisé à vue et provoque un à-coup vertical.
   useEffect(() => {
-    if (navTick > 0) mainRef.current?.focus()
+    if (navTick > 0) mainRef.current?.focus({ preventScroll: true })
   }, [navTick])
 
   return (
