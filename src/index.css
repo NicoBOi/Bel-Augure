@@ -308,22 +308,7 @@ textarea.field {
   animation: offerEnter 0.55s var(--ease-augure) both;
 }
 
-/* Coche d'option : la case fait un léger ressort, la coche se dessine. */
-@keyframes boxPop {
-  0% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.12);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-.box-pop {
-  animation: boxPop 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
+/* Coche d'option : la coche se dessine (la case ne rebondit plus). */
 @keyframes checkDraw {
   0% {
     transform: scale(0.4);

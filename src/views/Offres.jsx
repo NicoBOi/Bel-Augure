@@ -23,21 +23,20 @@ const OFFRES = [
       'Tout se tourne en une journée. Vous repartez avec cinq films prêts à publier, de quoi habiter vos réseaux pendant un trimestre.',
     ],
     inclus: [
-      'Entretien de cadrage et repérage en visioconférence, 30 minutes',
+      'Visite du lieu, en physique ou à distance, pour le repérage',
       'Écriture des textes, une version par tableau',
       'Une journée de tournage sur site, deux opérateurs',
-      'Une comédienne professionnelle, dirigée et déclarée',
-      'Lumière construite sur chaque tableau, micro-canon, son direct',
-      'Cinq tableaux — films verticaux de 15 à 25 secondes',
+      'Une comédienne professionnelle',
+      'Setup lumière construit & prise audio cinéma',
+      'Cinq films verticaux de 15 à 30 secondes',
       'Étalonnage et mixage',
-      'Sous-titres incrustés',
       'Fichiers 4K, format 9:16, prêts à publier',
       'Dossier de livraison avec instructions de publication',
       'Cession de droits illimitée dans le temps — France, web, réseaux sociaux, publicité en ligne',
       'Livraison sous 7 jours ouvrés',
     ],
     options: [
-      { label: 'Le film d’ambiance — 45 secondes sans parole et 10 photographies', price: 1000 },
+      { label: 'Le film d’ambiance de 30 à 45 s + pack de 10 photos', price: 1000 },
       { label: 'Tableau supplémentaire', price: 450, qty: [1, 3] },
       {
         label: 'Journée de tournage supplémentaire — jusqu’à cinq tableaux de plus',
@@ -45,8 +44,8 @@ const OFFRES = [
         qty: [1, 2],
       },
       { label: 'Comédienne supplémentaire', price: 400, qty: [1, 2] },
-      { label: 'Dix photographies supplémentaires', price: 400, qty: [1, 3] },
-      { label: 'Version anglaise sous-titrée', price: 250 },
+      { label: 'Vingt photographies supplémentaires', price: 400, qty: [1, 3] },
+      { label: 'Doublage IA en anglais + sous-titres', price: 250 },
       { label: 'Extension télévision, affichage, presse imprimée', quote: true },
     ],
     nonInclus: [
@@ -98,7 +97,7 @@ const OFFRES = [
         price: 2500,
       },
       { label: 'Voix off professionnelle', price: 600 },
-      { label: 'Version anglaise sous-titrée', price: 250 },
+      { label: 'Doublage IA en anglais + sous-titres', price: 250 },
       { label: 'Aller-retour de montage supplémentaire', price: 350, qty: [1, 3] },
       { label: 'Extension télévision, affichage, presse imprimée', quote: true },
     ],
@@ -429,7 +428,7 @@ export default function Offres({ setDark, onNavigate }) {
                             aria-hidden="true"
                             className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
                               on
-                                ? 'box-pop border-or bg-or text-encre'
+                                ? 'border-or bg-or text-encre'
                                 : ink
                                   ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70'
                                   : 'border-encre/45 bg-encre/[0.04] group-hover:border-encre/70'
