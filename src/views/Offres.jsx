@@ -65,10 +65,10 @@ const OFFRES = [
     from: true,
     compose: 'Composez votre film',
     accroche:
-      'Un film écrit et joué. Trente secondes tenues, faites pour durer trois ans.',
+      'Un film narratif pour graver votre nom dans le temps.',
     description: [
-      "Celui qu'on met en page d'accueil. Celui qu'on envoie à la presse, qu'on projette en salon, qu'on montre à un investisseur.",
-      "Un scénario, une équipe, une direction d'acteur. Nous écrivons, nous tournons, nous montons. Vous n'avez rien à préparer.",
+      "C’est le film qu’on met en page d’accueil, celui qu’on envoie à la presse, qu’on projette en salon, qu’on montre aux investisseurs…",
+      "Un scénario, une équipe, des acteurs. Nous gérons tout, du tournage à la livraison. Vous n’avez rien à préparer.",
     ],
     inclus: [
       "Entretien de cadrage et note d'intention",
