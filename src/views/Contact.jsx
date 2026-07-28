@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 // Le message est envoyé côté serveur par la fonction /api/contact (voir
@@ -21,6 +21,16 @@ export default function Contact({ onNavigate, prefill }) {
   // status : 'idle' | 'sending' | 'sent' | 'error'
   const [status, setStatus] = useState('idle')
   const [errorMsg, setErrorMsg] = useState('')
+
+  // Le champ « projet » se déroule pour montrer tout son contenu (utile quand
+  // le récapitulatif du devis le pré-remplit) et grandit à mesure qu'on écrit.
+  const messageRef = useRef(null)
+  useEffect(() => {
+    const el = messageRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${el.scrollHeight}px`
+  }, [form.message, status])
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }))
 
@@ -203,9 +213,10 @@ export default function Contact({ onNavigate, prefill }) {
               </label>
               <textarea
                 id="contact-message"
-                rows="5"
+                ref={messageRef}
+                rows={4}
                 required
-                className="field mt-1"
+                className="field mt-1 min-h-[7rem] resize-none overflow-hidden"
                 value={form.message}
                 onChange={update('message')}
               />
