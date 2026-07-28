@@ -323,20 +323,12 @@ export default function Offres({ setDark, onNavigate }) {
                 {o.from ? 'À partir de ' : ''}
                 {euros(o.base)} · HT
               </span>
-              {/* Mention de sélection : l'actif porte une pastille surlignée or
-                  (même langage que les cases cochées et le survol du CTA). */}
-              {on ? (
+              {/* Mention de sélection : seule la carte active porte une pastille
+                  surlignée or ; l'inactive reste vide. */}
+              {on && (
                 <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-or px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] text-encre">
                   <IconCheck />
                   Sélectionné
-                </span>
-              ) : (
-                <span
-                  className={`mt-4 inline-flex items-center gap-1.5 text-[10px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
-                    ink ? 'text-sable/55 group-hover:text-sable/90' : 'text-encre/50 group-hover:text-encre/85'
-                  }`}
-                >
-                  Choisir <span aria-hidden="true">→</span>
                 </span>
               )}
             </button>
