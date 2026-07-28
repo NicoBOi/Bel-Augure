@@ -15,7 +15,6 @@ const OFFRES = [
     base: 3500,
     from: true,
     compose: 'Composez vos tableaux',
-    tableaux: ['Le soin phare', 'La praticienne', "L'arrivée", 'Le moment', "L'invitation"],
     accroche:
       'Cinq films courts tournés en une journée chez vous. Une comédienne dirigée, une lumière construite.',
     description: [
@@ -366,31 +365,6 @@ export default function Offres({ setDark, onNavigate }) {
                 <p key={p}>{p}</p>
               ))}
             </div>
-
-            {/* Les cinq tableaux, nommés : le fil d'une visite. */}
-            {offre.tableaux && (
-              <div className="mt-11">
-                <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-                  Les cinq tableaux
-                </h2>
-                <ol className="mt-5 space-y-2.5">
-                  {offre.tableaux.map((t, i) => (
-                    <li key={t} className="flex items-baseline gap-4">
-                      <span className={`font-display text-[14px] tabular-nums ${priceText}`}>
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <span
-                        className={`text-[14.5px] font-light leading-[1.5] ${
-                          ink ? 'text-sable/85' : 'text-encre/80'
-                        }`}
-                      >
-                        {t}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
 
             {/* Compris : coché, verrouillé — la substance de l'offre */}
             <h2 className={`mt-12 text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
