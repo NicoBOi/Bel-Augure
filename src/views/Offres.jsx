@@ -350,7 +350,7 @@ export default function Offres({ setDark }) {
 
       {/* Contenu, rejoué à chaque changement d'offre (key). La carte active
           tient lieu de titre visible ; un h1 discret sert les lecteurs d'écran. */}
-      <div key={offre.name} className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
+      <div key={offre.name} className="offer-enter mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
         <h1 className="sr-only">Offre {offre.name} — Bel Augure</h1>
 
         {/* Le split : lire à gauche, composer à droite */}
@@ -362,18 +362,16 @@ export default function Offres({ setDark }) {
           {/* ── GAUCHE : lecture ───────────────────────────────── */}
           <div className="lg:col-span-6">
             <p
-              className={`fade-in max-w-[52ch] font-display text-[clamp(1.2rem,1.8vw,1.6rem)] leading-[1.5] ${
+              className={`max-w-[52ch] font-display text-[clamp(1.2rem,1.8vw,1.6rem)] leading-[1.5] ${
                 ink ? 'text-sable' : 'text-encre'
               }`}
-              style={{ '--d': '0.24s' }}
             >
               {offre.accroche}
             </p>
             <div
-              className={`fade-in mt-8 max-w-[60ch] space-y-4 text-[14px] font-light leading-[1.9] ${
+              className={`mt-8 max-w-[60ch] space-y-4 text-[14px] font-light leading-[1.9] ${
                 ink ? 'text-sable/85' : 'text-encre/80'
               }`}
-              style={{ '--d': '0.34s' }}
             >
               {offre.description.map((p) => (
                 <p key={p}>{p}</p>
@@ -443,13 +441,17 @@ export default function Offres({ setDark }) {
                             aria-hidden="true"
                             className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
                               on
-                                ? 'border-or bg-or text-encre'
+                                ? 'box-pop border-or bg-or text-encre'
                                 : ink
                                   ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70'
                                   : 'border-encre/45 bg-encre/[0.04] group-hover:border-encre/70'
                             }`}
                           >
-                            {on && <IconCheck />}
+                            {on && (
+                              <span className="check-draw">
+                                <IconCheck />
+                              </span>
+                            )}
                           </span>
                           <span className="min-w-0">
                             <span
@@ -497,11 +499,13 @@ export default function Offres({ setDark }) {
                               </button>
                               <span
                                 aria-live="polite"
-                                className={`w-3 text-center text-[13px] tabular-nums ${
+                                className={`w-3 overflow-hidden text-center text-[13px] tabular-nums ${
                                   ink ? 'text-creme' : 'text-encre'
                                 }`}
                               >
-                                {sel[i]}
+                                <span key={sel[i]} className="qty-roll">
+                                  {sel[i]}
+                                </span>
                               </span>
                               <button
                                 type="button"
@@ -551,9 +555,7 @@ export default function Offres({ setDark }) {
                         {fromPrice && (
                           <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>
                         )}
-                        <span key={total} className="price-pulse text-[clamp(1.9rem,2.6vw,2.4rem)] tabular-nums">
-                          {euros(total)}
-                        </span>
+                        <AnimatedPrice value={total} className="text-[clamp(1.9rem,2.6vw,2.4rem)] tabular-nums" />
                         <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
                       </span>
                     </div>
@@ -667,9 +669,7 @@ export default function Offres({ setDark }) {
             </span>
             <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
               {fromPrice && <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>}
-              <span key={total} className="price-pulse text-[clamp(1.5rem,7vw,1.9rem)] tabular-nums">
-                {euros(total)}
-              </span>
+              <AnimatedPrice value={total} className="text-[clamp(1.5rem,7vw,1.9rem)] tabular-nums" />
               <span className={`ml-1 inline-block align-middle transition-transform ${openDetail ? 'rotate-180' : ''} ${label}`}>
                 <IconChevron />
               </span>
@@ -688,6 +688,46 @@ export default function Offres({ setDark }) {
       </div>
     </section>
   )
+}
+
+// Prix qui « défile » : à chaque changement, le montant grimpe (ou descend)
+// jusqu'à sa nouvelle valeur, en ~450 ms, courbe ease-out. Respecte
+// prefers-reduced-motion (saut net, l'info reste juste).
+function AnimatedPrice({ value, className }) {
+  const [display, setDisplay] = useState(value)
+  const displayRef = useRef(value)
+  const rafRef = useRef()
+  useEffect(() => {
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const from = displayRef.current
+    const to = value
+    if (reduce || from === to) {
+      displayRef.current = to
+      setDisplay(to)
+      return
+    }
+    const start = performance.now()
+    const dur = 450
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / dur)
+      const eased = 1 - Math.pow(1 - t, 3)
+      const cur = Math.round(from + (to - from) * eased)
+      displayRef.current = cur
+      setDisplay(cur)
+      if (t < 1) rafRef.current = requestAnimationFrame(step)
+      else {
+        displayRef.current = to
+        setDisplay(to)
+      }
+    }
+    cancelAnimationFrame(rafRef.current)
+    rafRef.current = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [value])
+  return <span className={className}>{euros(display)}</span>
 }
 
 // Les lignes du devis, partagées entre la console (desktop) et la barre (mobile).
