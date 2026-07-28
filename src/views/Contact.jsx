@@ -7,9 +7,17 @@ import { useReveal } from '../hooks/useReveal.js'
 // Vercel — cf. commentaire de api/contact.js.
 const ENDPOINT = '/api/contact'
 
-export default function Contact({ onNavigate }) {
+export default function Contact({ onNavigate, prefill }) {
   const ref = useReveal(0.35)
-  const [form, setForm] = useState({ nom: '', maison: '', email: '', message: '', website: '' })
+  // Le message part vide, ou pré-rempli avec le récapitulatif du devis composé
+  // sur la page Offres (repris via la prop prefill au montage de la vue).
+  const [form, setForm] = useState(() => ({
+    nom: '',
+    maison: '',
+    email: '',
+    message: prefill?.message || '',
+    website: '',
+  }))
   // status : 'idle' | 'sending' | 'sent' | 'error'
   const [status, setStatus] = useState('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -94,11 +102,44 @@ export default function Contact({ onNavigate }) {
           </div>
         </div>
 
+        {sent ? (
+          // Annonce de confirmation : le formulaire cède la place à un message
+          // clair « c'est bon, on s'occupe de tout ».
+          <div
+            role="status"
+            aria-live="polite"
+            className="reveal-right lg:col-span-6 lg:col-start-7 lg:flex lg:flex-col lg:justify-center"
+          >
+            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-or text-encre">
+              <IconCheck />
+            </span>
+            <h2 className="mt-6 font-display text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.15] text-encre">
+              C'est envoyé<span className="text-or">.</span>
+            </h2>
+            <p className="mt-4 max-w-[42ch] text-[14px] font-light leading-[1.85] text-encre/80">
+              On s'occupe de tout. On revient vers vous très vite avec votre devis — et le
+              café, c'est nous qui l'offrons.
+            </p>
+            <button
+              type="button"
+              onClick={() => onNavigate?.('accueil')}
+              className="cta mt-8 w-max cursor-pointer px-8 py-3 text-[13px] font-normal tracking-[0.06em]"
+            >
+              Revenir à l'accueil
+            </button>
+          </div>
+        ) : (
         <form
           className="reveal-right lg:col-span-6 lg:col-start-7 lg:flex lg:flex-col lg:justify-center"
           style={{ '--d': '0.08s' }}
           onSubmit={submit}
         >
+          {prefill?.message && (
+            <p className="mb-7 text-[12.5px] font-light leading-[1.65] text-encre/70">
+              Votre sélection{prefill.offer ? ` — ${prefill.offer}` : ''} est reprise ci-dessous.
+              Ajoutez vos coordonnées, et on s'occupe du reste.
+            </p>
+          )}
           <div className="grid gap-x-8 gap-y-7 md:grid-cols-2">
             <div>
               <label
@@ -186,32 +227,51 @@ export default function Contact({ onNavigate }) {
 
           <button
             type="submit"
-            disabled={sending || sent}
+            disabled={sending}
             className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
           >
-            {sending ? 'Envoi en cours…' : sent ? 'Message envoyé, à très vite' : 'Écrire au studio'}
+            {sending
+              ? 'Envoi en cours…'
+              : prefill?.message
+                ? 'Envoyer ma demande de devis'
+                : 'Écrire au studio'}
           </button>
 
-          {/* Retour d'état, annoncé aux lecteurs d'écran (envoi / succès / erreur) */}
+          {/* Retour d'état, annoncé aux lecteurs d'écran (envoi / erreur ;
+              le succès bascule sur l'annonce de confirmation). */}
           <p
             aria-live="polite"
             role="status"
             className="mt-4 min-h-[1.3em] text-[12.5px] font-light leading-[1.6]"
           >
             {sending && <span className="text-grege">Envoi en cours…</span>}
-            {sent && (
-              <span className="text-encre/80">
-                Merci, votre message est parti. On vous répond très vite.
-              </span>
-            )}
             {status === 'error' && <span className="text-encre/80">{errorMsg}</span>}
           </p>
         </form>
+        )}
       </div>
 
       <p className="mt-auto pt-16 text-center text-[11px] font-light tracking-[0.04em] text-grege">
         Studio de production basé à Bordeaux
       </p>
     </section>
+  )
+}
+
+function IconCheck() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
   )
 }

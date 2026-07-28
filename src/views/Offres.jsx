@@ -147,7 +147,7 @@ const CONDITIONS = [
 
 const euros = (n) => `${n.toLocaleString('fr-FR')} €`
 
-export default function Offres({ setDark }) {
+export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
   const [index, setIndex] = useState(0)
   // Sélection conservée PAR offre : { [indexOffre]: { [indexOption]: quantité } }.
@@ -230,8 +230,9 @@ export default function Offres({ setDark }) {
   const hasQuote = quoteItems.length > 0
   const fromPrice = offre.from || hasQuote
 
-  // « Demander un devis » : la configuration retenue part par email, prête à
-  // l'envoi. Aucun backend, aucun stockage — le récapitulatif se compose ici.
+  // « Demander un devis » : on compose le récapitulatif de la configuration
+  // et on file vers la page Contact, où il pré-remplit le message. Le
+  // prospect n'a plus qu'à laisser ses coordonnées et envoyer.
   const requestQuote = () => {
     const lines = [
       ...priced.map(
@@ -239,17 +240,17 @@ export default function Offres({ setDark }) {
       ),
       ...quoteItems.map((l) => `— ${l} (sur devis)`),
     ]
-    const body = [
-      `Offre retenue : ${offre.name} — ${priceLabel}`,
+    const message = [
+      'Bonjour,',
       '',
-      lines.length ? 'Options :' : 'Sans option.',
+      `Je souhaite un devis pour l'offre ${offre.name} (${priceLabel}).`,
+      '',
+      lines.length ? 'Options retenues :' : 'Sans option supplémentaire.',
       ...lines,
       '',
-      `Estimation : ${fromPrice ? 'à partir de ' : ''}${euros(total)} HT (TVA 20 % en sus)`,
+      `Total estimé : ${fromPrice ? 'à partir de ' : ''}${euros(total)} HT (TVA 20 % en sus)`,
     ].join('\n')
-    window.location.href = `mailto:nicolas@belaugure.studio?subject=${encodeURIComponent(
-      `Devis · ${offre.name}`,
-    )}&body=${encodeURIComponent(body)}`
+    onNavigate?.('contact', { message, offer: offre.name })
   }
 
   const label = ink ? 'text-sable/75' : 'text-encre/70'

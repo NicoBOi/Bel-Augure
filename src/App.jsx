@@ -98,6 +98,9 @@ export default function App() {
   const barRef = useRef(null)
   // Compteur de navigation : sert de clé de remontage des vues (voir navigate).
   const [navTick, setNavTick] = useState(0)
+  // Pré-remplissage du formulaire Contact : la page Offres y dépose le
+  // récapitulatif du devis composé, repris à l'arrivée sur Contact.
+  const [contactPrefill, setContactPrefill] = useState(null)
   const bootAt = useRef(performance.now())
   // Zone de contenu principal : reçoit le focus après chaque navigation pour
   // que les utilisateurs clavier / lecteur d'écran atterrissent dans la
@@ -119,7 +122,10 @@ export default function App() {
   }, [])
   const View = VIEWS[view]
 
-  const navigate = (next) => {
+  const navigate = (next, payload) => {
+    // Contact : on reprend le récapitulatif du devis s'il est fourni, sinon
+    // on repart d'un formulaire vierge (clic depuis le menu par exemple).
+    if (next === 'contact') setContactPrefill(payload ?? null)
     // L'accueil vit dans l'encre : y revenir sans repasser par un éclair
     // de crème (l'effet de la vue remettrait dark ensuite, trop tard).
     setDark(next === 'accueil')
@@ -260,7 +266,12 @@ export default function App() {
       <main className="relative z-[1] h-full">
         <div ref={mainRef} tabIndex={-1} key={`${view}-${navTick}`} className="view-enter h-full outline-none">
           <Suspense fallback={null}>
-            <View onNavigate={navigate} setDark={setDark} mediaRef={heroMediaRef} />
+            <View
+              onNavigate={navigate}
+              setDark={setDark}
+              mediaRef={heroMediaRef}
+              prefill={contactPrefill}
+            />
           </Suspense>
         </div>
       </main>
