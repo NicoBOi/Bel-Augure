@@ -279,7 +279,7 @@ export default function Offres({ setDark }) {
         Deux offres — choisissez la vôtre
       </p>
       <div
-        className="reveal-up mx-auto mt-4 grid w-full max-w-[1180px] gap-4 sm:grid-cols-2"
+        className="reveal-up mx-auto mt-4 flex w-full max-w-[1180px] flex-col gap-4 sm:flex-row"
         style={{ '--d': '0.14s' }}
       >
         {OFFRES.map((o, i) => {
@@ -291,18 +291,14 @@ export default function Offres({ setDark }) {
               onClick={() => setIndex(i)}
               aria-current={on ? 'true' : undefined}
               aria-label={`Choisir l’offre ${o.name}`}
-              className={`group flex cursor-pointer flex-col items-start rounded-2xl border p-6 text-left outline-none transition-colors duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or md:p-7 ${
+              className={`group flex w-full cursor-pointer flex-col items-start overflow-hidden rounded-2xl border p-6 text-left outline-none transition-[flex-grow,border-color,background-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or sm:min-w-0 md:p-7 ${
                 on
-                  ? ink
-                    ? 'border-or bg-[#221c17]/60'
-                    : 'border-or bg-creme/55'
-                  : ink
-                    ? 'border-creme/15 hover:border-creme/35'
-                    : 'border-encre/15 hover:border-encre/35'
+                  ? `sm:flex-[1.6_1_0%] ${ink ? 'border-or bg-[#221c17]/60' : 'border-or bg-creme/55'}`
+                  : `sm:flex-[1_1_0%] ${ink ? 'border-creme/15 hover:border-creme/35' : 'border-encre/15 hover:border-encre/35'}`
               }`}
             >
               <span
-                className={`text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
+                className={`whitespace-nowrap text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
                   on ? (ink ? 'text-sable/75' : 'text-encre/70') : ink ? 'text-sable/50' : 'text-encre/50'
                 }`}
               >
@@ -319,7 +315,7 @@ export default function Offres({ setDark }) {
                 </span>
               </span>
               <span
-                className={`mt-3 text-[12px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
+                className={`mt-3 whitespace-nowrap text-[12px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
                   on ? priceText : ink ? 'text-sable/50' : 'text-encre/50'
                 }`}
               >
