@@ -10,7 +10,7 @@ import { useReveal } from '../hooks/useReveal.js'
 // (films verticaux courts), encre pour le Film (le film central).
 const OFFRES = [
   {
-    name: 'UGC',
+    name: 'UGC Créatif',
     eyebrow: 'Un tableau par espace',
     base: 3500,
     from: false,
@@ -61,8 +61,8 @@ const OFFRES = [
     ink: false,
   },
   {
-    name: 'Film',
-    eyebrow: 'Le film central',
+    name: 'Film Signature',
+    eyebrow: 'La pièce maîtresse',
     base: 9500,
     from: true,
     compose: 'Composez votre film',
@@ -119,7 +119,7 @@ const OFFRES = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Deux offres : UGC à 3 500 € et Film à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
+    r: 'Deux offres : UGC Créatif à 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
   },
   {
     q: "Qui apparaît à l'écran ?",
@@ -131,7 +131,7 @@ const QUESTIONS = [
   },
   {
     q: 'À qui appartient le film ?',
-    r: "Les droits de diffusion sont inclus : sans limite de temps pour l'UGC, deux ans pour le Film.",
+    r: "Les droits de diffusion sont inclus : sans limite de temps pour l'UGC Créatif, deux ans pour le Film Signature.",
   },
 ]
 

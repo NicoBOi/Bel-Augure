@@ -48,7 +48,7 @@ const DESCRIPTIONS = {
   studio:
     "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
   offres:
-    'Deux offres claires : UGC, des films courts par espace dès 3 500 €, et Film, le film central à partir de 9 500 €.',
+    'Deux offres claires : UGC Créatif, des films courts par espace dès 3 500 €, et Film Signature, le film central à partir de 9 500 €.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
