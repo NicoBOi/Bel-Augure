@@ -13,7 +13,7 @@ const OFFRES = [
     name: 'UGC Créatif',
     eyebrow: 'Un tableau par espace',
     base: 3500,
-    from: false,
+    from: true,
     compose: 'Composez vos tableaux',
     accroche:
       'Cinq films courts, un par espace de votre établissement. Une comédienne dirigée, une lumière construite, une journée chez vous.',
@@ -119,7 +119,7 @@ const OFFRES = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Deux offres : UGC Créatif à 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
+    r: 'Deux offres : UGC Créatif à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
   },
   {
     q: "Qui apparaît à l'écran ?",
@@ -322,27 +322,22 @@ export default function Offres({ setDark }) {
                 {o.from ? 'À partir de ' : ''}
                 {euros(o.base)} · HT
               </span>
-              {/* Mention de sélection : rend explicite le rôle d'interrupteur */}
-              <span
-                className={`mt-4 flex items-center gap-1.5 text-[10px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
-                  on
-                    ? priceText
-                    : ink
-                      ? 'text-sable/55 group-hover:text-sable/90'
-                      : 'text-encre/50 group-hover:text-encre/85'
-                }`}
-              >
-                {on ? (
-                  <>
-                    <IconCheck />
-                    Sélectionné
-                  </>
-                ) : (
-                  <>
-                    Choisir <span aria-hidden="true">→</span>
-                  </>
-                )}
-              </span>
+              {/* Mention de sélection : l'actif porte une pastille surlignée or
+                  (même langage que les cases cochées et le survol du CTA). */}
+              {on ? (
+                <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-or px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] text-encre">
+                  <IconCheck />
+                  Sélectionné
+                </span>
+              ) : (
+                <span
+                  className={`mt-4 inline-flex items-center gap-1.5 text-[10px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
+                    ink ? 'text-sable/55 group-hover:text-sable/90' : 'text-encre/50 group-hover:text-encre/85'
+                  }`}
+                >
+                  Choisir <span aria-hidden="true">→</span>
+                </span>
+              )}
             </button>
           )
         })}
@@ -362,7 +357,7 @@ export default function Offres({ setDark }) {
           {/* ── GAUCHE : lecture ───────────────────────────────── */}
           <div className="lg:col-span-6">
             <p
-              className={`max-w-[52ch] font-display text-[clamp(1.2rem,1.8vw,1.6rem)] leading-[1.5] ${
+              className={`max-w-[46ch] text-[clamp(1.05rem,1.4vw,1.3rem)] font-light leading-[1.65] ${
                 ink ? 'text-sable' : 'text-encre'
               }`}
             >
@@ -575,13 +570,10 @@ export default function Offres({ setDark }) {
                         + éléments sur devis, chiffrés avec vous
                       </p>
                     )}
-                    <p className={`mt-1.5 text-[11px] font-light ${ink ? 'text-sable/50' : 'text-encre/50'}`}>
-                      TVA 20 % en sus
-                    </p>
                     <button
                       type="button"
                       onClick={requestQuote}
-                      className={`cta mt-5 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
+                      className={`cta mt-6 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
                         ink ? 'cta-light' : ''
                       }`}
                     >
@@ -613,38 +605,45 @@ export default function Offres({ setDark }) {
           </dl>
         </div>
 
-        <div className="mt-16">
-          <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Non inclus</h2>
-          <p
-            className={`mt-4 max-w-[80ch] text-[12.5px] font-light leading-[1.9] ${
-              ink ? 'text-sable/70' : 'text-encre/70'
-            }`}
-          >
-            {offre.nonInclus.map((item, i) => (
-              <span key={item}>
-                {i > 0 && <span className={`mx-2 ${dash}`}>·</span>}
-                {item}
-              </span>
-            ))}
-          </p>
-        </div>
+        {/* Non inclus + Conditions communes : une seule section, deux colonnes */}
+        <div
+          className={`mt-16 grid gap-x-16 gap-y-10 border-t pt-12 md:grid-cols-2 ${
+            ink ? 'border-or/25' : 'border-or/45'
+          }`}
+        >
+          <div>
+            <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Non inclus</h2>
+            <p
+              className={`mt-4 text-[12.5px] font-light leading-[1.9] ${
+                ink ? 'text-sable/70' : 'text-encre/70'
+              }`}
+            >
+              {offre.nonInclus.map((item, i) => (
+                <span key={item}>
+                  {i > 0 && <span className={`mx-2 ${dash}`}>·</span>}
+                  {item}
+                </span>
+              ))}
+            </p>
+          </div>
 
-        <div className={`mt-14 border-t pt-10 ${ink ? 'border-or/20' : 'border-or/40'}`}>
-          <h2 className={`text-[10px] font-normal uppercase tracking-[0.3em] ${label}`}>
-            Conditions communes
-          </h2>
-          <p
-            className={`mt-4 max-w-[80ch] text-[12px] font-light leading-[1.9] ${
-              ink ? 'text-sable/70' : 'text-encre/70'
-            }`}
-          >
-            {CONDITIONS.map((c, i) => (
-              <span key={c}>
-                {i > 0 && <span className={`mx-2 ${dash}`}>·</span>}
-                {c}
-              </span>
-            ))}
-          </p>
+          <div>
+            <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+              Conditions communes
+            </h2>
+            <p
+              className={`mt-4 text-[12px] font-light leading-[1.9] ${
+                ink ? 'text-sable/70' : 'text-encre/70'
+              }`}
+            >
+              {CONDITIONS.map((c, i) => (
+                <span key={c}>
+                  {i > 0 && <span className={`mx-2 ${dash}`}>·</span>}
+                  {c}
+                </span>
+              ))}
+            </p>
+          </div>
         </div>
       </div>
 
