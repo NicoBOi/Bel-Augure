@@ -480,12 +480,17 @@ export default function Offres({ setDark }) {
                         </button>
 
                         <div className="flex shrink-0 items-center gap-3">
-                          {o.qty && on && (
-                            <span
-                              className={`flex items-center gap-2 rounded-full border px-2.5 py-1 ${
-                                ink ? 'border-creme/25' : 'border-encre/20'
-                              }`}
-                            >
+                          {/* Emplacement du compteur réservé en permanence sur les
+                              options à quantité : cocher n'élargit plus la ligne,
+                              rien ne se décale. */}
+                          {o.qty && (
+                            <div className="flex h-9 w-[104px] shrink-0 items-center justify-end">
+                              {on && (
+                                <span
+                                  className={`flex items-center gap-2 rounded-full border px-2.5 py-1 ${
+                                    ink ? 'border-creme/25' : 'border-encre/20'
+                                  }`}
+                                >
                               <button
                                 type="button"
                                 aria-label={`Réduire la quantité — ${o.label}`}
@@ -518,7 +523,9 @@ export default function Offres({ setDark }) {
                               >
                                 +
                               </button>
-                            </span>
+                                </span>
+                              )}
+                            </div>
                           )}
                           <span
                             className={`whitespace-nowrap text-[12.5px] tracking-[0.02em] ${
@@ -555,7 +562,11 @@ export default function Offres({ setDark }) {
                         {fromPrice && (
                           <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>
                         )}
-                        <AnimatedPrice value={total} className="text-[clamp(1.9rem,2.6vw,2.4rem)] tabular-nums" />
+                        <span className="inline-block overflow-hidden align-bottom">
+                          <span key={total} className="price-roll text-[clamp(1.9rem,2.6vw,2.4rem)] tabular-nums">
+                            {euros(total)}
+                          </span>
+                        </span>
                         <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
                       </span>
                     </div>
@@ -669,7 +680,11 @@ export default function Offres({ setDark }) {
             </span>
             <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
               {fromPrice && <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>}
-              <AnimatedPrice value={total} className="text-[clamp(1.5rem,7vw,1.9rem)] tabular-nums" />
+              <span className="inline-block overflow-hidden align-bottom">
+                <span key={total} className="price-roll text-[clamp(1.5rem,7vw,1.9rem)] tabular-nums">
+                  {euros(total)}
+                </span>
+              </span>
               <span className={`ml-1 inline-block align-middle transition-transform ${openDetail ? 'rotate-180' : ''} ${label}`}>
                 <IconChevron />
               </span>
@@ -688,46 +703,6 @@ export default function Offres({ setDark }) {
       </div>
     </section>
   )
-}
-
-// Prix qui « défile » : à chaque changement, le montant grimpe (ou descend)
-// jusqu'à sa nouvelle valeur, en ~450 ms, courbe ease-out. Respecte
-// prefers-reduced-motion (saut net, l'info reste juste).
-function AnimatedPrice({ value, className }) {
-  const [display, setDisplay] = useState(value)
-  const displayRef = useRef(value)
-  const rafRef = useRef()
-  useEffect(() => {
-    const reduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const from = displayRef.current
-    const to = value
-    if (reduce || from === to) {
-      displayRef.current = to
-      setDisplay(to)
-      return
-    }
-    const start = performance.now()
-    const dur = 450
-    const step = (now) => {
-      const t = Math.min(1, (now - start) / dur)
-      const eased = 1 - Math.pow(1 - t, 3)
-      const cur = Math.round(from + (to - from) * eased)
-      displayRef.current = cur
-      setDisplay(cur)
-      if (t < 1) rafRef.current = requestAnimationFrame(step)
-      else {
-        displayRef.current = to
-        setDisplay(to)
-      }
-    }
-    cancelAnimationFrame(rafRef.current)
-    rafRef.current = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [value])
-  return <span className={className}>{euros(display)}</span>
 }
 
 // Les lignes du devis, partagées entre la console (desktop) et la barre (mobile).

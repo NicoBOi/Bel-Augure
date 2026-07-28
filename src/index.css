@@ -181,38 +181,23 @@ h3 {
 /* ---------- CTA : pilule douce, remplissage or ---------- */
 
 .cta {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
   border-radius: 9999px;
-  border: 1px solid rgb(217 198 166 / 0.6);
-  background-color: rgb(217 198 166 / 0.12);
+  border: 1px solid rgb(217 198 166 / 0.55);
+  background-color: rgb(217 198 166 / 0.1);
   color: var(--color-encre);
   transition:
-    border-color 0.5s var(--ease-augure),
-    transform 0.5s var(--ease-augure);
+    background-color 0.45s var(--ease-augure),
+    border-color 0.45s var(--ease-augure),
+    color 0.45s var(--ease-augure),
+    transform 0.45s var(--ease-augure);
 }
 
-.cta::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-color: var(--color-or);
-  transform: translateY(101%);
-  border-radius: 9999px;
-  transition: transform 0.5s var(--ease-augure);
-}
-
+/* Survol : la pastille se teinte d'or en fondu (plus de bloc qui monte). */
 .cta:hover,
 .cta:focus-visible {
+  background-color: var(--color-or);
   border-color: var(--color-or);
   transform: translateY(-1px);
-}
-
-.cta:hover::before,
-.cta:focus-visible::before {
-  transform: translateY(0);
 }
 
 .cta:active {
@@ -373,6 +358,23 @@ textarea.field {
 .qty-roll {
   display: inline-block;
   animation: qtyRoll 220ms var(--ease-augure);
+}
+
+/* Total : le montant entier glisse d'un coup vers sa nouvelle valeur, avec un
+   léger décalage avant de partir. Pas de comptage chiffre à chiffre. */
+@keyframes priceRoll {
+  0% {
+    transform: translateY(0.55em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.price-roll {
+  display: inline-block;
+  animation: priceRoll 340ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
 }
 
 /* Apparition sans transform : pour les éléments dont le transform est piloté en JS */
