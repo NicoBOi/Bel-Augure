@@ -269,11 +269,18 @@ export default function Offres({ setDark }) {
       style={{ backgroundColor: offre.bgColor }}
     >
       {/* Le sélecteur : deux cartes de choix. La carte active fait office de
-          titre — nom, surtitre et prix de l'offre. Choisir change la lumière
-          de la page. */}
+          titre — nom, surtitre et prix. Un mot d'intro et une mention par carte
+          (« Choisir » / « Sélectionné ») rendent le geste explicite : on choisit
+          entre deux offres, et le choix change la lumière de la page. */}
+      <p
+        className={`reveal-up mx-auto mt-4 w-full max-w-[1180px] text-[11px] font-normal uppercase tracking-[0.3em] md:mt-8 ${label}`}
+        style={{ '--d': '0.08s' }}
+      >
+        Deux offres — choisissez la vôtre
+      </p>
       <div
-        className="reveal-up mx-auto mt-4 grid w-full max-w-[1180px] gap-4 sm:grid-cols-2 md:mt-6"
-        style={{ '--d': '0.12s' }}
+        className="reveal-up mx-auto mt-4 grid w-full max-w-[1180px] gap-4 sm:grid-cols-2"
+        style={{ '--d': '0.14s' }}
       >
         {OFFRES.map((o, i) => {
           const on = i === index
@@ -284,26 +291,26 @@ export default function Offres({ setDark }) {
               onClick={() => setIndex(i)}
               aria-current={on ? 'true' : undefined}
               aria-label={`Choisir l’offre ${o.name}`}
-              className={`flex cursor-pointer flex-col items-start rounded-2xl border p-6 text-left outline-none transition-colors duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or md:p-7 ${
+              className={`group flex cursor-pointer flex-col items-start rounded-2xl border p-6 text-left outline-none transition-colors duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or md:p-7 ${
                 on
                   ? ink
                     ? 'border-or bg-[#221c17]/60'
                     : 'border-or bg-creme/55'
                   : ink
-                    ? 'border-creme/12 hover:border-creme/30'
-                    : 'border-encre/12 hover:border-encre/30'
+                    ? 'border-creme/15 hover:border-creme/35'
+                    : 'border-encre/15 hover:border-encre/35'
               }`}
             >
               <span
                 className={`text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
-                  on ? (ink ? 'text-sable/75' : 'text-encre/70') : ink ? 'text-sable/40' : 'text-encre/40'
+                  on ? (ink ? 'text-sable/75' : 'text-encre/70') : ink ? 'text-sable/50' : 'text-encre/50'
                 }`}
               >
                 {o.eyebrow}
               </span>
               <span
                 className={`mt-2 font-display text-[clamp(2rem,3.4vw,3rem)] leading-none transition-colors duration-500 ${
-                  on ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/55' : 'text-encre/50'
+                  on ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/65' : 'text-encre/60'
                 }`}
               >
                 {o.name}
@@ -313,11 +320,32 @@ export default function Offres({ setDark }) {
               </span>
               <span
                 className={`mt-3 text-[12px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
-                  on ? priceText : ink ? 'text-sable/40' : 'text-encre/40'
+                  on ? priceText : ink ? 'text-sable/50' : 'text-encre/50'
                 }`}
               >
                 {o.from ? 'À partir de ' : ''}
                 {euros(o.base)} · HT
+              </span>
+              {/* Mention de sélection : rend explicite le rôle d'interrupteur */}
+              <span
+                className={`mt-4 flex items-center gap-1.5 text-[10px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
+                  on
+                    ? priceText
+                    : ink
+                      ? 'text-sable/55 group-hover:text-sable/90'
+                      : 'text-encre/50 group-hover:text-encre/85'
+                }`}
+              >
+                {on ? (
+                  <>
+                    <IconCheck />
+                    Sélectionné
+                  </>
+                ) : (
+                  <>
+                    Choisir <span aria-hidden="true">→</span>
+                  </>
+                )}
               </span>
             </button>
           )
