@@ -121,11 +121,10 @@ h3 {
   transform: scaleX(1);
 }
 
-/* Page active : le libellé passe en gras (500, le poids le plus lourd
-   chargé), le trait or reste inchangé. */
-.nav-link[aria-current='page'] .nav-label {
-  font-weight: 500;
-}
+/* Page active : marquée par le trait or + une couleur pleine (géré côté
+   composant). Surtout pas de changement de graisse : passer en gras
+   modifierait la largeur du libellé et ferait « sauter » la rangée du menu
+   à chaque changement de page. */
 
 /* ---------- Panneau mobile : grid-rows 0fr -> 1fr ---------- */
 

@@ -14,7 +14,13 @@ function NavLink({ view, label, active, onNavigate, dark }) {
       onClick={() => onNavigate(view)}
       aria-current={active ? 'page' : undefined}
       className={`nav-link inline-flex min-h-[44px] cursor-pointer items-center py-2 -my-1 text-[12px] font-normal tracking-[0.08em] transition-colors duration-500 ${
-        dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
+        active
+          ? dark
+            ? 'text-creme'
+            : 'text-encre'
+          : dark
+            ? 'text-creme/75 hover:text-creme'
+            : 'text-encre/80 hover:text-encre'
       }`}
     >
       <span className="nav-label">{label}</span>
