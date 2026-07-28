@@ -124,14 +124,17 @@ export default function Navbar({ activeView, onNavigate, dark }) {
         </button>
 
         <div className="hidden justify-self-end md:block">
-          <a
-            href="mailto:nicolas@belaugure.studio"
-            className={`nav-link text-[12px] tracking-[0.08em] transition-colors duration-500 ${
-              dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
+          <button
+            type="button"
+            onClick={() => navigate('contact')}
+            className={`inline-flex min-h-[40px] cursor-pointer items-center rounded-full border px-5 py-2 text-[12px] tracking-[0.08em] transition-colors duration-500 ${
+              dark
+                ? 'border-creme/30 text-creme/85 hover:border-or hover:text-creme'
+                : 'border-encre/25 text-encre/85 hover:border-or hover:text-encre'
             }`}
           >
-            <span className="nav-label">nicolas@belaugure.studio</span>
-          </a>
+            Écrire au studio
+          </button>
         </div>
       </div>
 
