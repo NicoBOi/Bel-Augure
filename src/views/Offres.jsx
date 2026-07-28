@@ -268,75 +268,70 @@ export default function Offres({ setDark }) {
       className="flex h-full flex-col overflow-y-auto px-6 pt-28 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:px-16"
       style={{ backgroundColor: offre.bgColor }}
     >
-      {/* Le sélecteur : les deux noms, dans la langue des liens du site */}
-      <nav aria-label="Choisir une offre" className="reveal-up mt-4 md:mt-8" style={{ '--d': '0.15s' }}>
-        <ul className="flex flex-wrap items-baseline justify-center gap-x-10 gap-y-2">
-          {OFFRES.map((o, i) => (
-            <li key={o.name}>
-              <button
-                type="button"
-                onClick={() => setIndex(i)}
-                aria-current={i === index ? 'true' : undefined}
-                className={`nav-link cursor-pointer py-3 font-display text-[clamp(1.15rem,1.7vw,1.6rem)] transition-colors duration-500 ${
-                  i === index
-                    ? ink
-                      ? 'text-creme'
-                      : 'text-encre'
-                    : ink
-                      ? 'text-sable/45 hover:text-sable/80'
-                      : 'text-encre/40 hover:text-encre/70'
+      {/* Le sélecteur : deux cartes de choix. La carte active fait office de
+          titre — nom, surtitre et prix de l'offre. Choisir change la lumière
+          de la page. */}
+      <div
+        className="reveal-up mx-auto mt-4 grid w-full max-w-[1180px] gap-4 sm:grid-cols-2 md:mt-6"
+        style={{ '--d': '0.12s' }}
+      >
+        {OFFRES.map((o, i) => {
+          const on = i === index
+          return (
+            <button
+              key={o.name}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-current={on ? 'true' : undefined}
+              aria-label={`Choisir l’offre ${o.name}`}
+              className={`flex cursor-pointer flex-col items-start rounded-2xl border p-6 text-left outline-none transition-colors duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or md:p-7 ${
+                on
+                  ? ink
+                    ? 'border-or bg-[#221c17]/60'
+                    : 'border-or bg-creme/55'
+                  : ink
+                    ? 'border-creme/12 hover:border-creme/30'
+                    : 'border-encre/12 hover:border-encre/30'
+              }`}
+            >
+              <span
+                className={`text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
+                  on ? (ink ? 'text-sable/75' : 'text-encre/70') : ink ? 'text-sable/40' : 'text-encre/40'
                 }`}
               >
-                <span className="nav-label">
-                  {o.name}
-                  <span
-                    className={`text-or transition-opacity duration-300 ${
-                      i === index ? 'opacity-100' : 'opacity-0'
-                    }`}
-                  >
-                    .
-                  </span>
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* Tout le contenu se rejoue à chaque changement d'offre (key) */}
-      <div key={offre.name} className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
-        {/* En-tête, ferré à gauche sur la colonne lecture */}
-        <header className="mt-12 md:mt-16">
-          <p
-            className={`fade-in text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}
-            style={{ '--d': '0.05s' }}
-          >
-            {offre.eyebrow}
-          </p>
-          <h1
-            className={`mt-4 font-display text-[clamp(2.6rem,6vw,5.4rem)] leading-[1.02] ${
-              ink ? 'text-creme' : 'text-encre'
-            }`}
-          >
-            <span className="mask" style={{ '--d': '0.1s' }}>
-              <span>
-                {offre.name}
-                <span className="dot-breathe text-or">.</span>
+                {o.eyebrow}
               </span>
-            </span>
-          </h1>
-          <p
-            className={`fade-in mt-4 text-[12px] font-normal uppercase tracking-[0.22em] ${priceText}`}
-            style={{ '--d': '0.18s' }}
-          >
-            {offre.from ? 'À partir de ' : ''}
-            {euros(offre.base)} · HT
-          </p>
-        </header>
+              <span
+                className={`mt-2 font-display text-[clamp(2rem,3.4vw,3rem)] leading-none transition-colors duration-500 ${
+                  on ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/55' : 'text-encre/50'
+                }`}
+              >
+                {o.name}
+                <span className={`text-or transition-opacity duration-300 ${on ? 'dot-breathe opacity-100' : 'opacity-0'}`}>
+                  .
+                </span>
+              </span>
+              <span
+                className={`mt-3 text-[12px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
+                  on ? priceText : ink ? 'text-sable/40' : 'text-encre/40'
+                }`}
+              >
+                {o.from ? 'À partir de ' : ''}
+                {euros(o.base)} · HT
+              </span>
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Contenu, rejoué à chaque changement d'offre (key). La carte active
+          tient lieu de titre visible ; un h1 discret sert les lecteurs d'écran. */}
+      <div key={offre.name} className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
+        <h1 className="sr-only">Offre {offre.name} — Bel Augure</h1>
 
         {/* Le split : lire à gauche, composer à droite */}
         <div
-          className={`mt-12 grid gap-x-16 gap-y-12 border-t pt-12 lg:grid-cols-12 ${
+          className={`mt-10 grid gap-x-16 gap-y-12 border-t pt-12 lg:grid-cols-12 ${
             ink ? 'border-or/25' : 'border-or/45'
           }`}
         >
