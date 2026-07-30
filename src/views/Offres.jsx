@@ -69,9 +69,9 @@ const OFFRES = [
     from: true,
     compose: 'Composez vos tableaux',
     accroche:
-      'Cinq films courts tournés en une journée chez vous. Des comédiens expérimentés, une lumière maîtrisée.',
+      'Cinq portraits filmés en une journée chez vous. Des comédiens expérimentés, une lumière maîtrisée.',
     description: [
-      "Cinq tableaux qui suivent le fil d’une visite dans votre univers. Une comédienne joue ce que vit votre client, elle dit ce qu’il ressent. Les moyens du cinéma, à votre porte.",
+      "Cinq portraits qui suivent le fil d’une visite dans votre univers. Une comédienne joue ce que vit votre client, elle dit ce qu’il ressent. Les moyens du cinéma, à votre porte.",
       "Vous repartez avec cinq films prêts à publier. Plus besoin de lire, seulement de le vivre.",
     ],
     inclus: [
