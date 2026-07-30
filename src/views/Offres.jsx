@@ -67,7 +67,7 @@ const OFFRES = [
     eyebrow: 'Cinq films, une journée',
     base: 3500,
     from: true,
-    compose: 'Composez vos tableaux',
+    compose: 'Composez vos portraits',
     accroche:
       'Cinq portraits filmés en une journée chez vous. Des comédiens expérimentés, une lumière maîtrisée.',
     description: [
@@ -76,7 +76,7 @@ const OFFRES = [
     ],
     inclus: [
       'Visite du lieu, en physique ou à distance, pour le repérage',
-      'Écriture des textes, une version par tableau',
+      'Écriture des textes, une version par portrait',
       'Une journée de tournage sur site, deux opérateurs',
       'Une comédienne professionnelle',
       'Setup lumière construit & prise audio cinéma',
@@ -88,13 +88,13 @@ const OFFRES = [
       'Livraison sous 7 jours ouvrés',
     ],
     options: [
-      { label: 'Tableau supplémentaire', price: 450, qty: [1, 3] },
+      { label: 'Portrait supplémentaire', price: 450, qty: [1, 3] },
       { label: 'Vingt photographies supplémentaires', price: 400, qty: [1, 3] },
       { label: 'Le film d’ambiance de 30 à 45 s + pack de 10 photos', price: 1000 },
       { label: 'Doublage IA en anglais + sous-titres', price: 250 },
       { label: 'Comédienne supplémentaire', price: 400, qty: [1, 2] },
       {
-        label: 'Journée de tournage supplémentaire — jusqu’à cinq tableaux de plus',
+        label: 'Journée de tournage supplémentaire — jusqu’à cinq portraits de plus',
         price: 2500,
         qty: [1, 2],
       },
