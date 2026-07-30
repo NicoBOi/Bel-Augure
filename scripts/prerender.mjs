@@ -57,7 +57,7 @@ const ROUTES = [
       <h2>Portraits — à partir de 3 500 €</h2>
       <p>Cinq films courts en une journée. Une comédienne dirigée, une lumière construite, une journée chez vous. Inclus : écriture des textes, une journée de tournage avec deux opérateurs, une comédienne professionnelle déclarée, cinq films verticaux de 15 à 30 secondes, étalonnage et mixage, fichiers 4K 9:16 prêts à publier, cession de droits illimitée dans le temps en France, livraison sous 7 jours ouvrés. Options : portrait supplémentaire, journée de tournage supplémentaire, comédienne supplémentaire, photographies, doublage IA en anglais.</p>
       <h2>Les questions qui reviennent</h2>
-      <p>Combien ça coûte ? Deux offres : Portraits à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.</p>
+      <p>Combien ça coûte ? Deux offres : Portraits à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite votre sélection, et nous établissons le devis précis avec vous.</p>
       <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
       <p>Partout en France ? Oui, partout en France.</p>
       <p>À qui appartient le film ? Les droits de diffusion sont inclus : sans limite de temps pour les Portraits, deux ans pour le Film Signature.</p>

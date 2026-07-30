@@ -117,7 +117,7 @@ const OFFRES = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Deux offres : Portraits à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
+    r: 'Deux offres : Portraits à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite votre sélection, et nous établissons le devis précis avec vous.',
   },
   {
     q: "Qui apparaît à l'écran ?",
@@ -224,18 +224,14 @@ export default function Offres({ setDark, onNavigate }) {
     .filter(Boolean)
   const quoteItems = offre.options.filter((o, i) => o.quote && sel[i]).map((o) => o.label)
   const items = [{ label: offre.name, amount: offre.base, base: true }, ...priced]
-  const total = items.reduce((s, it) => s + it.amount, 0)
   const hasQuote = quoteItems.length > 0
-  const fromPrice = offre.from || hasQuote
 
   // « Demander un devis » : on compose le récapitulatif de la configuration
   // et on file vers la page Contact, où il pré-remplit le message. Le
   // prospect n'a plus qu'à laisser ses coordonnées et envoyer.
   const requestQuote = () => {
     const lines = [
-      ...priced.map(
-        (it) => `— ${it.label}${it.hasQty ? ` × ${it.qty}` : ''} · ${euros(it.amount)}`,
-      ),
+      ...priced.map((it) => `— ${it.label}${it.hasQty ? ` × ${it.qty}` : ''}`),
       ...quoteItems.map((l) => `— ${l} (sur devis)`),
     ]
     const message = [
@@ -245,8 +241,6 @@ export default function Offres({ setDark, onNavigate }) {
       '',
       lines.length ? 'Options retenues :' : 'Sans option supplémentaire.',
       ...lines,
-      '',
-      `Total estimé : ${fromPrice ? 'à partir de ' : ''}${euros(total)} HT (TVA 20 % en sus)`,
     ].join('\n')
     onNavigate?.('contact', { message, offer: offre.name })
   }
@@ -513,22 +507,22 @@ export default function Offres({ setDark, onNavigate }) {
                               )}
                             </div>
                           )}
-                          <span
-                            className={`whitespace-nowrap text-[12.5px] tracking-[0.02em] ${
-                              o.quote
-                                ? `italic ${ink ? 'text-sable/55' : 'text-encre/55'}`
-                                : priceText
-                            }`}
-                          >
-                            {o.quote ? 'sur devis' : `+ ${euros(o.price)}`}
-                          </span>
+                          {o.quote && (
+                            <span
+                              className={`whitespace-nowrap text-[12.5px] italic tracking-[0.02em] ${
+                                ink ? 'text-sable/55' : 'text-encre/55'
+                              }`}
+                            >
+                              sur devis
+                            </span>
+                          )}
                         </div>
                       </li>
                     )
                   })}
                 </ul>
 
-                {/* Pied de console — toujours visible : note, total, CTA */}
+                {/* Pied de console — toujours visible : note + CTA */}
                 <div className="shrink-0">
                   {offre.note && (
                     <p className={`mt-4 text-[12px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
@@ -536,35 +530,19 @@ export default function Offres({ setDark, onNavigate }) {
                     </p>
                   )}
 
-                  {/* Devis desktop : total + CTA. Le détail itémisé vit dans la
-                      barre du bas sur mobile ; ici chaque option chiffrée est
-                      déjà lisible ligne à ligne juste au-dessus. */}
+                  {/* Le prix affiché est l'ancre « à partir de » de la carte ;
+                      ici on garde le seul appel à l'action. Le devis précis se
+                      construit avec le studio depuis la sélection transmise. */}
                   <div className={`mt-6 hidden border-t pt-5 lg:block ${ink ? 'border-or/25' : 'border-or/45'}`}>
-                    <div className="flex items-end justify-between" aria-live="polite">
-                      <span className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
-                        Votre devis
-                      </span>
-                      <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
-                        {fromPrice && (
-                          <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>
-                        )}
-                        <span className="inline-block overflow-hidden align-bottom">
-                          <span key={total} className="price-roll text-[clamp(1.9rem,2.6vw,2.4rem)] tabular-nums">
-                            {euros(total)}
-                          </span>
-                        </span>
-                        <span className={`ml-1.5 font-sans text-[12px] font-light ${label}`}>HT</span>
-                      </span>
-                    </div>
                     {hasQuote && (
-                      <p className={`mt-2 text-[11.5px] font-light leading-[1.5] ${priceText}`}>
+                      <p className={`text-[11.5px] font-light leading-[1.5] ${priceText}`}>
                         + éléments sur devis, chiffrés avec vous
                       </p>
                     )}
                     <button
                       type="button"
                       onClick={requestQuote}
-                      className={`cta mt-6 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
+                      className={`cta mt-5 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
                         ink ? 'cta-light' : ''
                       }`}
                     >
@@ -663,21 +641,13 @@ export default function Offres({ setDark, onNavigate }) {
             type="button"
             onClick={() => setOpenDetail((v) => !v)}
             aria-expanded={openDetail}
-            className="min-h-[44px] cursor-pointer text-left"
+            className="flex min-h-[44px] items-center gap-2 cursor-pointer text-left"
           >
-            <span className={`block text-[10px] font-normal uppercase tracking-[0.25em] ${label}`}>
-              {openDetail ? 'Masquer le détail' : 'Votre devis'}
+            <span className={`text-[11px] font-normal uppercase tracking-[0.25em] ${label}`}>
+              {openDetail ? 'Masquer le détail' : 'Votre sélection'}
             </span>
-            <span className={`font-display leading-none ${ink ? 'text-creme' : 'text-encre'}`}>
-              {fromPrice && <span className={`font-sans text-[12px] font-light ${label}`}>à partir de </span>}
-              <span className="inline-block overflow-hidden align-bottom">
-                <span key={total} className="price-roll text-[clamp(1.5rem,7vw,1.9rem)] tabular-nums">
-                  {euros(total)}
-                </span>
-              </span>
-              <span className={`ml-1 inline-block align-middle transition-transform ${openDetail ? 'rotate-180' : ''} ${label}`}>
-                <IconChevron />
-              </span>
+            <span className={`inline-block align-middle transition-transform ${openDetail ? 'rotate-180' : ''} ${label}`}>
+              <IconChevron />
             </span>
           </button>
           <button
@@ -697,20 +667,16 @@ export default function Offres({ setDark, onNavigate }) {
 
 // Les lignes du devis, partagées entre la console (desktop) et la barre (mobile).
 // Récap itémisé : socle, options chiffrées (× quantité, sous-total), sur-devis.
-function ReceiptLines({ items, quoteItems, ink, priceText, label }) {
+function ReceiptLines({ items, quoteItems, ink, label }) {
   const rowText = ink ? 'text-sable/85' : 'text-encre/80'
   const strong = ink ? 'text-creme' : 'text-encre'
   return (
     <ul className="space-y-3">
       {items.map((it, i) => (
-        <li key={`${it.label}-${i}`} className="flex items-baseline justify-between gap-4">
+        <li key={`${it.label}-${i}`} className="flex items-baseline gap-2">
           <span className={`text-[13px] font-light leading-[1.4] ${it.base ? strong : rowText}`}>
             {it.label}
             {it.qty > 1 && <span className={label}> × {it.qty}</span>}
-          </span>
-          <span className={`shrink-0 text-[13px] tabular-nums ${it.base ? strong : priceText}`}>
-            {it.base ? '' : '+ '}
-            {euros(it.amount)}
           </span>
         </li>
       ))}
