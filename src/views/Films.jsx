@@ -22,9 +22,9 @@ export default function Films({ setDark }) {
   const [paused, setPaused] = useState({})
   const stageRefs = useRef({})
 
-  // Le film se regarde dans l'encre, comme en salle.
+  // Le film se pose sur l'or pâle de la charte : fond chaud, texte encre.
   useEffect(() => {
-    setDark?.(true)
+    setDark?.(false)
   }, [setDark])
 
   // Le plein écran natif n'existe pas sur iPhone (l'API Fullscreen n'y
@@ -50,7 +50,7 @@ export default function Films({ setDark }) {
     <section
       ref={ref}
       aria-label="Films"
-      className="flex h-full flex-col overflow-y-auto bg-cafe py-24"
+      className="flex h-full flex-col overflow-y-auto bg-or py-24"
     >
       <div className="mx-auto w-full lg:flex lg:max-w-[1500px] lg:flex-1 lg:flex-col lg:justify-center lg:px-16">
         {FILMS.map((film) => (
@@ -70,7 +70,7 @@ export default function Films({ setDark }) {
                 if (e.target.closest('[data-ctrl]')) return
                 setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))
               }}
-              className="film-stage relative aspect-video w-full cursor-pointer overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl lg:border lg:border-creme/15"
+              className="film-stage relative aspect-video w-full cursor-pointer overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl lg:border lg:border-encre/10"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
@@ -130,12 +130,12 @@ export default function Films({ setDark }) {
 
             <div className="px-6 lg:col-span-4 lg:px-0">
               <p
-                className="reveal-up mt-8 text-[11px] font-normal uppercase tracking-[0.3em] text-sable/60 lg:mt-0"
+                className="reveal-up mt-8 text-[11px] font-normal uppercase tracking-[0.3em] text-encre/55 lg:mt-0"
                 style={{ '--d': '0.1s' }}
               >
                 {film.world}
               </p>
-              <h1 className="mt-4 font-display text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.05] text-creme">
+              <h1 className="mt-4 font-display text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.05] text-encre">
                 <span className="mask" style={{ '--d': '0.15s' }}>
                   <span>
                     {film.title}
@@ -144,7 +144,7 @@ export default function Films({ setDark }) {
                 </span>
               </h1>
               <p
-                className="reveal-up mt-6 max-w-[46ch] text-[13.5px] font-light leading-[1.9] text-sable/90"
+                className="reveal-up mt-6 max-w-[46ch] text-[13.5px] font-light leading-[1.9] text-encre/80"
                 style={{ '--d': '0.3s' }}
               >
                 {film.desc}
@@ -154,7 +154,7 @@ export default function Films({ setDark }) {
         ))}
       </div>
 
-      <p className="mx-auto mt-auto w-full px-6 pt-16 text-center text-[11px] font-light tracking-[0.04em] text-sable/60 lg:max-w-[1500px] lg:px-16">
+      <p className="mx-auto mt-auto w-full px-6 pt-16 text-center text-[11px] font-light tracking-[0.04em] text-encre/50 lg:max-w-[1500px] lg:px-16">
         Studio de production basé à Bordeaux
       </p>
     </section>
