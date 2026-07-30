@@ -10,7 +10,60 @@ import { useReveal } from '../hooks/useReveal.js'
 // (films verticaux courts), encre pour le Film (le film central).
 const OFFRES = [
   {
-    name: 'UGC Créatif',
+    name: 'Film Signature',
+    eyebrow: 'La pièce maîtresse',
+    base: 9500,
+    from: true,
+    compose: 'Composez votre film',
+    accroche:
+      'Un film narratif pour graver votre nom dans le temps.',
+    description: [
+      "C’est le film qu’on met en page d’accueil, celui qu’on envoie à la presse, qu’on projette en salon, qu’on montre aux investisseurs…",
+      "Un scénario, une équipe, des acteurs. Nous gérons tout, du tournage à la livraison. Vous n’avez rien à préparer.",
+    ],
+    inclus: [
+      "Entretien de cadrage et note d'intention",
+      'Écriture du scénario et des dialogues, deux versions',
+      'Repérage sur site, une demi-journée',
+      "Casting et direction d'acteur",
+      'Une journée de tournage',
+      'Équipe complète — deux opérateurs, un comédien, une maquilleuse-coiffeuse, un assistant lumière, tous déclarés',
+      'Un film de 60 à 90 secondes',
+      'Un teaser de 30 secondes issu du même montage',
+      'Deux déclinaisons, 9:16 et 1:1',
+      'Quinze photographies de plateau',
+      'Étalonnage, création sonore, mixage',
+      'Musique sous licence pour la durée de la cession',
+      'Fichiers 4K, prêts à publier, sous-titres incrustés sur les verticales et fichier séparé pour le film',
+      'Deux allers-retours de montage',
+      'Cession de droits 2 ans — France, digital et réseaux sociaux',
+      'Livraison sous 3 semaines',
+    ],
+    options: [
+      { label: 'Voix off professionnelle', price: 600 },
+      { label: 'Doublage IA en anglais + sous-titres', price: 250 },
+      { label: 'Aller-retour de montage supplémentaire', price: 350, qty: [1, 3] },
+      { label: 'Comédien supplémentaire', price: 900, qty: [1, 3] },
+      { label: 'Journée de tournage supplémentaire', price: 3500, qty: [1, 2] },
+      {
+        label: 'Exploitation cinéma — DCP, extension de droits, contrats comédiens étendus',
+        price: 2500,
+      },
+      { label: 'Extension télévision, affichage, presse imprimée', quote: true },
+    ],
+    note: 'Renouvellement de licence à partir du 25ᵉ mois — 20 % du prix par an.',
+    nonInclus: [
+      "Achat d'espace, en salle comme ailleurs",
+      'Décors, stylisme, accessoires',
+      'Autorisations de tournage payantes',
+      'Figuration au-delà du comédien principal',
+      'Fichiers sources et rushes',
+    ],
+    bgColor: '#1a1512',
+    ink: true,
+  },
+  {
+    name: 'Portraits',
     eyebrow: 'Cinq films, une journée',
     base: 3500,
     from: true,
@@ -58,66 +111,13 @@ const OFFRES = [
     bgColor: 'rgb(217 198 166 / 0.45)',
     ink: false,
   },
-  {
-    name: 'Film Signature',
-    eyebrow: 'La pièce maîtresse',
-    base: 9500,
-    from: true,
-    compose: 'Composez votre film',
-    accroche:
-      'Un film narratif pour graver votre nom dans le temps.',
-    description: [
-      "C’est le film qu’on met en page d’accueil, celui qu’on envoie à la presse, qu’on projette en salon, qu’on montre aux investisseurs…",
-      "Un scénario, une équipe, des acteurs. Nous gérons tout, du tournage à la livraison. Vous n’avez rien à préparer.",
-    ],
-    inclus: [
-      "Entretien de cadrage et note d'intention",
-      'Écriture du scénario et des dialogues, deux versions',
-      'Repérage sur site, une demi-journée',
-      "Casting et direction d'acteur",
-      'Une journée de tournage',
-      'Équipe complète — deux opérateurs, un comédien, une maquilleuse-coiffeuse, un assistant lumière, tous déclarés',
-      'Un film de 30 secondes',
-      'Une version longue de 60 secondes issue du même montage',
-      'Deux déclinaisons, 9:16 et 1:1',
-      'Quinze photographies de plateau',
-      'Étalonnage, création sonore, mixage',
-      'Musique sous licence pour la durée de la cession',
-      'Fichiers 4K, prêts à publier, sous-titres incrustés sur les verticales et fichier séparé pour le film',
-      'Deux allers-retours de montage',
-      'Cession de droits 2 ans — France, digital et réseaux sociaux',
-      'Livraison sous 3 semaines',
-    ],
-    options: [
-      { label: 'Voix off professionnelle', price: 600 },
-      { label: 'Doublage IA en anglais + sous-titres', price: 250 },
-      { label: 'Aller-retour de montage supplémentaire', price: 350, qty: [1, 3] },
-      { label: 'Comédien supplémentaire', price: 900, qty: [1, 3] },
-      { label: 'Journée de tournage supplémentaire', price: 3500, qty: [1, 2] },
-      {
-        label: 'Exploitation cinéma — DCP, extension de droits, contrats comédiens étendus',
-        price: 2500,
-      },
-      { label: 'Extension télévision, affichage, presse imprimée', quote: true },
-    ],
-    note: 'Renouvellement de licence à partir du 25ᵉ mois — 20 % du prix par an.',
-    nonInclus: [
-      "Achat d'espace, en salle comme ailleurs",
-      'Décors, stylisme, accessoires',
-      'Autorisations de tournage payantes',
-      'Figuration au-delà du comédien principal',
-      'Fichiers sources et rushes',
-    ],
-    bgColor: '#1a1512',
-    ink: true,
-  },
 ]
 
 // Les questions qui reviennent, gardées en bas de page. Réponses courtes.
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Deux offres : UGC Créatif à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
+    r: 'Deux offres : Portraits à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite avec les options, le prix se met à jour en direct.',
   },
   {
     q: "Qui apparaît à l'écran ?",
@@ -129,7 +129,7 @@ const QUESTIONS = [
   },
   {
     q: 'À qui appartient le film ?',
-    r: "Les droits de diffusion sont inclus : sans limite de temps pour l'UGC Créatif, deux ans pour le Film Signature.",
+    r: "Les droits de diffusion sont inclus : sans limite de temps pour les Portraits, deux ans pour le Film Signature.",
   },
 ]
 
