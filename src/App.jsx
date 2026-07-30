@@ -214,13 +214,13 @@ export default function App() {
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', url)
   }, [view])
 
-  // La barre du navigateur (mobile) suit la lumière de la vue : encre sur les
-  // scènes sombres (accueil, films, offre Film), crème sur les vues claires.
+  // La barre du navigateur (mobile) suit la lumière de la vue : café sur la
+  // page Films, encre sur les autres scènes sombres (accueil, offre Film),
+  // crème sur les vues claires.
   useEffect(() => {
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', dark ? '#1a1512' : '#f2ede4')
-  }, [dark])
+    const color = view === 'films' ? '#6e6350' : dark ? '#1a1512' : '#f2ede4'
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color)
+  }, [dark, view])
 
   // Après une navigation, on déplace le focus dans la nouvelle vue (jamais au
   // premier rendu). preventScroll : sans lui, le navigateur fait défiler pour

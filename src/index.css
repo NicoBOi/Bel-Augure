@@ -19,6 +19,9 @@
   --color-orfonce: #655329;
   --color-sable: #f0e6d8;
   --color-grege: #6e6350;
+  /* Café : le fond chaud de la page Films (repris du grège des anciennes
+     Saisons) — le film se pose sur une matière, pas sur l'encre pure. */
+  --color-cafe: #6e6350;
   --color-creme: #f2ede4;
 
   --font-display: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;

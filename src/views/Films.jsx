@@ -50,7 +50,7 @@ export default function Films({ setDark }) {
     <section
       ref={ref}
       aria-label="Films"
-      className="flex h-full flex-col overflow-y-auto py-24"
+      className="flex h-full flex-col overflow-y-auto bg-cafe py-24"
     >
       <div className="mx-auto w-full lg:flex lg:max-w-[1500px] lg:flex-1 lg:flex-col lg:justify-center lg:px-16">
         {FILMS.map((film) => (
