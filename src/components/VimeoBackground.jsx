@@ -34,6 +34,9 @@ export default function VimeoBackground({
   // Miroir de `paused` : ne pas relancer un film que le visiteur a mis en pause.
   const pausedRef = useRef(paused)
   pausedRef.current = paused
+  // Audio « réchauffé » une seule fois : le player passe en démuté/volume 0 dès
+  // le premier geste, pour qu'activer le son plus tard soit instantané.
+  const warmedRef = useRef(false)
 
   const post = (method, value) => {
     frameRef.current?.contentWindow?.postMessage(
@@ -89,31 +92,42 @@ export default function VimeoBackground({
       }
     }, 900)
 
-    // Déblocage iOS : si l'autoplay est refusé (Économie d'énergie, Safari),
-    // on relance une lecture muette au premier geste discret — jamais sur
-    // 'scroll' (qui saccaderait le défilement), et jamais si le visiteur a
-    // volontairement mis en pause. S'arrête dès que le film tourne.
-    const kick = () => {
-      if (playedRef.current || pausedRef.current) return
-      post('setVolume', soundRef.current ? 1 : 0)
-      post('play')
+    // Au premier geste discret (jamais 'scroll', qui saccaderait le défilement) :
+    //  • tant que le film n'a pas démarré, on relance une lecture muette —
+    //    déblocage iOS quand l'autoplay est refusé (Économie d'énergie, Safari) ;
+    //  • une fois lancé, sur le lecteur Films (non-background), on réchauffe la
+    //    piste audio une seule fois : le player passe en « démuté, volume 0 »
+    //    (donc silencieux). Activer le son ensuite n'est plus qu'un changement
+    //    de volume — instantané, sans re-bufferisation ni saccade de l'image.
+    const onGesture = () => {
+      if (!playedRef.current && !pausedRef.current) {
+        post('setVolume', soundRef.current ? 1 : 0)
+        post('play')
+        return
+      }
+      if (!background && !warmedRef.current) {
+        warmedRef.current = true
+        post('setVolume', soundRef.current ? 1 : 0)
+        post('setMuted', false)
+      }
     }
     const gestures = ['pointerdown', 'touchend']
-    for (const g of gestures) window.addEventListener(g, kick, { passive: true })
+    for (const g of gestures) window.addEventListener(g, onGesture, { passive: true })
 
     return () => {
       window.removeEventListener('message', onMessage)
       clearTimeout(reveal)
-      for (const g of gestures) window.removeEventListener(g, kick)
+      for (const g of gestures) window.removeEventListener(g, onGesture)
     }
   }, [])
 
-  // Le son suit la volonté du visiteur, sans recharger le player. On lève
-  // d'abord le muet (obligatoire pour qu'un son sorte), puis on règle le
-  // volume — le clic sur le bouton fournit le geste utilisateur exigé par iOS.
+  // Le son suit la volonté du visiteur, sans recharger le player. À l'activation
+  // on lève le muet (le clic fournit le geste utilisateur exigé par iOS) ; à la
+  // coupure on ne remute jamais — on descend juste le volume à 0. La piste audio
+  // reste « chaude », donc revenir au son est instantané, sans saccade d'image.
   useEffect(() => {
     if (soundOn === undefined) return
-    post('setMuted', soundOn ? false : true)
+    if (soundOn) post('setMuted', false)
     post('setVolume', soundOn ? 1 : 0)
   }, [soundOn])
 
