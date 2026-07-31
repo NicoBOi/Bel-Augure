@@ -70,7 +70,7 @@ export default function Films({ setDark }) {
                 if (e.target.closest('[data-ctrl]')) return
                 setPaused((s) => ({ ...s, [film.id]: !s[film.id] }))
               }}
-              className="film-stage relative aspect-video w-full cursor-pointer overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl lg:border lg:border-encre/10"
+              className="film-stage relative aspect-video w-full cursor-pointer overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl"
             >
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground

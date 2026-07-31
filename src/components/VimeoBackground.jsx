@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 // Lecteur Vimeo en mode background qui ne se montre qu'une fois la lecture
 // réellement démarrée : avant cela, le fond encre reste seul en scène.
@@ -123,25 +123,35 @@ export default function VimeoBackground({
     post(paused ? 'pause' : 'play')
   }, [paused])
 
-  if (!id) return null
-
   // Fond pur : le film joue sans aucune UI Vimeo, non cliquable. playsinline
   // garde la lecture dans la page sur iOS (pas de bascule plein écran forcée).
-  const src = `https://player.vimeo.com/video/${id}?${
-    background ? 'background=1&' : ''
-  }autoplay=1&loop=1&muted=1&playsinline=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
+  const src = id
+    ? `https://player.vimeo.com/video/${id}?${
+        background ? 'background=1&' : ''
+      }autoplay=1&loop=1&muted=1&playsinline=1&autopause=0&controls=0&title=0&byline=0&portrait=0&dnt=1`
+    : ''
 
-  return (
-    <iframe
-      ref={frameRef}
-      title={title}
-      src={src}
-      allow="autoplay; fullscreen; picture-in-picture"
-      allowFullScreen
-      tabIndex={-1}
-      className={`pointer-events-none border-0 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        playing ? 'opacity-100' : 'opacity-0'
-      } ${className}`}
-    />
+  // L'iframe est mémoïsée : une fois la lecture lancée, couper le son ou mettre
+  // en pause re-rend le composant (pour poster le message à Vimeo) mais React
+  // réutilise le même élément iframe — le player n'est jamais retouché ni
+  // rechargé, donc la vidéo ne saccade plus au clic sur les contrôles.
+  const iframe = useMemo(
+    () => (
+      <iframe
+        ref={frameRef}
+        title={title}
+        src={src}
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowFullScreen
+        tabIndex={-1}
+        className={`pointer-events-none border-0 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          playing ? 'opacity-100' : 'opacity-0'
+        } ${className}`}
+      />
+    ),
+    [src, title, playing, className],
   )
+
+  if (!id) return null
+  return iframe
 }
