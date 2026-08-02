@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 // Lecteur Vimeo en mode background qui ne se montre qu'une fois la lecture
 // réellement démarrée : avant cela, le fond encre reste seul en scène.
@@ -37,6 +37,22 @@ export default function VimeoBackground({
   // Audio « réchauffé » une seule fois : le player passe en démuté/volume 0 dès
   // le premier geste, pour qu'activer le son plus tard soit instantané.
   const warmedRef = useRef(false)
+  // Minuteries de révélation : grâce après chargement de l'iframe, et recours
+  // absolu anti-blocage.
+  const revealTimer = useRef(null)
+  const hardTimer = useRef(null)
+
+  // Révèle le film (fondu) et prévient le parent — une seule fois. Passé en ref
+  // pour rester appelable depuis des callbacks stables (message, load, timers).
+  const reveal = () => {
+    setPlaying(true)
+    if (!notified.current) {
+      notified.current = true
+      onPlayingRef.current?.()
+    }
+  }
+  const revealRef = useRef(reveal)
+  revealRef.current = reveal
 
   const post = (method, value) => {
     frameRef.current?.contentWindow?.postMessage(
@@ -69,28 +85,22 @@ export default function VimeoBackground({
         post('setVolume', soundRef.current ? 1 : 0)
         if (!pausedRef.current) post('play')
       } else if (data.event === 'play' || data.event === 'playProgress') {
+        // Signal réel de lecture : on révèle pile quand l'image tourne — donc au
+        // bon moment, y compris sur connexion lente (jamais un player encore en
+        // train de charger). C'est le chemin principal.
         playedRef.current = true
-        setPlaying(true)
-        if (!notified.current) {
-          notified.current = true
-          onPlayingRef.current?.()
-        }
+        revealRef.current()
       }
     }
     window.addEventListener('message', onMessage)
 
-    // Filet de sécurité : sur mobile l'autoplay muet ne renvoie pas toujours
-    // les événements 'play'/'playProgress'. Sans ce signal, l'iframe resterait
-    // à opacity-0 et rien ne s'afficherait. On révèle donc le film après un
-    // court délai. (Un simple setTimeout, aucun listener : ne touche pas au
-    // scroll.)
-    const reveal = setTimeout(() => {
-      setPlaying(true)
-      if (!notified.current) {
-        notified.current = true
-        onPlayingRef.current?.()
-      }
-    }, 900)
+    // Recours absolu anti-blocage : si le player ne signale jamais rien (cas très
+    // rare — iframe morte, réseau coupé), on révèle au bout de quelques secondes
+    // pour ne pas laisser le voile tourner indéfiniment. Le filet ordinaire est
+    // le 'load' de l'iframe (handleFrameLoad) ; le chemin nominal, l'événement
+    // 'play' réel ci-dessus. Volontairement long pour laisser une connexion lente
+    // démarrer d'elle-même avant tout affichage forcé.
+    hardTimer.current = setTimeout(() => revealRef.current(), 9000)
 
     // Au premier geste discret (jamais 'scroll', qui saccaderait le défilement) :
     //  • tant que le film n'a pas démarré, on relance une lecture muette —
@@ -116,9 +126,21 @@ export default function VimeoBackground({
 
     return () => {
       window.removeEventListener('message', onMessage)
-      clearTimeout(reveal)
+      clearTimeout(revealTimer.current)
+      clearTimeout(hardTimer.current)
       for (const g of gestures) window.removeEventListener(g, onGesture)
     }
+  }, [])
+
+  // Le player a fini de charger. S'il n'a pas encore signalé la lecture, on lui
+  // laisse un court délai pour démarrer, puis on révèle — filet pour les
+  // navigateurs (mobiles surtout) qui ne postent pas d'événement 'play'. Sur
+  // connexion lente ce 'load' arrive tard, donc la révélation attend d'autant :
+  // on n'affiche plus le film avant qu'il soit réellement chargé.
+  const handleFrameLoad = useCallback(() => {
+    if (notified.current) return
+    clearTimeout(revealTimer.current)
+    revealTimer.current = setTimeout(() => revealRef.current(), 2500)
   }, [])
 
   // Le son suit la volonté du visiteur, sans recharger le player. À l'activation
@@ -155,6 +177,7 @@ export default function VimeoBackground({
         ref={frameRef}
         title={title}
         src={src}
+        onLoad={handleFrameLoad}
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen
         tabIndex={-1}
@@ -163,7 +186,7 @@ export default function VimeoBackground({
         } ${className}`}
       />
     ),
-    [src, title, playing, className],
+    [src, title, playing, className, handleFrameLoad],
   )
 
   if (!id) return null

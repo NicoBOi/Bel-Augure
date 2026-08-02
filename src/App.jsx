@@ -176,17 +176,22 @@ export default function App() {
 
   // La barre progresse d'un seul mouvement continu : elle s'approche en
   // douceur d'un plafond tant que le film se prépare (92 %), puis, dès qu'il
-  // joue (heroReady) ou après un plafond de sûreté, la même courbe la mène
-  // jusqu'au bout — pas de saut, pas de palier, un remplissage fluide.
-  // On écrit la largeur directement (pas de setState par frame) et le voile
-  // ne se lève qu'une fois, quand la barre est quasi pleine.
+  // joue (heroReady), la même courbe la mène jusqu'au bout — pas de saut, pas
+  // de palier, un remplissage fluide. On écrit la largeur directement (pas de
+  // setState par frame) et le voile ne se lève qu'une fois, quand la barre est
+  // quasi pleine.
+  // heroReady est le vrai signal (événement 'play' réel du player, avec ses
+  // propres filets côté VimeoBackground) : sur connexion lente le voile attend
+  // donc que le film démarre vraiment, au lieu de se lever sur un écran noir.
+  // Le plafond de 11 s n'est qu'un ultime garde-fou anti-blocage, au-delà du
+  // recours interne du player (9 s) — il ne se déclenche jamais en usage normal.
   useEffect(() => {
     if (!veiled) return
     let raf
     let lifted = false
     const loop = () => {
       const p = progressRef.current
-      const done = heroReady || performance.now() - bootAt.current > 3000
+      const done = heroReady || performance.now() - bootAt.current > 11000
       const goal = done ? 100 : 92
       progressRef.current = p + (goal - p) * 0.08
       if (barRef.current) barRef.current.style.width = `${progressRef.current}%`
