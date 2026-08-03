@@ -49,20 +49,22 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Deux offres : Portraits, cinq films courts tournés en une journée, et Film Signature, le film narratif de la maison. Chaque projet est chiffré sur mesure.',
+    desc: 'Trois offres sur mesure : Film Signature, le film narratif central ; Histoires de marque, une collection de récits courts ; Campagne signature, un concept décliné sur tous vos supports. Chaque projet est chiffré sur mesure.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: `
       <h2>Film Signature</h2>
-      <p>Un film narratif pour graver votre nom dans le temps. Le film qu'on met en page d'accueil, qu'on envoie à la presse, qu'on projette en salon, qu'on montre aux investisseurs. Un scénario, une équipe, des acteurs ; nous gérons tout, du tournage à la livraison. Inclus : écriture du scénario et des dialogues, repérage, casting et direction d'acteur, une journée de tournage avec équipe complète déclarée, un film de 60 à 90 secondes et son teaser de 30 secondes, deux déclinaisons 9:16 et 1:1, quinze photographies de plateau, étalonnage, création sonore et mixage, musique sous licence, cession de droits 2 ans en France, livraison sous 3 semaines. Options : journée de tournage supplémentaire, comédien supplémentaire, exploitation cinéma, voix off, doublage IA en anglais.</p>
-      <h2>Portraits</h2>
-      <p>Cinq films courts en une journée. Une comédienne dirigée, une lumière construite, une journée chez vous. Inclus : écriture des textes, une journée de tournage avec deux opérateurs, une comédienne professionnelle déclarée, cinq films verticaux de 15 à 30 secondes, étalonnage et mixage, fichiers 4K 9:16 prêts à publier, cession de droits illimitée dans le temps en France, livraison sous 7 jours ouvrés. Options : portrait supplémentaire, journée de tournage supplémentaire, comédienne supplémentaire, photographies, doublage IA en anglais.</p>
+      <p>Le film qui installe durablement votre univers. Une pièce centrale imaginée pour révéler ce que votre marque fait ressentir : conception, écriture, mise en scène et production pensées autour de votre identité. La création peut réunir conception créative et écriture, direction artistique, repérage et préparation, mise en scène de l'expérience, tournage et direction de la photographie, montage, création sonore et étalonnage, adaptations aux supports de diffusion. Pour un lancement, votre site, une présentation, un salon, YouTube ou une diffusion cinéma. Une création entièrement conçue sur mesure.</p>
+      <h2>Histoires de marque</h2>
+      <p>Des récits courts pour faire vivre votre univers dans le temps. Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent. Chaque collection peut explorer un rituel ou un soin signature, le portrait d'un fondateur ou d'un artisan, l'atmosphère d'un lieu, l'origine d'un produit ou d'un ingrédient, les gestes d'un savoir-faire, les convictions et les histoires de la maison. Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.</p>
+      <h2>Campagne signature</h2>
+      <p>Un même concept pour donner de la force à chaque prise de parole. Une campagne complète imaginée autour d'un lancement, d'une ouverture ou d'un temps fort : film principal, récits courts et déclinaisons visuelles réunis au sein d'une même direction créative. La campagne peut associer conception du concept créatif, Film Signature, collection d'Histoires de marque, déclinaisons horizontales et verticales, formats courts, photographies ou photogrammes de campagne, adaptations aux différents supports. Pour lancer un lieu, une gamme, un soin, une saison ou une nouvelle identité.</p>
+      <h2>Extensions possibles</h2>
+      <p>Chaque création peut être complétée selon ses besoins de production et de diffusion : déclinaisons verticales et formats courts, version cinéma, photographies de campagne, banque d'images, voix off et création sonore originale, casting, stylisme et maquillage, journée de tournage supplémentaire, adaptations multilingues. Ces éléments sont étudiés et chiffrés selon les besoins réels du projet.</p>
       <h2>Les questions qui reviennent</h2>
       <p>Combien ça coûte ? Chaque projet est chiffré sur mesure, selon votre lieu, l'ampleur du tournage et la diffusion visée. Parlons-en : on vous envoie un devis clair et détaillé.</p>
-      <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
-      <p>Partout en France ? Oui, partout en France.</p>
-      <p>À qui appartient le film ? Les droits de diffusion sont inclus : sans limite de temps pour les Portraits, deux ans pour le Film Signature.</p>
-      <h2>Conditions communes</h2>
-      <p>Acompte 50 % à la commande, solde à la livraison. Journée de 8 heures, heures supplémentaires majorées. Déplacement au-delà de 80 km depuis Bordeaux, repas et hébergement en sus. Report sans frais jusqu'à 7 jours avant le tournage. Fichiers sources conservés 12 mois, non livrés. TVA 20 % en sus.</p>`,
+      <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
+      <p>Partout en France ? Oui, partout en France.</p>
+      <p>À qui appartient le film ? Les droits de diffusion sont inclus et définis avec vous, selon les supports et la durée d'exploitation visés.</p>`,
   },
   {
     path: '/contact',

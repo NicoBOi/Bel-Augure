@@ -2,152 +2,124 @@ import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
 // Page /offres — une console d'atelier, pas un panier. À GAUCHE on lit l'offre
-// (accroche, description, ce qui est déjà compris) ; à DROITE on la compose
-// (les options qu'on ajoute) et le devis se recompose en direct, comme un
-// panneau de stats. On emprunte la structure du loadout de jeu vidéo — slots,
-// états francs, un seul chiffre qui compte — jamais son esthétique (pas de HUD,
-// pas de néon). La pièce change de lumière selon l'offre : or pâle pour l'UGC
-// (films verticaux courts), encre pour le Film (le film central).
+// (accroche, description, usages) ; à DROITE on compose (on coche les éléments
+// qui parlent au projet) et le studio reprend cette sélection pour un devis sur
+// mesure. On emprunte la structure du loadout de jeu vidéo — slots, états
+// francs — jamais son esthétique (pas de HUD, pas de néon). Aucun prix affiché :
+// tout est chiffré selon les besoins réels. La pièce change de lumière selon
+// l'offre.
 const OFFRES = [
   {
     name: 'Film Signature',
-    eyebrow: 'La pièce maîtresse',
-    base: 9500,
-    from: true,
-    compose: 'Composez votre film',
-    accroche:
-      'Un film narratif pour graver votre nom dans le temps.',
+    eyebrow: '01',
+    accroche: 'Le film qui installe durablement votre univers.',
     description: [
-      "C’est le film qu’on met en page d’accueil, celui qu’on envoie à la presse, qu’on projette en salon, qu’on montre aux investisseurs…",
-      "Un scénario, une équipe, des acteurs. Nous gérons tout, du tournage à la livraison. Vous n’avez rien à préparer.",
+      'Une pièce centrale imaginée pour révéler ce que votre marque fait ressentir. Conception, écriture, mise en scène et production sont entièrement pensées autour de votre identité.',
     ],
-    inclus: [
-      "Entretien de cadrage et note d'intention",
-      'Écriture du scénario et des dialogues, deux versions',
-      'Repérage sur site, une demi-journée',
-      "Casting et direction d'acteur",
-      'Une journée de tournage',
-      'Équipe complète — deux opérateurs, un comédien, une maquilleuse-coiffeuse, un assistant lumière, tous déclarés',
-      'Un film de 60 à 90 secondes',
-      'Un teaser de 30 secondes issu du même montage',
-      'Deux déclinaisons, 9:16 et 1:1',
-      'Quinze photographies de plateau',
-      'Étalonnage, création sonore, mixage',
-      'Musique sous licence pour la durée de la cession',
-      'Fichiers 4K, prêts à publier, sous-titres incrustés sur les verticales et fichier séparé pour le film',
-      'Deux allers-retours de montage',
-      'Cession de droits 2 ans — France, digital et réseaux sociaux',
-      'Livraison sous 3 semaines',
+    compose: 'La création peut réunir',
+    items: [
+      'Conception créative et écriture',
+      'Direction artistique',
+      'Repérage et préparation',
+      'Mise en scène de l’expérience',
+      'Tournage et direction de la photographie',
+      'Montage, création sonore et étalonnage',
+      'Adaptations aux supports de diffusion',
     ],
-    options: [
-      { label: 'Voix off professionnelle', price: 600 },
-      { label: 'Doublage IA en anglais + sous-titres', price: 250 },
-      { label: 'Aller-retour de montage supplémentaire', price: 350, qty: [1, 3] },
-      { label: 'Comédien supplémentaire', price: 900, qty: [1, 3] },
-      { label: 'Journée de tournage supplémentaire', price: 3500, qty: [1, 2] },
-      {
-        label: 'Exploitation cinéma — DCP, extension de droits, contrats comédiens étendus',
-        price: 2500,
-      },
-      { label: 'Extension télévision, affichage, presse imprimée', quote: true },
-    ],
-    note: 'Renouvellement de licence à partir du 25ᵉ mois — 20 % du prix par an.',
-    nonInclus: [
-      "Achat d'espace, en salle comme ailleurs",
-      'Décors, stylisme, accessoires',
-      'Autorisations de tournage payantes',
-      'Figuration au-delà du comédien principal',
-      'Fichiers sources et rushes',
-    ],
+    usage:
+      'Pour un lancement, votre site, une présentation, un salon, YouTube ou une diffusion cinéma.',
+    closing: 'Une création entièrement conçue sur mesure.',
     bgColor: '#1a1512',
     ink: true,
   },
   {
-    name: 'Portraits',
-    eyebrow: 'Cinq films, une journée',
-    base: 3500,
-    from: true,
-    compose: 'Composez vos portraits',
-    accroche:
-      'Cinq portraits filmés en une journée chez vous. Des comédiens expérimentés, une lumière maîtrisée.',
+    name: 'Histoires de marque',
+    eyebrow: '02',
+    accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
     description: [
-      "Cinq portraits qui suivent le fil d’une visite dans votre univers. Une comédienne joue ce que vit votre client, elle dit ce qu’il ressent. Les moyens du cinéma, à votre porte.",
-      "Vous repartez avec cinq films prêts à publier. Plus besoin de lire, seulement de le vivre.",
+      'Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent.',
     ],
-    inclus: [
-      'Visite du lieu, en physique ou à distance, pour le repérage',
-      'Écriture des textes, une version par portrait',
-      'Une journée de tournage sur site, deux opérateurs',
-      'Une comédienne professionnelle',
-      'Setup lumière construit & prise audio cinéma',
-      'Cinq films verticaux de 15 à 30 secondes',
-      'Étalonnage et mixage',
-      'Fichiers 4K, format 9:16, prêts à publier',
-      'Dossier de livraison avec instructions de publication',
-      'Cession de droits illimitée dans le temps — France, web, réseaux sociaux, publicité en ligne',
-      'Livraison sous 7 jours ouvrés',
+    compose: 'Chaque collection peut explorer',
+    items: [
+      'Un rituel ou un soin signature',
+      'Le portrait d’un fondateur ou d’un artisan',
+      'L’atmosphère d’un lieu',
+      'L’origine d’un produit ou d’un ingrédient',
+      'Les gestes d’un savoir-faire',
+      'Les convictions et les histoires de la maison',
     ],
-    options: [
-      { label: 'Portrait supplémentaire', price: 450, qty: [1, 3] },
-      { label: 'Vingt photographies supplémentaires', price: 400, qty: [1, 3] },
-      { label: 'Le film d’ambiance de 30 à 45 s + pack de 10 photos', price: 1000 },
-      { label: 'Doublage IA en anglais + sous-titres', price: 250 },
-      { label: 'Comédienne supplémentaire', price: 400, qty: [1, 2] },
-      {
-        label: 'Journée de tournage supplémentaire — jusqu’à cinq portraits de plus',
-        price: 2500,
-        qty: [1, 2],
-      },
-      { label: 'Extension télévision, affichage, presse imprimée', quote: true },
-    ],
-    nonInclus: [
-      'Stratégie éditoriale, rédaction de légendes, publication, community management',
-      "Rapport d'audience",
-      'Drone, machinerie, groupe électrogène',
-      'Stylisme, accessoires',
-      'Fichiers sources et rushes',
-      "Achat d'espace publicitaire",
-    ],
+    usage:
+      'Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.',
+    closing: 'Le nombre, la durée et les formats sont définis selon votre ligne éditoriale.',
     bgColor: 'rgb(217 198 166 / 0.45)',
     ink: false,
   },
+  {
+    name: 'Campagne signature',
+    eyebrow: '03',
+    accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
+    description: [
+      'Une campagne complète imaginée autour d’un lancement, d’une ouverture ou d’un temps fort. Film principal, récits courts et déclinaisons visuelles sont réunis au sein d’une même direction créative.',
+    ],
+    compose: 'La campagne peut associer',
+    items: [
+      'Conception du concept créatif',
+      'Film Signature',
+      'Collection d’Histoires de marque',
+      'Déclinaisons horizontales et verticales',
+      'Formats courts',
+      'Photographies ou photogrammes de campagne',
+      'Adaptations aux différents supports',
+    ],
+    usage: 'Pour lancer un lieu, une gamme, un soin, une saison ou une nouvelle identité.',
+    closing: 'Un univers cohérent, pensé pour se déployer sur l’ensemble de vos supports.',
+    bgColor: '#241c15',
+    ink: true,
+  },
 ]
+
+// Extensions communes aux trois offres : de quoi prolonger le projet.
+const EXTENSIONS = {
+  tagline: 'Prolonger le projet',
+  intro:
+    'Chaque création peut être complétée selon ses besoins de production et de diffusion.',
+  items: [
+    'Déclinaisons verticales et formats courts',
+    'Version cinéma',
+    'Photographies de campagne',
+    'Banque d’images',
+    'Voix off et création sonore originale',
+    'Casting, stylisme et maquillage',
+    'Journée de tournage supplémentaire',
+    'Adaptations multilingues',
+  ],
+  closing: 'Ces éléments sont étudiés et chiffrés selon les besoins réels du projet.',
+}
 
 // Les questions qui reviennent, gardées en bas de page. Réponses courtes.
 const QUESTIONS = [
   {
-    q: 'Combien ça coûte ?',
+    q: 'Combien ça coûte ?',
     r: 'Chaque projet est chiffré sur mesure, selon votre lieu, l’ampleur du tournage et la diffusion visée. Parlons-en : on vous envoie un devis clair et détaillé.',
   },
   {
-    q: "Qui apparaît à l'écran ?",
-    r: 'Nous avons à cœur de travailler avec des acteurs pour rendre votre lieu vivant ! Nous nous occupons du casting.',
+    q: "Qui apparaît à l'écran ?",
+    r: 'Nous avons à cœur de travailler avec des acteurs pour rendre votre lieu vivant ! Nous nous occupons du casting.',
   },
   {
-    q: 'Partout en France ?',
-    r: 'Oui, partout en France ! Chaque projet est une occasion de découvrir de nouveaux décors et de faire naître de nouvelles idées.',
+    q: 'Partout en France ?',
+    r: 'Oui, partout en France ! Chaque projet est une occasion de découvrir de nouveaux décors et de faire naître de nouvelles idées.',
   },
   {
-    q: 'À qui appartient le film ?',
-    r: "Les droits de diffusion sont inclus : sans limite de temps pour les Portraits, deux ans pour le Film Signature.",
+    q: 'À qui appartient le film ?',
+    r: 'Les droits de diffusion sont inclus et définis avec vous, selon les supports et la durée d’exploitation visés.',
   },
 ]
-
-// Conditions communes aux deux offres, en pied de page.
-const CONDITIONS = [
-  'Acompte 50 % à la commande, solde à la livraison',
-  'journée de 8 heures, heures supplémentaires majorées',
-  'déplacement au-delà de 80 km depuis Bordeaux, repas et hébergement en sus',
-  "report sans frais jusqu'à 7 jours avant le tournage",
-  'fichiers sources conservés 12 mois, non livrés',
-  'TVA 20 % en sus',
-]
-
 
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
   const [index, setIndex] = useState(0)
-  // Sélection conservée PAR offre : { [indexOffre]: { [indexOption]: quantité } }.
+  // Sélection conservée PAR offre : { [indexOffre]: { [indexÉlément]: true } }.
   // Changer d'offre ne détruit plus la composition — on la retrouve en revenant.
   const [selByOffer, setSelByOffer] = useState({})
   // Repli du récapitulatif sur mobile (barre du bas dépliable).
@@ -167,7 +139,7 @@ export default function Offres({ setDark, onNavigate }) {
   }, [index])
 
   // Flèches clavier : on passe d'une offre à l'autre — sauf quand le focus est
-  // dans la console (steppers, cases), pour ne pas changer d'offre par mégarde.
+  // dans la console (cases), pour ne pas changer d'offre par mégarde.
   useEffect(() => {
     const onKey = (e) => {
       if (document.activeElement?.closest('[data-console]')) return
@@ -200,55 +172,29 @@ export default function Offres({ setDark, onNavigate }) {
     setSelByOffer((all) => {
       const cur = { ...(all[index] || {}) }
       if (cur[i]) delete cur[i]
-      else cur[i] = offre.options[i].qty ? offre.options[i].qty[0] : 1
+      else cur[i] = true
       return { ...all, [index]: cur }
     })
 
-  const step = (i, delta) =>
-    setSelByOffer((all) => {
-      const cur = { ...(all[index] || {}) }
-      const [min, max] = offre.options[i].qty
-      cur[i] = Math.min(max, Math.max(min, (cur[i] || min) + delta))
-      return { ...all, [index]: cur }
-    })
+  // Les éléments cochés de l'offre courante, dans l'ordre.
+  const selected = offre.items.filter((_, i) => sel[i])
 
-  // Composition du devis : socle + options chiffrées, les « sur devis » à part.
-  const priced = offre.options
-    .map((o, i) =>
-      !sel[i] || o.quote || !o.price
-        ? null
-        : { label: o.label, qty: o.qty ? sel[i] : 1, hasQty: !!o.qty, amount: o.price * sel[i] },
-    )
-    .filter(Boolean)
-  const quoteItems = offre.options.filter((o, i) => o.quote && sel[i]).map((o) => o.label)
-  const items = [{ label: offre.name, amount: offre.base, base: true }, ...priced]
-  const hasQuote = quoteItems.length > 0
-
-  // « Demander un devis » : on compose le récapitulatif de la configuration
-  // et on file vers la page Contact, où il pré-remplit le message. Le
-  // prospect n'a plus qu'à laisser ses coordonnées et envoyer.
+  // « Demander un devis » : on reprend l'offre et la sélection dans un message
+  // qui pré-remplit la page Contact. Le prospect n'a plus qu'à laisser ses
+  // coordonnées et envoyer. Aucun prix — le chiffrage se fait sur mesure.
   const requestQuote = () => {
-    const lines = [
-      ...priced.map((it) => `— ${it.label}${it.hasQty ? ` × ${it.qty}` : ''}`),
-      ...quoteItems.map((l) => `— ${l} (sur devis)`),
-    ]
     const message = [
       'Bonjour,',
       '',
-      `Je souhaite un devis pour l'offre ${offre.name}.`,
+      `Je souhaite échanger sur l'offre ${offre.name}.`,
       '',
-      lines.length ? 'Options retenues :' : 'Sans option supplémentaire.',
-      ...lines,
+      selected.length ? 'Ce qui m’intéresse :' : 'Je vous laisse me guider.',
+      ...selected.map((l) => `— ${l}`),
     ].join('\n')
     onNavigate?.('contact', { message, offer: offre.name })
   }
 
   const label = ink ? 'text-sable/75' : 'text-encre/70'
-  const dash = ink ? 'text-or/75' : 'text-grege'
-  // Sur fond clair, l'or pâle est illisible : on passe à l'or foncé (token),
-  // qui respecte le contraste AA pour les prix et accents.
-  const priceText = ink ? 'text-or' : 'text-orfonce'
-  const lineParts = { items, quoteItems, ink, priceText, label }
 
   return (
     <section
@@ -259,15 +205,15 @@ export default function Offres({ setDark, onNavigate }) {
       className="flex h-full flex-col overflow-y-auto px-6 pt-28 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:px-16"
       style={{ backgroundColor: offre.bgColor }}
     >
-      {/* Le sélecteur : deux cartes de choix. La carte active fait office de
-          titre — nom, surtitre et prix. Un mot d'intro et une mention par carte
-          (« Choisir » / « Sélectionné ») rendent le geste explicite : on choisit
-          entre deux offres, et le choix change la lumière de la page. */}
+      {/* Le sélecteur : trois cartes de choix. La carte active fait office de
+          titre — numéro et nom. Un mot d'intro et une pastille « Sélectionné »
+          rendent le geste explicite : on choisit une offre, et le choix change
+          la lumière de la page. */}
       <p
         className={`reveal-up mx-auto mt-4 w-full max-w-[1180px] text-[11px] font-normal uppercase tracking-[0.3em] md:mt-8 ${label}`}
         style={{ '--d': '0.08s' }}
       >
-        Deux offres — choisissez la vôtre
+        Trois offres — choisissez la vôtre
       </p>
       <div
         className="reveal-up mx-auto mt-4 flex w-full max-w-[1180px] flex-col gap-4 sm:flex-row"
@@ -296,7 +242,7 @@ export default function Offres({ setDark, onNavigate }) {
                 {o.eyebrow}
               </span>
               <span
-                className={`mt-2 font-display text-[clamp(2rem,3.4vw,3rem)] leading-none transition-colors duration-500 ${
+                className={`mt-2 font-display text-[clamp(1.7rem,2.9vw,2.6rem)] leading-[1.04] transition-colors duration-500 ${
                   on ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/65' : 'text-encre/60'
                 }`}
               >
@@ -348,25 +294,23 @@ export default function Offres({ setDark, onNavigate }) {
               ))}
             </div>
 
-            {/* Compris : coché, verrouillé — la substance de l'offre */}
-            <h2 className={`mt-12 text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-              Compris dans l’offre
-            </h2>
-            <ul className="mt-6 space-y-3">
-              {offre.inclus.map((item) => (
-                <li
-                  key={item}
-                  className={`flex gap-3 text-[13px] font-light leading-[1.55] ${
-                    ink ? 'text-sable/80' : 'text-encre/75'
-                  }`}
-                >
-                  <span aria-hidden="true" className="mt-[0.15em] shrink-0 text-or">
-                    <IconCheck />
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            {/* Où le montrer */}
+            <p
+              className={`mt-9 max-w-[54ch] text-[13px] font-light leading-[1.85] ${
+                ink ? 'text-sable/65' : 'text-encre/60'
+              }`}
+            >
+              {offre.usage}
+            </p>
+
+            {/* Note de clôture — la promesse sur mesure */}
+            <p
+              className={`mt-8 max-w-[46ch] text-[14.5px] font-light italic leading-[1.55] ${
+                ink ? 'text-sable' : 'text-encre'
+              }`}
+            >
+              {offre.closing}
+            </p>
           </div>
 
           {/* ── DROITE : la console ────────────────────────────── */}
@@ -383,19 +327,19 @@ export default function Offres({ setDark, onNavigate }) {
                     {offre.compose}
                   </h2>
                   <p className={`mt-2 text-[12.5px] font-light leading-[1.6] ${ink ? 'text-sable/70' : 'text-encre/65'}`}>
-                    Le socle est compris. Ajoutez ce qui vous ressemble.
+                    Cochez ce qui vous parle — on affine le projet ensemble.
                   </p>
                 </div>
 
-                {/* Les options : seule zone qui défile en interne sur écran court —
-                    l'en-tête et le pied (total + devis) restent toujours en vue.
+                {/* Les éléments : seule zone qui défile en interne sur écran court —
+                    l'en-tête et le pied (devis) restent toujours en vue.
                     data-console : les flèches clavier n'y changent pas d'offre. */}
                 <ul data-console className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
-                  {offre.options.map((o, i) => {
+                  {offre.items.map((item, i) => {
                     const on = !!sel[i]
                     return (
                       <li
-                        key={o.label}
+                        key={item}
                         className={`flex items-center gap-4 border-b py-4 ${
                           ink ? 'border-creme/10' : 'border-encre/10'
                         }`}
@@ -435,7 +379,7 @@ export default function Offres({ setDark, onNavigate }) {
                                     : 'text-encre/80'
                               }`}
                             >
-                              {o.label}
+                              {item}
                             </span>
                             {/* Filet or qui se trace sous la ligne retenue */}
                             <span
@@ -448,65 +392,6 @@ export default function Offres({ setDark, onNavigate }) {
                             />
                           </span>
                         </button>
-
-                        <div className="flex shrink-0 items-center gap-3">
-                          {/* Emplacement du compteur réservé en permanence sur les
-                              options à quantité : cocher n'élargit plus la ligne,
-                              rien ne se décale. */}
-                          {o.qty && (
-                            <div className="flex h-9 w-[104px] shrink-0 items-center justify-end">
-                              {on && (
-                                <span
-                                  className={`flex items-center gap-2 rounded-full border px-2.5 py-1 ${
-                                    ink ? 'border-creme/25' : 'border-encre/20'
-                                  }`}
-                                >
-                              <button
-                                type="button"
-                                aria-label={`Réduire la quantité — ${o.label}`}
-                                onClick={() => step(i, -1)}
-                                disabled={sel[i] <= o.qty[0]}
-                                className={`-my-2 flex h-11 w-9 cursor-pointer items-center justify-center text-[16px] leading-none transition-transform active:scale-90 disabled:cursor-default disabled:opacity-25 ${
-                                  ink ? 'text-creme' : 'text-encre'
-                                }`}
-                              >
-                                −
-                              </button>
-                              <span
-                                aria-live="polite"
-                                className={`w-3 overflow-hidden text-center text-[13px] tabular-nums ${
-                                  ink ? 'text-creme' : 'text-encre'
-                                }`}
-                              >
-                                <span key={sel[i]} className="qty-roll">
-                                  {sel[i]}
-                                </span>
-                              </span>
-                              <button
-                                type="button"
-                                aria-label={`Augmenter la quantité — ${o.label}`}
-                                onClick={() => step(i, 1)}
-                                disabled={sel[i] >= o.qty[1]}
-                                className={`-my-2 flex h-11 w-9 cursor-pointer items-center justify-center text-[16px] leading-none transition-transform active:scale-90 disabled:cursor-default disabled:opacity-25 ${
-                                  ink ? 'text-creme' : 'text-encre'
-                                }`}
-                              >
-                                +
-                              </button>
-                                </span>
-                              )}
-                            </div>
-                          )}
-                          {o.quote && (
-                            <span
-                              className={`whitespace-nowrap text-[12.5px] italic tracking-[0.02em] ${
-                                ink ? 'text-sable/55' : 'text-encre/55'
-                              }`}
-                            >
-                              sur devis
-                            </span>
-                          )}
-                        </div>
                       </li>
                     )
                   })}
@@ -514,20 +399,12 @@ export default function Offres({ setDark, onNavigate }) {
 
                 {/* Pied de console — toujours visible : note + CTA */}
                 <div className="shrink-0">
-                  {offre.note && (
-                    <p className={`mt-4 text-[12px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
-                      {offre.note}
-                    </p>
-                  )}
-
-                  {/* Aucun prix affiché : le devis est établi sur mesure avec
-                      le studio, à partir de la sélection transmise. */}
+                  {/* Aucun prix affiché : le devis est établi sur mesure avec le
+                      studio, à partir de la sélection transmise. */}
                   <div className={`mt-6 hidden border-t pt-5 lg:block ${ink ? 'border-or/25' : 'border-or/45'}`}>
-                    {hasQuote && (
-                      <p className={`text-[11.5px] font-light leading-[1.5] ${priceText}`}>
-                        + éléments sur devis, chiffrés avec vous
-                      </p>
-                    )}
+                    <p className={`text-[11.5px] font-light leading-[1.5] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
+                      Devis établi sur mesure, selon votre projet.
+                    </p>
                     <button
                       type="button"
                       onClick={requestQuote}
@@ -544,7 +421,7 @@ export default function Offres({ setDark, onNavigate }) {
           </div>
         </div>
 
-        {/* ── Épilogue pleine largeur : questions, non-inclus, conditions ── */}
+        {/* ── Épilogue : questions ── */}
         <div className={`mt-20 border-t pt-14 ${ink ? 'border-or/25' : 'border-or/45'}`}>
           <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Les questions qui reviennent
@@ -563,50 +440,48 @@ export default function Offres({ setDark, onNavigate }) {
           </dl>
         </div>
 
-        {/* Non inclus + Conditions communes : une seule section, deux colonnes */}
-        <div
-          className={`mt-16 grid gap-x-16 gap-y-10 border-t pt-12 md:grid-cols-2 ${
-            ink ? 'border-or/25' : 'border-or/45'
-          }`}
-        >
-          <div>
-            <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>Non inclus</h2>
-            <p
-              className={`mt-4 text-[12.5px] font-light leading-[1.9] ${
-                ink ? 'text-sable/70' : 'text-encre/70'
-              }`}
-            >
-              {offre.nonInclus.map((item, i) => (
-                <span key={item}>
-                  {i > 0 && <span className={`mx-2 ${dash}`}>·</span>}
-                  {item}
+        {/* ── Extensions possibles : commun aux trois offres ── */}
+        <div className={`mt-16 border-t pt-12 ${ink ? 'border-or/25' : 'border-or/45'}`}>
+          <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+            Extensions possibles
+          </h2>
+          <p
+            className={`mt-5 font-display text-[clamp(1.4rem,2.2vw,2rem)] leading-[1.15] ${
+              ink ? 'text-creme' : 'text-encre'
+            }`}
+          >
+            {EXTENSIONS.tagline}
+          </p>
+          <p
+            className={`mt-4 max-w-[60ch] text-[14px] font-light leading-[1.9] ${
+              ink ? 'text-sable/85' : 'text-encre/80'
+            }`}
+          >
+            {EXTENSIONS.intro}
+          </p>
+          <ul className="mt-8 grid gap-x-16 gap-y-3 sm:grid-cols-2">
+            {EXTENSIONS.items.map((it) => (
+              <li
+                key={it}
+                className={`flex gap-3 text-[13.5px] font-light leading-[1.5] ${
+                  ink ? 'text-sable/80' : 'text-encre/75'
+                }`}
+              >
+                <span aria-hidden="true" className="mt-[0.15em] shrink-0 text-or">
+                  <IconCheck />
                 </span>
-              ))}
-            </p>
-          </div>
-
-          <div>
-            <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-              Conditions communes
-            </h2>
-            <p
-              className={`mt-4 text-[12px] font-light leading-[1.9] ${
-                ink ? 'text-sable/70' : 'text-encre/70'
-              }`}
-            >
-              {CONDITIONS.map((c, i) => (
-                <span key={c}>
-                  {i > 0 && <span className={`mx-2 ${dash}`}>·</span>}
-                  {c}
-                </span>
-              ))}
-            </p>
-          </div>
+                <span>{it}</span>
+              </li>
+            ))}
+          </ul>
+          <p className={`mt-8 text-[12.5px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
+            {EXTENSIONS.closing}
+          </p>
         </div>
       </div>
 
       {/* Mobile : le devis se glisse en barre du bas, toujours visible, et se
-          déplie pour montrer le détail ligne par ligne. */}
+          déplie pour montrer la sélection. */}
       <div
         className={`sticky bottom-0 z-10 -mx-6 mt-auto border-t backdrop-blur-md md:-mx-16 lg:hidden ${
           ink ? 'border-or/25 bg-encre/90' : 'border-or/45 bg-creme/90'
@@ -614,12 +489,7 @@ export default function Offres({ setDark, onNavigate }) {
       >
         {openDetail && (
           <div className="max-h-[45vh] overflow-y-auto px-6 pt-5 md:px-16">
-            <ReceiptLines {...lineParts} />
-            {hasQuote && (
-              <p className={`mt-3 text-[11.5px] font-light ${priceText}`}>
-                + éléments sur devis, chiffrés avec vous
-              </p>
-            )}
+            <ReceiptLines selected={selected} ink={ink} />
           </div>
         )}
         <div
@@ -654,27 +524,28 @@ export default function Offres({ setDark, onNavigate }) {
   )
 }
 
-// Les lignes du devis, partagées entre la console (desktop) et la barre (mobile).
-// Récap itémisé : socle, options chiffrées (× quantité, sous-total), sur-devis.
-function ReceiptLines({ items, quoteItems, ink, label }) {
+// La sélection reprise sous la barre mobile : les éléments cochés, ou une
+// invite quand rien n'est encore coché.
+function ReceiptLines({ selected, ink }) {
   const rowText = ink ? 'text-sable/85' : 'text-encre/80'
-  const strong = ink ? 'text-creme' : 'text-encre'
+  if (!selected.length) {
+    return (
+      <p className={`text-[13px] font-light leading-[1.5] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
+        Rien de coché pour l’instant — cochez ce qui vous intéresse, ou laissez-nous vous guider.
+      </p>
+    )
+  }
   return (
-    <ul className="space-y-3">
-      {items.map((it, i) => (
-        <li key={`${it.label}-${i}`} className="flex items-baseline gap-2">
-          <span className={`text-[13px] font-light leading-[1.4] ${it.base ? strong : rowText}`}>
-            {it.label}
-            {it.qty > 1 && <span className={label}> × {it.qty}</span>}
+    <ul className="space-y-2.5">
+      {selected.map((l) => (
+        <li
+          key={l}
+          className={`flex items-baseline gap-2.5 text-[13px] font-light leading-[1.4] ${rowText}`}
+        >
+          <span aria-hidden="true" className="mt-[0.15em] shrink-0 text-or">
+            <IconCheck />
           </span>
-        </li>
-      ))}
-      {quoteItems.map((l) => (
-        <li key={l} className="flex items-baseline justify-between gap-4">
-          <span className={`text-[13px] font-light leading-[1.4] ${rowText}`}>{l}</span>
-          <span className={`shrink-0 text-[12px] italic ${ink ? 'text-sable/55' : 'text-encre/55'}`}>
-            sur devis
-          </span>
+          <span>{l}</span>
         </li>
       ))}
     </ul>

@@ -48,7 +48,7 @@ const DESCRIPTIONS = {
   studio:
     "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
   offres:
-    'Deux offres : Portraits, cinq films courts tournés en une journée, et Film Signature, le film narratif de la maison. Chaque projet est chiffré sur mesure.',
+    'Trois offres sur mesure : Film Signature, le film narratif central ; Histoires de marque, une collection de récits courts ; Campagne signature, un concept décliné sur tous vos supports. Chaque projet est chiffré sur mesure.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
