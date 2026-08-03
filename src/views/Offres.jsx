@@ -213,14 +213,11 @@ export default function Offres({ setDark, onNavigate }) {
           const rankBorder = ink
             ? r === 3 ? 'border-or/55' : r === 2 ? 'border-or/30' : 'border-creme/15'
             : r === 3 ? 'border-orfonce/55' : r === 2 ? 'border-orfonce/32' : 'border-orfonce/16'
-          const border = on ? 'border-highlight' : `${rankBorder} ${ink ? 'hover:border-creme/40' : 'hover:border-orfonce/60'}`
-          const bg = on ? 'bg-highlight/[0.18]' : ''
+          const border = on ? (ink ? 'border-or' : 'border-encre') : `${rankBorder} ${ink ? 'hover:border-creme/40' : 'hover:border-orfonce/60'}`
+          const bg = on ? (ink ? 'bg-[#241c13]/55' : 'bg-black/[0.04]') : ''
           const lift = on ? 'sm:scale-[1.02]' : ''
-          const shadow = on
-            ? ink
-              ? 'shadow-[0_26px_64px_-40px_rgba(0,0,0,0.9)]'
-              : 'shadow-[0_22px_54px_-34px_rgba(26,21,18,0.5)]'
-            : ''
+          // Pas d'ombre portée sur la sélection.
+          const shadow = ''
           const numCol = ink ? (on ? 'text-or' : 'text-sable/45') : (on ? 'text-orfonce' : 'text-encre/45')
           const pipCol = ink ? (on ? 'bg-or' : 'bg-or/55') : (on ? 'bg-orfonce' : 'bg-orfonce/55')
           const nameCol = ink ? (on ? 'text-creme' : 'text-sable/55') : (on ? 'text-encre' : 'text-encre/60')
@@ -256,9 +253,9 @@ export default function Offres({ setDark, onNavigate }) {
               </span>
               <span className="mt-5 flex h-[26px] items-center">
                 <span
-                  className={`inline-flex items-center gap-1.5 rounded-full bg-highlight px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] text-encre transition-opacity duration-500 ${
-                    on ? 'opacity-100' : 'opacity-0'
-                  }`}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] transition-opacity duration-500 ${
+                    ink ? 'bg-or text-encre' : 'bg-encre text-or'
+                  } ${on ? 'opacity-100' : 'opacity-0'}`}
                 >
                   <IconCheck />
                   Sélectionné
@@ -320,7 +317,7 @@ export default function Offres({ setDark, onNavigate }) {
                             aria-hidden="true"
                             className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
                               checked
-                                ? 'border-highlight bg-highlight text-encre'
+                                ? ink ? 'border-or bg-or text-encre' : 'border-encre bg-encre text-or'
                                 : ink ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70' : 'border-orfonce/45 bg-black/[0.03] group-hover:border-orfonce/70'
                             }`}
                           >
@@ -336,7 +333,7 @@ export default function Offres({ setDark, onNavigate }) {
                             </span>
                             <span
                               aria-hidden="true"
-                              className="mt-1 block h-px origin-left bg-highlight"
+                              className={`mt-1 block h-px origin-left ${ink ? 'bg-or/70' : 'bg-encre/70'}`}
                               style={{
                                 transform: checked ? 'scaleX(1)' : 'scaleX(0)',
                                 transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
