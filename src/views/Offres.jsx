@@ -12,7 +12,7 @@ const OFFRES = [
     eyebrow: '01',
     register: 'Le fil continu',
     rank: 1,
-    bgColor: 'rgb(217 198 166 / 0.45)',
+    bgColor: '#F0E6D8',
     ink: false,
     accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
     description: [
@@ -36,8 +36,8 @@ const OFFRES = [
     eyebrow: '02',
     register: 'La pièce maîtresse',
     rank: 2,
-    bgColor: '#1a1512',
-    ink: true,
+    bgColor: '#D9C6A6',
+    ink: false,
     accroche: 'Le film qui installe durablement votre univers.',
     description: [
       'Une pièce centrale imaginée pour révéler ce que votre marque fait ressentir. Conception, écriture, mise en scène et production sont entièrement pensées autour de votre identité.',
@@ -61,7 +61,7 @@ const OFFRES = [
     eyebrow: '03',
     register: 'Le déploiement complet',
     rank: 3,
-    bgColor: '#221a11',
+    bgColor: '#1a1512',
     ink: true,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
     description: [
