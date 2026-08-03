@@ -1,39 +1,20 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-// Page /offres — pas de tableau de prix, pas d'images (on n'a que le film de
-// l'accueil). Le luxe vient du type, de la lumière et de la matière : chaque
-// offre est une scène « en salle », son nom projeté dans un halo chaud comme un
-// carton de titre, sur un grain de pellicule, un grand chiffre fantôme en
-// profondeur. Ça monte du fil continu (01) à l'ensemble réuni (03).
+// Page /offres — la première mouture, retravaillée. À GAUCHE on lit l'offre, à
+// DROITE on compose (on coche ce qui parle au projet). Trois cartes de choix,
+// mais elles ne se redimensionnent plus : la sélection se lit à la couleur, au
+// cadre or, à la pastille — jamais à la taille. Rien ne se recompose, aucune
+// phrase ne se casse pendant les interactions. Fond sombre uniforme, aucun prix.
 const OFFRES = [
   {
-    name: 'Histoires de marque',
-    eyebrow: '01',
-    register: 'Le fil continu',
-    accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
-    description:
-      'Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent.',
-    compose: 'Chaque collection peut explorer',
-    items: [
-      'Un rituel ou un soin signature',
-      'Le portrait d’un fondateur ou d’un artisan',
-      'L’atmosphère d’un lieu',
-      'L’origine d’un produit ou d’un ingrédient',
-      'Les gestes d’un savoir-faire',
-      'Les convictions et les histoires de la maison',
-    ],
-    usage:
-      'Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.',
-    closing: 'Le nombre, la durée et les formats sont définis selon votre ligne éditoriale.',
-  },
-  {
     name: 'Film Signature',
-    eyebrow: '02',
+    eyebrow: '01',
     register: 'La pièce maîtresse',
     accroche: 'Le film qui installe durablement votre univers.',
-    description:
+    description: [
       'Une pièce centrale imaginée pour révéler ce que votre marque fait ressentir. Conception, écriture, mise en scène et production sont entièrement pensées autour de votre identité.',
+    ],
     compose: 'La création peut réunir',
     items: [
       'Conception créative et écriture',
@@ -49,13 +30,34 @@ const OFFRES = [
     closing: 'Une création entièrement conçue sur mesure.',
   },
   {
+    name: 'Histoires de marque',
+    eyebrow: '02',
+    register: 'Le fil continu',
+    accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
+    description: [
+      'Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent.',
+    ],
+    compose: 'Chaque collection peut explorer',
+    items: [
+      'Un rituel ou un soin signature',
+      'Le portrait d’un fondateur ou d’un artisan',
+      'L’atmosphère d’un lieu',
+      'L’origine d’un produit ou d’un ingrédient',
+      'Les gestes d’un savoir-faire',
+      'Les convictions et les histoires de la maison',
+    ],
+    usage:
+      'Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.',
+    closing: 'Le nombre, la durée et les formats sont définis selon votre ligne éditoriale.',
+  },
+  {
     name: 'Campagne signature',
     eyebrow: '03',
     register: 'Le déploiement complet',
-    finale: true,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
-    description:
+    description: [
       'Une campagne complète imaginée autour d’un lancement, d’une ouverture ou d’un temps fort. Film principal, récits courts et déclinaisons visuelles sont réunis au sein d’une même direction créative.',
+    ],
     compose: 'La campagne peut associer',
     items: [
       'Conception du concept créatif',
@@ -107,31 +109,62 @@ const QUESTIONS = [
   },
 ]
 
-// Grain de pellicule (aucune image chargée : bruit SVG inline).
-const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E\")"
-
-// Halo chaud « projecteur », placé selon la scène (alterné, centré pour la finale).
-const SPOT = [
-  'radial-gradient(48% 42% at 22% 30%, rgba(217,198,166,0.12), transparent 62%)',
-  'radial-gradient(48% 42% at 80% 28%, rgba(217,198,166,0.12), transparent 62%)',
-  'radial-gradient(60% 55% at 50% 22%, rgba(217,198,166,0.16), transparent 64%)',
-]
-const NAME_SIZE = [
-  'text-[clamp(2.3rem,6.4vw,4rem)]',
-  'text-[clamp(2.7rem,7.4vw,4.9rem)]',
-  'text-[clamp(3.1rem,9.5vw,6.2rem)]',
-]
-
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
+  const [index, setIndex] = useState(0)
+  const [selByOffer, setSelByOffer] = useState({})
+  const offre = OFFRES[index]
+  const sel = selByOffer[index] || {}
 
   useEffect(() => {
     setDark?.(true)
   }, [setDark])
 
-  const requestQuote = (offre) => {
-    const message = ['Bonjour,', '', `Je souhaite échanger sur l'offre ${offre.name}.`].join('\n')
+  useEffect(() => {
+    const onKey = (e) => {
+      if (document.activeElement?.closest('[data-console]')) return
+      if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % OFFRES.length)
+      else if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const touch = useRef(null)
+  const onTouchStart = (e) => {
+    touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  }
+  const onTouchEnd = (e) => {
+    if (!touch.current) return
+    const dx = e.changedTouches[0].clientX - touch.current.x
+    const dy = e.changedTouches[0].clientY - touch.current.y
+    touch.current = null
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      setIndex((i) =>
+        dx < 0 ? (i + 1) % OFFRES.length : (i - 1 + OFFRES.length) % OFFRES.length,
+      )
+    }
+  }
+
+  const toggle = (i) =>
+    setSelByOffer((all) => {
+      const cur = { ...(all[index] || {}) }
+      if (cur[i]) delete cur[i]
+      else cur[i] = true
+      return { ...all, [index]: cur }
+    })
+
+  const selected = offre.items.filter((_, i) => sel[i])
+
+  const requestQuote = () => {
+    const message = [
+      'Bonjour,',
+      '',
+      `Je souhaite échanger sur l'offre ${offre.name}.`,
+      '',
+      selected.length ? 'Ce qui m’intéresse :' : 'Je vous laisse me guider.',
+      ...selected.map((l) => `— ${l}`),
+    ].join('\n')
     onNavigate?.('contact', { message, offer: offre.name })
   }
 
@@ -141,127 +174,190 @@ export default function Offres({ setDark, onNavigate }) {
     <section
       ref={ref}
       aria-label="Offres"
-      className="h-full overflow-y-auto bg-encre"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      className="flex h-full flex-col overflow-y-auto bg-encre px-6 pt-28 md:px-16"
     >
-      {/* Grain de pellicule sur toute la page */}
+      {/* Sélecteur : trois cartes. Elles ne changent jamais de taille — la
+          sélection se lit au cadre or, au fond, à la pastille. */}
+      <p
+        className={`reveal-up mx-auto mt-4 w-full max-w-[1180px] text-[11px] font-normal uppercase tracking-[0.32em] md:mt-8 ${label}`}
+        style={{ '--d': '0.08s' }}
+      >
+        Trois offres — choisissez la vôtre
+      </p>
       <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-[1] opacity-[0.05] mix-blend-soft-light"
-        style={{ backgroundImage: GRAIN, backgroundSize: '160px 160px' }}
-      />
-
-      <div className="relative z-[2] px-6 pt-28 md:px-16">
-        {/* Ouverture */}
-        <p
-          className={`reveal-up mx-auto w-full max-w-[1160px] text-[11px] font-normal uppercase tracking-[0.34em] ${label}`}
-          style={{ '--d': '0.06s' }}
-        >
-          Nos offres — du fil à l’ensemble
-        </p>
-
-        {/* Les trois scènes */}
-        {OFFRES.map((offre, i) => (
-          <article
-            key={offre.name}
-            className="relative mx-auto w-full max-w-[1160px] overflow-hidden py-[clamp(3.5rem,8vw,7rem)]"
-          >
-            {/* Halo projecteur */}
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: SPOT[i] }} />
-            {/* Chiffre fantôme en profondeur */}
-            <span
-              aria-hidden="true"
-              className={`pointer-events-none absolute -top-4 select-none font-display leading-none text-sable/[0.035] text-[clamp(9rem,26vw,22rem)] ${
-                i % 2 === 0 ? 'right-0 md:-right-6' : 'left-0 md:-left-6'
+        className="reveal-up mx-auto mt-5 flex w-full max-w-[1180px] flex-col gap-4 sm:flex-row sm:items-stretch"
+        style={{ '--d': '0.14s' }}
+      >
+        {OFFRES.map((o, i) => {
+          const on = i === index
+          return (
+            <button
+              key={o.name}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-current={on ? 'true' : undefined}
+              aria-label={`Choisir l’offre ${o.name}`}
+              style={{ willChange: 'transform' }}
+              className={`group flex cursor-pointer flex-col items-start rounded-2xl border p-6 text-left outline-none transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or md:p-7 sm:flex-1 ${
+                on
+                  ? 'border-or bg-[#211a13]/70 shadow-[0_26px_64px_-40px_rgba(0,0,0,0.9)] sm:scale-[1.02]'
+                  : 'border-creme/12 hover:border-creme/28'
               }`}
             >
-              {offre.eyebrow}
-            </span>
-
-            <div className={`relative ${offre.finale ? 'text-center' : ''}`}>
-              {/* Surtitre : numéro + registre */}
-              <p
-                className={`flex items-baseline gap-3 text-[11px] font-normal uppercase tracking-[0.28em] ${
-                  offre.finale ? 'justify-center' : ''
+              <span
+                className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${
+                  on ? 'text-or' : 'text-sable/35'
                 }`}
               >
-                <span className="font-display text-[15px] tracking-[0.1em] text-or">{offre.eyebrow}</span>
-                <span className="text-or/85">{offre.register}</span>
-              </p>
-
-              {/* Le titre projeté */}
-              <h2
-                className={`mt-4 font-display leading-[0.98] text-creme ${NAME_SIZE[i]} ${
-                  offre.finale ? 'mx-auto max-w-[15ch]' : 'max-w-[16ch]'
+                {o.eyebrow}
+              </span>
+              <span
+                className={`mt-2.5 font-display text-[clamp(1.55rem,2.4vw,2.2rem)] leading-[1.06] transition-colors duration-500 ${
+                  on ? 'text-creme' : 'text-sable/55'
                 }`}
               >
-                {offre.name}
-                <span className="text-or">.</span>
-              </h2>
-
-              {/* Accroche */}
-              <p
-                className={`mt-6 text-[clamp(1.2rem,2vw,1.7rem)] font-light italic leading-[1.4] text-sable ${
-                  offre.finale ? 'mx-auto max-w-[30ch]' : 'max-w-[26ch]'
+                {o.name}
+                <span className={`text-or transition-opacity duration-300 ${on ? 'dot-breathe opacity-100' : 'opacity-0'}`}>
+                  .
+                </span>
+              </span>
+              <span
+                className={`mt-2 text-[10px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${
+                  on ? 'text-or/85' : 'text-sable/40'
                 }`}
               >
-                {offre.accroche}
-              </p>
-            </div>
-
-            {/* Corps : lecture + possibilités */}
-            <div className="relative mt-12 grid gap-x-16 gap-y-10 border-t border-or/15 pt-11 md:grid-cols-12">
-              <div className="md:col-span-6">
-                <p className="max-w-[46ch] text-[15px] font-light leading-[1.8] text-sable/85">
-                  {offre.description}
-                </p>
-                <p className="mt-5 max-w-[50ch] text-[12px] font-light leading-[1.7] text-sable/45">
-                  {offre.usage}
-                </p>
-                <p className="mt-5 max-w-[42ch] text-[14px] font-light italic leading-[1.5] text-sable/90">
-                  {offre.closing}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => requestQuote(offre)}
-                  className="group mt-8 inline-flex cursor-pointer items-center gap-2.5 border-b border-or pb-1 text-[12px] font-normal uppercase tracking-[0.16em] text-or transition-colors duration-500 hover:text-creme"
+                {o.register}
+              </span>
+              {/* Emplacement réservé : la pastille apparaît sans jamais changer
+                  la hauteur de la carte (donc rien ne se décale). */}
+              <span className="mt-5 flex h-[26px] items-center">
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full bg-or px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] text-encre transition-opacity duration-500 ${
+                    on ? 'opacity-100' : 'opacity-0'
+                  }`}
                 >
-                  Demander un devis
-                  <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1">
-                    →
-                  </span>
-                </button>
-              </div>
+                  <IconCheck />
+                  Sélectionné
+                </span>
+              </span>
+            </button>
+          )
+        })}
+      </div>
 
-              <div className="md:col-span-6 lg:col-span-5 lg:col-start-8">
-                <p className={`text-[11px] font-normal uppercase tracking-[0.26em] ${label}`}>
-                  {offre.compose}
-                </p>
-                <ul className="mt-6">
-                  {offre.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3.5 border-b border-creme/[0.06] py-3"
-                    >
-                      <span aria-hidden="true" className="mt-[0.7em] h-px w-4 shrink-0 bg-or/60" />
-                      <span className="text-[13.5px] font-light leading-[1.5] text-sable/85">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
+      {/* Contenu de l'offre en lecture. Fondu à l'opacité (offer-enter) : le
+          texte ne se recompose pas, il se substitue en douceur. */}
+      <div key={offre.name} className="offer-enter mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
+        <h1 className="sr-only">Offre {offre.name} — Bel Augure</h1>
+
+        <div className="mt-12 grid gap-x-16 gap-y-12 border-t border-or/20 pt-12 lg:grid-cols-12">
+          {/* ── GAUCHE : lecture ── */}
+          <div className="lg:col-span-6">
+            <p className="max-w-[24ch] text-[clamp(1.5rem,2.5vw,2.15rem)] font-light leading-[1.2] text-creme">
+              {offre.accroche}
+            </p>
+            <div className="mt-6 max-w-[52ch] space-y-4 text-[15px] font-light leading-[1.8] text-sable/85">
+              {offre.description.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+            <p className="mt-6 max-w-[50ch] text-[12px] font-light leading-[1.7] text-sable/45">
+              {offre.usage}
+            </p>
+            <p className="mt-5 max-w-[42ch] text-[14px] font-light italic leading-[1.5] text-sable/90">
+              {offre.closing}
+            </p>
+          </div>
+
+          {/* ── DROITE : composer ── */}
+          <div className="lg:col-span-6 lg:self-start">
+            <div className="lg:sticky lg:top-24">
+              <div className="flex flex-col rounded-2xl border border-or/20 bg-[#211a13]/45 p-6 backdrop-blur-sm md:p-7 lg:max-h-[calc(100dvh-7rem)]">
+                <div className="shrink-0">
+                  <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
+                    {offre.compose}
+                  </h2>
+                  <p className="mt-2 text-[12.5px] font-light leading-[1.6] text-sable/65">
+                    Cochez ce qui vous parle — on affine le projet ensemble.
+                  </p>
+                </div>
+
+                <ul data-console className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
+                  {offre.items.map((item, i) => {
+                    const checked = !!sel[i]
+                    return (
+                      <li key={item} className="flex items-center gap-4 border-b border-creme/10 py-3.5">
+                        <button
+                          type="button"
+                          role="checkbox"
+                          aria-checked={checked}
+                          onClick={() => toggle(i)}
+                          className="group flex flex-1 cursor-pointer items-start gap-3.5 rounded-md text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
+                              checked
+                                ? 'border-or bg-or text-encre'
+                                : 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70'
+                            }`}
+                          >
+                            {checked && (
+                              <span className="check-draw">
+                                <IconCheck />
+                              </span>
+                            )}
+                          </span>
+                          <span className="min-w-0">
+                            <span
+                              className={`block text-[13.5px] font-light leading-[1.5] transition-colors duration-300 ${
+                                checked ? 'text-creme' : 'text-sable/85'
+                              }`}
+                            >
+                              {item}
+                            </span>
+                            <span
+                              aria-hidden="true"
+                              className="mt-1 block h-px origin-left bg-or/70"
+                              style={{
+                                transform: checked ? 'scaleX(1)' : 'scaleX(0)',
+                                transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
+                              }}
+                            />
+                          </span>
+                        </button>
+                      </li>
+                    )
+                  })}
                 </ul>
+
+                <div className="mt-6 hidden shrink-0 border-t border-or/25 pt-5 lg:block">
+                  <p className="text-[11.5px] font-light leading-[1.5] text-sable/60">
+                    Devis établi sur mesure, selon votre projet.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={requestQuote}
+                    className="cta cta-light mt-5 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em]"
+                  >
+                    Demander un devis
+                  </button>
+                </div>
               </div>
             </div>
-          </article>
-        ))}
+          </div>
+        </div>
 
-        {/* Extensions */}
-        <div className="relative mx-auto mt-4 w-full max-w-[1160px] border-t border-or/20 pt-14 pb-20">
-          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+        {/* ── Extensions possibles ── */}
+        <div className="mt-16 border-t border-or/20 pt-12">
+          <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Extensions possibles
-          </p>
-          <h2 className="mt-5 font-display text-[clamp(1.5rem,2.6vw,2.2rem)] leading-[1.15] text-creme">
-            {EXTENSIONS.tagline}
           </h2>
+          <p className="mt-5 font-display text-[clamp(1.4rem,2.2vw,2rem)] leading-[1.15] text-creme">
+            {EXTENSIONS.tagline}
+          </p>
           <p className="mt-4 max-w-[60ch] text-[14px] font-light leading-[1.9] text-sable/85">
             {EXTENSIONS.intro}
           </p>
@@ -281,11 +377,11 @@ export default function Offres({ setDark, onNavigate }) {
           </p>
         </div>
 
-        {/* Questions */}
-        <div className="relative mx-auto w-full max-w-[1160px] border-t border-or/20 pt-14 pb-28">
-          <p className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
+        {/* ── Questions ── */}
+        <div className="mt-16 border-t border-or/20 pt-14">
+          <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Les questions qui reviennent
-          </p>
+          </h2>
           <dl className="mt-8 grid gap-x-12 gap-y-9 md:grid-cols-2">
             {QUESTIONS.map((item) => (
               <div key={item.q}>
@@ -296,6 +392,40 @@ export default function Offres({ setDark, onNavigate }) {
           </dl>
         </div>
       </div>
+
+      {/* Mobile : CTA en barre du bas, toujours accessible. */}
+      <div className="sticky bottom-0 z-10 -mx-6 mt-auto border-t border-or/20 bg-encre/90 backdrop-blur-md md:-mx-16 lg:hidden">
+        <div
+          className="px-6 pt-4 md:px-16"
+          style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
+        >
+          <button
+            type="button"
+            onClick={requestQuote}
+            className="cta cta-light w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em]"
+          >
+            Demander un devis
+          </button>
+        </div>
+      </div>
     </section>
+  )
+}
+
+function IconCheck() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
   )
 }
