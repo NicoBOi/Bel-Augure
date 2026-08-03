@@ -1,15 +1,38 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-// Page /offres — on lit l'offre à gauche (accroche-titre, description, usages,
-// conclusion) et, à droite, la liste des possibilités que la création peut
-// réunir : des repères éditoriaux, pas des cases à cocher. Le fond reste sombre
-// et uniforme d'une offre à l'autre, pour la continuité et la comparaison.
-// Aucun prix : tout est chiffré sur mesure.
+// Page /offres — les trois offres se lisent comme une progression, du fil
+// continu à l'ensemble réuni. Le sélecteur hiérarchise par paliers : la carte
+// grandit (largeur, titre, contraste) au fil du périmètre, et la dernière —
+// Campagne — porte le traitement « apex » (cadre or, elle réunit 01 + 02).
+// À gauche on lit l'offre, à droite ses possibilités (repères éditoriaux, non
+// interactifs). Fond sombre uniforme, aucun prix : chiffrage sur mesure.
 const OFFRES = [
   {
-    name: 'Film Signature',
+    name: 'Histoires de marque',
     eyebrow: '01',
+    register: 'Le fil continu',
+    accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
+    description: [
+      'Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent.',
+    ],
+    compose: 'Chaque collection peut explorer',
+    items: [
+      'Un rituel ou un soin signature',
+      'Le portrait d’un fondateur ou d’un artisan',
+      'L’atmosphère d’un lieu',
+      'L’origine d’un produit ou d’un ingrédient',
+      'Les gestes d’un savoir-faire',
+      'Les convictions et les histoires de la maison',
+    ],
+    usage:
+      'Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.',
+    closing: 'Le nombre, la durée et les formats sont définis selon votre ligne éditoriale.',
+  },
+  {
+    name: 'Film Signature',
+    eyebrow: '02',
+    register: 'La pièce maîtresse',
     accroche: 'Le film qui installe durablement votre univers.',
     description: [
       'Une pièce centrale imaginée pour révéler ce que votre marque fait ressentir. Conception, écriture, mise en scène et production sont entièrement pensées autour de votre identité.',
@@ -29,28 +52,10 @@ const OFFRES = [
     closing: 'Une création entièrement conçue sur mesure.',
   },
   {
-    name: 'Histoires de marque',
-    eyebrow: '02',
-    accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
-    description: [
-      'Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent.',
-    ],
-    compose: 'Chaque collection peut explorer',
-    items: [
-      'Un rituel ou un soin signature',
-      'Le portrait d’un fondateur ou d’un artisan',
-      'L’atmosphère d’un lieu',
-      'L’origine d’un produit ou d’un ingrédient',
-      'Les gestes d’un savoir-faire',
-      'Les convictions et les histoires de la maison',
-    ],
-    usage:
-      'Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.',
-    closing: 'Le nombre, la durée et les formats sont définis selon votre ligne éditoriale.',
-  },
-  {
     name: 'Campagne signature',
     eyebrow: '03',
+    register: 'Le déploiement complet',
+    apex: true,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
     description: [
       'Une campagne complète imaginée autour d’un lancement, d’une ouverture ou d’un temps fort. Film principal, récits courts et déclinaisons visuelles sont réunis au sein d’une même direction créative.',
@@ -69,6 +74,20 @@ const OFFRES = [
     closing: 'Un univers cohérent, pensé pour se déployer sur l’ensemble de vos supports.',
   },
 ]
+
+// Paliers de la progression : largeur (flex), taille et couleur du titre montent
+// avec le périmètre. Écrit en classes littérales pour que Tailwind les génère.
+const FLEX = [
+  ['sm:flex-[1_1_0%]', 'sm:flex-[1.25_1_0%]'],
+  ['sm:flex-[1.3_1_0%]', 'sm:flex-[1.6_1_0%]'],
+  ['sm:flex-[1.7_1_0%]', 'sm:flex-[2_1_0%]'],
+]
+const TITLE = [
+  'text-[clamp(1.15rem,1.9vw,1.6rem)]',
+  'text-[clamp(1.45rem,2.4vw,2.05rem)]',
+  'text-[clamp(1.8rem,3.2vw,2.75rem)]',
+]
+const DIM = ['text-sable/40', 'text-sable/55', 'text-sable/80']
 
 // Extensions communes aux trois offres : de quoi prolonger le projet.
 const EXTENSIONS = {
@@ -110,7 +129,8 @@ const QUESTIONS = [
 
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
-  const [index, setIndex] = useState(0)
+  // On ouvre sur la pièce maîtresse (Film Signature), au centre de la progression.
+  const [index, setIndex] = useState(1)
   const offre = OFFRES[index]
 
   // Le fond des offres est sombre, sur toute la page : le header suit.
@@ -151,11 +171,7 @@ export default function Offres({ setDark, onNavigate }) {
   // « Demander un devis » : on reprend l'offre dans un message qui pré-remplit
   // la page Contact. Aucun prix — le chiffrage se fait sur mesure.
   const requestQuote = () => {
-    const message = [
-      'Bonjour,',
-      '',
-      `Je souhaite échanger sur l'offre ${offre.name}.`,
-    ].join('\n')
+    const message = ['Bonjour,', '', `Je souhaite échanger sur l'offre ${offre.name}.`].join('\n')
     onNavigate?.('contact', { message, offer: offre.name })
   }
 
@@ -169,21 +185,28 @@ export default function Offres({ setDark, onNavigate }) {
       onTouchEnd={onTouchEnd}
       className="flex h-full flex-col overflow-y-auto bg-encre px-6 pt-28 md:px-16"
     >
-      {/* Le sélecteur : trois cartes de choix. La carte active fait office de
-          titre — numéro et nom, nettement dominante. Une pastille « Sélectionné »
-          rend le geste explicite. */}
+      {/* Le sélecteur : une progression du fil continu à l'ensemble réuni. Les
+          cartes grandissent par paliers ; la dernière porte le traitement apex. */}
       <p
         className={`reveal-up mx-auto mt-4 w-full max-w-[1180px] text-[11px] font-normal uppercase tracking-[0.3em] md:mt-8 ${label}`}
         style={{ '--d': '0.08s' }}
       >
-        Trois offres — choisissez la vôtre
+        Trois offres — du fil à l’ensemble
       </p>
       <div
-        className="reveal-up mx-auto mt-4 flex w-full max-w-[1180px] flex-col gap-4 sm:flex-row"
+        className="reveal-up mx-auto mt-4 flex w-full max-w-[1180px] flex-col gap-4 sm:flex-row sm:items-stretch"
         style={{ '--d': '0.14s' }}
       >
         {OFFRES.map((o, i) => {
           const on = i === index
+          const apex = !!o.apex
+          const flex = on ? FLEX[i][1] : FLEX[i][0]
+          const border = on
+            ? 'border-or'
+            : apex
+              ? 'border-or/35 hover:border-or/55'
+              : 'border-creme/12 hover:border-creme/30'
+          const bg = on ? 'bg-[#241d15]/75' : apex ? 'bg-[#241d15]/40' : ''
           return (
             <button
               key={o.name}
@@ -191,24 +214,18 @@ export default function Offres({ setDark, onNavigate }) {
               onClick={() => setIndex(i)}
               aria-current={on ? 'true' : undefined}
               aria-label={`Choisir l’offre ${o.name}`}
-              className={`group flex w-full cursor-pointer flex-col items-start overflow-hidden rounded-2xl border p-6 text-left outline-none transition-[flex-grow,border-color,background-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or sm:min-w-0 md:p-7 ${
-                on
-                  ? 'border-or bg-[#221c17]/70 sm:flex-[1.7_1_0%]'
-                  : 'border-creme/12 hover:border-creme/30 sm:flex-[1_1_0%]'
-              }`}
+              className={`group flex w-full cursor-pointer flex-col items-start overflow-hidden rounded-2xl border p-6 text-left outline-none transition-[flex-grow,border-color,background-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or sm:min-w-0 md:p-7 ${flex} ${border} ${bg}`}
             >
               <span
-                className={`whitespace-nowrap text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
-                  on ? 'text-sable/75' : 'text-sable/40'
+                className={`text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
+                  on ? 'text-or' : apex ? 'text-sable/60' : 'text-sable/40'
                 }`}
               >
                 {o.eyebrow}
               </span>
               <span
-                className={`mt-2 font-display leading-[1.04] transition-[color,font-size] duration-500 ${
-                  on
-                    ? 'text-[clamp(1.75rem,3vw,2.7rem)] text-creme'
-                    : 'text-[clamp(1.3rem,2.1vw,1.85rem)] text-sable/45'
+                className={`mt-2 font-display leading-[1.04] transition-[color,font-size] duration-500 ${TITLE[i]} ${
+                  on ? 'text-creme' : DIM[i]
                 }`}
               >
                 {o.name}
@@ -216,12 +233,27 @@ export default function Offres({ setDark, onNavigate }) {
                   .
                 </span>
               </span>
-              {/* Mention de sélection : seule la carte active porte une pastille
-                  surlignée or ; l'inactive reste vide. */}
-              {on && (
-                <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-or px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] text-encre">
-                  <IconCheck />
-                  Sélectionné
+
+              {/* Registre : positionne l'offre. Passe en or, coché, quand elle
+                  est sélectionnée. */}
+              <span
+                className={`mt-2 inline-flex items-center gap-1.5 text-[10px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
+                  on ? 'text-or' : apex ? 'text-or/70' : 'text-sable/40'
+                }`}
+              >
+                {on && <IconCheck />}
+                {o.register}
+              </span>
+
+              {/* Apex : Campagne réunit 01 + 02 — dit le périmètre sans un mot. */}
+              {apex && (
+                <span
+                  aria-hidden="true"
+                  className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-normal uppercase tracking-[0.14em] text-or/60"
+                >
+                  <span className="rounded border border-or/40 px-1.5 py-0.5">01</span>
+                  <span>+</span>
+                  <span className="rounded border border-or/40 px-1.5 py-0.5">02</span>
                 </span>
               )}
             </button>
@@ -369,7 +401,7 @@ export default function Offres({ setDark, onNavigate }) {
   )
 }
 
-// Coche fine, dessinée à la charte (pastille « Sélectionné », listes).
+// Coche fine, dessinée à la charte (registre sélectionné, listes).
 function IconCheck() {
   return (
     <svg
