@@ -14,7 +14,7 @@ const OFFRES = [
     eyebrow: '01',
     register: 'Le fil continu',
     rank: 1,
-    bgColor: 'rgb(217 198 166 / 0.45)',
+    bgColor: '#F0E6D8',
     ink: false,
     accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
     description: [
@@ -38,8 +38,8 @@ const OFFRES = [
     eyebrow: '02',
     register: 'La pièce maîtresse',
     rank: 2,
-    bgColor: '#1a1512',
-    ink: true,
+    bgColor: '#D9C6A6',
+    ink: false,
     accroche: 'Le film qui installe durablement votre univers.',
     description: [
       'Une pièce centrale imaginée pour révéler ce que votre marque fait ressentir. Conception, écriture, mise en scène et production sont entièrement pensées autour de votre identité.',
@@ -63,8 +63,8 @@ const OFFRES = [
     eyebrow: '03',
     register: 'Le déploiement complet',
     rank: 3,
-    bgColor: '#221a11',
-    ink: true,
+    bgColor: '#8A7E68',
+    ink: false,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
     description: [
       'Une campagne complète imaginée autour d’un lancement, d’une ouverture ou d’un temps fort. Film principal, récits courts et déclinaisons visuelles sont réunis au sein d’une même direction créative.',
@@ -206,27 +206,14 @@ export default function Offres({ setDark, onNavigate }) {
         {OFFRES.map((o, i) => {
           const on = i === index
           const r = o.rank
-          // Rareté croissante (statique) : liseré or de plus en plus présent.
-          const rankBorder = r === 3 ? 'border-or/55' : r === 2 ? 'border-or/30' : ink ? 'border-creme/12' : 'border-encre/12'
-          const border = on ? 'border-or' : rankBorder
-          // Fond : sélection > voile doré du rang 3 > rien.
-          const bg = on
-            ? ink
-              ? 'bg-[#241c13]/70'
-              : 'bg-creme/55'
-            : r === 3
-              ? 'bg-gradient-to-br from-or/[0.09] to-transparent'
-              : ''
+          // Rareté croissante (statique) : liseré or foncé de plus en plus
+          // présent. Fonds chauds et clairs — pas de dégradé, tout est plat.
+          const rankBorder = r === 3 ? 'border-orfonce/60' : r === 2 ? 'border-orfonce/35' : 'border-encre/15'
+          const border = on ? 'border-orfonce' : rankBorder
+          // Sélection : léger assombrissement à plat (aucun dégradé).
+          const bg = on ? 'bg-black/[0.05]' : ''
           const lift = on ? 'sm:scale-[1.02]' : ''
-          const shadow = on
-            ? ink
-              ? 'shadow-[0_26px_64px_-40px_rgba(0,0,0,0.9)]'
-              : 'shadow-[0_22px_54px_-34px_rgba(26,21,18,0.55)]'
-            : r === 3
-              ? ink
-                ? 'shadow-[0_0_60px_-24px_rgba(217,198,166,0.4)]'
-                : 'shadow-[0_0_54px_-26px_rgba(101,83,41,0.35)]'
-              : ''
+          const shadow = on ? 'shadow-[0_22px_54px_-34px_rgba(26,21,18,0.5)]' : ''
           return (
             <button
               key={o.name}
@@ -241,30 +228,30 @@ export default function Offres({ setDark, onNavigate }) {
               <span className="flex w-full items-center justify-between">
                 <span
                   className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${
-                    on ? 'text-or' : ink ? 'text-sable/35' : 'text-encre/35'
+                    on ? 'text-orfonce' : 'text-encre/35'
                   }`}
                 >
                   {o.eyebrow}
                 </span>
                 <span aria-hidden="true" className="flex items-center gap-1">
                   {Array.from({ length: r }).map((_, k) => (
-                    <span key={k} className={`h-[5px] w-[5px] rounded-full transition-colors duration-500 ${on ? 'bg-or' : 'bg-or/55'}`} />
+                    <span key={k} className={`h-[5px] w-[5px] rounded-full transition-colors duration-500 ${on ? 'bg-orfonce' : 'bg-orfonce/55'}`} />
                   ))}
                 </span>
               </span>
               <span
                 className={`mt-2.5 font-display text-[clamp(1.55rem,2.4vw,2.2rem)] leading-[1.06] transition-colors duration-500 ${
-                  on ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/55' : 'text-encre/55'
+                  on ? 'text-encre' : 'text-encre/50'
                 }`}
               >
                 {o.name}
-                <span className={`text-or transition-opacity duration-300 ${on ? 'dot-breathe opacity-100' : 'opacity-0'}`}>
+                <span className={`text-orfonce transition-opacity duration-300 ${on ? 'dot-breathe opacity-100' : 'opacity-0'}`}>
                   .
                 </span>
               </span>
               <span
                 className={`mt-2 text-[10px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${
-                  on ? 'text-or' : ink ? 'text-sable/40' : 'text-encre/45'
+                  on ? 'text-orfonce' : 'text-encre/45'
                 }`}
               >
                 {o.register}
@@ -273,7 +260,7 @@ export default function Offres({ setDark, onNavigate }) {
                   hauteur de la carte (rien ne se décale). */}
               <span className="mt-5 flex h-[26px] items-center">
                 <span
-                  className={`inline-flex items-center gap-1.5 rounded-full bg-or px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] text-encre transition-opacity duration-500 ${
+                  className={`inline-flex items-center gap-1.5 rounded-full bg-orfonce px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] text-creme transition-opacity duration-500 ${
                     on ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
@@ -379,7 +366,7 @@ export default function Offres({ setDark, onNavigate }) {
                   <button
                     type="button"
                     onClick={requestQuote}
-                    className={`cta mt-5 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${ink ? 'cta-light' : ''}`}
+                    className="mt-5 w-full cursor-pointer rounded-full border border-encre/55 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-500 hover:border-encre hover:bg-encre hover:text-creme"
                   >
                     Demander un devis
                   </button>
@@ -441,7 +428,7 @@ export default function Offres({ setDark, onNavigate }) {
           <button
             type="button"
             onClick={requestQuote}
-            className={`cta w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${ink ? 'cta-light' : ''}`}
+            className="w-full cursor-pointer rounded-full border border-encre/55 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-500 hover:border-encre hover:bg-encre hover:text-creme"
           >
             Demander un devis
           </button>
