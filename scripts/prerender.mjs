@@ -49,15 +49,15 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Deux offres claires : Portraits, cinq films courts en une journée dès 3 500 €, et Film Signature, le film central à partir de 9 500 €.',
+    desc: 'Deux offres : Portraits, cinq films courts tournés en une journée, et Film Signature, le film narratif de la maison. Chaque projet est chiffré sur mesure.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: `
-      <h2>Film Signature — à partir de 9 500 €</h2>
+      <h2>Film Signature</h2>
       <p>Un film narratif pour graver votre nom dans le temps. Le film qu'on met en page d'accueil, qu'on envoie à la presse, qu'on projette en salon, qu'on montre aux investisseurs. Un scénario, une équipe, des acteurs ; nous gérons tout, du tournage à la livraison. Inclus : écriture du scénario et des dialogues, repérage, casting et direction d'acteur, une journée de tournage avec équipe complète déclarée, un film de 60 à 90 secondes et son teaser de 30 secondes, deux déclinaisons 9:16 et 1:1, quinze photographies de plateau, étalonnage, création sonore et mixage, musique sous licence, cession de droits 2 ans en France, livraison sous 3 semaines. Options : journée de tournage supplémentaire, comédien supplémentaire, exploitation cinéma, voix off, doublage IA en anglais.</p>
-      <h2>Portraits — à partir de 3 500 €</h2>
+      <h2>Portraits</h2>
       <p>Cinq films courts en une journée. Une comédienne dirigée, une lumière construite, une journée chez vous. Inclus : écriture des textes, une journée de tournage avec deux opérateurs, une comédienne professionnelle déclarée, cinq films verticaux de 15 à 30 secondes, étalonnage et mixage, fichiers 4K 9:16 prêts à publier, cession de droits illimitée dans le temps en France, livraison sous 7 jours ouvrés. Options : portrait supplémentaire, journée de tournage supplémentaire, comédienne supplémentaire, photographies, doublage IA en anglais.</p>
       <h2>Les questions qui reviennent</h2>
-      <p>Combien ça coûte ? Deux offres : Portraits à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite votre sélection, et nous établissons le devis précis avec vous.</p>
+      <p>Combien ça coûte ? Chaque projet est chiffré sur mesure, selon votre lieu, l'ampleur du tournage et la diffusion visée. Parlons-en : on vous envoie un devis clair et détaillé.</p>
       <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
       <p>Partout en France ? Oui, partout en France.</p>
       <p>À qui appartient le film ? Les droits de diffusion sont inclus : sans limite de temps pour les Portraits, deux ans pour le Film Signature.</p>

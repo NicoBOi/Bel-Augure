@@ -48,7 +48,7 @@ const DESCRIPTIONS = {
   studio:
     "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
   offres:
-    'Deux offres claires : Portraits, cinq films courts en une journée dès 3 500 €, et Film Signature, le film central à partir de 9 500 €.',
+    'Deux offres : Portraits, cinq films courts tournés en une journée, et Film Signature, le film narratif de la maison. Chaque projet est chiffré sur mesure.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',

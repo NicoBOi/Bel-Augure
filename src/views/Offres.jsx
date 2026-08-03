@@ -117,7 +117,7 @@ const OFFRES = [
 const QUESTIONS = [
   {
     q: 'Combien ça coûte ?',
-    r: 'Deux offres : Portraits à partir de 3 500 € et Film Signature à partir de 9 500 €. Vous composez ensuite votre sélection, et nous établissons le devis précis avec vous.',
+    r: 'Chaque projet est chiffré sur mesure, selon votre lieu, l’ampleur du tournage et la diffusion visée. Parlons-en : on vous envoie un devis clair et détaillé.',
   },
   {
     q: "Qui apparaît à l'écran ?",
@@ -143,7 +143,6 @@ const CONDITIONS = [
   'TVA 20 % en sus',
 ]
 
-const euros = (n) => `${n.toLocaleString('fr-FR')} €`
 
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
@@ -156,7 +155,6 @@ export default function Offres({ setDark, onNavigate }) {
   const offre = OFFRES[index]
   const ink = offre.ink
   const sel = selByOffer[index] || {}
-  const priceLabel = (offre.from ? 'à partir de ' : '') + euros(offre.base)
 
   // Le header suit la lumière de la pièce : crème sur l'encre, encre sur l'or.
   useEffect(() => {
@@ -237,7 +235,7 @@ export default function Offres({ setDark, onNavigate }) {
     const message = [
       'Bonjour,',
       '',
-      `Je souhaite un devis pour l'offre ${offre.name} (${priceLabel}).`,
+      `Je souhaite un devis pour l'offre ${offre.name}.`,
       '',
       lines.length ? 'Options retenues :' : 'Sans option supplémentaire.',
       ...lines,
@@ -306,14 +304,6 @@ export default function Offres({ setDark, onNavigate }) {
                 <span className={`text-or transition-opacity duration-300 ${on ? 'dot-breathe opacity-100' : 'opacity-0'}`}>
                   .
                 </span>
-              </span>
-              <span
-                className={`mt-3 whitespace-nowrap text-[12px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
-                  on ? priceText : ink ? 'text-sable/50' : 'text-encre/50'
-                }`}
-              >
-                {o.from ? 'À partir de ' : ''}
-                {euros(o.base)} · HT
               </span>
               {/* Mention de sélection : seule la carte active porte une pastille
                   surlignée or ; l'inactive reste vide. */}
@@ -530,9 +520,8 @@ export default function Offres({ setDark, onNavigate }) {
                     </p>
                   )}
 
-                  {/* Le prix affiché est l'ancre « à partir de » de la carte ;
-                      ici on garde le seul appel à l'action. Le devis précis se
-                      construit avec le studio depuis la sélection transmise. */}
+                  {/* Aucun prix affiché : le devis est établi sur mesure avec
+                      le studio, à partir de la sélection transmise. */}
                   <div className={`mt-6 hidden border-t pt-5 lg:block ${ink ? 'border-or/25' : 'border-or/45'}`}>
                     {hasQuote && (
                       <p className={`text-[11.5px] font-light leading-[1.5] ${priceText}`}>
