@@ -19,6 +19,8 @@
   --color-orfonce: #655329;
   --color-sable: #f0e6d8;
   --color-grege: #6e6350;
+  /* Highlight : le ton de sélection/état actif (cartes, coches). */
+  --color-highlight: #8a7e68;
   --color-creme: #f2ede4;
 
   --font-display: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;

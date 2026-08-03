@@ -213,8 +213,8 @@ export default function Offres({ setDark, onNavigate }) {
           const rankBorder = ink
             ? r === 3 ? 'border-or/55' : r === 2 ? 'border-or/30' : 'border-creme/15'
             : r === 3 ? 'border-orfonce/55' : r === 2 ? 'border-orfonce/32' : 'border-orfonce/16'
-          const border = on ? (ink ? 'border-or' : 'border-orfonce') : `${rankBorder} ${ink ? 'hover:border-creme/40' : 'hover:border-orfonce/60'}`
-          const bg = on ? (ink ? 'bg-[#241c13]/70' : 'bg-black/[0.05]') : ''
+          const border = on ? 'border-highlight' : `${rankBorder} ${ink ? 'hover:border-creme/40' : 'hover:border-orfonce/60'}`
+          const bg = on ? 'bg-highlight/[0.18]' : ''
           const lift = on ? 'sm:scale-[1.02]' : ''
           const shadow = on
             ? ink
@@ -256,9 +256,9 @@ export default function Offres({ setDark, onNavigate }) {
               </span>
               <span className="mt-5 flex h-[26px] items-center">
                 <span
-                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] transition-opacity duration-500 ${
-                    ink ? 'bg-or text-encre' : 'bg-orfonce text-creme'
-                  } ${on ? 'opacity-100' : 'opacity-0'}`}
+                  className={`inline-flex items-center gap-1.5 rounded-full bg-highlight px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] text-encre transition-opacity duration-500 ${
+                    on ? 'opacity-100' : 'opacity-0'
+                  }`}
                 >
                   <IconCheck />
                   Sélectionné
@@ -320,7 +320,7 @@ export default function Offres({ setDark, onNavigate }) {
                             aria-hidden="true"
                             className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
                               checked
-                                ? ink ? 'border-or bg-or text-encre' : 'border-orfonce bg-orfonce text-creme'
+                                ? 'border-highlight bg-highlight text-encre'
                                 : ink ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70' : 'border-orfonce/45 bg-black/[0.03] group-hover:border-orfonce/70'
                             }`}
                           >
@@ -336,7 +336,7 @@ export default function Offres({ setDark, onNavigate }) {
                             </span>
                             <span
                               aria-hidden="true"
-                              className={`mt-1 block h-px origin-left ${ink ? 'bg-or/70' : 'bg-orfonce/70'}`}
+                              className="mt-1 block h-px origin-left bg-highlight"
                               style={{
                                 transform: checked ? 'scaleX(1)' : 'scaleX(0)',
                                 transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
