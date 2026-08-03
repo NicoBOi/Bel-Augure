@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-// Page /offres — une console d'atelier, pas un panier. À GAUCHE on lit l'offre
-// (accroche, description, usages) ; à DROITE on compose (on coche les éléments
-// qui parlent au projet) et le studio reprend cette sélection pour un devis sur
-// mesure. On emprunte la structure du loadout de jeu vidéo — slots, états
-// francs — jamais son esthétique (pas de HUD, pas de néon). Aucun prix affiché :
-// tout est chiffré selon les besoins réels. La pièce change de lumière selon
-// l'offre.
+// Page /offres — on lit l'offre à gauche (accroche-titre, description, usages,
+// conclusion) et, à droite, la liste des possibilités que la création peut
+// réunir : des repères éditoriaux, pas des cases à cocher. Le fond reste sombre
+// et uniforme d'une offre à l'autre, pour la continuité et la comparaison.
+// Aucun prix : tout est chiffré sur mesure.
 const OFFRES = [
   {
     name: 'Film Signature',
@@ -29,8 +27,6 @@ const OFFRES = [
     usage:
       'Pour un lancement, votre site, une présentation, un salon, YouTube ou une diffusion cinéma.',
     closing: 'Une création entièrement conçue sur mesure.',
-    bgColor: '#1a1512',
-    ink: true,
   },
   {
     name: 'Histoires de marque',
@@ -51,8 +47,6 @@ const OFFRES = [
     usage:
       'Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.',
     closing: 'Le nombre, la durée et les formats sont définis selon votre ligne éditoriale.',
-    bgColor: 'rgb(217 198 166 / 0.45)',
-    ink: false,
   },
   {
     name: 'Campagne signature',
@@ -73,8 +67,6 @@ const OFFRES = [
     ],
     usage: 'Pour lancer un lieu, une gamme, un soin, une saison ou une nouvelle identité.',
     closing: 'Un univers cohérent, pensé pour se déployer sur l’ensemble de vos supports.',
-    bgColor: '#241c15',
-    ink: true,
   },
 ]
 
@@ -119,27 +111,15 @@ const QUESTIONS = [
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
   const [index, setIndex] = useState(0)
-  // Sélection conservée PAR offre : { [indexOffre]: { [indexÉlément]: true } }.
-  // Changer d'offre ne détruit plus la composition — on la retrouve en revenant.
-  const [selByOffer, setSelByOffer] = useState({})
-  // Repli du récapitulatif sur mobile (barre du bas dépliable).
-  const [openDetail, setOpenDetail] = useState(false)
   const offre = OFFRES[index]
-  const ink = offre.ink
-  const sel = selByOffer[index] || {}
 
-  // Le header suit la lumière de la pièce : crème sur l'encre, encre sur l'or.
+  // Le fond des offres est sombre, sur toute la page : le header suit.
   useEffect(() => {
-    setDark?.(ink)
-  }, [ink, setDark])
-
-  // Changer d'offre referme le détail mobile (la sélection, elle, est conservée).
-  useEffect(() => {
-    setOpenDetail(false)
-  }, [index])
+    setDark?.(true)
+  }, [setDark])
 
   // Flèches clavier : on passe d'une offre à l'autre — sauf quand le focus est
-  // dans la console (cases), pour ne pas changer d'offre par mégarde.
+  // dans la console (le CTA), pour ne pas changer d'offre par mégarde.
   useEffect(() => {
     const onKey = (e) => {
       if (document.activeElement?.closest('[data-console]')) return
@@ -168,33 +148,18 @@ export default function Offres({ setDark, onNavigate }) {
     }
   }
 
-  const toggle = (i) =>
-    setSelByOffer((all) => {
-      const cur = { ...(all[index] || {}) }
-      if (cur[i]) delete cur[i]
-      else cur[i] = true
-      return { ...all, [index]: cur }
-    })
-
-  // Les éléments cochés de l'offre courante, dans l'ordre.
-  const selected = offre.items.filter((_, i) => sel[i])
-
-  // « Demander un devis » : on reprend l'offre et la sélection dans un message
-  // qui pré-remplit la page Contact. Le prospect n'a plus qu'à laisser ses
-  // coordonnées et envoyer. Aucun prix — le chiffrage se fait sur mesure.
+  // « Demander un devis » : on reprend l'offre dans un message qui pré-remplit
+  // la page Contact. Aucun prix — le chiffrage se fait sur mesure.
   const requestQuote = () => {
     const message = [
       'Bonjour,',
       '',
       `Je souhaite échanger sur l'offre ${offre.name}.`,
-      '',
-      selected.length ? 'Ce qui m’intéresse :' : 'Je vous laisse me guider.',
-      ...selected.map((l) => `— ${l}`),
     ].join('\n')
     onNavigate?.('contact', { message, offer: offre.name })
   }
 
-  const label = ink ? 'text-sable/75' : 'text-encre/70'
+  const label = 'text-sable/75'
 
   return (
     <section
@@ -202,13 +167,11 @@ export default function Offres({ setDark, onNavigate }) {
       aria-label="Offres"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      className="flex h-full flex-col overflow-y-auto px-6 pt-28 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:px-16"
-      style={{ backgroundColor: offre.bgColor }}
+      className="flex h-full flex-col overflow-y-auto bg-encre px-6 pt-28 md:px-16"
     >
       {/* Le sélecteur : trois cartes de choix. La carte active fait office de
-          titre — numéro et nom. Un mot d'intro et une pastille « Sélectionné »
-          rendent le geste explicite : on choisit une offre, et le choix change
-          la lumière de la page. */}
+          titre — numéro et nom, nettement dominante. Une pastille « Sélectionné »
+          rend le geste explicite. */}
       <p
         className={`reveal-up mx-auto mt-4 w-full max-w-[1180px] text-[11px] font-normal uppercase tracking-[0.3em] md:mt-8 ${label}`}
         style={{ '--d': '0.08s' }}
@@ -230,20 +193,22 @@ export default function Offres({ setDark, onNavigate }) {
               aria-label={`Choisir l’offre ${o.name}`}
               className={`group flex w-full cursor-pointer flex-col items-start overflow-hidden rounded-2xl border p-6 text-left outline-none transition-[flex-grow,border-color,background-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or sm:min-w-0 md:p-7 ${
                 on
-                  ? `sm:flex-[1.6_1_0%] ${ink ? 'border-or bg-[#221c17]/60' : 'border-or bg-creme/55'}`
-                  : `sm:flex-[1_1_0%] ${ink ? 'border-creme/15 hover:border-creme/35' : 'border-encre/15 hover:border-encre/35'}`
+                  ? 'border-or bg-[#221c17]/70 sm:flex-[1.7_1_0%]'
+                  : 'border-creme/12 hover:border-creme/30 sm:flex-[1_1_0%]'
               }`}
             >
               <span
                 className={`whitespace-nowrap text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
-                  on ? (ink ? 'text-sable/75' : 'text-encre/70') : ink ? 'text-sable/50' : 'text-encre/50'
+                  on ? 'text-sable/75' : 'text-sable/40'
                 }`}
               >
                 {o.eyebrow}
               </span>
               <span
-                className={`mt-2 font-display text-[clamp(1.7rem,2.9vw,2.6rem)] leading-[1.04] transition-colors duration-500 ${
-                  on ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/65' : 'text-encre/60'
+                className={`mt-2 font-display leading-[1.04] transition-[color,font-size] duration-500 ${
+                  on
+                    ? 'text-[clamp(1.75rem,3vw,2.7rem)] text-creme'
+                    : 'text-[clamp(1.3rem,2.1vw,1.85rem)] text-sable/45'
                 }`}
               >
                 {o.name}
@@ -269,152 +234,73 @@ export default function Offres({ setDark, onNavigate }) {
       <div key={offre.name} className="offer-enter mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
         <h1 className="sr-only">Offre {offre.name} — Bel Augure</h1>
 
-        {/* Le split : lire à gauche, composer à droite */}
-        <div
-          className={`mt-10 grid gap-x-16 gap-y-12 border-t pt-12 lg:grid-cols-12 ${
-            ink ? 'border-or/25' : 'border-or/45'
-          }`}
-        >
+        {/* Le split : lire à gauche (dominant), consulter les possibilités à droite */}
+        <div className="mt-10 grid gap-x-16 gap-y-12 border-t border-or/20 pt-12 lg:grid-cols-12">
           {/* ── GAUCHE : lecture ───────────────────────────────── */}
-          <div className="lg:col-span-6">
-            <p
-              className={`max-w-[46ch] text-[clamp(1.05rem,1.4vw,1.3rem)] font-light leading-[1.65] ${
-                ink ? 'text-sable' : 'text-encre'
-              }`}
-            >
+          <div className="lg:col-span-7">
+            {/* Accroche = titre principal de la section : grande, contrastée,
+                largeur resserrée pour l'impact — même fonte lisible qu'avant. */}
+            <p className="max-w-[22ch] text-[clamp(1.7rem,2.9vw,2.7rem)] font-light leading-[1.15] text-creme">
               {offre.accroche}
             </p>
-            <div
-              className={`mt-8 max-w-[60ch] space-y-4 text-[14px] font-light leading-[1.9] ${
-                ink ? 'text-sable/85' : 'text-encre/80'
-              }`}
-            >
+            {/* Description : juste dessous, poids intermédiaire. */}
+            <div className="mt-5 max-w-[52ch] space-y-3 text-[15px] font-light leading-[1.75] text-sable/85">
               {offre.description.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
 
-            {/* Où le montrer */}
-            <p
-              className={`mt-9 max-w-[54ch] text-[13px] font-light leading-[1.85] ${
-                ink ? 'text-sable/65' : 'text-encre/60'
-              }`}
-            >
+            {/* Usage : information secondaire — plus petit, moins contrasté. */}
+            <p className="mt-5 max-w-[50ch] text-[12px] font-light leading-[1.7] text-sable/45">
               {offre.usage}
             </p>
 
-            {/* Note de clôture — la promesse sur mesure */}
-            <p
-              className={`mt-8 max-w-[46ch] text-[14.5px] font-light italic leading-[1.55] ${
-                ink ? 'text-sable' : 'text-encre'
-              }`}
-            >
+            {/* Conclusion en italique, rapprochée du reste. */}
+            <p className="mt-4 max-w-[42ch] text-[14px] font-light italic leading-[1.5] text-sable/90">
               {offre.closing}
             </p>
           </div>
 
-          {/* ── DROITE : la console ────────────────────────────── */}
-          <div className="lg:col-span-6 lg:self-start">
+          {/* ── DROITE : les possibilités (repères éditoriaux, non interactifs) ── */}
+          <div className="lg:col-span-5 lg:self-start">
             <div className="lg:sticky lg:top-24">
               <div
-                className={`flex flex-col rounded-2xl border p-6 backdrop-blur-sm md:p-7 lg:max-h-[calc(100dvh-7rem)] ${
-                  ink ? 'border-or/20 bg-[#221c17]/55' : 'border-or/35 bg-creme/45'
-                }`}
+                data-console
+                className="flex flex-col rounded-2xl border border-creme/10 bg-[#211a14]/35 p-6 backdrop-blur-sm md:p-7 lg:max-h-[calc(100dvh-7rem)]"
               >
-                {/* En-tête de console — toujours visible */}
-                <div className="shrink-0">
-                  <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
-                    {offre.compose}
-                  </h2>
-                  <p className={`mt-2 text-[12.5px] font-light leading-[1.6] ${ink ? 'text-sable/70' : 'text-encre/65'}`}>
-                    Cochez ce qui vous parle — on affine le projet ensemble.
-                  </p>
-                </div>
+                {/* Sous-titre du bloc — renforcé, mais sous l'accroche. */}
+                <h2 className="shrink-0 text-[13px] font-normal uppercase tracking-[0.24em] text-creme/90">
+                  {offre.compose}
+                </h2>
 
-                {/* Les éléments : seule zone qui défile en interne sur écran court —
-                    l'en-tête et le pied (devis) restent toujours en vue.
-                    data-console : les flèches clavier n'y changent pas d'offre. */}
-                <ul data-console className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
-                  {offre.items.map((item, i) => {
-                    const on = !!sel[i]
-                    return (
-                      <li
-                        key={item}
-                        className={`flex items-center gap-4 border-b py-4 ${
-                          ink ? 'border-creme/10' : 'border-encre/10'
-                        }`}
-                      >
-                        <button
-                          type="button"
-                          role="checkbox"
-                          aria-checked={on}
-                          onClick={() => toggle(i)}
-                          className="group flex flex-1 cursor-pointer items-start gap-3.5 rounded-md text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or"
-                        >
-                          <span
-                            aria-hidden="true"
-                            className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
-                              on
-                                ? 'border-or bg-or text-encre'
-                                : ink
-                                  ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70'
-                                  : 'border-encre/45 bg-encre/[0.04] group-hover:border-encre/70'
-                            }`}
-                          >
-                            {on && (
-                              <span className="check-draw">
-                                <IconCheck />
-                              </span>
-                            )}
-                          </span>
-                          <span className="min-w-0">
-                            <span
-                              className={`block text-[13.5px] font-light leading-[1.5] ${
-                                on
-                                  ? ink
-                                    ? 'text-creme'
-                                    : 'text-encre'
-                                  : ink
-                                    ? 'text-sable/85'
-                                    : 'text-encre/80'
-                              }`}
-                            >
-                              {item}
-                            </span>
-                            {/* Filet or qui se trace sous la ligne retenue */}
-                            <span
-                              aria-hidden="true"
-                              className="mt-1 block h-px origin-left bg-or/70"
-                              style={{
-                                transform: on ? 'scaleX(1)' : 'scaleX(0)',
-                                transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
-                              }}
-                            />
-                          </span>
-                        </button>
-                      </li>
-                    )
-                  })}
+                {/* Les possibilités : une liste éditoriale, chaque ligne marquée
+                    d'un simple filet or. Aucune case, aucune sélection. */}
+                <ul className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
+                  {offre.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3.5 border-b border-creme/[0.07] py-3.5"
+                    >
+                      <span aria-hidden="true" className="mt-[0.72em] h-px w-4 shrink-0 bg-or/55" />
+                      <span className="text-[13.5px] font-light leading-[1.5] text-sable/85">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
                 </ul>
 
-                {/* Pied de console — toujours visible : note + CTA */}
-                <div className="shrink-0">
-                  {/* Aucun prix affiché : le devis est établi sur mesure avec le
-                      studio, à partir de la sélection transmise. */}
-                  <div className={`mt-6 hidden border-t pt-5 lg:block ${ink ? 'border-or/25' : 'border-or/45'}`}>
-                    <p className={`text-[11.5px] font-light leading-[1.5] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
-                      Devis établi sur mesure, selon votre projet.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={requestQuote}
-                      className={`cta mt-5 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em] ${
-                        ink ? 'cta-light' : ''
-                      }`}
-                    >
-                      Demander un devis
-                    </button>
-                  </div>
+                {/* Pied de console — CTA (desktop). Aucun prix : devis sur mesure. */}
+                <div className="mt-6 hidden shrink-0 border-t border-creme/10 pt-5 lg:block">
+                  <p className="text-[11.5px] font-light leading-[1.5] text-sable/55">
+                    Devis établi sur mesure, selon votre projet.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={requestQuote}
+                    className="cta cta-light mt-5 w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em]"
+                  >
+                    Demander un devis
+                  </button>
                 </div>
               </div>
             </div>
@@ -422,99 +308,58 @@ export default function Offres({ setDark, onNavigate }) {
         </div>
 
         {/* ── Épilogue : questions ── */}
-        <div className={`mt-20 border-t pt-14 ${ink ? 'border-or/25' : 'border-or/45'}`}>
+        <div className="mt-20 border-t border-or/20 pt-14">
           <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Les questions qui reviennent
           </h2>
           <dl className="mt-8 grid gap-x-12 gap-y-9 md:grid-cols-2">
             {QUESTIONS.map((item) => (
               <div key={item.q}>
-                <dt className={`font-display text-[16px] leading-[1.4] ${ink ? 'text-creme' : 'text-encre'}`}>
-                  {item.q}
-                </dt>
-                <dd className={`mt-2 text-[13px] font-light leading-[1.8] ${ink ? 'text-sable/75' : 'text-encre/75'}`}>
-                  {item.r}
-                </dd>
+                <dt className="font-display text-[16px] leading-[1.4] text-creme">{item.q}</dt>
+                <dd className="mt-2 text-[13px] font-light leading-[1.8] text-sable/75">{item.r}</dd>
               </div>
             ))}
           </dl>
         </div>
 
         {/* ── Extensions possibles : commun aux trois offres ── */}
-        <div className={`mt-16 border-t pt-12 ${ink ? 'border-or/25' : 'border-or/45'}`}>
+        <div className="mt-16 border-t border-or/20 pt-12">
           <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Extensions possibles
           </h2>
-          <p
-            className={`mt-5 font-display text-[clamp(1.4rem,2.2vw,2rem)] leading-[1.15] ${
-              ink ? 'text-creme' : 'text-encre'
-            }`}
-          >
+          <p className="mt-5 font-display text-[clamp(1.4rem,2.2vw,2rem)] leading-[1.15] text-creme">
             {EXTENSIONS.tagline}
           </p>
-          <p
-            className={`mt-4 max-w-[60ch] text-[14px] font-light leading-[1.9] ${
-              ink ? 'text-sable/85' : 'text-encre/80'
-            }`}
-          >
+          <p className="mt-4 max-w-[60ch] text-[14px] font-light leading-[1.9] text-sable/85">
             {EXTENSIONS.intro}
           </p>
           <ul className="mt-8 grid gap-x-16 gap-y-3 sm:grid-cols-2">
             {EXTENSIONS.items.map((it) => (
               <li
                 key={it}
-                className={`flex gap-3 text-[13.5px] font-light leading-[1.5] ${
-                  ink ? 'text-sable/80' : 'text-encre/75'
-                }`}
+                className="flex items-start gap-3.5 text-[13.5px] font-light leading-[1.5] text-sable/80"
               >
-                <span aria-hidden="true" className="mt-[0.15em] shrink-0 text-or">
-                  <IconCheck />
-                </span>
+                <span aria-hidden="true" className="mt-[0.72em] h-px w-4 shrink-0 bg-or/55" />
                 <span>{it}</span>
               </li>
             ))}
           </ul>
-          <p className={`mt-8 text-[12.5px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
+          <p className="mt-8 text-[12.5px] font-light leading-[1.7] text-sable/60">
             {EXTENSIONS.closing}
           </p>
         </div>
       </div>
 
-      {/* Mobile : le devis se glisse en barre du bas, toujours visible, et se
-          déplie pour montrer la sélection. */}
-      <div
-        className={`sticky bottom-0 z-10 -mx-6 mt-auto border-t backdrop-blur-md md:-mx-16 lg:hidden ${
-          ink ? 'border-or/25 bg-encre/90' : 'border-or/45 bg-creme/90'
-        }`}
-      >
-        {openDetail && (
-          <div className="max-h-[45vh] overflow-y-auto px-6 pt-5 md:px-16">
-            <ReceiptLines selected={selected} ink={ink} />
-          </div>
-        )}
+      {/* Mobile : le CTA reste accessible en barre du bas. */}
+      <div className="sticky bottom-0 z-10 -mx-6 mt-auto border-t border-or/20 bg-encre/90 backdrop-blur-md md:-mx-16 lg:hidden">
         <div
-          className="flex items-center justify-between gap-4 px-6 pt-4 md:px-16"
+          className="px-6 pt-4 md:px-16"
           style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
         >
           <button
             type="button"
-            onClick={() => setOpenDetail((v) => !v)}
-            aria-expanded={openDetail}
-            className="flex min-h-[44px] items-center gap-2 cursor-pointer text-left"
-          >
-            <span className={`text-[11px] font-normal uppercase tracking-[0.25em] ${label}`}>
-              {openDetail ? 'Masquer le détail' : 'Votre sélection'}
-            </span>
-            <span className={`inline-block align-middle transition-transform ${openDetail ? 'rotate-180' : ''} ${label}`}>
-              <IconChevron />
-            </span>
-          </button>
-          <button
-            type="button"
             onClick={requestQuote}
-            className={`cta w-max shrink-0 cursor-pointer px-6 py-3 text-[13px] font-normal tracking-[0.06em] ${
-              ink ? 'cta-light' : ''
-            }`}
+            className="cta cta-light w-full cursor-pointer py-3.5 text-[13px] font-normal tracking-[0.06em]"
           >
             Demander un devis
           </button>
@@ -524,35 +369,7 @@ export default function Offres({ setDark, onNavigate }) {
   )
 }
 
-// La sélection reprise sous la barre mobile : les éléments cochés, ou une
-// invite quand rien n'est encore coché.
-function ReceiptLines({ selected, ink }) {
-  const rowText = ink ? 'text-sable/85' : 'text-encre/80'
-  if (!selected.length) {
-    return (
-      <p className={`text-[13px] font-light leading-[1.5] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
-        Rien de coché pour l’instant — cochez ce qui vous intéresse, ou laissez-nous vous guider.
-      </p>
-    )
-  }
-  return (
-    <ul className="space-y-2.5">
-      {selected.map((l) => (
-        <li
-          key={l}
-          className={`flex items-baseline gap-2.5 text-[13px] font-light leading-[1.4] ${rowText}`}
-        >
-          <span aria-hidden="true" className="mt-[0.15em] shrink-0 text-or">
-            <IconCheck />
-          </span>
-          <span>{l}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-// Coche fine, dessinée à la charte.
+// Coche fine, dessinée à la charte (pastille « Sélectionné », listes).
 function IconCheck() {
   return (
     <svg
@@ -567,24 +384,6 @@ function IconCheck() {
       aria-hidden="true"
     >
       <path d="M20 6 9 17l-5-5" />
-    </svg>
-  )
-}
-
-function IconChevron() {
-  return (
-    <svg
-      width="13"
-      height="13"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="m6 9 6 6 6-6" />
     </svg>
   )
 }
