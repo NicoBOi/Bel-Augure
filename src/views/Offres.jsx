@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 
-// Page /offres — les trois offres se lisent comme une progression, du fil
-// continu à l'ensemble réuni. Le sélecteur hiérarchise par paliers : la carte
-// grandit (largeur, titre, contraste) au fil du périmètre, et la dernière —
-// Campagne — porte le traitement « apex » (cadre or, elle réunit 01 + 02).
-// À gauche on lit l'offre, à droite ses possibilités (repères éditoriaux, non
-// interactifs). Fond sombre uniforme, aucun prix : chiffrage sur mesure.
+// Page /offres — pas un tableau de prix, un générique. Les trois offres sont
+// « billées » comme au cinéma : leurs noms montent en échelle typographique, du
+// fil continu à l'ensemble réuni, et celui qu'on regarde s'allume en or. La
+// hiérarchie vit dans la taille du nom — le geste le plus proche d'une affiche.
+// On choisit un nom, sa scène se dévoile dessous. Fond sombre, aucun prix.
 const OFFRES = [
   {
     name: 'Histoires de marque',
@@ -55,7 +54,6 @@ const OFFRES = [
     name: 'Campagne signature',
     eyebrow: '03',
     register: 'Le déploiement complet',
-    apex: true,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
     description: [
       'Une campagne complète imaginée autour d’un lancement, d’une ouverture ou d’un temps fort. Film principal, récits courts et déclinaisons visuelles sont réunis au sein d’une même direction créative.',
@@ -75,19 +73,12 @@ const OFFRES = [
   },
 ]
 
-// Paliers de la progression : largeur (flex), taille et couleur du titre montent
-// avec le périmètre. Écrit en classes littérales pour que Tailwind les génère.
-const FLEX = [
-  ['sm:flex-[1_1_0%]', 'sm:flex-[1.25_1_0%]'],
-  ['sm:flex-[1.3_1_0%]', 'sm:flex-[1.6_1_0%]'],
-  ['sm:flex-[1.7_1_0%]', 'sm:flex-[2_1_0%]'],
+// Échelle typographique du générique : le nom grandit avec le périmètre.
+const SIZE = [
+  'text-[clamp(1.7rem,5.2vw,2.6rem)]',
+  'text-[clamp(2.1rem,6.4vw,3.3rem)]',
+  'text-[clamp(2.6rem,8vw,4.2rem)]',
 ]
-const TITLE = [
-  'text-[clamp(1.15rem,1.9vw,1.6rem)]',
-  'text-[clamp(1.45rem,2.4vw,2.05rem)]',
-  'text-[clamp(1.8rem,3.2vw,2.75rem)]',
-]
-const DIM = ['text-sable/40', 'text-sable/55', 'text-sable/80']
 
 // Extensions communes aux trois offres : de quoi prolonger le projet.
 const EXTENSIONS = {
@@ -129,29 +120,27 @@ const QUESTIONS = [
 
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
-  // On ouvre sur la pièce maîtresse (Film Signature), au centre de la progression.
+  // On ouvre sur la pièce maîtresse (Film Signature), au cœur du générique.
   const [index, setIndex] = useState(1)
   const offre = OFFRES[index]
 
-  // Le fond des offres est sombre, sur toute la page : le header suit.
   useEffect(() => {
     setDark?.(true)
   }, [setDark])
 
-  // Flèches clavier : on passe d'une offre à l'autre — sauf quand le focus est
-  // dans la console (le CTA), pour ne pas changer d'offre par mégarde.
+  // Flèches clavier : on change d'offre — sauf focus dans la scène/console.
   useEffect(() => {
     const onKey = (e) => {
       if (document.activeElement?.closest('[data-console]')) return
-      if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % OFFRES.length)
-      else if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') setIndex((i) => (i + 1) % OFFRES.length)
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp')
+        setIndex((i) => (i - 1 + OFFRES.length) % OFFRES.length)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  // Mobile : un glissement horizontal net fait défiler les offres, sans gêner
-  // le scroll vertical de la page.
+  // Mobile : glissement horizontal net pour changer d'offre.
   const touch = useRef(null)
   const onTouchStart = (e) => {
     touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
@@ -168,8 +157,6 @@ export default function Offres({ setDark, onNavigate }) {
     }
   }
 
-  // « Demander un devis » : on reprend l'offre dans un message qui pré-remplit
-  // la page Contact. Aucun prix — le chiffrage se fait sur mesure.
   const requestQuote = () => {
     const message = ['Bonjour,', '', `Je souhaite échanger sur l'offre ${offre.name}.`].join('\n')
     onNavigate?.('contact', { message, offer: offre.name })
@@ -185,129 +172,111 @@ export default function Offres({ setDark, onNavigate }) {
       onTouchEnd={onTouchEnd}
       className="flex h-full flex-col overflow-y-auto bg-encre px-6 pt-28 md:px-16"
     >
-      {/* Le sélecteur : une progression du fil continu à l'ensemble réuni. Les
-          cartes grandissent par paliers ; la dernière porte le traitement apex. */}
+      {/* ── Le générique : les trois noms billés en échelle ─────────────── */}
       <p
-        className={`reveal-up mx-auto mt-4 w-full max-w-[1180px] text-[11px] font-normal uppercase tracking-[0.3em] md:mt-8 ${label}`}
-        style={{ '--d': '0.08s' }}
+        className={`reveal-up mx-auto w-full max-w-[1180px] text-[11px] font-normal uppercase tracking-[0.34em] ${label}`}
+        style={{ '--d': '0.06s' }}
       >
-        Trois offres — du fil à l’ensemble
+        Le programme — du fil à l’ensemble
       </p>
+
       <div
-        className="reveal-up mx-auto mt-4 flex w-full max-w-[1180px] flex-col gap-4 sm:flex-row sm:items-stretch"
-        style={{ '--d': '0.14s' }}
+        role="tablist"
+        aria-label="Nos offres"
+        className="reveal-up mx-auto mt-8 w-full max-w-[1180px]"
+        style={{ '--d': '0.12s' }}
       >
         {OFFRES.map((o, i) => {
           const on = i === index
-          const apex = !!o.apex
-          const flex = on ? FLEX[i][1] : FLEX[i][0]
-          const border = on
-            ? 'border-or'
-            : apex
-              ? 'border-or/35 hover:border-or/55'
-              : 'border-creme/12 hover:border-creme/30'
-          const bg = on ? 'bg-[#241d15]/75' : apex ? 'bg-[#241d15]/40' : ''
           return (
             <button
               key={o.name}
               type="button"
+              role="tab"
+              aria-selected={on}
+              aria-label={`Afficher l’offre ${o.name}`}
               onClick={() => setIndex(i)}
-              aria-current={on ? 'true' : undefined}
-              aria-label={`Choisir l’offre ${o.name}`}
-              className={`group flex w-full cursor-pointer flex-col items-start overflow-hidden rounded-2xl border p-6 text-left outline-none transition-[flex-grow,border-color,background-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-or sm:min-w-0 md:p-7 ${flex} ${border} ${bg}`}
+              className="group block w-full cursor-pointer py-4 text-left outline-none md:py-5"
             >
-              <span
-                className={`text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 ${
-                  on ? 'text-or' : apex ? 'text-sable/60' : 'text-sable/40'
-                }`}
-              >
-                {o.eyebrow}
-              </span>
-              <span
-                className={`mt-2 font-display leading-[1.04] transition-[color,font-size] duration-500 ${TITLE[i]} ${
-                  on ? 'text-creme' : DIM[i]
-                }`}
-              >
-                {o.name}
-                <span className={`text-or transition-opacity duration-300 ${on ? 'dot-breathe opacity-100' : 'opacity-0'}`}>
-                  .
+              <span className="flex items-baseline gap-3">
+                <span
+                  className={`font-display text-[13px] tabular-nums tracking-[0.12em] transition-colors duration-500 ${
+                    on ? 'text-or' : 'text-sable/25'
+                  }`}
+                >
+                  {o.eyebrow}
+                </span>
+                <span
+                  className={`text-[10px] font-normal uppercase tracking-[0.26em] transition-colors duration-500 ${
+                    on ? 'text-or' : 'text-sable/25 group-hover:text-sable/45'
+                  }`}
+                >
+                  {o.register}
                 </span>
               </span>
-
-              {/* Registre : positionne l'offre. Passe en or, coché, quand elle
-                  est sélectionnée. */}
-              <span
-                className={`mt-2 inline-flex items-center gap-1.5 text-[10px] font-normal uppercase tracking-[0.2em] transition-colors duration-500 ${
-                  on ? 'text-or' : apex ? 'text-or/70' : 'text-sable/40'
-                }`}
-              >
-                {on && <IconCheck />}
-                {o.register}
-              </span>
-
-              {/* Apex : Campagne réunit 01 + 02 — dit le périmètre sans un mot. */}
-              {apex && (
+              <span className="relative mt-1.5 inline-block">
+                <span
+                  className={`font-display leading-[1.0] transition-colors duration-500 ${SIZE[i]} ${
+                    on
+                      ? 'text-creme'
+                      : 'text-sable/25 group-hover:text-sable/55 group-focus-visible:text-sable/55'
+                  }`}
+                >
+                  {o.name}
+                  <span className={`text-or transition-opacity duration-500 ${on ? 'opacity-100' : 'opacity-0'}`}>
+                    .
+                  </span>
+                </span>
+                {/* Le trait or qui se trace sous le nom en lecture (marquee). */}
                 <span
                   aria-hidden="true"
-                  className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-normal uppercase tracking-[0.14em] text-or/60"
-                >
-                  <span className="rounded border border-or/40 px-1.5 py-0.5">01</span>
-                  <span>+</span>
-                  <span className="rounded border border-or/40 px-1.5 py-0.5">02</span>
-                </span>
-              )}
+                  className="absolute -bottom-1 left-0 block h-px w-full origin-left bg-or"
+                  style={{
+                    transform: on ? 'scaleX(1)' : 'scaleX(0)',
+                    transition: 'transform 0.55s cubic-bezier(0.16,1,0.3,1)',
+                  }}
+                />
+              </span>
             </button>
           )
         })}
       </div>
 
-      {/* Contenu, rejoué à chaque changement d'offre (key). La carte active
-          tient lieu de titre visible ; un h1 discret sert les lecteurs d'écran. */}
-      <div key={offre.name} className="offer-enter mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
+      {/* ── La scène : le contenu de l'offre en lecture, en fondu ────────── */}
+      <div
+        key={offre.name}
+        role="tabpanel"
+        className="offer-enter mx-auto w-full max-w-[1180px] pb-40 lg:pb-24"
+      >
         <h1 className="sr-only">Offre {offre.name} — Bel Augure</h1>
 
-        {/* Le split : lire à gauche (dominant), consulter les possibilités à droite */}
-        <div className="mt-10 grid gap-x-16 gap-y-12 border-t border-or/20 pt-12 lg:grid-cols-12">
-          {/* ── GAUCHE : lecture ───────────────────────────────── */}
+        <div className="mt-12 grid gap-x-16 gap-y-12 border-t border-or/20 pt-12 lg:grid-cols-12">
+          {/* ── GAUCHE : lecture ── */}
           <div className="lg:col-span-7">
-            {/* Accroche = titre principal de la section : grande, contrastée,
-                largeur resserrée pour l'impact — même fonte lisible qu'avant. */}
-            <p className="max-w-[22ch] text-[clamp(1.7rem,2.9vw,2.7rem)] font-light leading-[1.15] text-creme">
+            <p className="max-w-[24ch] text-[clamp(1.4rem,2.3vw,2rem)] font-light leading-[1.2] text-creme">
               {offre.accroche}
             </p>
-            {/* Description : juste dessous, poids intermédiaire. */}
             <div className="mt-5 max-w-[52ch] space-y-3 text-[15px] font-light leading-[1.75] text-sable/85">
               {offre.description.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
-
-            {/* Usage : information secondaire — plus petit, moins contrasté. */}
             <p className="mt-5 max-w-[50ch] text-[12px] font-light leading-[1.7] text-sable/45">
               {offre.usage}
             </p>
-
-            {/* Conclusion en italique, rapprochée du reste. */}
             <p className="mt-4 max-w-[42ch] text-[14px] font-light italic leading-[1.5] text-sable/90">
               {offre.closing}
             </p>
           </div>
 
-          {/* ── DROITE : les possibilités (repères éditoriaux, non interactifs) ── */}
+          {/* ── DROITE : les possibilités (repères éditoriaux) ── */}
           <div className="lg:col-span-5 lg:self-start">
             <div className="lg:sticky lg:top-24">
-              <div
-                data-console
-                className="flex flex-col rounded-2xl border border-creme/10 bg-[#211a14]/35 p-6 backdrop-blur-sm md:p-7 lg:max-h-[calc(100dvh-7rem)]"
-              >
-                {/* Sous-titre du bloc — renforcé, mais sous l'accroche. */}
+              <div data-console className="flex flex-col">
                 <h2 className="shrink-0 text-[13px] font-normal uppercase tracking-[0.24em] text-creme/90">
                   {offre.compose}
                 </h2>
-
-                {/* Les possibilités : une liste éditoriale, chaque ligne marquée
-                    d'un simple filet or. Aucune case, aucune sélection. */}
-                <ul className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
+                <ul className="mt-6">
                   {offre.items.map((item) => (
                     <li
                       key={item}
@@ -320,9 +289,7 @@ export default function Offres({ setDark, onNavigate }) {
                     </li>
                   ))}
                 </ul>
-
-                {/* Pied de console — CTA (desktop). Aucun prix : devis sur mesure. */}
-                <div className="mt-6 hidden shrink-0 border-t border-creme/10 pt-5 lg:block">
+                <div className="mt-7 hidden shrink-0 lg:block">
                   <p className="text-[11.5px] font-light leading-[1.5] text-sable/55">
                     Devis établi sur mesure, selon votre projet.
                   </p>
@@ -354,7 +321,7 @@ export default function Offres({ setDark, onNavigate }) {
           </dl>
         </div>
 
-        {/* ── Extensions possibles : commun aux trois offres ── */}
+        {/* ── Extensions possibles ── */}
         <div className="mt-16 border-t border-or/20 pt-12">
           <h2 className={`text-[11px] font-normal uppercase tracking-[0.3em] ${label}`}>
             Extensions possibles
@@ -382,7 +349,7 @@ export default function Offres({ setDark, onNavigate }) {
         </div>
       </div>
 
-      {/* Mobile : le CTA reste accessible en barre du bas. */}
+      {/* Mobile : CTA en barre du bas. */}
       <div className="sticky bottom-0 z-10 -mx-6 mt-auto border-t border-or/20 bg-encre/90 backdrop-blur-md md:-mx-16 lg:hidden">
         <div
           className="px-6 pt-4 md:px-16"
@@ -398,24 +365,5 @@ export default function Offres({ setDark, onNavigate }) {
         </div>
       </div>
     </section>
-  )
-}
-
-// Coche fine, dessinée à la charte (registre sélectionné, listes).
-function IconCheck() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
   )
 }
