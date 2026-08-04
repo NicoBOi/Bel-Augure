@@ -195,7 +195,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           <div className="lg:col-span-8">
             <h1
               id="hero-titre"
-              className="font-wordmark text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:whitespace-nowrap"
+              className="font-display text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:whitespace-nowrap"
             >
               <span className="mask" style={{ '--d': '0.05s' }}>
                 <span>
