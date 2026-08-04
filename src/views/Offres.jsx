@@ -12,7 +12,7 @@ const OFFRES = [
     eyebrow: '01',
     register: 'Le fil continu',
     rank: 1,
-    icon: 'stories',
+    formats: ['9:16'],
     bgColor: '#F0E6D8',
     ink: false,
     accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
@@ -37,7 +37,7 @@ const OFFRES = [
     eyebrow: '02',
     register: 'La pièce maîtresse',
     rank: 2,
-    icon: 'film',
+    formats: ['16:9'],
     bgColor: '#D9C6A6',
     ink: false,
     accroche: 'Le film qui installe durablement votre univers.',
@@ -63,7 +63,7 @@ const OFFRES = [
     eyebrow: '03',
     register: 'Le déploiement complet',
     rank: 3,
-    icon: 'campaign',
+    formats: ['16:9', '9:16'],
     bgColor: '#1a1512',
     ink: true,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
@@ -223,7 +223,7 @@ export default function Offres({ setDark, onNavigate }) {
           // Pas d'ombre portée sur la sélection.
           const shadow = ''
           const numCol = ink ? (on ? 'text-or' : 'text-sable/45') : (on ? 'text-orfonce' : 'text-encre/45')
-          const iconCol = ink ? (on ? 'text-or' : 'text-or/55') : (on ? 'text-orfonce' : 'text-orfonce/55')
+          const iconCol = ink ? (on ? 'border-or' : 'border-or/45') : (on ? 'border-orfonce' : 'border-orfonce/40')
           const nameCol = ink ? (on ? 'text-creme' : 'text-sable/55') : (on ? 'text-encre' : 'text-encre/60')
           const regCol = ink ? (on ? 'text-or' : 'text-sable/45') : (on ? 'text-orfonce' : 'text-encre/55')
           return (
@@ -239,8 +239,10 @@ export default function Offres({ setDark, onNavigate }) {
               <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
                 {o.eyebrow}
               </span>
-              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center">
-                <OfferIcon kind={o.icon} className={iconCol} />
+              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center gap-2.5">
+                {o.formats.map((f) => (
+                  <FormatIcon key={f} ratio={f} className={iconCol} />
+                ))}
               </span>
               <span className={`mt-4 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
                 {o.name}
@@ -435,49 +437,14 @@ function IconCheck() {
   )
 }
 
-// Icône de livrable, dessinée d'après ce que chaque offre propose :
-//  · stories  — une collection de récits verticaux (9:16) pour les réseaux
-//  · film     — une pièce centrale, un film horizontal (16:9)
-//  · campaign — le déploiement : film + récit vertical + photo de campagne
-function OfferIcon({ kind, className }) {
-  const s = {
-    fill: 'none',
-    stroke: 'currentColor',
-    strokeWidth: 1.4,
-    strokeLinejoin: 'round',
-    strokeLinecap: 'round',
-  }
+// Petit gabarit de format : la silhouette du livrable (9:16 vertical,
+// 16:9 horizontal). Remplace les anciens pips — on lit ce qu'on reçoit.
+function FormatIcon({ ratio, className }) {
+  const dims = ratio === '9:16' ? 'h-[34px] w-[19px]' : 'h-[19px] w-[34px]'
   return (
-    <svg
-      viewBox="0 0 40 34"
-      height="34"
+    <span
       aria-hidden="true"
-      className={`transition-colors duration-500 ${className}`}
-      {...s}
-    >
-      {kind === 'stories' && (
-        <>
-          <rect x="6" y="4" width="15" height="26" rx="2.5" opacity="0.5" />
-          <rect x="18" y="6" width="15" height="26" rx="2.5" />
-          <path d="M23.5 15.5v7l6-3.5z" fill="currentColor" stroke="none" />
-        </>
-      )}
-      {kind === 'film' && (
-        <>
-          <rect x="4" y="9" width="32" height="18" rx="2.5" />
-          <path d="M17 13.5v9l7.5-4.5z" fill="currentColor" stroke="none" />
-        </>
-      )}
-      {kind === 'campaign' && (
-        <>
-          <rect x="2" y="5" width="22" height="13" rx="2" />
-          <path d="M9.5 9v5l4.5-2.5z" fill="currentColor" stroke="none" />
-          <rect x="27" y="4" width="9" height="16" rx="2" />
-          <rect x="6" y="22" width="13" height="9" rx="2" />
-          <circle cx="9.6" cy="25.4" r="1.3" fill="currentColor" stroke="none" />
-          <path d="M6.5 30l3-2.6 2 1.7 3-2.6" />
-        </>
-      )}
-    </svg>
+      className={`inline-block rounded-[2px] border transition-colors duration-500 ${dims} ${className}`}
+    />
   )
 }
