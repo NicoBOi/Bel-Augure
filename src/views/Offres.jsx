@@ -215,7 +215,8 @@ export default function Offres({ setDark, onNavigate }) {
             : r === 3 ? 'border-orfonce/55' : r === 2 ? 'border-orfonce/32' : 'border-orfonce/16'
           const border = on ? (ink ? 'border-or' : 'border-encre') : `${rankBorder} ${ink ? 'hover:border-creme/40' : 'hover:border-orfonce/60'}`
           const bg = on ? (ink ? 'bg-[#241c13]/55' : 'bg-black/[0.04]') : ''
-          const lift = on ? 'sm:scale-[1.02]' : ''
+          // Pas d'agrandissement : la carte sélectionnée reste alignée sur la ligne.
+          const lift = ''
           // Pas d'ombre portée sur la sélection.
           const shadow = ''
           const numCol = ink ? (on ? 'text-or' : 'text-sable/45') : (on ? 'text-orfonce' : 'text-encre/45')
@@ -230,7 +231,7 @@ export default function Offres({ setDark, onNavigate }) {
               aria-current={on ? 'true' : undefined}
               aria-label={`Choisir l’offre ${o.name}`}
               style={{ willChange: 'transform' }}
-              className={`group flex cursor-pointer flex-col items-start rounded-2xl border p-6 text-left outline-none transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'} md:p-7 sm:flex-1 ${border} ${bg} ${lift} ${shadow}`}
+              className={`group flex cursor-pointer flex-col items-start rounded-2xl border p-6 text-left outline-none transition-[border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'} md:p-7 sm:min-w-0 sm:flex-1 ${border} ${bg} ${lift} ${shadow}`}
             >
               <span className="flex w-full items-center justify-between">
                 <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
@@ -253,7 +254,7 @@ export default function Offres({ setDark, onNavigate }) {
               </span>
               <span className="mt-5 flex h-[26px] items-center">
                 <span
-                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] transition-opacity duration-500 ${
+                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] ${
                     ink ? 'bg-or text-encre' : 'bg-encre text-or'
                   } ${on ? 'opacity-100' : 'opacity-0'}`}
                 >
