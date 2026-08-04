@@ -35,12 +35,19 @@ const OFFRES = [
       'Diffusion incluse : deux ans, France, digital et réseaux sociaux',
       'Un seul projet à la fois',
     ],
-    extensions:
-      'Déclinaisons verticales supplémentaires · voix off · musique originale · images aériennes · journée de tournage supplémentaire · diffusion télévision, affichage, cinéma, internationale ou durée étendue.',
-    itemsMode: 'none',
-    items: [],
-    price: 'À partir de 10 000 € HT',
-    priceNote: 'Une proposition détaillée vous est adressée après un échange de trente minutes.',
+    consoleTitle: 'Extensions possibles',
+    consoleIntro: 'Cochez ce qui vous intéresse — chiffré dans la proposition.',
+    itemsMode: 'options',
+    items: [
+      'Déclinaisons verticales supplémentaires',
+      'Voix off',
+      'Musique originale',
+      'Images aériennes',
+      'Journée de tournage supplémentaire',
+      'Diffusion télévision ou affichage',
+      'Diffusion cinéma',
+      'Diffusion internationale ou durée étendue',
+    ],
     cta: 'Prendre rendez-vous',
   },
   {
@@ -84,8 +91,6 @@ const OFFRES = [
     ],
     bridge:
       'Le programme prolonge naturellement un Film Signature : même univers, déployé dans le temps.',
-    price: 'Sur devis',
-    priceNote: 'Selon le format du programme.',
     cta: 'Prendre rendez-vous',
   },
   {
@@ -101,23 +106,22 @@ const OFFRES = [
       'Une campagne complète autour d’un temps fort : ouverture, lancement de gamme, nouvelle identité. Film principal, récits courts et déclinaisons multi-supports, réunis sous une même direction créative. Conçue sur mesure, après un premier échange.',
     ],
     context: null,
-    receiveTitle: 'Elle réunit',
-    receive: [
+    receive: null,
+    cadre: [
+      'Huit à dix semaines entre la validation de la proposition et la livraison',
+      'La campagne est suivie directement par les deux fondateurs',
+      'Diffusion incluse : deux ans, France, digital et réseaux sociaux ; les autres usages sont chiffrés dès la proposition',
+    ],
+    consoleTitle: 'Elle réunit',
+    consoleIntro: 'Chaque campagne fait l’objet d’une proposition dédiée.',
+    itemsMode: 'included',
+    items: [
       'Une idée directrice',
       'Un Film Signature',
       'Une collection d’Histoires de marque',
       'Les déclinaisons horizontales et verticales de l’ensemble',
       'La photographie de campagne, avec un photographe partenaire, en option',
     ],
-    cadre: [
-      'Huit à dix semaines entre la validation de la proposition et la livraison',
-      'La campagne est suivie directement par les deux fondateurs',
-      'Diffusion incluse : deux ans, France, digital et réseaux sociaux ; les autres usages sont chiffrés dès la proposition',
-    ],
-    itemsMode: 'none',
-    items: [],
-    price: 'Sur mesure',
-    priceNote: 'Chaque campagne fait l’objet d’une proposition dédiée.',
     cta: 'Écrire au studio',
   },
 ]
@@ -154,7 +158,7 @@ export default function Offres({ setDark, onNavigate }) {
   const offre = OFFRES[index]
   const ink = offre.ink
   const sel = selByOffer[index] || {}
-  const hasConsole = offre.itemsMode === 'options' || offre.itemsMode === 'subjects'
+  const hasConsole = offre.itemsMode !== 'none'
 
   // Le header suit la lumière de l'offre (sombre sur la Campagne).
   useEffect(() => {
@@ -323,19 +327,21 @@ export default function Offres({ setDark, onNavigate }) {
             )}
 
             {/* Ce que vous recevez */}
-            <div className={`mt-10 border-t pt-8 ${line}`}>
-              <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
-                {offre.receiveTitle}
-              </h2>
-              <ul className="mt-5 space-y-3">
-                {offre.receive.map((it) => (
-                  <li key={it} className={`flex items-start gap-3.5 text-[14px] font-light leading-[1.55] ${ink ? 'text-sable/85' : 'text-encre/85'}`}>
-                    <span aria-hidden="true" className={`mt-[0.62em] h-px w-4 shrink-0 ${dash}`} />
-                    <span>{it}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {offre.receive && (
+              <div className={`mt-10 border-t pt-8 ${line}`}>
+                <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
+                  {offre.receiveTitle}
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  {offre.receive.map((it) => (
+                    <li key={it} className={`flex items-start gap-3.5 text-[14px] font-light leading-[1.55] ${ink ? 'text-sable/85' : 'text-encre/85'}`}>
+                      <span aria-hidden="true" className={`mt-[0.62em] h-px w-4 shrink-0 ${dash}`} />
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Le cadre */}
             <div className={`mt-8 border-t pt-8 ${line}`}>
@@ -351,17 +357,6 @@ export default function Offres({ setDark, onNavigate }) {
                 ))}
               </ul>
             </div>
-
-            {offre.extensions && (
-              <div className={`mt-8 border-t pt-8 ${line}`}>
-                <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
-                  Extensions possibles
-                </h2>
-                <p className={`mt-4 max-w-[58ch] text-[13.5px] font-light leading-[1.75] ${ink ? 'text-sable/75' : 'text-encre/70'}`}>
-                  {offre.extensions}
-                </p>
-              </div>
-            )}
 
             {offre.bridge && (
               <p className={`mt-8 max-w-[52ch] text-[13.5px] font-light italic leading-[1.6] ${ink ? 'text-sable/80' : 'text-encre/75'}`}>
@@ -387,34 +382,29 @@ export default function Offres({ setDark, onNavigate }) {
 
                     <ul data-console className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
                       {offre.items.map((item, i) => {
-                        const checked = !!sel[i]
-                        return (
-                          <li key={item} className={`flex items-center gap-4 border-b py-3.5 ${ink ? 'border-creme/10' : 'border-encre/12'}`}>
-                            <button
-                              type="button"
-                              role="checkbox"
-                              aria-checked={checked}
-                              onClick={() => toggle(i)}
-                              className={`group flex flex-1 cursor-pointer items-start gap-3.5 rounded-md text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'}`}
+                        const included = offre.itemsMode === 'included'
+                        const checked = included || !!sel[i]
+                        const inner = (
+                          <>
+                            <span
+                              aria-hidden="true"
+                              className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
+                                checked
+                                  ? ink ? 'border-or bg-or text-encre' : 'border-encre bg-encre text-or'
+                                  : ink ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70' : 'border-orfonce/45 bg-black/[0.03] group-hover:border-orfonce/70'
+                              }`}
                             >
-                              <span
-                                aria-hidden="true"
-                                className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
-                                  checked
-                                    ? ink ? 'border-or bg-or text-encre' : 'border-encre bg-encre text-or'
-                                    : ink ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70' : 'border-orfonce/45 bg-black/[0.03] group-hover:border-orfonce/70'
-                                }`}
-                              >
-                                {checked && (
-                                  <span className="check-draw">
-                                    <IconCheck />
-                                  </span>
-                                )}
-                              </span>
-                              <span className="min-w-0">
-                                <span className={`block text-[13.5px] font-light leading-[1.5] transition-colors duration-300 ${checked ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/85' : 'text-encre/85'}`}>
-                                  {item}
+                              {checked && (
+                                <span className={included ? undefined : 'check-draw'}>
+                                  <IconCheck />
                                 </span>
+                              )}
+                            </span>
+                            <span className="min-w-0">
+                              <span className={`block text-[13.5px] font-light leading-[1.5] transition-colors duration-300 ${checked ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/85' : 'text-encre/85'}`}>
+                                {item}
+                              </span>
+                              {!included && (
                                 <span
                                   aria-hidden="true"
                                   className={`mt-1 block h-px origin-left ${ink ? 'bg-or/70' : 'bg-encre/70'}`}
@@ -423,31 +413,34 @@ export default function Offres({ setDark, onNavigate }) {
                                     transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
                                   }}
                                 />
-                              </span>
-                            </button>
+                              )}
+                            </span>
+                          </>
+                        )
+                        return (
+                          <li key={item} className={`flex items-center gap-4 border-b py-3.5 ${ink ? 'border-creme/10' : 'border-encre/12'}`}>
+                            {included ? (
+                              <span className="flex flex-1 items-start gap-3.5">{inner}</span>
+                            ) : (
+                              <button
+                                type="button"
+                                role="checkbox"
+                                aria-checked={checked}
+                                onClick={() => toggle(i)}
+                                className={`group flex flex-1 cursor-pointer items-start gap-3.5 rounded-md text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'}`}
+                              >
+                                {inner}
+                              </button>
+                            )}
                           </li>
                         )
                       })}
                     </ul>
-
-                    {offre.itemsNote && (
-                      <p className={`mt-4 shrink-0 text-[11.5px] font-light leading-[1.5] ${ink ? 'text-sable/55' : 'text-encre/55'}`}>
-                        {offre.itemsNote}
-                      </p>
-                    )}
                   </>
                 )}
 
                 <div className={`shrink-0 ${hasConsole ? `mt-6 border-t pt-5 ${line}` : ''}`}>
-                  <p className={`font-display text-[clamp(1.35rem,2vw,1.7rem)] leading-[1.1] ${ink ? 'text-creme' : 'text-encre'}`}>
-                    {offre.price}
-                  </p>
-                  {offre.priceNote && (
-                    <p className={`mt-2 text-[12px] font-light leading-[1.5] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
-                      {offre.priceNote}
-                    </p>
-                  )}
-                  <button type="button" onClick={requestQuote} className={`mt-5 ${ctaClass}`}>
+                  <button type="button" onClick={requestQuote} className={ctaClass}>
                     {offre.cta}
                   </button>
                 </div>

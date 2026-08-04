@@ -48,7 +48,7 @@ const DESCRIPTIONS = {
   studio:
     "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
   offres:
-    'Trois façons de travailler ensemble : Film Signature, le film fondateur (à partir de 10 000 € HT) ; Histoires de marque, un programme de récits courts ; Campagne Sensorielle, un déploiement complet sur mesure. Diffusion deux ans France incluse.',
+    'Trois façons de travailler ensemble : Film Signature, le film fondateur ; Histoires de marque, un programme de récits courts ; Campagne Sensorielle, un déploiement complet sur mesure. Diffusion deux ans France incluse.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
