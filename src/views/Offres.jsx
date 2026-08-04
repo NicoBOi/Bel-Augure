@@ -12,7 +12,7 @@ const OFFRES = [
     eyebrow: '01',
     register: 'Le fil continu',
     rank: 1,
-    formats: ['9:16'],
+    formats: ['9:16', '9:16', '9:16'],
     bgColor: '#F0E6D8',
     ink: false,
     accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
@@ -239,9 +239,9 @@ export default function Offres({ setDark, onNavigate }) {
               <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
                 {o.eyebrow}
               </span>
-              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center gap-2.5">
-                {o.formats.map((f) => (
-                  <FormatIcon key={f} ratio={f} className={iconCol} />
+              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center gap-2">
+                {o.formats.map((f, k) => (
+                  <FormatIcon key={k} ratio={f} className={iconCol} />
                 ))}
               </span>
               <span className={`mt-4 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
