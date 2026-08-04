@@ -12,7 +12,14 @@ const ENDPOINT = '/api/contact'
 // (champ diffusion) avant même le devis.
 const PROJETS = ['Film Signature', 'Histoires de marque', 'Campagne Sensorielle', 'Je ne sais pas encore']
 const ECHEANCES = ['Une date précise', 'Dans les 3 mois', 'Dans l’année', 'Pas d’échéance']
-const BUDGETS = ['Moins de 8 000 €', '8 000 – 15 000 €', '15 000 – 30 000 €', 'Au-delà', 'À définir']
+const BUDGETS = [
+  'Moins de 8 000 €',
+  '8 000 – 12 000 €',
+  '12 000 – 20 000 €',
+  '20 000 – 35 000 €',
+  'Plus de 35 000 €',
+  'À définir',
+]
 const DIFFUSIONS = ['Site et réseaux', 'Télévision ou affichage', 'Je ne sais pas encore']
 
 export default function Contact({ onNavigate, prefill }) {

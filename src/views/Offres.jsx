@@ -17,38 +17,30 @@ const OFFRES = [
     ink: false,
     accroche: 'Le film qui installe durablement votre univers.',
     description: [
-      'Une pièce centrale, écrite et réalisée autour de ce que votre maison fait ressentir. Un objet cinématographique conçu pour durer : votre site, vos présentations, vos salons, vos réseaux.',
+      'Une pièce centrale, écrite et réalisée autour de ce que votre maison fait ressentir. Un film conçu pour durer : votre site, vos présentations, vos salons, vos réseaux.',
     ],
     context: 'Pour une ouverture, une rénovation, un repositionnement, un lancement.',
     receiveTitle: 'Ce que vous recevez',
     receive: [
-      'Un film de marque de 60 à 120 secondes, réalisé sur mesure',
-      'Deux déclinaisons de durée pour vos autres usages',
+      'Un film de marque de 60 à 90 secondes, réalisé sur mesure',
+      'Ses versions 30 et 15 secondes',
       'Conception, écriture, direction artistique, repérage',
-      'Deux à trois jours de tournage dans votre lieu',
-      'Montage, création sonore, étalonnage — entièrement réalisés au studio',
+      'Deux jours de tournage dans votre lieu',
+      'Montage, création sonore, étalonnage — réalisés au studio',
       'Musique licenciée incluse',
     ],
     cadre: [
-      'Livraison : deux semaines après le dernier jour de tournage',
+      'Livraison deux semaines après le dernier jour de tournage',
       'Deux allers-retours de validation inclus',
       'Diffusion incluse : deux ans, France, digital et réseaux sociaux',
-      'Un seul projet à la fois — votre film a toute notre attention',
+      'Un seul projet à la fois',
     ],
-    consoleTitle: 'En option',
-    consoleIntro: 'Cochez ce qui vous intéresse — chaque option est chiffrée au devis.',
-    itemsMode: 'options',
-    items: [
-      'Déclinaisons verticales supplémentaires',
-      'Voix off',
-      'Musique originale',
-      'Images aériennes',
-      'Diffusion télévision ou affichage',
-      'Diffusion cinéma',
-      'Diffusion internationale ou durée étendue',
-    ],
-    price: 'À partir de 8 000 € HT',
-    priceNote: 'Devis ferme après un appel de trente minutes.',
+    extensions:
+      'Déclinaisons verticales supplémentaires · voix off · musique originale · images aériennes · journée de tournage supplémentaire · diffusion télévision, affichage, cinéma, internationale ou durée étendue.',
+    itemsMode: 'none',
+    items: [],
+    price: 'À partir de 10 000 € HT',
+    priceNote: 'Une proposition détaillée vous est adressée après un échange de trente minutes.',
     cta: 'Prendre rendez-vous',
   },
   {
@@ -64,23 +56,23 @@ const OFFRES = [
       'Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent. Pensée comme un programme : un rythme défini ensemble, des tournages groupés, une écriture qui prolonge votre identité — loin des formats jetables.',
     ],
     context:
-      'Pour les maisons qui publient régulièrement : marques de soin, thalassos, hôtels à saisons.',
+      'Pour les maisons qui publient régulièrement : marques de soin, thalassos, hôtels rythmés par les saisons.',
     receiveTitle: 'Ce que vous recevez',
     receive: [
       'Une collection de quatre films minimum, de 30 à 60 secondes chacun',
       'Chaque film livré aux formats de vos canaux, horizontal et vertical',
       'Une ligne éditoriale construite avec vous au démarrage',
-      'Tournages groupés sur une à deux journées par vague',
+      'Des tournages groupés, une à deux journées par vague',
       'Montage, son et étalonnage réalisés au studio',
     ],
     cadre: [
-      'Nombre de films, durées et calendrier fixés au devis',
+      'Nombre de films, durées et calendrier fixés à la proposition',
       'Deux allers-retours de validation par film',
       'Diffusion incluse : deux ans, France, digital et réseaux sociaux',
       'Programme trimestriel ou saisonnier, reconduit d’un commun accord',
     ],
     consoleTitle: 'Chaque collection peut explorer',
-    consoleIntro: 'Cochez ce qui vous parle — on affine le projet ensemble.',
+    consoleIntro: 'Choisissez ce qui vous parle — on affine le projet ensemble.',
     itemsMode: 'subjects',
     items: [
       'Un rituel ou un soin signature',
@@ -90,12 +82,10 @@ const OFFRES = [
       'Les gestes d’un savoir-faire',
       'Les convictions et les histoires de la maison',
     ],
-    itemsNote:
-      'Ces cases choisissent les sujets de vos films — le nombre de films, lui, est fixé au devis.',
     bridge:
-      'Le programme prolonge naturellement un Film Signature : même univers, déclinaison dans le temps.',
+      'Le programme prolonge naturellement un Film Signature : même univers, déployé dans le temps.',
     price: 'Sur devis',
-    priceNote: 'Selon le format du programme, défini ensemble.',
+    priceNote: 'Selon le format du programme.',
     cta: 'Prendre rendez-vous',
   },
   {
@@ -108,27 +98,26 @@ const OFFRES = [
     ink: true,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
     description: [
-      'Une campagne complète autour d’un temps fort daté : ouverture, lancement de gamme, nouvelle identité. Film principal, récits courts et déclinaisons multi-supports, réunis sous une même direction créative.',
+      'Une campagne complète autour d’un temps fort : ouverture, lancement de gamme, nouvelle identité. Film principal, récits courts et déclinaisons multi-supports, réunis sous une même direction créative. Conçue sur mesure, après un premier échange.',
     ],
     context: null,
-    receiveTitle: 'Ce qu’elle réunit',
+    receiveTitle: 'Elle réunit',
     receive: [
-      'Un concept créatif transverse',
+      'Une idée directrice',
       'Un Film Signature',
       'Une collection d’Histoires de marque',
       'Les déclinaisons horizontales et verticales de l’ensemble',
-      'Photographie de campagne par un photographe partenaire, chiffrée en option',
+      'La photographie de campagne, avec un photographe partenaire, en option',
     ],
     cadre: [
-      'Conçue sur consultation uniquement — chaque campagne est un dispositif complet, construit avec vous',
-      'Huit à dix semaines entre le premier rendez-vous et la livraison',
-      'Le studio se consacre exclusivement à votre campagne pendant la production',
-      'Diffusion incluse : deux ans, France, digital et réseaux sociaux ; télévision, affichage et autres extensions chiffrées au devis',
+      'Huit à dix semaines entre la validation de la proposition et la livraison',
+      'La campagne est suivie directement par les deux fondateurs',
+      'Diffusion incluse : deux ans, France, digital et réseaux sociaux ; les autres usages sont chiffrés dès la proposition',
     ],
     itemsMode: 'none',
     items: [],
-    price: 'Sur consultation',
-    priceNote: null,
+    price: 'Sur mesure',
+    priceNote: 'Chaque campagne fait l’objet d’une proposition dédiée.',
     cta: 'Écrire au studio',
   },
 ]
@@ -136,11 +125,11 @@ const OFFRES = [
 // Bloc transverse (bas de page) — même pour les trois offres.
 const PROCESS = [
   {
-    t: 'Un appel de trente minutes',
+    t: 'Un échange de trente minutes',
     d: 'Votre projet, votre échéance, votre budget. Nous vous disons ce qui est possible.',
   },
   {
-    t: 'Une proposition ferme',
+    t: 'Une proposition détaillée',
     d: 'Livrables, calendrier, prix : tout est écrit avant de commencer.',
   },
   {
@@ -155,7 +144,7 @@ const PROCESS = [
 
 const DIFFUSION = {
   title: 'La diffusion, en clair',
-  body: 'Tous nos prix incluent deux ans d’utilisation en France, sur le digital et les réseaux sociaux. Télévision, affichage, cinéma, international ou durée étendue : chiffrés au devis, jamais découverts après coup.',
+  body: 'Tous nos prix incluent deux ans d’utilisation en France, sur le digital et les réseaux sociaux. Télévision, affichage, cinéma, international ou durée étendue : ces usages sont définis et chiffrés dès la proposition.',
 }
 
 export default function Offres({ setDark, onNavigate }) {
@@ -362,6 +351,17 @@ export default function Offres({ setDark, onNavigate }) {
                 ))}
               </ul>
             </div>
+
+            {offre.extensions && (
+              <div className={`mt-8 border-t pt-8 ${line}`}>
+                <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
+                  Extensions possibles
+                </h2>
+                <p className={`mt-4 max-w-[58ch] text-[13.5px] font-light leading-[1.75] ${ink ? 'text-sable/75' : 'text-encre/70'}`}>
+                  {offre.extensions}
+                </p>
+              </div>
+            )}
 
             {offre.bridge && (
               <p className={`mt-8 max-w-[52ch] text-[13.5px] font-light italic leading-[1.6] ${ink ? 'text-sable/80' : 'text-encre/75'}`}>
