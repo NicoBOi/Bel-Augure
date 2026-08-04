@@ -239,7 +239,10 @@ export default function Offres({ setDark, onNavigate }) {
               <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
                 {o.eyebrow}
               </span>
-              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center">
+              <span
+                aria-hidden="true"
+                className={`mt-4 flex h-[34px] items-center justify-center transition-opacity duration-500 ${on ? 'opacity-100' : 'opacity-0'}`}
+              >
                 <OfferIcon kind={o.icon} bg={offre.bgColor} className={iconCol} />
               </span>
               <span className={`mt-4 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
