@@ -236,14 +236,11 @@ export default function Offres({ setDark, onNavigate }) {
               style={{ willChange: 'transform' }}
               className={`group flex cursor-pointer flex-col items-center rounded-2xl border p-5 text-center outline-none transition-[border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'} md:p-6 sm:min-w-0 sm:flex-1 ${border} ${bg} ${lift} ${shadow}`}
             >
-              <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-[color,opacity] duration-500 ${numCol} ${on ? 'opacity-100' : 'opacity-0'}`}>
+              <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
                 {o.eyebrow}
               </span>
-              <span
-                aria-hidden="true"
-                className={`mt-4 flex h-[34px] items-center justify-center transition-opacity duration-500 ${on ? 'opacity-100' : 'opacity-0'}`}
-              >
-                <OfferIcon kind={o.icon} bg={offre.bgColor} className={iconCol} />
+              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center">
+                <OfferIcon kind={o.icon} className={iconCol} />
               </span>
               <span className={`mt-4 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
                 {o.name}
@@ -251,7 +248,7 @@ export default function Offres({ setDark, onNavigate }) {
                   .
                 </span>
               </span>
-              <span className={`mt-2 text-[10px] font-normal uppercase tracking-[0.22em] transition-[color,opacity] duration-500 ${regCol} ${on ? 'opacity-100' : 'opacity-0'}`}>
+              <span className={`mt-2 text-[10px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${regCol}`}>
                 {o.register}
               </span>
               <span className="mt-4 flex h-[24px] items-center justify-center">
@@ -439,14 +436,13 @@ function IconCheck() {
 }
 
 // Icône de livrable, même langage que les cadres de format mais en pile :
-// chaque cadre est rempli de la couleur du fond de la carte, si bien que la
-// pile se masque proprement (comme des cartes empilées) — jamais un
-// enchevêtrement de traits.
+// des cadres en trait seul, superposés, hiérarchisés par l'opacité (les
+// cadres du fond plus pâles) — la profondeur se lit sans remplissage.
 //  · collection — une pile de récits verticaux : « plusieurs », sans nombre
 //  · film       — un cadre horizontal : la pièce unique
 //  · campaign   — une pile de formats mêlés : le déploiement, l'abondance
-function OfferIcon({ kind, bg, className }) {
-  const s = { fill: bg, stroke: 'currentColor', strokeWidth: 1, strokeLinejoin: 'round' }
+function OfferIcon({ kind, className }) {
+  const s = { fill: 'none', stroke: 'currentColor', strokeWidth: 1, strokeLinejoin: 'round' }
   return (
     <svg
       viewBox="0 0 40 34"
