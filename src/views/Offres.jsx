@@ -12,6 +12,7 @@ const OFFRES = [
     eyebrow: '01',
     register: 'Le fil continu',
     rank: 1,
+    formats: ['9:16'],
     bgColor: '#F0E6D8',
     ink: false,
     accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
@@ -36,6 +37,7 @@ const OFFRES = [
     eyebrow: '02',
     register: 'La pièce maîtresse',
     rank: 2,
+    formats: ['16:9'],
     bgColor: '#D9C6A6',
     ink: false,
     accroche: 'Le film qui installe durablement votre univers.',
@@ -61,6 +63,7 @@ const OFFRES = [
     eyebrow: '03',
     register: 'Le déploiement complet',
     rank: 3,
+    formats: ['16:9', '9:16'],
     bgColor: '#1a1512',
     ink: true,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
@@ -220,7 +223,7 @@ export default function Offres({ setDark, onNavigate }) {
           // Pas d'ombre portée sur la sélection.
           const shadow = ''
           const numCol = ink ? (on ? 'text-or' : 'text-sable/45') : (on ? 'text-orfonce' : 'text-encre/45')
-          const pipCol = ink ? (on ? 'bg-or' : 'bg-or/55') : (on ? 'bg-orfonce' : 'bg-orfonce/55')
+          const iconCol = ink ? (on ? 'border-or' : 'border-or/45') : (on ? 'border-orfonce' : 'border-orfonce/40')
           const nameCol = ink ? (on ? 'text-creme' : 'text-sable/55') : (on ? 'text-encre' : 'text-encre/60')
           const regCol = ink ? (on ? 'text-or' : 'text-sable/45') : (on ? 'text-orfonce' : 'text-encre/55')
           return (
@@ -231,19 +234,17 @@ export default function Offres({ setDark, onNavigate }) {
               aria-current={on ? 'true' : undefined}
               aria-label={`Choisir l’offre ${o.name}`}
               style={{ willChange: 'transform' }}
-              className={`group flex cursor-pointer flex-col items-start rounded-2xl border p-5 text-left outline-none transition-[border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'} md:p-6 sm:min-w-0 sm:flex-1 ${border} ${bg} ${lift} ${shadow}`}
+              className={`group flex cursor-pointer flex-col items-center rounded-2xl border p-5 text-center outline-none transition-[border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'} md:p-6 sm:min-w-0 sm:flex-1 ${border} ${bg} ${lift} ${shadow}`}
             >
-              <span className="flex w-full items-center justify-between">
-                <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
-                  {o.eyebrow}
-                </span>
-                <span aria-hidden="true" className="flex items-center gap-1">
-                  {Array.from({ length: r }).map((_, k) => (
-                    <span key={k} className={`h-[5px] w-[5px] rounded-full transition-colors duration-500 ${pipCol}`} />
-                  ))}
-                </span>
+              <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
+                {o.eyebrow}
               </span>
-              <span className={`mt-2 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
+              <span aria-hidden="true" className="mt-4 flex h-[24px] items-center justify-center gap-2">
+                {o.formats.map((f) => (
+                  <FormatIcon key={f} ratio={f} className={iconCol} />
+                ))}
+              </span>
+              <span className={`mt-4 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
                 {o.name}
                 <span className={`transition-opacity duration-300 ${ink ? 'text-or' : 'text-orfonce'} ${on ? 'dot-breathe opacity-100' : 'opacity-0'}`}>
                   .
@@ -252,7 +253,7 @@ export default function Offres({ setDark, onNavigate }) {
               <span className={`mt-2 text-[10px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${regCol}`}>
                 {o.register}
               </span>
-              <span className="mt-4 flex h-[24px] items-center">
+              <span className="mt-4 flex h-[24px] items-center justify-center">
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] ${
                     ink ? 'bg-or text-encre' : 'bg-encre text-or'
@@ -433,5 +434,17 @@ function IconCheck() {
     >
       <path d="M20 6 9 17l-5-5" />
     </svg>
+  )
+}
+
+// Petit gabarit de format : la silhouette du livrable (9:16 vertical,
+// 16:9 horizontal). Remplace les anciens pips — on lit ce qu'on reçoit.
+function FormatIcon({ ratio, className }) {
+  const dims = ratio === '9:16' ? 'h-[22px] w-[12.5px]' : 'h-[12.5px] w-[22px]'
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-block rounded-[2px] border transition-colors duration-500 ${dims} ${className}`}
+    />
   )
 }
