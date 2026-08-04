@@ -59,7 +59,7 @@ const OFFRES = [
     closing: 'Une création entièrement conçue sur mesure.',
   },
   {
-    name: 'Campagne signature',
+    name: 'Campagne Sensorielle',
     eyebrow: '03',
     register: 'Le déploiement complet',
     rank: 3,
@@ -239,7 +239,7 @@ export default function Offres({ setDark, onNavigate }) {
               <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
                 {o.eyebrow}
               </span>
-              <span aria-hidden="true" className="mt-4 flex h-[24px] items-center justify-center gap-2">
+              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center gap-2.5">
                 {o.formats.map((f) => (
                   <FormatIcon key={f} ratio={f} className={iconCol} />
                 ))}
@@ -440,7 +440,7 @@ function IconCheck() {
 // Petit gabarit de format : la silhouette du livrable (9:16 vertical,
 // 16:9 horizontal). Remplace les anciens pips — on lit ce qu'on reçoit.
 function FormatIcon({ ratio, className }) {
-  const dims = ratio === '9:16' ? 'h-[22px] w-[12.5px]' : 'h-[12.5px] w-[22px]'
+  const dims = ratio === '9:16' ? 'h-[34px] w-[19px]' : 'h-[19px] w-[34px]'
   return (
     <span
       aria-hidden="true"

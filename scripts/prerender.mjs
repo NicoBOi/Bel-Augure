@@ -49,14 +49,14 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Trois offres sur mesure : Film Signature, le film narratif central ; Histoires de marque, une collection de récits courts ; Campagne signature, un concept décliné sur tous vos supports. Chaque projet est chiffré sur mesure.',
+    desc: 'Trois offres sur mesure : Film Signature, le film narratif central ; Histoires de marque, une collection de récits courts ; Campagne Sensorielle, un concept décliné sur tous vos supports. Chaque projet est chiffré sur mesure.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: `
       <h2>Film Signature</h2>
       <p>Le film qui installe durablement votre univers. Une pièce centrale imaginée pour révéler ce que votre marque fait ressentir : conception, écriture, mise en scène et production pensées autour de votre identité. La création peut réunir conception créative et écriture, direction artistique, repérage et préparation, mise en scène de l'expérience, tournage et direction de la photographie, montage, création sonore et étalonnage, adaptations aux supports de diffusion. Pour un lancement, votre site, une présentation, un salon, YouTube ou une diffusion cinéma. Une création entièrement conçue sur mesure.</p>
       <h2>Histoires de marque</h2>
       <p>Des récits courts pour faire vivre votre univers dans le temps. Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent. Chaque collection peut explorer un rituel ou un soin signature, le portrait d'un fondateur ou d'un artisan, l'atmosphère d'un lieu, l'origine d'un produit ou d'un ingrédient, les gestes d'un savoir-faire, les convictions et les histoires de la maison. Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.</p>
-      <h2>Campagne signature</h2>
+      <h2>Campagne Sensorielle</h2>
       <p>Un même concept pour donner de la force à chaque prise de parole. Une campagne complète imaginée autour d'un lancement, d'une ouverture ou d'un temps fort : film principal, récits courts et déclinaisons visuelles réunis au sein d'une même direction créative. La campagne peut associer conception du concept créatif, Film Signature, collection d'Histoires de marque, déclinaisons horizontales et verticales, formats courts, photographies ou photogrammes de campagne, adaptations aux différents supports. Pour lancer un lieu, une gamme, un soin, une saison ou une nouvelle identité.</p>
       <h2>Extensions possibles</h2>
       <p>Chaque création peut être complétée selon ses besoins de production et de diffusion : déclinaisons verticales et formats courts, version cinéma, photographies de campagne, banque d'images, voix off et création sonore originale, casting, stylisme et maquillage, journée de tournage supplémentaire, adaptations multilingues. Ces éléments sont étudiés et chiffrés selon les besoins réels du projet.</p>
