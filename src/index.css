@@ -10,6 +10,16 @@
   font-display: swap;
 }
 
+/* Noe Display : la fonte des titrages (tout sauf le mot-symbole « Bel Augure »,
+   qui reste en Giflika). */
+@font-face {
+  font-family: 'Noe Display';
+  src: url('/fonts/noe-display.ttf') format('truetype');
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-encre: #1a1512;
   --color-or: #d9c6a6;
@@ -23,7 +33,9 @@
   --color-highlight: #8a7e68;
   --color-creme: #f2ede4;
 
-  --font-display: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;
+  /* Titrages : Noe Display. Le mot-symbole garde Giflika (var --font-wordmark). */
+  --font-display: 'Noe Display', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;
+  --font-wordmark: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
 
   --ease-augure: cubic-bezier(0.16, 1, 0.3, 1);

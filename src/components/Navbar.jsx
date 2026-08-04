@@ -116,7 +116,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
           onClick={() => navigate('accueil')}
           aria-label="Bel Augure, retour à l'accueil"
           tabIndex={logoHidden ? -1 : 0}
-          className={`cursor-pointer justify-self-center font-display text-[24px] tracking-[0.02em] transition-opacity md:text-[28px] ${
+          className={`cursor-pointer justify-self-center font-wordmark text-[24px] tracking-[0.02em] transition-opacity md:text-[28px] ${
             dark ? 'text-creme' : 'text-encre'
           } ${logoHidden ? 'pointer-events-none opacity-0 duration-0' : 'opacity-100 duration-500'}`}
         >

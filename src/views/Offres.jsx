@@ -231,7 +231,7 @@ export default function Offres({ setDark, onNavigate }) {
               aria-current={on ? 'true' : undefined}
               aria-label={`Choisir l’offre ${o.name}`}
               style={{ willChange: 'transform' }}
-              className={`group flex cursor-pointer flex-col items-start rounded-2xl border p-6 text-left outline-none transition-[border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'} md:p-7 sm:min-w-0 sm:flex-1 ${border} ${bg} ${lift} ${shadow}`}
+              className={`group flex cursor-pointer flex-col items-start rounded-2xl border p-5 text-left outline-none transition-[border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'} md:p-6 sm:min-w-0 sm:flex-1 ${border} ${bg} ${lift} ${shadow}`}
             >
               <span className="flex w-full items-center justify-between">
                 <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
@@ -243,7 +243,7 @@ export default function Offres({ setDark, onNavigate }) {
                   ))}
                 </span>
               </span>
-              <span className={`mt-2.5 font-display text-[clamp(1.55rem,2.4vw,2.2rem)] leading-[1.06] transition-colors duration-500 ${nameCol}`}>
+              <span className={`mt-2 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
                 {o.name}
                 <span className={`transition-opacity duration-300 ${ink ? 'text-or' : 'text-orfonce'} ${on ? 'dot-breathe opacity-100' : 'opacity-0'}`}>
                   .
@@ -252,7 +252,7 @@ export default function Offres({ setDark, onNavigate }) {
               <span className={`mt-2 text-[10px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${regCol}`}>
                 {o.register}
               </span>
-              <span className="mt-5 flex h-[26px] items-center">
+              <span className="mt-4 flex h-[24px] items-center">
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] ${
                     ink ? 'bg-or text-encre' : 'bg-encre text-or'
