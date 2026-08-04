@@ -10,6 +10,45 @@
   font-display: swap;
 }
 
+/* Founders Grotesk : la typographie de la marque. Regular pour les titres,
+   Light pour les paragraphes, Medium en capitales espacées pour boutons et
+   labels. Le logo « Bel Augure » garde Giflika (var --font-wordmark). */
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk-light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk-semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-encre: #1a1512;
   --color-or: #d9c6a6;
@@ -23,8 +62,10 @@
   --color-highlight: #8a7e68;
   --color-creme: #f2ede4;
 
-  --font-display: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  /* Titres : Founders Grotesk Regular. Le logo garde Giflika (--font-wordmark). */
+  --font-display: 'Founders Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-wordmark: 'Giflika', 'Didot', 'Bodoni MT', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Founders Grotesk', 'Helvetica Neue', Arial, sans-serif;
 
   --ease-augure: cubic-bezier(0.16, 1, 0.3, 1);
 }
