@@ -240,7 +240,7 @@ export default function Offres({ setDark, onNavigate }) {
                 {o.eyebrow}
               </span>
               <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center">
-                <OfferIcon kind={o.icon} className={iconCol} />
+                <OfferIcon kind={o.icon} bg={offre.bgColor} className={iconCol} />
               </span>
               <span className={`mt-4 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
                 {o.name}
@@ -436,13 +436,15 @@ function IconCheck() {
 }
 
 // Icône de livrable, même langage que les cadres de format mais en pile :
-// des cadres en trait seul, superposés, hiérarchisés par l'opacité (les
-// cadres du fond plus pâles) — la profondeur se lit sans remplissage.
+// chaque cadre est un écran plein, rempli de la couleur du fond de la carte,
+// si bien que la pile se masque comme de vraies cartes empilées (jamais un
+// enchevêtrement de traits). Les cadres du fond sont plus pâles : la
+// profondeur se lit à l'opacité.
 //  · collection — une pile de récits verticaux : « plusieurs », sans nombre
 //  · film       — un cadre horizontal : la pièce unique
 //  · campaign   — une pile de formats mêlés : le déploiement, l'abondance
-function OfferIcon({ kind, className }) {
-  const s = { fill: 'none', stroke: 'currentColor', strokeWidth: 1, strokeLinejoin: 'round' }
+function OfferIcon({ kind, bg, className }) {
+  const s = { fill: bg, stroke: 'currentColor', strokeWidth: 1, strokeLinejoin: 'round' }
   return (
     <svg
       viewBox="0 0 40 34"
