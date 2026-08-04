@@ -12,7 +12,7 @@ const OFFRES = [
     eyebrow: '01',
     register: 'Le fil continu',
     rank: 1,
-    formats: ['9:16', '9:16', '9:16'],
+    icon: 'collection',
     bgColor: '#F0E6D8',
     ink: false,
     accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
@@ -37,7 +37,7 @@ const OFFRES = [
     eyebrow: '02',
     register: 'La pièce maîtresse',
     rank: 2,
-    formats: ['16:9'],
+    icon: 'film',
     bgColor: '#D9C6A6',
     ink: false,
     accroche: 'Le film qui installe durablement votre univers.',
@@ -63,7 +63,7 @@ const OFFRES = [
     eyebrow: '03',
     register: 'Le déploiement complet',
     rank: 3,
-    formats: ['16:9', '9:16'],
+    icon: 'campaign',
     bgColor: '#1a1512',
     ink: true,
     accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
@@ -239,10 +239,8 @@ export default function Offres({ setDark, onNavigate }) {
               <span className={`font-display text-[13px] tabular-nums tracking-[0.1em] transition-colors duration-500 ${numCol}`}>
                 {o.eyebrow}
               </span>
-              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center gap-2">
-                {o.formats.map((f, k) => (
-                  <FormatIcon key={k} ratio={f} className={iconCol} />
-                ))}
+              <span aria-hidden="true" className="mt-4 flex h-[34px] items-center justify-center">
+                <OfferIcon kind={o.icon} bg={offre.bgColor} className={iconCol} />
               </span>
               <span className={`mt-4 whitespace-nowrap font-display text-[clamp(1.05rem,1.9vw,1.5rem)] leading-[1.1] transition-colors duration-500 ${nameCol}`}>
                 {o.name}
@@ -437,14 +435,37 @@ function IconCheck() {
   )
 }
 
-// Petit gabarit de format : la silhouette du livrable (9:16 vertical,
-// 16:9 horizontal). Remplace les anciens pips — on lit ce qu'on reçoit.
-function FormatIcon({ ratio, className }) {
-  const dims = ratio === '9:16' ? 'h-[34px] w-[19px]' : 'h-[19px] w-[34px]'
+// Icône de livrable, même langage que les cadres de format mais en pile :
+// chaque cadre est rempli de la couleur du fond de la carte, si bien que la
+// pile se masque proprement (comme des cartes empilées) — jamais un
+// enchevêtrement de traits.
+//  · collection — une pile de récits verticaux : « plusieurs », sans nombre
+//  · film       — un cadre horizontal : la pièce unique
+//  · campaign   — une pile de formats mêlés : le déploiement, l'abondance
+function OfferIcon({ kind, bg, className }) {
+  const s = { fill: bg, stroke: 'currentColor', strokeWidth: 1.4, strokeLinejoin: 'round' }
   return (
-    <span
+    <svg
+      viewBox="0 0 40 34"
+      height="34"
       aria-hidden="true"
-      className={`inline-block rounded-[2px] border transition-colors duration-500 ${dims} ${className}`}
-    />
+      className={`transition-colors duration-500 ${className}`}
+    >
+      {kind === 'collection' && (
+        <>
+          <rect x="3.5" y="9" width="14" height="24" rx="2" {...s} opacity="0.45" />
+          <rect x="9" y="6" width="14" height="24" rx="2" {...s} opacity="0.7" />
+          <rect x="14.5" y="3" width="14" height="24" rx="2" {...s} />
+        </>
+      )}
+      {kind === 'film' && <rect x="5" y="8.5" width="30" height="17" rx="2.5" {...s} />}
+      {kind === 'campaign' && (
+        <>
+          <rect x="23" y="2.5" width="13" height="22" rx="2" {...s} opacity="0.5" />
+          <rect x="3.5" y="5.5" width="24" height="14" rx="2" {...s} opacity="0.72" />
+          <rect x="8" y="14" width="24" height="14" rx="2" {...s} />
+        </>
+      )}
+    </svg>
   )
 }
