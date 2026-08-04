@@ -28,6 +28,10 @@ export default async function handler(req, res) {
   const nom = clean(body.nom)
   const maison = clean(body.maison)
   const email = clean(body.email)
+  const projet = clean(body.projet)
+  const echeance = clean(body.echeance)
+  const budget = clean(body.budget)
+  const diffusion = clean(body.diffusion)
   const message = clean(body.message)
 
   // Pot de miel anti-spam : un champ invisible que seuls les robots remplissent.
@@ -49,6 +53,10 @@ export default async function handler(req, res) {
     `Nom : ${nom}`,
     maison ? `Établissement : ${maison}` : null,
     `Email : ${email}`,
+    projet ? `Projet : ${projet}` : null,
+    echeance ? `Échéance : ${echeance}` : null,
+    budget ? `Budget : ${budget}` : null,
+    diffusion ? `Diffusion : ${diffusion}` : null,
     '',
     message,
   ]

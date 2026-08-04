@@ -49,22 +49,19 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Trois offres sur mesure : Film Signature, le film narratif central ; Histoires de marque, une collection de récits courts ; Campagne Sensorielle, un concept décliné sur tous vos supports. Chaque projet est chiffré sur mesure.',
+    desc: 'Trois façons de travailler ensemble : Film Signature, le film fondateur (à partir de 8 000 € HT) ; Histoires de marque, un programme de récits courts ; Campagne Sensorielle, un déploiement complet sur consultation. Diffusion deux ans France incluse.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: `
       <h2>Film Signature</h2>
-      <p>Le film qui installe durablement votre univers. Une pièce centrale imaginée pour révéler ce que votre marque fait ressentir : conception, écriture, mise en scène et production pensées autour de votre identité. La création peut réunir conception créative et écriture, direction artistique, repérage et préparation, mise en scène de l'expérience, tournage et direction de la photographie, montage, création sonore et étalonnage, adaptations aux supports de diffusion. Pour un lancement, votre site, une présentation, un salon, YouTube ou une diffusion cinéma. Une création entièrement conçue sur mesure.</p>
+      <p>Le film qui installe durablement votre univers. Une pièce centrale, écrite et réalisée autour de ce que votre maison fait ressentir, conçue pour durer : votre site, vos présentations, vos salons, vos réseaux. Ce que vous recevez : un film de marque de 60 à 120 secondes réalisé sur mesure, deux déclinaisons de durée, conception, écriture, direction artistique, repérage, deux à trois jours de tournage dans votre lieu, montage, création sonore et étalonnage réalisés au studio, musique licenciée incluse. Livraison deux semaines après le dernier jour de tournage, deux allers-retours de validation inclus, diffusion incluse deux ans en France sur le digital et les réseaux sociaux. À partir de 8 000 € HT.</p>
       <h2>Histoires de marque</h2>
-      <p>Des récits courts pour faire vivre votre univers dans le temps. Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent. Chaque collection peut explorer un rituel ou un soin signature, le portrait d'un fondateur ou d'un artisan, l'atmosphère d'un lieu, l'origine d'un produit ou d'un ingrédient, les gestes d'un savoir-faire, les convictions et les histoires de la maison. Pensés principalement pour les réseaux sociaux, sans reprendre leurs codes ordinaires.</p>
+      <p>Des récits courts pour faire vivre votre univers dans le temps. Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent, pensée comme un programme : un rythme défini ensemble, des tournages groupés, une écriture qui prolonge votre identité. Une collection de quatre films minimum, de 30 à 60 secondes, livrés aux formats de vos canaux, horizontal et vertical, avec une ligne éditoriale construite avec vous. Pour les maisons qui publient régulièrement : marques de soin, thalassos, hôtels à saisons. Sur devis, selon le format du programme.</p>
       <h2>Campagne Sensorielle</h2>
-      <p>Un même concept pour donner de la force à chaque prise de parole. Une campagne complète imaginée autour d'un lancement, d'une ouverture ou d'un temps fort : film principal, récits courts et déclinaisons visuelles réunis au sein d'une même direction créative. La campagne peut associer conception du concept créatif, Film Signature, collection d'Histoires de marque, déclinaisons horizontales et verticales, formats courts, photographies ou photogrammes de campagne, adaptations aux différents supports. Pour lancer un lieu, une gamme, un soin, une saison ou une nouvelle identité.</p>
-      <h2>Extensions possibles</h2>
-      <p>Chaque création peut être complétée selon ses besoins de production et de diffusion : déclinaisons verticales et formats courts, version cinéma, photographies de campagne, banque d'images, voix off et création sonore originale, casting, stylisme et maquillage, journée de tournage supplémentaire, adaptations multilingues. Ces éléments sont étudiés et chiffrés selon les besoins réels du projet.</p>
-      <h2>Les questions qui reviennent</h2>
-      <p>Combien ça coûte ? Chaque projet est chiffré sur mesure, selon votre lieu, l'ampleur du tournage et la diffusion visée. Parlons-en : on vous envoie un devis clair et détaillé.</p>
-      <p>Qui apparaît à l'écran ? Nous travaillons avec des acteurs pour rendre votre lieu vivant. Nous nous occupons du casting.</p>
-      <p>Partout en France ? Oui, partout en France.</p>
-      <p>À qui appartient le film ? Les droits de diffusion sont inclus et définis avec vous, selon les supports et la durée d'exploitation visés.</p>`,
+      <p>Un même concept pour donner de la force à chaque prise de parole. Une campagne complète autour d'un temps fort daté — ouverture, lancement de gamme, nouvelle identité. Ce qu'elle réunit : un concept créatif transverse, un Film Signature, une collection d'Histoires de marque, les déclinaisons horizontales et verticales de l'ensemble, et une photographie de campagne par un photographe partenaire, chiffrée en option. Conçue sur consultation, huit à dix semaines entre le premier rendez-vous et la livraison. Sur consultation.</p>
+      <h2>Comment nous travaillons</h2>
+      <p>Un appel de trente minutes pour cadrer votre projet, votre échéance et votre budget. Une proposition ferme où livrables, calendrier et prix sont écrits avant de commencer. Un tournage mené par une équipe légère, deux à trois personnes, dans le respect de votre lieu et de vos clients. Une postproduction entièrement réalisée au studio, avec deux allers-retours de validation inclus.</p>
+      <h2>La diffusion, en clair</h2>
+      <p>Tous nos prix incluent deux ans d'utilisation en France, sur le digital et les réseaux sociaux. Télévision, affichage, cinéma, international ou durée étendue sont chiffrés au devis, jamais découverts après coup.</p>`,
   },
   {
     path: '/contact',

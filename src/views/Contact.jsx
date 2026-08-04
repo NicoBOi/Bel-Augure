@@ -7,6 +7,14 @@ import { useReveal } from '../hooks/useReveal.js'
 // Vercel — cf. commentaire de api/contact.js.
 const ENDPOINT = '/api/contact'
 
+// Champs qualifiants du rendez-vous (audit v2) : orientent le projet, filtrent
+// les leads sous-budgétés (champ budget) et amorcent la pédagogie droits
+// (champ diffusion) avant même le devis.
+const PROJETS = ['Film Signature', 'Histoires de marque', 'Campagne Sensorielle', 'Je ne sais pas encore']
+const ECHEANCES = ['Une date précise', 'Dans les 3 mois', 'Dans l’année', 'Pas d’échéance']
+const BUDGETS = ['Moins de 8 000 €', '8 000 – 15 000 €', '15 000 – 30 000 €', 'Au-delà', 'À définir']
+const DIFFUSIONS = ['Site et réseaux', 'Télévision ou affichage', 'Je ne sais pas encore']
+
 export default function Contact({ onNavigate, prefill }) {
   const ref = useReveal(0.35)
   // Le message part vide, ou pré-rempli avec le récapitulatif du devis composé
@@ -15,6 +23,10 @@ export default function Contact({ onNavigate, prefill }) {
     nom: '',
     maison: '',
     email: '',
+    projet: prefill?.offer && PROJETS.includes(prefill.offer) ? prefill.offer : '',
+    echeance: '',
+    budget: '',
+    diffusion: '',
     message: prefill?.message || '',
     website: '',
   }))
@@ -48,7 +60,17 @@ export default function Contact({ onNavigate, prefill }) {
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data.error || 'Envoi impossible pour le moment.')
       setStatus('sent')
-      setForm({ nom: '', maison: '', email: '', message: '', website: '' })
+      setForm({
+        nom: '',
+        maison: '',
+        email: '',
+        projet: '',
+        echeance: '',
+        budget: '',
+        diffusion: '',
+        message: '',
+        website: '',
+      })
     } catch (err) {
       setErrorMsg(err.message || 'Envoi impossible pour le moment.')
       setStatus('error')
@@ -204,12 +226,100 @@ export default function Contact({ onNavigate, prefill }) {
               />
             </div>
 
+            <div>
+              <label
+                htmlFor="contact-projet"
+                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
+              >
+                Votre projet
+              </label>
+              <select
+                id="contact-projet"
+                className="field mt-1 cursor-pointer"
+                value={form.projet}
+                onChange={update('projet')}
+              >
+                <option value="">À préciser</option>
+                {PROJETS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="contact-echeance"
+                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
+              >
+                Votre échéance
+              </label>
+              <select
+                id="contact-echeance"
+                className="field mt-1 cursor-pointer"
+                value={form.echeance}
+                onChange={update('echeance')}
+              >
+                <option value="">À préciser</option>
+                {ECHEANCES.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="contact-budget"
+                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
+              >
+                Budget envisagé
+              </label>
+              <select
+                id="contact-budget"
+                className="field mt-1 cursor-pointer"
+                value={form.budget}
+                onChange={update('budget')}
+              >
+                <option value="">À définir</option>
+                {BUDGETS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="contact-diffusion"
+                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
+              >
+                Diffusion prévue
+              </label>
+              <select
+                id="contact-diffusion"
+                className="field mt-1 cursor-pointer"
+                value={form.diffusion}
+                onChange={update('diffusion')}
+              >
+                <option value="">À préciser</option>
+                {DIFFUSIONS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="md:col-span-2">
               <label
                 htmlFor="contact-message"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
               >
-                Votre projet
+                Votre message
               </label>
               <textarea
                 id="contact-message"
@@ -241,11 +351,7 @@ export default function Contact({ onNavigate, prefill }) {
             disabled={sending}
             className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
           >
-            {sending
-              ? 'Envoi en cours…'
-              : prefill?.message
-                ? 'Envoyer ma demande de devis'
-                : 'Écrire au studio'}
+            {sending ? 'Envoi en cours…' : 'Demander un rendez-vous'}
           </button>
 
           {/* Retour d'état, annoncé aux lecteurs d'écran (envoi / erreur ;
