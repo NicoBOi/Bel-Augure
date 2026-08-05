@@ -272,26 +272,36 @@ export default function Offres({ setDark, onNavigate }) {
         </div>
       </div>
 
-      {/* ══ Chapitres ══ */}
-      {OFFERS.map((o) => (
-        <article
+      {/* ══ Chapitres ══
+          Chaque offre est une bande pleine largeur au fond légèrement alterné :
+          la transition d'une offre à l'autre se voit, et le grand numéro
+          marque nettement le début de chacune. Palette unique — seule la
+          valeur du fond varie très légèrement. */}
+      {OFFERS.map((o, i) => (
+        <div
           key={o.id}
           id={`detail-${o.id}`}
-          className={`mx-auto w-full max-w-[1180px] scroll-mt-28 border-t py-14 md:py-20 ${RULE}`}
+          className="-mx-6 scroll-mt-24 px-6 py-20 md:-mx-16 md:px-16 md:py-28"
+          style={{ backgroundColor: i % 2 === 1 ? '#E6D8C1' : '#F4ECDF' }}
         >
-          {/* Bandeau essentiel : identité + promesse à gauche, prix à droite.
-              Tout ce qui compte est lisible d'un coup d'œil, aligné. */}
-          <header className="max-w-[52ch]">
-            <p className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">
-              {o.num} · {o.label}
-            </p>
-            <h2 className="mt-4 font-display text-[clamp(2.1rem,4.6vw,3.1rem)] font-light leading-[1.03] text-encre">
-              {o.name}
-            </h2>
-            <p className="mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] text-encre/90">
-              {o.promise}
-            </p>
-          </header>
+          <article className="mx-auto w-full max-w-[1180px]">
+            {/* Grand numéro : signal de nouvelle offre */}
+            <header className="flex items-start gap-6 sm:gap-10">
+              <span className="font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums text-encre/20">
+                {o.num}
+              </span>
+              <div className="max-w-[46ch] pt-1">
+                <p className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">
+                  {o.label}
+                </p>
+                <h2 className="mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] text-encre">
+                  {o.name}
+                </h2>
+                <p className="mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] text-encre/90">
+                  {o.promise}
+                </p>
+              </div>
+            </header>
 
           {/* Détail : sections empilées pleine largeur, listes sur deux colonnes
               pour combler l'espace et garder un rythme régulier. */}
@@ -399,7 +409,8 @@ export default function Offres({ setDark, onNavigate }) {
               {o.cta}
             </button>
           </div>
-        </article>
+          </article>
+        </div>
       ))}
 
       {/* ══ Bloc transverse : comment nous travaillons ══ */}
