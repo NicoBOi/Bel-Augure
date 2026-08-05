@@ -185,6 +185,15 @@ const DASH = 'bg-orfonce/70'
 const RULE = 'border-orfonce/20'
 const BG = '#EFE4D5'
 
+// Survol du bouton « Découvrir » : chaque offre tire vers la teinte de sa
+// propre bande, en aperçu de la section visée (classes littérales pour que
+// Tailwind génère bien les couleurs arbitraires).
+const DISC_HOVER = {
+  film: 'hover:border-[#F4ECDF] hover:bg-[#F4ECDF] hover:text-encre',
+  histoires: 'hover:border-[#E6D8C1] hover:bg-[#E6D8C1] hover:text-encre',
+  campagne: 'hover:border-[#1a1512] hover:bg-[#1a1512] hover:text-creme',
+}
+
 function DashList({ items, className = '', muted = false, cols = 1, ink = false }) {
   const dash = ink ? 'bg-or/60' : DASH
   const txt = muted ? (ink ? 'text-sable/60' : 'text-encre/65') : ink ? 'text-sable/90' : 'text-encre/85'
@@ -288,7 +297,7 @@ export default function Offres({ setDark, onNavigate }) {
               <button
                 type="button"
                 onClick={() => scrollToDetail(o.id)}
-                className="mt-4 inline-flex cursor-pointer items-center justify-center self-start rounded-full border border-encre/50 px-6 py-2.5 text-[12.5px] font-normal tracking-[0.04em] text-encre transition-colors duration-300 hover:border-encre hover:bg-encre hover:text-creme"
+                className={`mt-4 inline-flex cursor-pointer items-center justify-center self-start rounded-full border border-encre/50 px-6 py-2.5 text-[12.5px] font-normal tracking-[0.04em] text-encre transition-colors duration-300 ${DISC_HOVER[o.id]}`}
               >
                 Découvrir
               </button>
