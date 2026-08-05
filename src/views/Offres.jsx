@@ -297,7 +297,7 @@ export default function Offres({ setDark, onNavigate }) {
               <button
                 type="button"
                 onClick={() => scrollToDetail(o.id)}
-                className={`mt-4 inline-flex cursor-pointer items-center justify-center self-start rounded-full border border-encre/50 px-6 py-2.5 text-[12.5px] font-normal tracking-[0.04em] text-encre transition-colors duration-300 ${DISC_HOVER[o.id]}`}
+                className={`mt-4 inline-flex min-h-[44px] cursor-pointer items-center justify-center self-start rounded-full border border-encre/50 px-6 py-2.5 text-[12.5px] font-normal tracking-[0.04em] text-encre transition-colors duration-300 ${DISC_HOVER[o.id]}`}
               >
                 Découvrir
               </button>
@@ -318,8 +318,8 @@ export default function Offres({ setDark, onNavigate }) {
         const band = ink ? '#1a1512' : i % 2 === 1 ? '#E6D8C1' : '#F4ECDF'
         const cTitle = ink ? 'text-creme' : 'text-encre'
         const cBody = ink ? 'text-sable/85' : 'text-encre/80'
-        const cMuted = ink ? 'text-sable/55' : 'text-encre/55'
-        const cFaint = ink ? 'text-sable/45' : 'text-encre/50'
+        const cMuted = ink ? 'text-sable/70' : 'text-encre/70'
+        const cFaint = ink ? 'text-sable/60' : 'text-encre/60'
         const cPromise = ink ? 'text-sable/90' : 'text-encre/90'
         const cAccent = ink ? 'text-or' : 'text-orfonce'
         const cSection = ink ? 'text-sable/70' : 'text-encre/70'
@@ -382,7 +382,7 @@ export default function Offres({ setDark, onNavigate }) {
                       </span>
                       <p className="mt-3 flex-1 text-[14px] font-light leading-[1.55] text-encre/80">{f.desc}</p>
                       <p className="mt-4 text-[15px] font-normal tabular-nums text-encre">{f.price}</p>
-                      <p className="mt-1 text-[12px] font-light leading-[1.5] text-encre/50">{f.usage}</p>
+                      <p className="mt-1 text-[12px] font-light leading-[1.5] text-encre/65">{f.usage}</p>
                     </div>
                   ))}
                 </div>
@@ -426,7 +426,7 @@ export default function Offres({ setDark, onNavigate }) {
                 <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                   <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.extensionsTitle}</h3>
                   {o.extensionsIntro && (
-                    <p className="text-[12px] font-light text-encre/50">{o.extensionsIntro}</p>
+                    <p className="text-[12px] font-light text-encre/60">{o.extensionsIntro}</p>
                   )}
                 </div>
                 <div className="mt-6 grid gap-x-10 gap-y-6 sm:grid-cols-3">
