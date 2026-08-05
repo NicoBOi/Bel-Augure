@@ -185,15 +185,6 @@ const DASH = 'bg-orfonce/70'
 const RULE = 'border-orfonce/20'
 const BG = '#EFE4D5'
 
-// Survol du bouton « Découvrir » : chaque offre tire vers la teinte de sa
-// propre bande, en aperçu de la section visée (classes littérales pour que
-// Tailwind génère bien les couleurs arbitraires).
-const DISC_HOVER = {
-  film: 'hover:border-[#F4ECDF] hover:bg-[#F4ECDF] hover:text-encre',
-  histoires: 'hover:border-[#E6D8C1] hover:bg-[#E6D8C1] hover:text-encre',
-  campagne: 'hover:border-[#1a1512] hover:bg-[#1a1512] hover:text-creme',
-}
-
 function DashList({ items, className = '', muted = false, cols = 1, ink = false }) {
   const dash = ink ? 'bg-or/60' : DASH
   const txt = muted ? (ink ? 'text-sable/60' : 'text-encre/65') : ink ? 'text-sable/90' : 'text-encre/85'
@@ -290,25 +281,44 @@ export default function Offres({ setDark, onNavigate }) {
           </div>
         </div>
 
-        {/* Bas : trois cartes très condensées, sur une ligne */}
-        <div className="reveal-up grid gap-px pb-8 pt-12 sm:grid-cols-3 md:pt-16" style={{ '--d': '0.16s' }}>
+        {/* Bas : trois cartes très condensées, contenu centré (ni prix ni
+            bouton). Le détail se trouve plus bas. */}
+        <div className="reveal-up grid gap-px pt-12 sm:grid-cols-3 md:pt-16" style={{ '--d': '0.16s' }}>
           {OFFERS.map((o) => (
-            <div key={o.id} className={`flex flex-col border-t py-7 sm:border-r sm:px-7 sm:first:pl-0 ${RULE}`}>
+            <div key={o.id} className={`flex flex-col items-center border-t px-4 py-7 text-center sm:border-r sm:px-8 ${RULE}`}>
               <p className="text-[10px] font-normal uppercase tracking-[0.24em] text-orfonce">{o.label}</p>
               <h3 className="mt-3 font-display text-[clamp(1.15rem,1.8vw,1.4rem)] font-light leading-[1.15] text-encre">
                 {o.name}
               </h3>
-              <p className="mt-2 flex-1 text-[14.5px] font-light leading-[1.5] text-encre/80">{o.cardPhrase}</p>
-              <p className="mt-5 text-[14px] font-normal tabular-nums text-encre">{o.price}</p>
-              <button
-                type="button"
-                onClick={() => scrollToDetail(o.id)}
-                className={`mt-4 inline-flex min-h-[44px] cursor-pointer items-center justify-center self-start rounded-full border border-encre/50 px-6 py-2.5 text-[12.5px] font-normal tracking-[0.04em] text-encre transition-colors duration-300 ${DISC_HOVER[o.id]}`}
-              >
-                Découvrir
-              </button>
+              <p className="mt-2 max-w-[32ch] text-[14.5px] font-light leading-[1.5] text-encre/80">{o.cardPhrase}</p>
             </div>
           ))}
+        </div>
+
+        {/* Indicateur unique : tout le détail des offres est plus bas */}
+        <div className="reveal-up flex justify-center pb-6 pt-10 md:pt-12" style={{ '--d': '0.22s' }}>
+          <button
+            type="button"
+            onClick={() => scrollToDetail('film')}
+            aria-label="Voir le détail des offres, plus bas"
+            className="group flex cursor-pointer flex-col items-center gap-2 text-orfonce transition-colors duration-300 hover:text-encre"
+          >
+            <span className="text-[10px] font-normal uppercase tracking-[0.24em]">Le détail des offres</span>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className="motion-safe:animate-bounce"
+            >
+              <path d="M12 5v14M6 13l6 6 6-6" />
+            </svg>
+          </button>
         </div>
       </div>
 
