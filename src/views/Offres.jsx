@@ -72,38 +72,44 @@ const OFFRES = [
     icon: 'collection',
     bgColor: '#D9C6A6',
     ink: false,
-    accroche: 'Révélez une nouvelle facette de votre univers à chaque film.',
+    accroche: 'Une nouvelle histoire chaque mois.',
     description: [
-      'Nous imaginons une collection de films courts autour d’un produit, d’un rituel, d’un savoir-faire, d’une personne ou d’un lieu. Chaque histoire explore un sujet différent ; ensemble, elles font vivre votre marque au fil de l’année, dans une même continuité.',
+      'Nous construisons avec vous un calendrier autour de vos produits, de vos gestes, de vos savoir-faire, de vos lieux et de celles et ceux qui les font vivre.',
+      'Les tournages sont regroupés au fil des saisons. Chaque mois, vous recevez un nouveau film, pensé dans la continuité des précédents. Votre communication reste vivante toute l’année, sans produire dans l’urgence ni repartir de zéro à chaque projet.',
     ],
-    context: 'Pour communiquer régulièrement tout en restant immédiatement reconnaissable.',
-    receiveTitle: 'Ce que vous recevez',
+    context:
+      'Pour les hôtels, spas, thalassos et marques de soin qui ont plusieurs expériences, produits ou temps forts à faire vivre.',
+    receiveTitle: 'Ce que comprend le partenariat',
     receive: [
-      'Une collection de quatre films minimum, de 30 à 60 secondes chacun',
-      'Chaque film livré aux formats de vos canaux, horizontal et vertical',
-      'Une ligne éditoriale construite avec vous au démarrage',
-      'Des tournages groupés, une à deux journées par vague',
-      'Montage, son et étalonnage réalisés au studio',
+      'Douze films de 30 à 45 secondes, livrés au rythme d’un par mois',
+      'Un format principal et une adaptation verticale ou horizontale de chaque film',
+      'Un à deux extraits courts issus de chaque histoire',
+      'Une direction créative et narrative construite pour l’année',
+      'Quatre vagues de tournage, généralement organisées sur une à deux journées',
+      'Le montage, la création sonore et l’étalonnage, réalisés au studio',
+      'Les musiques licenciées pour les usages prévus',
+      'Une médiathèque organisée, enrichie à chaque livraison',
     ],
+    rhythm: {
+      title: 'Le rythme',
+      body: [
+        'Tous les trois mois, nous définissons les prochaines histoires à partir de votre calendrier : saison, lancement, nouveauté, offre, événement ou prise de parole.',
+        'Trois histoires sont ensuite préparées et tournées ensemble, puis livrées progressivement au cours du trimestre.',
+      ],
+    },
     cadre: [
-      'Nombre de films, durées et calendrier fixés à la proposition',
-      'Deux allers-retours de validation par film',
-      'Diffusion incluse : deux ans, France, digital et réseaux sociaux',
-      'Programme trimestriel ou saisonnier, reconduit d’un commun accord',
+      'Partenariat de douze mois, réglé mensuellement ou en une fois',
+      'Deux séries de retours regroupées sur chaque vague',
+      'Droits d’utilisation inclus pendant deux ans à compter de chaque livraison, selon les supports définis dans la proposition',
+      'Casting, stylisme, maquillage, décors, déplacements et moyens techniques supplémentaires chiffrés séparément',
     ],
-    consoleTitle: 'Chaque collection peut explorer',
-    consoleIntro: 'Choisissez ce qui vous parle — on affine le projet ensemble.',
-    itemsMode: 'subjects',
-    items: [
-      'Un rituel ou un soin signature',
-      'Le portrait d’un fondateur ou d’un artisan',
-      'L’atmosphère d’un lieu',
-      'L’origine d’un produit ou d’un ingrédient',
-      'Les gestes d’un savoir-faire',
-      'Les convictions et les histoires de la maison',
-    ],
-    bridge:
-      'Le programme prolonge naturellement un Film Signature : même univers, déployé dans le temps.',
+    starter: {
+      title: 'Commencer par une saison',
+      body:
+        'Avant de construire l’année entière, nous pouvons commencer par un premier cycle de trois mois : une vague de tournage, trois histoires et une livraison chaque mois. Le programme se poursuit ensuite uniquement si nous souhaitons continuer ensemble.',
+    },
+    itemsMode: 'none',
+    items: [],
     cta: 'Prendre rendez-vous',
   },
   {
@@ -414,6 +420,20 @@ export default function Offres({ setDark, onNavigate }) {
               </div>
             )}
 
+            {/* Le rythme (Histoires) */}
+            {offre.rhythm && (
+              <div className={`mt-8 border-t pt-8 ${line}`}>
+                <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
+                  {offre.rhythm.title}
+                </h2>
+                <div className={`mt-5 max-w-[56ch] space-y-4 text-[14px] font-light leading-[1.75] ${ink ? 'text-sable/85' : 'text-encre/80'}`}>
+                  {offre.rhythm.body.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Le cadre */}
             <div className={`mt-8 border-t pt-8 ${line}`}>
               <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
@@ -471,7 +491,18 @@ export default function Offres({ setDark, onNavigate }) {
                   </>
                 )}
 
-                <div className={`shrink-0 ${hasConsole ? `mt-6 border-t pt-5 ${line}` : ''}`}>
+                {offre.starter && (
+                  <div className="shrink-0">
+                    <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
+                      {offre.starter.title}
+                    </h2>
+                    <p className={`mt-3 text-[13px] font-light leading-[1.7] ${ink ? 'text-sable/80' : 'text-encre/75'}`}>
+                      {offre.starter.body}
+                    </p>
+                  </div>
+                )}
+
+                <div className={`shrink-0 ${hasConsole || offre.starter ? `mt-6 border-t pt-5 ${line}` : ''}`}>
                   <button type="button" onClick={requestQuote} className={ctaClass}>
                     {offre.cta}
                   </button>
