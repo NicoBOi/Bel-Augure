@@ -333,53 +333,54 @@ export default function Offres({ setDark, onNavigate }) {
           style={{ backgroundColor: band }}
         >
           <article className="mx-auto w-full max-w-[1180px]">
-            {/* En-tête (grand numéro + identité) à gauche, description à droite :
-                le paragraphe équilibre le vide à côté du numéro. */}
-            <div className="grid gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-center">
-              <header className="flex items-start gap-6 sm:gap-10">
-                <span className={`font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
-                  {o.num}
-                </span>
-                <div className="max-w-[46ch] pt-1">
-                  <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>
-                    {o.label}
-                  </p>
-                  <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
-                    {o.name}
-                  </h2>
-                  <p className={`mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}>
-                    {o.promise}
-                  </p>
-                </div>
-              </header>
-
-              {o.description && (
-                <p className={`max-w-[56ch] text-[16px] font-light leading-[1.75] lg:pt-2 ${cBody}`}>
-                  {o.description.join(' ')}
-                </p>
-              )}
-            </div>
-
-          {/* Détail replié dans un accordéon : le prix, ce que comprend l'offre,
-              le cadre et les extensions apparaissent à l'ouverture. */}
-          <details className="group mt-10">
-            <summary className="flex list-none">
-              <span
-                className={`inline-flex cursor-pointer items-center gap-3 rounded-full border px-7 py-3.5 text-[12.5px] font-normal uppercase tracking-[0.14em] transition-colors duration-300 ${
-                  ink
-                    ? 'border-or/45 text-creme hover:border-or hover:bg-or hover:text-encre'
-                    : 'border-encre/40 text-encre hover:border-encre hover:bg-encre hover:text-creme'
-                }`}
-              >
-                <span className="group-open:hidden">Afficher le détail</span>
-                <span className="hidden group-open:inline">Réduire</span>
-                <span aria-hidden="true" className="text-[16px] leading-none transition-transform duration-300 group-open:rotate-45">
-                  +
-                </span>
+            {/* Grand numéro en gouttière à gauche ; identité, description, bouton
+                et détail alignés sur le texte (jamais sur le numéro). */}
+            <div className="flex items-start gap-6 sm:gap-10">
+              <span className={`shrink-0 font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
+                {o.num}
               </span>
-            </summary>
 
-          <div className="mt-11 space-y-11">
+              <div className="min-w-0 flex-1">
+                <div className="grid gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-center">
+                  <header className="max-w-[46ch] pt-1">
+                    <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>
+                      {o.label}
+                    </p>
+                    <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
+                      {o.name}
+                    </h2>
+                    <p className={`mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}>
+                      {o.promise}
+                    </p>
+                  </header>
+
+                  {o.description && (
+                    <p className={`max-w-[56ch] text-[16px] font-light leading-[1.75] lg:pt-2 ${cBody}`}>
+                      {o.description.join(' ')}
+                    </p>
+                  )}
+                </div>
+
+                {/* Détail replié dans un accordéon : le prix, ce que comprend
+                    l'offre, le cadre et les extensions apparaissent à l'ouverture. */}
+                <details className="group mt-10">
+                  <summary className="flex list-none">
+                    <span
+                      className={`inline-flex cursor-pointer items-center gap-3 rounded-full border px-7 py-3.5 text-[12.5px] font-normal uppercase tracking-[0.14em] transition-colors duration-300 ${
+                        ink
+                          ? 'border-or/45 text-creme hover:border-or hover:bg-or hover:text-encre'
+                          : 'border-encre/40 text-encre hover:border-encre hover:bg-encre hover:text-creme'
+                      }`}
+                    >
+                      <span className="group-open:hidden">Afficher le détail</span>
+                      <span className="hidden group-open:inline">Réduire</span>
+                      <span aria-hidden="true" className="text-[16px] leading-none transition-transform duration-300 group-open:rotate-45">
+                        +
+                      </span>
+                    </span>
+                  </summary>
+
+                  <div className="mt-11 space-y-11">
             {o.formats && (
               <section className={`border-t pt-9 ${RULE}`}>
                 <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.formatsTitle}</h3>
@@ -477,7 +478,9 @@ export default function Offres({ setDark, onNavigate }) {
               {o.cta}
             </button>
           </div>
-          </details>
+                </details>
+              </div>
+            </div>
           </article>
         </div>
         )
