@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
 
@@ -187,6 +187,204 @@ function DashList({ items, className = '', muted = false, cols = 1, ink = false 
   )
 }
 
+const CTA_LIGHT =
+  'inline-flex cursor-pointer items-center justify-center rounded-full border border-encre/55 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-300 hover:bg-encre hover:text-creme'
+const CTA_INK =
+  'inline-flex cursor-pointer items-center justify-center rounded-full border border-or/55 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-creme transition-colors duration-300 hover:bg-or hover:text-encre'
+
+// Un chapitre d'offre. L'en-tête (numéro, identité, description) reste fixe ;
+// le détail devient un RUBAN de panneaux qui défile horizontalement. Au-dessus
+// de la bande, la molette est convertie en défilement latéral et n'est relâchée
+// (retour au scroll vertical de la page) qu'une fois arrivé au début ou à la
+// fin du ruban. Le tactile utilise le swipe horizontal natif.
+function OfferChapter({ o, i, onContact }) {
+  const ink = o.id === 'campagne'
+  const band = ink ? '#1a1512' : i % 2 === 1 ? '#E6D8C1' : '#F4ECDF'
+  const cTitle = ink ? 'text-creme' : 'text-encre'
+  const cBody = ink ? 'text-sable/85' : 'text-encre/80'
+  const cMuted = ink ? 'text-sable/70' : 'text-encre/70'
+  const cFaint = ink ? 'text-sable/55' : 'text-encre/55'
+  const cPromise = ink ? 'text-sable/90' : 'text-encre/90'
+  const cAccent = ink ? 'text-or' : 'text-orfonce'
+  const cSection = ink ? 'text-sable/70' : 'text-encre/70'
+  const cNum = ink ? 'text-creme/20' : 'text-encre/20'
+  const cRule = ink ? 'border-or/25' : 'border-orfonce/30'
+  const cTrack = ink ? 'bg-or/15' : 'bg-orfonce/15'
+  const cFill = ink ? 'bg-or' : 'bg-orfonce'
+
+  const bandRef = useRef(null)
+  const stripRef = useRef(null)
+  const [prog, setProg] = useState(0)
+  const [overflow, setOverflow] = useState(false)
+
+  useEffect(() => {
+    const bandEl = bandRef.current
+    const strip = stripRef.current
+    if (!bandEl || !strip) return
+    const measure = () => setOverflow(strip.scrollWidth - strip.clientWidth > 4)
+    measure()
+    const onWheel = (e) => {
+      if (e.ctrlKey) return // pincer-zoomer
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return // trackpad horizontal : natif
+      const max = strip.scrollWidth - strip.clientWidth
+      if (max <= 0) return
+      const down = e.deltaY > 0
+      const atStart = strip.scrollLeft <= 0
+      const atEnd = strip.scrollLeft >= max - 1
+      if ((down && !atEnd) || (!down && !atStart)) {
+        e.preventDefault()
+        strip.scrollLeft += e.deltaY
+      }
+    }
+    bandEl.addEventListener('wheel', onWheel, { passive: false })
+    window.addEventListener('resize', measure)
+    return () => {
+      bandEl.removeEventListener('wheel', onWheel)
+      window.removeEventListener('resize', measure)
+    }
+  }, [])
+
+  const onStripScroll = () => {
+    const strip = stripRef.current
+    if (!strip) return
+    const max = strip.scrollWidth - strip.clientWidth
+    setProg(max > 0 ? Math.min(1, strip.scrollLeft / max) : 0)
+  }
+
+  const panelCls = `snap-start shrink-0 basis-[86vw] border-l pl-8 pr-8 first:border-l-0 first:pl-0 last:pr-0 sm:basis-[28rem] ${cRule}`
+
+  const panels = []
+  if (o.formats) {
+    o.formats.forEach((f) => {
+      panels.push(
+        <div key={`f-${f.label}`} className={panelCls}>
+          <div className="flex min-h-[1.2em] items-baseline">
+            {f.tag && <span className={`text-[9.5px] font-normal uppercase tracking-[0.2em] ${cAccent}`}>{f.tag}</span>}
+          </div>
+          <span className={`mt-1 block font-display text-[clamp(1.3rem,1.8vw,1.6rem)] font-light leading-[1.1] ${cTitle}`}>{f.label}</span>
+          <p className={`mt-4 text-[14px] font-light leading-[1.6] ${cBody}`}>{f.desc}</p>
+          <p className={`mt-2 text-[13px] font-light leading-[1.6] ${cMuted}`}>{f.usage}</p>
+          <p className={`mt-5 text-[15px] font-normal tabular-nums ${cTitle}`}>{f.price}</p>
+        </div>,
+      )
+    })
+  }
+  if (o.receive) {
+    panels.push(
+      <div key="receive" className={panelCls}>
+        <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
+        <DashList items={o.receive} ink={ink} className="mt-6" />
+        {o.receiveNote && (
+          <div className={`mt-6 space-y-2 text-[12.5px] font-light leading-[1.65] ${cMuted}`}>
+            {o.receiveNote.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </div>
+        )}
+      </div>,
+    )
+  }
+  if (o.rhythm) {
+    panels.push(
+      <div key="rhythm" className={panelCls}>
+        <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.rhythm.title}</h3>
+        <div className={`mt-5 space-y-3 text-[15px] font-light leading-[1.75] ${cBody}`}>
+          {o.rhythm.body.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+        </div>
+      </div>,
+    )
+  }
+  if (o.cadre) {
+    panels.push(
+      <div key="cadre" className={panelCls}>
+        <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>Délais, retours et droits</h3>
+        <DashList items={o.cadre} muted ink={ink} className="mt-6" />
+      </div>,
+    )
+  }
+  if (o.extensions) {
+    panels.push(
+      <div key="ext" className={panelCls}>
+        <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.extensionsTitle}</h3>
+        <DashList items={o.extensions} muted ink={ink} className="mt-6" />
+      </div>,
+    )
+  }
+  panels.push(
+    <div key="price" className={`${panelCls} flex flex-col`}>
+      <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
+      <p className={`mt-1.5 font-display text-[clamp(1.5rem,2.4vw,2rem)] font-light tabular-nums leading-none ${cTitle}`}>{o.price}</p>
+      {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
+      <button type="button" onClick={() => onContact(o.name)} className={`mt-7 self-start ${ink ? CTA_INK : CTA_LIGHT}`}>
+        {o.cta}
+      </button>
+    </div>,
+  )
+
+  return (
+    <div
+      ref={bandRef}
+      id={`detail-${o.id}`}
+      className="-mx-6 scroll-mt-24 px-6 py-20 md:-mx-16 md:px-16 md:py-24"
+      style={{ backgroundColor: band }}
+    >
+      <article className="mx-auto w-full max-w-[1180px]">
+        <div className="flex items-start gap-6 sm:gap-10">
+          <span className={`shrink-0 font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
+            {o.num}
+          </span>
+          <div className="min-w-0 flex-1">
+            <div className="grid gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-center">
+              <header className="max-w-[46ch] pt-1">
+                <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>{o.label}</p>
+                <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>{o.name}</h2>
+                <p className={`mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}>{o.promise}</p>
+              </header>
+              {o.description && (
+                <p className={`max-w-[56ch] text-[16px] font-light leading-[1.75] lg:pt-2 ${cBody}`}>{o.description.join(' ')}</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Ruban horizontal du détail */}
+        <div className="relative mt-12">
+          <div
+            ref={stripRef}
+            onScroll={onStripScroll}
+            className="flex snap-x snap-mandatory overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {panels}
+          </div>
+          {overflow && (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 right-0 w-16 transition-opacity duration-300"
+              style={{ background: `linear-gradient(to right, transparent, ${band})`, opacity: prog > 0.98 ? 0 : 1 }}
+            />
+          )}
+        </div>
+
+        {overflow && (
+          <div className="mt-8 flex items-center gap-5">
+            <span className={`relative h-px w-40 overflow-hidden ${cTrack}`}>
+              <span className={`absolute inset-y-0 left-0 ${cFill}`} style={{ width: `${Math.max(8, prog * 100)}%` }} />
+            </span>
+            <span
+              className={`text-[10px] font-normal uppercase tracking-[0.2em] transition-opacity duration-300 ${cFaint}`}
+              style={{ opacity: prog > 0.05 ? 0 : 1 }}
+            >
+              Faites défiler pour tout voir →
+            </span>
+          </div>
+        )}
+      </article>
+    </div>
+  )
+}
+
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
 
@@ -222,11 +420,6 @@ export default function Offres({ setDark, onNavigate }) {
   const goContact = (name) => onNavigate?.('contact', { offer: name })
   const scrollToDetail = (id) =>
     document.getElementById(`detail-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-
-  const cta =
-    'inline-flex cursor-pointer items-center justify-center rounded-full border border-encre/55 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-500 hover:border-encre hover:bg-encre hover:text-creme'
-  const ctaInk =
-    'inline-flex cursor-pointer items-center justify-center rounded-full border border-or/55 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-creme transition-colors duration-500 hover:border-or hover:bg-or hover:text-encre'
 
   return (
     <section
@@ -311,175 +504,12 @@ export default function Offres({ setDark, onNavigate }) {
         </div>
       </div>
 
-      {/* ══ Chapitres ══
-          Chaque offre est une bande pleine largeur au fond légèrement alterné :
-          la transition d'une offre à l'autre se voit, et le grand numéro
-          marque nettement le début de chacune. Palette unique — seule la
-          valeur du fond varie très légèrement. */}
-      {OFFERS.map((o, i) => {
-        // Bandes au fond légèrement alterné ; la dernière (Campagne) passe en
-        // sombre. Les couleurs de texte s'inversent alors (encre → crème/or).
-        const ink = o.id === 'campagne'
-        const band = ink ? '#1a1512' : i % 2 === 1 ? '#E6D8C1' : '#F4ECDF'
-        const cTitle = ink ? 'text-creme' : 'text-encre'
-        const cBody = ink ? 'text-sable/85' : 'text-encre/80'
-        const cMuted = ink ? 'text-sable/70' : 'text-encre/70'
-        const cFaint = ink ? 'text-sable/60' : 'text-encre/60'
-        const cPromise = ink ? 'text-sable/90' : 'text-encre/90'
-        const cAccent = ink ? 'text-or' : 'text-orfonce'
-        const cSection = ink ? 'text-sable/70' : 'text-encre/70'
-        const cNum = ink ? 'text-creme/20' : 'text-encre/20'
-        const cRule = ink ? 'border-or/20' : 'border-orfonce/20'
-        return (
-        <div
-          key={o.id}
-          id={`detail-${o.id}`}
-          className="-mx-6 scroll-mt-24 px-6 py-20 md:-mx-16 md:px-16 md:py-28"
-          style={{ backgroundColor: band }}
-        >
-          <article className="mx-auto w-full max-w-[1180px]">
-            {/* Grand numéro en gouttière à gauche ; identité, description, bouton
-                et détail alignés sur le texte (jamais sur le numéro). */}
-            <div className="flex items-start gap-6 sm:gap-10">
-              <span className={`shrink-0 font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
-                {o.num}
-              </span>
-
-              <div className="min-w-0 flex-1">
-                <div className="grid gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-center">
-                  <header className="max-w-[46ch] pt-1">
-                    <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>
-                      {o.label}
-                    </p>
-                    <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
-                      {o.name}
-                    </h2>
-                    <p className={`mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}>
-                      {o.promise}
-                    </p>
-                  </header>
-
-                  {o.description && (
-                    <p className={`max-w-[56ch] text-[16px] font-light leading-[1.75] lg:pt-2 ${cBody}`}>
-                      {o.description.join(' ')}
-                    </p>
-                  )}
-                </div>
-
-                {/* Détail replié dans un accordéon : le prix, ce que comprend
-                    l'offre, le cadre et les extensions apparaissent à l'ouverture. */}
-                <details className="group mt-10">
-                  {/* Bouton simple : contour fin qui se remplit d'une couleur au
-                      survol (transition classique, sans effet). */}
-                  <summary className="inline-flex cursor-pointer list-none">
-                    <span
-                      className={`inline-flex items-center gap-3.5 rounded-full border px-9 py-3.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-300 ${
-                        ink
-                          ? 'border-or/50 text-creme hover:bg-or hover:text-encre'
-                          : 'border-encre/40 text-encre hover:bg-encre hover:text-creme'
-                      }`}
-                    >
-                      <span className="group-open:hidden">Afficher le détail</span>
-                      <span className="hidden group-open:inline">Réduire</span>
-                      <span aria-hidden="true" className="text-[13px] leading-none transition-transform duration-300 group-open:rotate-90">
-                        →
-                      </span>
-                    </span>
-                  </summary>
-
-                  <div className="mt-11 space-y-11">
-            {o.formats && (
-              <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.formatsTitle}</h3>
-                <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-3">
-                  {o.formats.map((f) => (
-                    <div
-                      key={f.label}
-                      className={`flex flex-col rounded-lg border p-5 ${f.tag ? 'border-orfonce/50 bg-black/[0.02]' : 'border-encre/12'}`}
-                    >
-                      <div className="flex min-h-[1.4em] items-baseline">
-                        {f.tag && (
-                          <span className="text-[9.5px] font-normal uppercase tracking-[0.2em] text-orfonce">{f.tag}</span>
-                        )}
-                      </div>
-                      <span className="mt-1 font-display text-[clamp(1.2rem,1.7vw,1.45rem)] font-light leading-[1.1] text-encre">
-                        {f.label}
-                      </span>
-                      <p className="mt-3 flex-1 text-[14px] font-light leading-[1.55] text-encre/80">{f.desc}</p>
-                      <p className="mt-4 text-[15px] font-normal tabular-nums text-encre">{f.price}</p>
-                      <p className="mt-1 text-[12px] font-light leading-[1.5] text-encre/65">{f.usage}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {o.receive && (
-              <section className={`border-t pt-9 ${cRule}`}>
-                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
-                <DashList items={o.receive} cols={2} ink={ink} className="mt-6" />
-                {o.receiveNote && (
-                  <div className={`mt-6 max-w-[72ch] space-y-2 text-[12.5px] font-light leading-[1.65] ${cMuted}`}>
-                    {o.receiveNote.map((p) => (
-                      <p key={p}>{p}</p>
-                    ))}
-                  </div>
-                )}
-              </section>
-            )}
-
-            {o.rhythm && (
-              <section className={`border-t pt-9 ${cRule}`}>
-                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.rhythm.title}</h3>
-                <div className={`mt-5 max-w-[72ch] space-y-3 text-[15px] font-light leading-[1.75] ${cBody}`}>
-                  {o.rhythm.body.map((p) => (
-                    <p key={p}>{p}</p>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {o.cadre && (
-              <section className={`border-t pt-9 ${cRule}`}>
-                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>Délais, retours et droits</h3>
-                <DashList items={o.cadre} cols={2} muted ink={ink} className="mt-6" />
-              </section>
-            )}
-
-            {o.extensions && (
-              <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.extensionsTitle}</h3>
-                <DashList items={o.extensions} cols={2} muted className="mt-6" />
-              </section>
-            )}
-
-            {o.note && (
-              <p className={`border-t pt-9 text-[13px] font-light italic leading-[1.7] ${cMuted} ${cRule}`}>
-                {o.note}
-              </p>
-            )}
-          </div>
-
-          {/* Prix + appel à l'action, en bas de fiche */}
-          <div className={`mt-12 flex flex-col items-start gap-6 border-t pt-8 sm:flex-row sm:items-end sm:justify-between ${cRule}`}>
-            <div>
-              <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
-              <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light tabular-nums leading-none ${cTitle}`}>
-                {o.price}
-              </p>
-              {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
-            </div>
-            <button type="button" onClick={() => goContact(o.name)} className={ink ? ctaInk : cta}>
-              {o.cta}
-            </button>
-          </div>
-                </details>
-              </div>
-            </div>
-          </article>
-        </div>
-        )
-      })}
+      {/* ══ Chapitres ══ Chaque offre est une bande pleine largeur (fond
+          alterné, sombre pour la Campagne). Le détail défile horizontalement
+          — voir le composant OfferChapter. */}
+      {OFFERS.map((o, i) => (
+        <OfferChapter key={o.id} o={o} i={i} onContact={goContact} />
+      ))}
 
       {/* ══ Bloc transverse : comment nous travaillons ══ */}
       <div className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
