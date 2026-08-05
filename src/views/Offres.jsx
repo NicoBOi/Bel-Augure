@@ -185,15 +185,14 @@ const DASH = 'bg-orfonce/70'
 const RULE = 'border-orfonce/20'
 const BG = '#EFE4D5'
 
-function DashList({ items, className = '', muted = false, cols = 1 }) {
+function DashList({ items, className = '', muted = false, cols = 1, ink = false }) {
+  const dash = ink ? 'bg-or/60' : DASH
+  const txt = muted ? (ink ? 'text-sable/60' : 'text-encre/65') : ink ? 'text-sable/90' : 'text-encre/85'
   return (
     <ul className={`${cols === 2 ? 'grid gap-x-10 gap-y-3 sm:grid-cols-2' : 'space-y-3'} ${className}`}>
       {items.map((it) => (
-        <li
-          key={it}
-          className={`flex items-start gap-3.5 font-light leading-[1.55] ${muted ? 'text-[13.5px] text-encre/65' : 'text-[15px] text-encre/85'}`}
-        >
-          <span aria-hidden="true" className={`mt-[0.6em] h-px w-4 shrink-0 ${DASH}`} />
+        <li key={it} className={`flex items-start gap-3.5 font-light leading-[1.55] ${muted ? 'text-[13.5px]' : 'text-[15px]'} ${txt}`}>
+          <span aria-hidden="true" className={`mt-[0.6em] h-px w-4 shrink-0 ${dash}`} />
           <span>{it}</span>
         </li>
       ))}
@@ -204,9 +203,33 @@ function DashList({ items, className = '', muted = false, cols = 1 }) {
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
 
-  // La page vit dans la lumière : en-tête clair, sans bascule sombre.
+  // La page vit dans la lumière, sauf la dernière offre (Campagne) qui passe
+  // en sombre : quand sa bande glisse sous le header transparent, on bascule
+  // l'en-tête en clair pour garder le contraste, puis on revient au clair
+  // dès qu'on la quitte.
   useEffect(() => {
-    setDark?.(false)
+    const NAV = 90
+    let raf = 0
+    const check = () => {
+      raf = 0
+      const band = document.getElementById('detail-campagne')
+      if (!band) {
+        setDark?.(false)
+        return
+      }
+      const r = band.getBoundingClientRect()
+      setDark?.(r.top <= NAV && r.bottom > NAV)
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(check)
+    }
+    const scroller = document.querySelector('section[aria-label="Offres"]')
+    scroller?.addEventListener('scroll', onScroll, { passive: true })
+    check()
+    return () => {
+      scroller?.removeEventListener('scroll', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
   }, [setDark])
 
   const goContact = (name) => onNavigate?.('contact', { offer: name })
@@ -215,6 +238,8 @@ export default function Offres({ setDark, onNavigate }) {
 
   const cta =
     'inline-flex cursor-pointer items-center justify-center rounded-full border border-encre/55 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-500 hover:border-encre hover:bg-encre hover:text-creme'
+  const ctaInk =
+    'inline-flex cursor-pointer items-center justify-center rounded-full border border-or/55 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-creme transition-colors duration-500 hover:border-or hover:bg-or hover:text-encre'
 
   return (
     <section
@@ -277,27 +302,41 @@ export default function Offres({ setDark, onNavigate }) {
           la transition d'une offre à l'autre se voit, et le grand numéro
           marque nettement le début de chacune. Palette unique — seule la
           valeur du fond varie très légèrement. */}
-      {OFFERS.map((o, i) => (
+      {OFFERS.map((o, i) => {
+        // Bandes au fond légèrement alterné ; la dernière (Campagne) passe en
+        // sombre. Les couleurs de texte s'inversent alors (encre → crème/or).
+        const ink = o.id === 'campagne'
+        const band = ink ? '#1a1512' : i % 2 === 1 ? '#E6D8C1' : '#F4ECDF'
+        const cTitle = ink ? 'text-creme' : 'text-encre'
+        const cBody = ink ? 'text-sable/85' : 'text-encre/80'
+        const cMuted = ink ? 'text-sable/55' : 'text-encre/55'
+        const cFaint = ink ? 'text-sable/45' : 'text-encre/50'
+        const cPromise = ink ? 'text-sable/90' : 'text-encre/90'
+        const cAccent = ink ? 'text-or' : 'text-orfonce'
+        const cSection = ink ? 'text-sable/70' : 'text-encre/70'
+        const cNum = ink ? 'text-creme/20' : 'text-encre/20'
+        const cRule = ink ? 'border-or/20' : 'border-orfonce/20'
+        return (
         <div
           key={o.id}
           id={`detail-${o.id}`}
           className="-mx-6 scroll-mt-24 px-6 py-20 md:-mx-16 md:px-16 md:py-28"
-          style={{ backgroundColor: i % 2 === 1 ? '#E6D8C1' : '#F4ECDF' }}
+          style={{ backgroundColor: band }}
         >
           <article className="mx-auto w-full max-w-[1180px]">
             {/* Grand numéro : signal de nouvelle offre */}
             <header className="flex items-start gap-6 sm:gap-10">
-              <span className="font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums text-encre/20">
+              <span className={`font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
                 {o.num}
               </span>
               <div className="max-w-[46ch] pt-1">
-                <p className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">
+                <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>
                   {o.label}
                 </p>
-                <h2 className="mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] text-encre">
+                <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
                   {o.name}
                 </h2>
-                <p className="mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] text-encre/90">
+                <p className={`mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}>
                   {o.promise}
                 </p>
               </div>
@@ -307,7 +346,7 @@ export default function Offres({ setDark, onNavigate }) {
               pour combler l'espace et garder un rythme régulier. */}
           <div className="mt-12 space-y-11">
             {o.description && (
-              <p className="max-w-[62ch] text-[16px] font-light leading-[1.75] text-encre/80">
+              <p className={`max-w-[62ch] text-[16px] font-light leading-[1.75] ${cBody}`}>
                 {o.description.join(' ')}
               </p>
             )}
@@ -339,11 +378,11 @@ export default function Offres({ setDark, onNavigate }) {
             )}
 
             {o.receive && (
-              <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.receiveTitle}</h3>
-                <DashList items={o.receive} cols={2} className="mt-6" />
+              <section className={`border-t pt-9 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
+                <DashList items={o.receive} cols={2} ink={ink} className="mt-6" />
                 {o.receiveNote && (
-                  <div className="mt-6 max-w-[72ch] space-y-2 text-[12.5px] font-light leading-[1.65] text-encre/55">
+                  <div className={`mt-6 max-w-[72ch] space-y-2 text-[12.5px] font-light leading-[1.65] ${cMuted}`}>
                     {o.receiveNote.map((p) => (
                       <p key={p}>{p}</p>
                     ))}
@@ -353,9 +392,9 @@ export default function Offres({ setDark, onNavigate }) {
             )}
 
             {o.rhythm && (
-              <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.rhythm.title}</h3>
-                <div className="mt-5 max-w-[72ch] space-y-3 text-[15px] font-light leading-[1.75] text-encre/80">
+              <section className={`border-t pt-9 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.rhythm.title}</h3>
+                <div className={`mt-5 max-w-[72ch] space-y-3 text-[15px] font-light leading-[1.75] ${cBody}`}>
                   {o.rhythm.body.map((p) => (
                     <p key={p}>{p}</p>
                   ))}
@@ -364,9 +403,9 @@ export default function Offres({ setDark, onNavigate }) {
             )}
 
             {o.cadre && (
-              <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">Le cadre</h3>
-                <DashList items={o.cadre} cols={2} muted className="mt-6" />
+              <section className={`border-t pt-9 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>Le cadre</h3>
+                <DashList items={o.cadre} cols={2} muted ink={ink} className="mt-6" />
               </section>
             )}
 
@@ -390,28 +429,29 @@ export default function Offres({ setDark, onNavigate }) {
             )}
 
             {o.note && (
-              <p className={`border-t pt-9 text-[13px] font-light italic leading-[1.7] text-encre/60 ${RULE}`}>
+              <p className={`border-t pt-9 text-[13px] font-light italic leading-[1.7] ${cMuted} ${cRule}`}>
                 {o.note}
               </p>
             )}
           </div>
 
           {/* Prix + appel à l'action, en bas de fiche */}
-          <div className={`mt-12 flex flex-col items-start gap-6 border-t pt-8 sm:flex-row sm:items-end sm:justify-between ${RULE}`}>
+          <div className={`mt-12 flex flex-col items-start gap-6 border-t pt-8 sm:flex-row sm:items-end sm:justify-between ${cRule}`}>
             <div>
-              <p className="text-[10px] font-normal uppercase tracking-[0.22em] text-encre/45">Tarif</p>
-              <p className="mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light tabular-nums leading-none text-encre">
+              <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
+              <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light tabular-nums leading-none ${cTitle}`}>
                 {o.price}
               </p>
-              {o.priceNote && <p className="mt-2 text-[12.5px] font-light text-encre/55">{o.priceNote}</p>}
+              {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
             </div>
-            <button type="button" onClick={() => goContact(o.name)} className={cta}>
+            <button type="button" onClick={() => goContact(o.name)} className={ink ? ctaInk : cta}>
               {o.cta}
             </button>
           </div>
           </article>
         </div>
-      ))}
+        )
+      })}
 
       {/* ══ Bloc transverse : comment nous travaillons ══ */}
       <div className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
