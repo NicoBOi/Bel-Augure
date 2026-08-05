@@ -15,11 +15,11 @@ const OFFRES = [
     icon: 'film',
     bgColor: '#F0E6D8',
     ink: false,
-    accroche: 'Le film qui installe durablement votre univers.',
+    accroche: 'Faites ressentir ce qui vous distingue.',
     description: [
-      'Une pièce centrale, écrite et réalisée autour de ce que votre maison fait ressentir. Un film conçu pour durer : votre site, vos présentations, vos salons, vos réseaux.',
+      'Nous partons de votre vision, de vos gestes, de vos produits ou de votre lieu pour créer le film central de votre communication. Une pièce forte, entièrement pensée pour vous, conçue pour porter durablement votre image.',
     ],
-    context: 'Pour une ouverture, une rénovation, un repositionnement, un lancement.',
+    context: 'Pour installer votre univers, le révéler ou lui donner un nouveau souffle.',
     receiveTitle: 'Ce que vous recevez',
     receive: [
       'Un film de marque de 60 à 90 secondes, réalisé sur mesure',
@@ -58,12 +58,11 @@ const OFFRES = [
     icon: 'collection',
     bgColor: '#D9C6A6',
     ink: false,
-    accroche: 'Des récits courts pour faire vivre votre univers dans le temps.',
+    accroche: 'Révélez une nouvelle facette de votre univers à chaque film.',
     description: [
-      'Une collection de films conçus autour de vos gestes, de vos lieux, de vos savoir-faire et de celles et ceux qui les incarnent. Pensée comme un programme : un rythme défini ensemble, des tournages groupés, une écriture qui prolonge votre identité — loin des formats jetables.',
+      'Nous imaginons une collection de films courts autour d’un produit, d’un rituel, d’un savoir-faire, d’une personne ou d’un lieu. Chaque histoire explore un sujet différent ; ensemble, elles font vivre votre marque au fil de l’année, dans une même continuité.',
     ],
-    context:
-      'Pour les maisons qui publient régulièrement : marques de soin, thalassos, hôtels rythmés par les saisons.',
+    context: 'Pour communiquer régulièrement tout en restant immédiatement reconnaissable.',
     receiveTitle: 'Ce que vous recevez',
     receive: [
       'Une collection de quatre films minimum, de 30 à 60 secondes chacun',
@@ -101,9 +100,9 @@ const OFFRES = [
     icon: 'campaign',
     bgColor: '#1a1512',
     ink: true,
-    accroche: 'Un même concept pour donner de la force à chaque prise de parole.',
+    accroche: 'Donnez à votre prochain temps fort toute son ampleur.',
     description: [
-      'Une campagne complète autour d’un temps fort : ouverture, lancement de gamme, nouvelle identité. Film principal, récits courts et déclinaisons multi-supports, réunis sous une même direction créative. Conçue sur mesure, après un premier échange.',
+      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons une campagne audiovisuelle complète : un film principal, des histoires courtes et leurs déclinaisons. Tout est créé autour d’une même idée, pour former un univers fort sur chacun de vos supports.',
     ],
     context: null,
     receive: null,
