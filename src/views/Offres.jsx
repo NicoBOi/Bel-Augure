@@ -265,14 +265,20 @@ export default function Offres({ setDark, onNavigate }) {
         <div className="reveal-up grid flex-1 items-center gap-10 lg:grid-cols-2 lg:gap-16" style={{ '--d': '0.08s' }}>
           <div>
             <p className="text-[11px] font-normal uppercase tracking-[0.32em] text-orfonce">Nos offres</p>
-            <h2 className="mt-5 max-w-[16ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
-              Trois façons d’écrire votre histoire
+            <h2 className="mt-5 max-w-[18ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
+              Faites de votre image une raison de vous choisir.
             </h2>
-            <p className="mt-6 max-w-[48ch] text-[16px] font-light leading-[1.7] text-encre/75">
-              <span className="font-medium text-encre">Un film</span> pour en révéler l’essence,{' '}
-              <span className="font-medium text-encre">des récits</span> pour en dévoiler les facettes,{' '}
-              <span className="font-medium text-encre">une campagne</span> pour lui donner toute son ampleur.
-            </p>
+            <div className="mt-6 max-w-[54ch] space-y-4 text-[16px] font-light leading-[1.7] text-encre/75">
+              <p>
+                Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se projeter.
+                Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite pour eux.
+              </p>
+              <p>
+                Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui créent
+                ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de marque et donner
+                envie de venir (puis de revenir).
+              </p>
+            </div>
           </div>
 
           <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-encre lg:rounded-3xl">
