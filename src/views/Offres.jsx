@@ -360,9 +360,26 @@ export default function Offres({ setDark, onNavigate }) {
               )}
             </div>
 
-          {/* Détail : sections empilées pleine largeur, listes sur deux colonnes
-              pour combler l'espace et garder un rythme régulier. */}
-          <div className="mt-14 space-y-11">
+          {/* Détail replié dans un accordéon : le prix, ce que comprend l'offre,
+              le cadre et les extensions apparaissent à l'ouverture. */}
+          <details className="group mt-10">
+            <summary className="flex list-none">
+              <span
+                className={`inline-flex cursor-pointer items-center gap-3 rounded-full border px-7 py-3.5 text-[12.5px] font-normal uppercase tracking-[0.14em] transition-colors duration-300 ${
+                  ink
+                    ? 'border-or/45 text-creme hover:border-or hover:bg-or hover:text-encre'
+                    : 'border-encre/40 text-encre hover:border-encre hover:bg-encre hover:text-creme'
+                }`}
+              >
+                <span className="group-open:hidden">Afficher le détail</span>
+                <span className="hidden group-open:inline">Réduire</span>
+                <span aria-hidden="true" className="text-[16px] leading-none transition-transform duration-300 group-open:rotate-45">
+                  +
+                </span>
+              </span>
+            </summary>
+
+          <div className="mt-11 space-y-11">
             {o.formats && (
               <section className={`border-t pt-9 ${RULE}`}>
                 <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.formatsTitle}</h3>
@@ -460,6 +477,7 @@ export default function Offres({ setDark, onNavigate }) {
               {o.cta}
             </button>
           </div>
+          </details>
           </article>
         </div>
         )
