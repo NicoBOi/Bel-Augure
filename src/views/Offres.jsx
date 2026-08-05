@@ -66,7 +66,7 @@ const OFFERS = [
     promise: 'Des films courts qui révèlent, un à un, ce qui vous distingue.',
     usage: 'Pour une communication régulière, plusieurs sujets à valoriser.',
     description: [
-      'Des films courts qui mettent en lumière ce qui fait votre marque. Selon votre besoin : une histoire seule, une collection pensée d’un bloc, ou un partenariat qui installe un rythme sur la saison.',
+      'Vos gestes, vos lieux, vos savoir-faire, celles et ceux qui les incarnent : chaque histoire en isole un et lui donne toute la place, dans une écriture qui prolonge votre identité au fil de la saison.',
     ],
     formatsTitle: 'Trois façons de travailler',
     formats: [
@@ -335,7 +335,7 @@ export default function Offres({ setDark, onNavigate }) {
           <article className="mx-auto w-full max-w-[1180px]">
             {/* En-tête (grand numéro + identité) à gauche, description à droite :
                 le paragraphe équilibre le vide à côté du numéro. */}
-            <div className="grid gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-start">
+            <div className="grid gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-center">
               <header className="flex items-start gap-6 sm:gap-10">
                 <span className={`font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
                   {o.num}
