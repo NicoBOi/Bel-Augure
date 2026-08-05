@@ -391,27 +391,24 @@ export default function Offres({ setDark, onNavigate }) {
                 {/* Détail replié dans un accordéon : le prix, ce que comprend
                     l'offre, le cadre et les extensions apparaissent à l'ouverture. */}
                 <details className="group mt-10">
-                  {/* Ouverture par « index des sections » : un sommaire de ce qui
-                      se trouve dessous, plus engageant qu'un bouton générique. */}
+                  {/* Une action claire et soulignée (« Afficher le détail ») +,
+                      en dessous, un aperçu des sections que l'on va dévoiler. */}
                   <summary className="group/sum inline-flex cursor-pointer list-none">
-                    <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10.5px] font-normal uppercase tracking-[0.2em]">
-                      {sectionIndex.map((label, k) => (
-                        <span key={label} className="inline-flex items-center gap-x-2.5">
-                          {k > 0 && (
-                            <span aria-hidden="true" className={ink ? 'text-or/40' : 'text-orfonce/45'}>
-                              ·
-                            </span>
-                          )}
-                          <span className={`transition-colors duration-300 ${ink ? 'text-sable/70 group-hover/sum:text-creme' : 'text-encre/55 group-hover/sum:text-encre'}`}>
-                            {label}
-                          </span>
+                    <span className="flex flex-col gap-2.5">
+                      <span className={`inline-flex items-center gap-2.5 text-[12px] font-normal uppercase tracking-[0.18em] ${ink ? 'text-creme' : 'text-encre'}`}>
+                        <span className={`pb-1 ${ink ? 'border-b border-or/50' : 'border-b border-orfonce/50'}`}>
+                          <span className="group-open:hidden">Afficher le détail</span>
+                          <span className="hidden group-open:inline">Réduire le détail</span>
                         </span>
-                      ))}
-                      <span
-                        aria-hidden="true"
-                        className={`ml-1.5 text-[13px] leading-none transition-transform duration-300 group-hover/sum:translate-x-0.5 group-open:rotate-90 ${ink ? 'text-or' : 'text-orfonce'}`}
-                      >
-                        →
+                        <span
+                          aria-hidden="true"
+                          className={`text-[13px] leading-none transition-transform duration-300 group-hover/sum:translate-x-0.5 group-open:rotate-90 ${ink ? 'text-or' : 'text-orfonce'}`}
+                        >
+                          →
+                        </span>
+                      </span>
+                      <span className={`group-open:hidden text-[10px] font-normal uppercase tracking-[0.18em] ${ink ? 'text-sable/55' : 'text-encre/50'}`}>
+                        {sectionIndex.join('   ·   ')}
                       </span>
                     </span>
                   </summary>
