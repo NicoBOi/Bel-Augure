@@ -233,15 +233,17 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         {/* Le paragraphe épouse la largeur du titre : le conteneur prend la
             largeur du titre (max-content, le titre étant sur une ligne), et
             le paragraphe la remplit via w-0 + min-w-full. */}
-        <div className="mx-auto max-w-[46rem] text-center">
+        {/* Titre et paragraphe partagent la même largeur : le paragraphe
+            s'aligne sur le titre au lieu d'être tassé au centre. */}
+        <div className="mx-auto w-full max-w-[38rem] text-center">
         <h2
-          className="mx-auto max-w-[26ch] font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.2] text-encre"
+          className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.2] text-encre"
           style={{ textWrap: 'balance' }}
         >
           Faites de votre image une raison de vous choisir<span className="text-or">.</span>
         </h2>
 
-        <div className="mx-auto mt-8 max-w-[54ch] space-y-4 text-[14px] font-light leading-[1.85] text-encre/80" style={{ textWrap: 'pretty' }}>
+        <div className="mt-8 space-y-4 text-[15px] font-light leading-[1.85] text-encre/80" style={{ textWrap: 'pretty' }}>
           <p>
             Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se
             projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite
