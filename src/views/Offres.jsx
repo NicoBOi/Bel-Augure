@@ -267,10 +267,9 @@ export default function Offres({ setDark, onNavigate }) {
               <button
                 type="button"
                 onClick={() => scrollToDetail(o.id)}
-                className="group/link mt-3 inline-flex cursor-pointer items-center gap-2 self-start text-[11.5px] font-normal uppercase tracking-[0.18em] text-orfonce transition-colors duration-300 hover:text-encre"
+                className="mt-4 inline-flex cursor-pointer items-center justify-center self-start rounded-full border border-encre/50 px-6 py-2.5 text-[12.5px] font-normal tracking-[0.04em] text-encre transition-colors duration-300 hover:border-encre hover:bg-encre hover:text-creme"
               >
                 Découvrir
-                <span aria-hidden="true" className="transition-transform duration-300 group-hover/link:translate-x-1">↓</span>
               </button>
             </div>
           ))}
@@ -284,35 +283,38 @@ export default function Offres({ setDark, onNavigate }) {
           id={`detail-${o.id}`}
           className={`mx-auto w-full max-w-[1180px] scroll-mt-28 border-t py-14 md:py-20 ${RULE}`}
         >
-          {/* Grand plan du film : montrer avant d'expliquer */}
-          {o.image && (
-            <div className="mb-10 aspect-video w-full overflow-hidden rounded-2xl bg-encre md:mb-12 lg:rounded-3xl">
-              <img
-                src={o.image}
-                alt={o.imageAlt}
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          )}
+          {/* En-tête : texte + grand plan côte à côte, à la manière de l'intro.
+              La composition alterne (image à droite / à gauche) pour distinguer
+              les offres sans changer la palette. */}
+          <div className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${o.num === '02' ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+            <header>
+              <div className="flex items-baseline gap-5">
+                <span className="font-display text-[clamp(2.2rem,6vw,4rem)] font-light tabular-nums leading-none text-orfonce/25">
+                  {o.num}
+                </span>
+                <span className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">{o.label}</span>
+              </div>
+              <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3rem)] font-light leading-[1.05] text-encre">
+                {o.name}
+              </h2>
+              <p className="mt-5 max-w-[26ch] text-[clamp(1.25rem,2.2vw,1.8rem)] font-light leading-[1.2] text-encre">
+                {o.promise}
+              </p>
+              <p className="mt-3 max-w-[46ch] text-[13.5px] font-light leading-[1.6] text-encre/55">{o.usage}</p>
+            </header>
 
-          {/* En-tête de chapitre */}
-          <header>
-            <div className="flex items-baseline gap-5">
-              <span className="font-display text-[clamp(2.2rem,6vw,4rem)] font-light tabular-nums leading-none text-orfonce/25">
-                {o.num}
-              </span>
-              <span className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">{o.label}</span>
-            </div>
-            <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3rem)] font-light leading-[1.05] text-encre">
-              {o.name}
-            </h2>
-            <p className="mt-5 max-w-[30ch] text-[clamp(1.25rem,2.2vw,1.8rem)] font-light leading-[1.2] text-encre">
-              {o.promise}
-            </p>
-            <p className="mt-3 max-w-[52ch] text-[13.5px] font-light leading-[1.6] text-encre/55">{o.usage}</p>
-          </header>
+            {o.image && (
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-encre lg:rounded-3xl">
+                <img
+                  src={o.image}
+                  alt={o.imageAlt}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+            )}
+          </div>
 
           <div className="mt-9 grid gap-x-16 gap-y-10 lg:grid-cols-12">
             {/* Colonne principale : ce que le client obtient */}
@@ -358,16 +360,16 @@ export default function Offres({ setDark, onNavigate }) {
           </div>
 
           {/* Détail complet, replié */}
-          <details className="group mt-10">
-            <summary
-              className={`flex cursor-pointer list-none items-center gap-3 border-t pt-6 text-[11px] font-normal uppercase tracking-[0.24em] text-orfonce transition-colors hover:text-encre ${RULE}`}
-            >
-              <span className="group-open:hidden">Voir le détail complet</span>
-              <span className="hidden group-open:inline">Replier le détail</span>
-              <span aria-hidden="true" className="transition-transform duration-300 group-open:rotate-45">+</span>
+          <details className="group mt-12">
+            <summary className="flex list-none justify-center">
+              <span className="inline-flex cursor-pointer items-center gap-3 rounded-full border border-encre/40 bg-black/[0.02] px-7 py-3.5 text-[12.5px] font-normal uppercase tracking-[0.14em] text-encre transition-colors duration-300 hover:border-encre hover:bg-encre hover:text-creme">
+                <span className="group-open:hidden">Voir le détail complet</span>
+                <span className="hidden group-open:inline">Replier le détail</span>
+                <span aria-hidden="true" className="text-[16px] leading-none transition-transform duration-300 group-open:rotate-45">+</span>
+              </span>
             </summary>
 
-            <div className="mt-8 grid gap-x-16 gap-y-10 lg:grid-cols-12">
+            <div className="mt-10 grid gap-x-16 gap-y-10 lg:grid-cols-12">
               <div className="lg:col-span-7">
                 {o.description && (
                   <div className="max-w-[56ch] space-y-4 text-[15px] font-light leading-[1.8] text-encre/80">
