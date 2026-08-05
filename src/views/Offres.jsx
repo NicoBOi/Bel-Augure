@@ -1,23 +1,27 @@
 import { useEffect } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
+import VimeoBackground from '../components/VimeoBackground.jsx'
 
-// Page /offres — présentation éditoriale. Une vue d'ensemble en tête (les
-// différences se lisent immédiatement : label, ce qu'on achète, usage, prix),
-// puis les trois offres détaillées empilées et séparées par de grands espaces
-// et de très subtils changements de fond. Pas de cartes commerciales, pas
-// d'icônes, pas de couleur propre à chaque offre : la hiérarchie est portée
-// par la typographie et le vide.
+// Page /offres — direction éditoriale « montrer puis expliquer ».
+// Premier écran en deux temps : à gauche le titre, à droite le film ; en bas
+// trois cartes très condensées (nom, phrase, prix, Découvrir). Puis trois
+// chapitres, chacun une vraie séquence : promesse courte, quatre éléments
+// compris au plus, prix, appel à l'action, et le détail technique (droits,
+// cadre, extensions) replié dans un accordéon. Palette unique : les offres se
+// distinguent par la composition et — à terme — par un grand plan de film,
+// pas par trois univers colorés.
+const HERO_FILM_ID = '1211391558'
+
 const OFFERS = [
   {
     id: 'film',
     num: '01',
     name: 'Film Signature',
     label: 'Un film central',
-    pitch: 'Un projet ponctuel pour installer, révéler ou renouveler l’univers d’une marque.',
-    usage: 'Pour une ouverture, un repositionnement ou un nouveau souffle.',
+    cardPhrase: 'Le film central qui installe votre univers.',
     price: 'À partir de 5 500 € HT',
-    tint: '#F3EADC',
-    accroche: 'Faites ressentir ce qui vous distingue.',
+    promise: 'Faites ressentir ce qui vous distingue.',
+    usage: 'Pour une ouverture, un repositionnement ou un nouveau souffle.',
     description: [
       'Nous partons de votre vision, de vos gestes, de vos produits ou de votre lieu pour créer le film central de votre communication. Une pièce forte, entièrement pensée pour vous, conçue pour porter durablement votre image.',
     ],
@@ -56,11 +60,11 @@ const OFFERS = [
     num: '02',
     name: 'Histoires de marque',
     label: 'Des récits ciblés',
-    pitch: 'Un ou plusieurs films courts pour révéler un soin, un produit, un geste, une personne ou un lieu.',
-    usage: 'Pour une communication régulière, plusieurs sujets à valoriser.',
+    cardPhrase: 'Un ou plusieurs récits consacrés à ce qui vous distingue.',
     price: 'À partir de 3 500 € HT',
     priceNote: 'pour une histoire',
-    tint: '#E9DDCB',
+    promise: 'Des films courts qui révèlent, un à un, ce qui vous distingue.',
+    usage: 'Pour une communication régulière, plusieurs sujets à valoriser.',
     description: [
       'Des films courts qui mettent en lumière ce qui fait votre marque. Selon votre besoin : une histoire seule, une collection pensée d’un bloc, ou un partenariat qui installe un rythme sur la saison.',
     ],
@@ -106,11 +110,10 @@ const OFFERS = [
     num: '03',
     name: 'Campagne Sensorielle',
     label: 'Un dispositif complet',
-    pitch: 'Une campagne audiovisuelle conçue autour d’une ouverture, d’un lancement ou d’une nouvelle identité.',
-    usage: 'Pour un temps fort à fort enjeu.',
+    cardPhrase: 'Un dispositif complet conçu autour d’un temps fort.',
     price: 'À partir de 15 000 € HT',
-    tint: '#F3EADC',
-    accroche: 'Donnez à votre prochain temps fort toute son ampleur.',
+    promise: 'Donnez à votre prochain temps fort toute son ampleur.',
+    usage: 'Pour un temps fort à fort enjeu.',
     description: [
       'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons l’idée qui donnera sa cohérence à toute votre prise de parole.',
       'Elle prend vie dans un film principal, plusieurs films courts et les formats conçus pour vos différents supports. Chaque création a son propre rôle : annoncer, révéler ou prolonger le lancement. Ensemble, elles forment une campagne immédiatement reconnaissable.',
@@ -175,17 +178,22 @@ const DIFFUSION = {
   body: 'Tous nos prix incluent deux ans d’utilisation en France, sur le digital et les réseaux sociaux. Télévision, affichage, cinéma, international ou durée étendue : ces usages sont définis et chiffrés dès la proposition.',
 }
 
-// Palette — page entièrement claire (encre sur papier chaud). Plus de mode
-// sombre par offre : la distinction passe par la typographie et l'espace.
+// Palette — page entièrement claire (encre sur papier chaud). Une seule teinte
+// de fond pour toute la section : la distinction se joue par la typographie,
+// l'espace et le grand plan de film à venir.
 const DASH = 'bg-orfonce/70'
 const RULE = 'border-orfonce/20'
+const BG = '#EFE4D5'
 
-function DashList({ items, className = '' }) {
+function DashList({ items, className = '', muted = false }) {
   return (
     <ul className={`space-y-3 ${className}`}>
       {items.map((it) => (
-        <li key={it} className="flex items-start gap-3.5 text-[14px] font-light leading-[1.55] text-encre/85">
-          <span aria-hidden="true" className={`mt-[0.62em] h-px w-4 shrink-0 ${DASH}`} />
+        <li
+          key={it}
+          className={`flex items-start gap-3.5 font-light leading-[1.55] ${muted ? 'text-[13.5px] text-encre/65' : 'text-[15px] text-encre/85'}`}
+        >
+          <span aria-hidden="true" className={`mt-[0.6em] h-px w-4 shrink-0 ${DASH}`} />
           <span>{it}</span>
         </li>
       ))}
@@ -196,17 +204,14 @@ function DashList({ items, className = '' }) {
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
 
-  // La page vit dans la lumière : on force l'en-tête clair et on le laisse
-  // ainsi (aucune bascule sombre selon l'offre).
+  // La page vit dans la lumière : en-tête clair, sans bascule sombre.
   useEffect(() => {
     setDark?.(false)
   }, [setDark])
 
   const goContact = (name) => onNavigate?.('contact', { offer: name })
-
-  const scrollToDetail = (id) => {
+  const scrollToDetail = (id) =>
     document.getElementById(`detail-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
 
   const cta =
     'inline-flex cursor-pointer items-center justify-center rounded-full border border-encre/55 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-500 hover:border-encre hover:bg-encre hover:text-creme'
@@ -216,150 +221,146 @@ export default function Offres({ setDark, onNavigate }) {
       ref={ref}
       aria-label="Offres"
       className="h-full overflow-y-auto scroll-smooth px-6 pt-28 md:px-16"
-      style={{ backgroundColor: '#EFE4D5' }}
+      style={{ backgroundColor: BG }}
     >
       <h1 className="sr-only">Nos offres — Bel Augure</h1>
 
-      {/* ── Intro ── */}
-      <div className="reveal-up mx-auto w-full max-w-[1180px]" style={{ '--d': '0.08s' }}>
-        <p className="mt-4 text-[11px] font-normal uppercase tracking-[0.32em] text-orfonce md:mt-8">
-          Trois façons de travailler ensemble
-        </p>
-        <p className="mt-4 max-w-[24ch] font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-light leading-[1.15] text-encre">
-          Un film fondateur. Un univers qui vit. Un déploiement complet.
-        </p>
+      {/* ══ Premier écran : titre + film, puis trois cartes condensées ══ */}
+      <div className="mx-auto flex min-h-[calc(100dvh-9rem)] w-full max-w-[1180px] flex-col">
+        {/* Haut : titre à gauche, film à droite */}
+        <div className="reveal-up grid flex-1 items-center gap-10 lg:grid-cols-2 lg:gap-16" style={{ '--d': '0.08s' }}>
+          <div>
+            <p className="text-[11px] font-normal uppercase tracking-[0.32em] text-orfonce">Nos offres</p>
+            <h2 className="mt-5 max-w-[15ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
+              Un film fondateur. Un univers qui vit. Un déploiement complet.
+            </h2>
+            <p className="mt-6 max-w-[46ch] text-[16px] font-light leading-[1.7] text-encre/75">
+              Trois façons de travailler ensemble, du film unique au dispositif de campagne. Choisissez l’ampleur ; nous écrivons le reste avec vous.
+            </p>
+          </div>
+
+          <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-encre lg:rounded-3xl">
+            <VimeoBackground
+              id={HERO_FILM_ID}
+              title="Film Bel Augure"
+              className="absolute inset-0 h-full w-full"
+            />
+          </div>
+        </div>
+
+        {/* Bas : trois cartes très condensées, sur une ligne */}
+        <div className="reveal-up grid gap-px pb-8 pt-12 sm:grid-cols-3 md:pt-16" style={{ '--d': '0.16s' }}>
+          {OFFERS.map((o) => (
+            <div key={o.id} className={`flex flex-col border-t py-7 sm:border-r sm:px-7 sm:first:pl-0 ${RULE}`}>
+              <p className="text-[10px] font-normal uppercase tracking-[0.24em] text-orfonce">{o.label}</p>
+              <h3 className="mt-3 font-display text-[clamp(1.15rem,1.8vw,1.4rem)] font-light leading-[1.15] text-encre">
+                {o.name}
+              </h3>
+              <p className="mt-2 flex-1 text-[14.5px] font-light leading-[1.5] text-encre/80">{o.cardPhrase}</p>
+              <p className="mt-5 text-[14px] font-normal text-encre">{o.price}</p>
+              <button
+                type="button"
+                onClick={() => scrollToDetail(o.id)}
+                className="group/link mt-3 inline-flex cursor-pointer items-center gap-2 self-start text-[11.5px] font-normal uppercase tracking-[0.18em] text-orfonce transition-colors duration-300 hover:text-encre"
+              >
+                Découvrir
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover/link:translate-x-1">↓</span>
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* ── Vue d'ensemble : les trois offres, lisibles d'emblée ── */}
-      <div className="reveal-up mx-auto mt-14 w-full max-w-[1180px] md:mt-20" style={{ '--d': '0.14s' }}>
-        {OFFERS.map((o) => (
-          <div
-            key={o.id}
-            className={`grid gap-6 border-t py-10 md:grid-cols-[7rem_1fr] md:gap-14 md:py-12 ${RULE}`}
-          >
-            {/* Repère : numéro + label — sur mobile, le label vient avant tout */}
-            <div className="flex items-baseline gap-4 md:flex-col md:items-start md:gap-3">
-              <span className="font-display text-[clamp(1.6rem,3vw,2.4rem)] font-light tabular-nums leading-none text-orfonce/40">
+      {/* ══ Chapitres ══ */}
+      {OFFERS.map((o) => (
+        <article
+          key={o.id}
+          id={`detail-${o.id}`}
+          className={`mx-auto w-full max-w-[1180px] scroll-mt-28 border-t py-14 md:py-20 ${RULE}`}
+        >
+          {/* En-tête de chapitre */}
+          <header>
+            <div className="flex items-baseline gap-5">
+              <span className="font-display text-[clamp(2.2rem,6vw,4rem)] font-light tabular-nums leading-none text-orfonce/25">
                 {o.num}
               </span>
-              <span className="text-[10.5px] font-normal uppercase tracking-[0.26em] text-orfonce">
-                {o.label}
-              </span>
+              <span className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">{o.label}</span>
+            </div>
+            <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3rem)] font-light leading-[1.05] text-encre">
+              {o.name}
+            </h2>
+            <p className="mt-5 max-w-[30ch] text-[clamp(1.25rem,2.2vw,1.8rem)] font-light leading-[1.2] text-encre">
+              {o.promise}
+            </p>
+            <p className="mt-3 max-w-[52ch] text-[13.5px] font-light leading-[1.6] text-encre/55">{o.usage}</p>
+          </header>
+
+          <div className="mt-9 grid gap-x-16 gap-y-10 lg:grid-cols-12">
+            {/* Colonne principale : ce que le client obtient */}
+            <div className="lg:col-span-7">
+              {o.formats ? (
+                <div className="space-y-7">
+                  {o.formats.map((f) => (
+                    <div key={f.label} className={`border-l-2 pl-5 ${f.tag ? 'border-orfonce' : 'border-orfonce/25'}`}>
+                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <span className="font-display text-[clamp(1.15rem,1.8vw,1.4rem)] font-light leading-[1.15] text-encre">
+                          {f.label}
+                        </span>
+                        {f.tag && (
+                          <span className="text-[10px] font-normal uppercase tracking-[0.2em] text-orfonce">— {f.tag}</span>
+                        )}
+                      </div>
+                      <p className="mt-2 max-w-[52ch] text-[15px] font-light leading-[1.6] text-encre/85">{f.desc}</p>
+                      <p className="mt-1.5 max-w-[52ch] text-[13.5px] font-light leading-[1.6] text-encre/55">{f.usage}</p>
+                      <p className="mt-2.5 text-[14px] font-normal text-encre">{f.price}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <p className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">Ce que vous obtenez</p>
+                  <DashList items={o.receive.slice(0, 4)} className="mt-5" />
+                </>
+              )}
             </div>
 
-            <div>
-              <h2 className="font-display text-[clamp(1.6rem,3vw,2.3rem)] font-light leading-[1.1] text-encre">
-                {o.name}
-              </h2>
-              <p className="mt-3 max-w-[46ch] text-[clamp(0.98rem,1.5vw,1.15rem)] font-light leading-[1.5] text-encre/85">
-                {o.pitch}
+            {/* Colonne latérale : prix + appel à l'action */}
+            <div className="lg:col-span-5">
+              <p className="text-[clamp(1.05rem,1.6vw,1.3rem)] font-normal text-encre">
+                {o.price}
+                {o.priceNote && <span className="ml-2 text-[13px] font-light text-encre/55">{o.priceNote}</span>}
               </p>
-              <p className="mt-2 max-w-[46ch] text-[13px] font-light leading-[1.6] text-encre/55">
-                {o.usage}
-              </p>
-
-              <div className="mt-6 flex flex-wrap items-baseline gap-x-6 gap-y-3">
-                <span className="text-[15px] font-normal tracking-[0.01em] text-encre">
-                  {o.price}
-                  {o.priceNote && (
-                    <span className="ml-2 text-[12px] font-light text-encre/55">{o.priceNote}</span>
-                  )}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => scrollToDetail(o.id)}
-                  className="group/link inline-flex cursor-pointer items-center gap-2 text-[11.5px] font-normal uppercase tracking-[0.18em] text-orfonce transition-colors duration-300 hover:text-encre"
-                >
-                  Voir le détail
-                  <span aria-hidden="true" className="transition-transform duration-300 group-hover/link:translate-x-1">→</span>
+              <div className="mt-6">
+                <button type="button" onClick={() => goContact(o.name)} className={cta}>
+                  {o.cta}
                 </button>
               </div>
             </div>
           </div>
-        ))}
-        <div className={`border-t ${RULE}`} />
-      </div>
 
-      {/* ── Détails empilés ── */}
-      {OFFERS.map((o) => (
-        <div
-          key={o.id}
-          id={`detail-${o.id}`}
-          className="-mx-6 scroll-mt-24 px-6 py-20 md:-mx-16 md:px-16 md:py-28"
-          style={{ backgroundColor: o.tint }}
-        >
-          <article className="mx-auto w-full max-w-[1180px]">
-            {/* En-tête d'offre */}
-            <header className={`border-t pt-10 ${RULE}`}>
-              <div className="flex items-baseline gap-5">
-                <span className="font-display text-[clamp(2.2rem,6vw,4rem)] font-light tabular-nums leading-none text-orfonce/25">
-                  {o.num}
-                </span>
-                <span className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">
-                  {o.label}
-                </span>
-              </div>
-              <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3rem)] font-light leading-[1.05] text-encre">
-                {o.name}
-              </h2>
-              <p className="mt-4 max-w-[40ch] text-[15px] font-normal tracking-[0.01em] text-encre">
-                {o.price}
-                {o.priceNote && <span className="ml-2 text-[13px] font-light text-encre/55">{o.priceNote}</span>}
-              </p>
-            </header>
+          {/* Détail complet, replié */}
+          <details className="group mt-10">
+            <summary
+              className={`flex cursor-pointer list-none items-center gap-3 border-t pt-6 text-[11px] font-normal uppercase tracking-[0.24em] text-orfonce transition-colors hover:text-encre ${RULE}`}
+            >
+              <span className="group-open:hidden">Voir le détail complet</span>
+              <span className="hidden group-open:inline">Replier le détail</span>
+              <span aria-hidden="true" className="transition-transform duration-300 group-open:rotate-45">+</span>
+            </summary>
 
-            <div className="mt-10 grid gap-x-16 gap-y-12 lg:grid-cols-12">
-              {/* Colonne de lecture */}
+            <div className="mt-8 grid gap-x-16 gap-y-10 lg:grid-cols-12">
               <div className="lg:col-span-7">
-                {o.accroche && (
-                  <p className="max-w-[24ch] text-[clamp(1.4rem,2.4vw,2rem)] font-light leading-[1.2] text-encre">
-                    {o.accroche}
-                  </p>
-                )}
-                <div className={`max-w-[56ch] space-y-4 text-[15px] font-light leading-[1.8] text-encre/80 ${o.accroche ? 'mt-6' : ''}`}>
-                  {o.description.map((p) => (
-                    <p key={p}>{p}</p>
-                  ))}
-                </div>
-
-                {/* Histoires : les trois formats comme choix distincts */}
-                {o.formats && (
-                  <div className={`mt-10 border-t pt-8 ${RULE}`}>
-                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">
-                      {o.formatsTitle}
-                    </h3>
-                    <div className="mt-6 space-y-7">
-                      {o.formats.map((f) => (
-                        <div key={f.label} className={`border-l-2 pl-5 ${f.tag ? 'border-orfonce' : 'border-orfonce/25'}`}>
-                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                            <span className="font-display text-[clamp(1.15rem,1.8vw,1.4rem)] font-light leading-[1.15] text-encre">
-                              {f.label}
-                            </span>
-                            {f.tag && (
-                              <span className="text-[10px] font-normal uppercase tracking-[0.2em] text-orfonce">
-                                — {f.tag}
-                              </span>
-                            )}
-                          </div>
-                          <p className="mt-2 max-w-[52ch] text-[14px] font-light leading-[1.6] text-encre/85">
-                            {f.desc}
-                          </p>
-                          <p className="mt-1.5 max-w-[52ch] text-[13px] font-light leading-[1.6] text-encre/55">
-                            {f.usage}
-                          </p>
-                          <p className="mt-2.5 text-[13.5px] font-normal text-encre">{f.price}</p>
-                        </div>
-                      ))}
-                    </div>
+                {o.description && (
+                  <div className="max-w-[56ch] space-y-4 text-[15px] font-light leading-[1.8] text-encre/80">
+                    {o.description.map((p) => (
+                      <p key={p}>{p}</p>
+                    ))}
                   </div>
                 )}
 
-                {/* Ce que comprend le projet / la campagne / chaque histoire */}
                 {o.receive && (
-                  <div className={`mt-10 border-t pt-8 ${RULE}`}>
-                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">
-                      {o.receiveTitle}
-                    </h3>
+                  <div className={`mt-9 border-t pt-8 ${RULE}`}>
+                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.receiveTitle}</h3>
                     <DashList items={o.receive} className="mt-5" />
                     {o.receiveNote && (
                       <div className="mt-5 max-w-[56ch] space-y-2.5 text-[12.5px] font-light leading-[1.7] text-encre/60">
@@ -371,13 +372,10 @@ export default function Offres({ setDark, onNavigate }) {
                   </div>
                 )}
 
-                {/* Section prose (Photographie de campagne) */}
                 {o.rhythm && (
                   <div className={`mt-8 border-t pt-8 ${RULE}`}>
-                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">
-                      {o.rhythm.title}
-                    </h3>
-                    <div className="mt-5 max-w-[56ch] space-y-4 text-[14px] font-light leading-[1.75] text-encre/80">
+                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.rhythm.title}</h3>
+                    <div className="mt-5 max-w-[56ch] space-y-4 text-[15px] font-light leading-[1.75] text-encre/80">
                       {o.rhythm.body.map((p) => (
                         <p key={p}>{p}</p>
                       ))}
@@ -386,41 +384,25 @@ export default function Offres({ setDark, onNavigate }) {
                 )}
               </div>
 
-              {/* Colonne latérale : cadre, extensions, note, appel à l'action */}
               <div className="lg:col-span-5">
                 {o.cadre && (
-                  <div className={`border-t pt-8 ${RULE} lg:border-t-0 lg:pt-0`}>
-                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">
-                      Le cadre
-                    </h3>
-                    <ul className="mt-5 space-y-3">
-                      {o.cadre.map((it) => (
-                        <li key={it} className="flex items-start gap-3.5 text-[13.5px] font-light leading-[1.55] text-encre/70">
-                          <span aria-hidden="true" className={`mt-[0.62em] h-px w-4 shrink-0 ${DASH}`} />
-                          <span>{it}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div>
+                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">Le cadre</h3>
+                    <DashList items={o.cadre} className="mt-5" muted />
                   </div>
                 )}
 
                 {o.extensionGroups && (
                   <div className={`mt-8 border-t pt-8 ${RULE}`}>
-                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">
-                      {o.extensionsTitle}
-                    </h3>
+                    <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.extensionsTitle}</h3>
                     {o.extensionsIntro && (
-                      <p className="mt-2 text-[12.5px] font-light leading-[1.6] text-encre/60">
-                        {o.extensionsIntro}
-                      </p>
+                      <p className="mt-2 text-[12.5px] font-light leading-[1.6] text-encre/60">{o.extensionsIntro}</p>
                     )}
                     <div className="mt-5 space-y-5">
                       {o.extensionGroups.map((g) => (
                         <div key={g.label}>
-                          <p className="text-[10px] font-normal uppercase tracking-[0.22em] text-orfonce/70">
-                            {g.label}
-                          </p>
-                          <DashList items={g.items} className="mt-3" />
+                          <p className="text-[10px] font-normal uppercase tracking-[0.22em] text-orfonce/70">{g.label}</p>
+                          <DashList items={g.items} className="mt-3" muted />
                         </div>
                       ))}
                     </div>
@@ -432,24 +414,16 @@ export default function Offres({ setDark, onNavigate }) {
                     {o.note}
                   </p>
                 )}
-
-                <div className="mt-8">
-                  <button type="button" onClick={() => goContact(o.name)} className={cta}>
-                    {o.cta}
-                  </button>
-                </div>
               </div>
             </div>
-          </article>
-        </div>
+          </details>
+        </article>
       ))}
 
-      {/* ── Bloc transverse : comment nous travaillons ── */}
+      {/* ══ Bloc transverse : comment nous travaillons ══ */}
       <div className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
-        <div className={`mt-16 border-t pt-14 ${RULE}`}>
-          <h2 className="text-[11px] font-normal uppercase tracking-[0.3em] text-encre/70">
-            Comment nous travaillons
-          </h2>
+        <div className={`border-t pt-14 ${RULE}`}>
+          <h2 className="text-[11px] font-normal uppercase tracking-[0.3em] text-encre/70">Comment nous travaillons</h2>
           <ol className="mt-8 grid gap-x-14 gap-y-9 sm:grid-cols-2">
             {PROCESS.map((step, i) => (
               <li key={step.t} className="flex items-start gap-4">
@@ -458,9 +432,7 @@ export default function Offres({ setDark, onNavigate }) {
                 </span>
                 <span>
                   <span className="block font-display text-[16px] leading-[1.35] text-encre">{step.t}</span>
-                  <span className="mt-1.5 block text-[13px] font-light leading-[1.7] text-encre/75">
-                    {step.d}
-                  </span>
+                  <span className="mt-1.5 block text-[13.5px] font-light leading-[1.7] text-encre/75">{step.d}</span>
                 </span>
               </li>
             ))}
@@ -468,9 +440,7 @@ export default function Offres({ setDark, onNavigate }) {
 
           <div className={`mt-12 border-t pt-8 ${RULE}`}>
             <h3 className="font-display text-[16px] leading-[1.4] text-encre">{DIFFUSION.title}</h3>
-            <p className="mt-3 max-w-[70ch] text-[13.5px] font-light leading-[1.85] text-encre/80">
-              {DIFFUSION.body}
-            </p>
+            <p className="mt-3 max-w-[70ch] text-[14px] font-light leading-[1.85] text-encre/80">{DIFFUSION.body}</p>
           </div>
         </div>
       </div>
