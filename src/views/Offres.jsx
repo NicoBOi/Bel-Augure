@@ -20,7 +20,7 @@ const OFFERS = [
     label: 'Un film central',
     cardPhrase: 'Le film central qui installe votre univers.',
     price: 'À partir de 5 500 € HT',
-    promise: 'Faites ressentir ce qui vous distingue.',
+    promise: 'Devenez le premier choix avant même la première visite.',
     usage: 'Pour une ouverture, un repositionnement ou un nouveau souffle.',
     description: [
       'Nous partons de votre vision, de vos gestes, de vos produits ou de votre lieu pour créer le film central de votre communication. Une pièce forte, entièrement pensée pour vous, conçue pour porter durablement votre image.',
@@ -63,7 +63,7 @@ const OFFERS = [
     cardPhrase: 'Un ou plusieurs récits consacrés à ce qui vous distingue.',
     price: 'À partir de 3 500 € HT',
     priceNote: 'pour une histoire',
-    promise: 'Des films courts qui révèlent, un à un, ce qui vous distingue.',
+    promise: 'Mettez en lumière chacune de vos expériences pour donner envie de venir — et de revenir.',
     usage: 'Pour une communication régulière, plusieurs sujets à valoriser.',
     description: [
       'Des films courts qui mettent en lumière ce qui fait votre marque. Selon votre besoin : une histoire seule, une collection pensée d’un bloc, ou un partenariat qui installe un rythme sur la saison.',
@@ -112,7 +112,7 @@ const OFFERS = [
     label: 'Un dispositif complet',
     cardPhrase: 'Un dispositif complet conçu autour d’un temps fort.',
     price: 'À partir de 15 000 € HT',
-    promise: 'Donnez à votre prochain temps fort toute son ampleur.',
+    promise: 'Créez l’engouement autour de votre prochaine ouverture ou de votre prochain lancement.',
     usage: 'Pour un temps fort à fort enjeu.',
     description: [
       'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons l’idée qui donnera sa cohérence à toute votre prise de parole.',
