@@ -25,33 +25,26 @@ const OFFERS = [
     description: [
       'Nous partons de votre vision, de vos gestes, de vos produits ou de votre lieu pour créer le film central de votre communication. Une pièce forte, entièrement pensée pour vous, conçue pour porter durablement votre image.',
     ],
-    receiveTitle: 'Ce que comprend le projet',
+    receiveTitle: 'Ce que vous recevez',
     receive: [
-      'Un film de marque sur mesure de 60 à 90 secondes',
-      'Selon le périmètre retenu, une ou deux versions horizontales de 30 et 15 secondes',
-      'La conception, l’écriture, la direction artistique et les repérages',
-      'Un à deux jours de tournage, dans les lieux définis pour le projet',
-      'Le montage, la création sonore et l’étalonnage, réalisés au studio',
-      'Une musique licenciée, choisie pour le film',
+      'Un film de marque sur mesure, de 60 à 90 secondes',
+      'Ses versions courtes de 30 et 15 secondes pour vos réseaux',
+      'Une musique choisie pour votre film',
+      'De l’écriture au montage, tout est pris en charge',
     ],
     cadre: [
-      'Première version présentée sous deux semaines après le tournage',
+      'Première version deux semaines après le tournage',
       'Deux séries de retours incluses',
-      'Droits d’utilisation inclus pendant deux ans en France : site internet, réseaux sociaux, présentations et salons',
-      'Votre projet est suivi directement par les deux fondateurs',
+      'Droits d’utilisation : deux ans, en France, web et réseaux',
+      'Un suivi assuré directement par les deux fondateurs',
     ],
-    extensionsTitle: 'Extensions possibles',
-    extensionsIntro: 'Définies et chiffrées dans la proposition.',
-    extensionGroups: [
-      {
-        label: 'Création',
-        items: ['Déclinaisons verticales', 'Voix off', 'Musique originale', 'Prises de vues aériennes'],
-      },
-      { label: 'Production', items: ['Journée de tournage supplémentaire'] },
-      {
-        label: 'Droits d’utilisation',
-        items: ['Télévision, affichage ou cinéma', 'Diffusion internationale', 'Durée d’utilisation étendue'],
-      },
+    extensionsTitle: 'En option',
+    extensions: [
+      'Déclinaisons verticales, voix off ou musique originale',
+      'Images aériennes',
+      'Journée de tournage supplémentaire',
+      'Diffusion TV, cinéma, affichage ou à l’international',
+      'Durée d’utilisation étendue',
     ],
     cta: 'Prendre rendez-vous',
   },
@@ -68,7 +61,7 @@ const OFFERS = [
     description: [
       'Vos gestes, vos lieux, vos savoir-faire, celles et ceux qui les incarnent : chaque histoire en isole un et lui donne toute la place, dans une écriture qui prolonge votre identité au fil de la saison.',
     ],
-    formatsTitle: 'Trois façons de travailler',
+    formatsTitle: 'Trois formats au choix',
     formats: [
       {
         label: 'Une histoire',
@@ -90,18 +83,17 @@ const OFFERS = [
         usage: 'Engagement d’une saison, renouvelable d’un commun accord.',
       },
     ],
-    receiveTitle: 'Ce que comprend chaque histoire',
+    receiveTitle: 'Ce que vous recevez',
     receive: [
-      'Un format principal et une adaptation verticale ou horizontale de chaque film',
-      'Un à deux extraits courts issus de chaque histoire',
-      'Le montage, la création sonore et l’étalonnage, réalisés au studio',
-      'Les musiques licenciées pour les usages prévus',
+      'Un format principal et une adaptation verticale ou horizontale',
+      'Un à deux extraits courts par histoire',
+      'Musique et postproduction incluses',
     ],
     cadre: [
-      'Tournages groupés, généralement une à deux journées par vague',
-      'Deux séries de retours regroupées par vague',
-      'Droits d’utilisation inclus pendant deux ans à compter de chaque livraison, selon les supports définis dans la proposition',
-      'Casting, stylisme, maquillage, décors, déplacements et moyens techniques supplémentaires chiffrés séparément',
+      'Tournages groupés, une à deux journées par vague',
+      'Deux séries de retours par vague',
+      'Droits d’utilisation : deux ans à compter de chaque livraison',
+      'Casting, stylisme et décors en supplément selon les besoins',
     ],
     cta: 'Prendre rendez-vous',
   },
@@ -118,35 +110,30 @@ const OFFERS = [
       'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons l’idée qui donnera sa cohérence à toute votre prise de parole.',
       'Elle prend vie dans un film principal, plusieurs films courts et les formats conçus pour vos différents supports. Chaque création a son propre rôle : annoncer, révéler ou prolonger le lancement. Ensemble, elles forment une campagne immédiatement reconnaissable.',
     ],
-    receiveTitle: 'Ce que comprend la campagne',
+    receiveTitle: 'Ce que vous recevez',
     receive: [
       'Une idée directrice et une direction créative commune',
       'Un film principal de 60 à 90 secondes',
-      'Une série de trois films courts minimum, de 15 à 30 secondes',
-      'Les adaptations horizontales et verticales prévues pour les supports retenus',
-      'La conception, l’écriture, la direction artistique et la préparation du tournage',
-      'La production et la postproduction de l’ensemble',
-      'Les musiques licenciées pour les usages prévus',
+      'Trois films courts minimum, de 15 à 30 secondes',
+      'Les formats adaptés à vos différents supports',
+      'De l’idée à la livraison, tout est pris en charge',
+      'Musique incluse',
     ],
     receiveNote: [
-      'Les films courts sont conçus comme des pièces à part entière, et non comme de simples extraits du film principal.',
-      'Le nombre de films, leurs durées et leurs formats sont définis précisément dans la proposition.',
+      'Les films courts sont de vraies pièces à part entière, pas de simples extraits du film principal.',
     ],
     rhythm: {
-      title: 'Photographie de campagne',
+      title: 'Photographie de campagne — en option',
       body: [
-        'Une série photographique peut être imaginée dans la même direction artistique et réalisée pendant la production avec un photographe partenaire.',
-        'Selon le concept retenu, le casting, le stylisme, la coiffure-maquillage, les décors, les prises de vues aériennes, la musique originale et les moyens techniques particuliers sont définis et chiffrés dès la proposition.',
+        'Une série photographique, dans la même direction artistique, peut être réalisée pendant le tournage avec un photographe partenaire.',
       ],
     },
     cadre: [
-      'Un calendrier construit à partir de votre date de lancement',
-      'Environ huit à dix semaines entre la validation de la proposition et la livraison finale',
-      'Validation de l’idée et du traitement créatif avant le tournage',
-      'Deux séries de retours regroupées en postproduction',
-      'Une campagne suivie directement par les deux fondateurs',
-      'Droits d’utilisation inclus pendant deux ans en France : site internet, réseaux sociaux et campagnes digitales sponsorisées',
-      'Télévision, affichage, cinéma, international ou durée étendue chiffrés dès la proposition',
+      'Un calendrier construit sur votre date de lancement',
+      'Environ huit à dix semaines, de la validation à la livraison',
+      'Deux séries de retours incluses',
+      'Un suivi assuré directement par les deux fondateurs',
+      'Droits d’utilisation : deux ans, France, web et campagnes sponsorisées',
     ],
     note: 'Chaque campagne fait l’objet d’une proposition dédiée.',
     cta: 'Écrire au studio',
@@ -343,15 +330,6 @@ export default function Offres({ setDark, onNavigate }) {
         const cSection = ink ? 'text-sable/70' : 'text-encre/70'
         const cNum = ink ? 'text-creme/20' : 'text-encre/20'
         const cRule = ink ? 'border-or/20' : 'border-orfonce/20'
-        // Sommaire de ce qui se cache sous l'accordéon, propre à chaque offre.
-        const sectionIndex = [
-          o.formats && 'Les trois formats',
-          o.receive && 'Ce qui est compris',
-          o.rhythm && 'Photographie',
-          o.cadre && 'Le cadre',
-          o.extensionGroups && 'Extensions',
-          'Prix',
-        ].filter(Boolean)
         return (
         <div
           key={o.id}
@@ -391,36 +369,21 @@ export default function Offres({ setDark, onNavigate }) {
                 {/* Détail replié dans un accordéon : le prix, ce que comprend
                     l'offre, le cadre et les extensions apparaissent à l'ouverture. */}
                 <details className="group mt-10">
-                  {/* Bouton premium : contour fin qui se remplit d'un balayage au
-                      survol (l'encre glisse de la gauche, le texte passe en crème).
-                      Dessous, un aperçu discret des sections à dévoiler. */}
-                  <summary className="group/sum inline-flex cursor-pointer list-none flex-col items-start gap-3.5">
+                  {/* Bouton simple : contour fin qui se remplit d'une couleur au
+                      survol (transition classique, sans effet). */}
+                  <summary className="inline-flex cursor-pointer list-none">
                     <span
-                      className={`relative inline-flex items-center gap-3.5 overflow-hidden rounded-full border px-9 py-3.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${
+                      className={`inline-flex items-center gap-3.5 rounded-full border px-9 py-3.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-300 ${
                         ink
-                          ? 'border-or/50 text-creme group-hover/sum:text-encre'
-                          : 'border-encre/40 text-encre group-hover/sum:text-creme'
+                          ? 'border-or/50 text-creme hover:bg-or hover:text-encre'
+                          : 'border-encre/40 text-encre hover:bg-encre hover:text-creme'
                       }`}
                     >
-                      <span
-                        aria-hidden="true"
-                        className={`absolute inset-0 origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/sum:scale-x-100 ${
-                          ink ? 'bg-or' : 'bg-encre'
-                        }`}
-                      />
-                      <span className="relative">
-                        <span className="group-open:hidden">Afficher le détail</span>
-                        <span className="hidden group-open:inline">Réduire</span>
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="relative text-[13px] leading-none transition-transform duration-500 group-open:rotate-90"
-                      >
+                      <span className="group-open:hidden">Afficher le détail</span>
+                      <span className="hidden group-open:inline">Réduire</span>
+                      <span aria-hidden="true" className="text-[13px] leading-none transition-transform duration-300 group-open:rotate-90">
                         →
                       </span>
-                    </span>
-                    <span className={`pl-1 text-[9.5px] font-normal uppercase tracking-[0.2em] group-open:hidden ${ink ? 'text-sable/60' : 'text-encre/55'}`}>
-                      {sectionIndex.join('   ·   ')}
                     </span>
                   </summary>
 
@@ -478,27 +441,15 @@ export default function Offres({ setDark, onNavigate }) {
 
             {o.cadre && (
               <section className={`border-t pt-9 ${cRule}`}>
-                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>Le cadre</h3>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>Délais, retours et droits</h3>
                 <DashList items={o.cadre} cols={2} muted ink={ink} className="mt-6" />
               </section>
             )}
 
-            {o.extensionGroups && (
+            {o.extensions && (
               <section className={`border-t pt-9 ${RULE}`}>
-                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                  <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.extensionsTitle}</h3>
-                  {o.extensionsIntro && (
-                    <p className="text-[12px] font-light text-encre/60">{o.extensionsIntro}</p>
-                  )}
-                </div>
-                <div className="mt-6 grid gap-x-10 gap-y-6 sm:grid-cols-3">
-                  {o.extensionGroups.map((g) => (
-                    <div key={g.label}>
-                      <p className="text-[10px] font-normal uppercase tracking-[0.22em] text-orfonce/70">{g.label}</p>
-                      <DashList items={g.items} className="mt-3" muted />
-                    </div>
-                  ))}
-                </div>
+                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.extensionsTitle}</h3>
+                <DashList items={o.extensions} cols={2} muted className="mt-6" />
               </section>
             )}
 
