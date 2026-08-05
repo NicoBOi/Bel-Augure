@@ -20,33 +20,47 @@ const OFFRES = [
       'Nous partons de votre vision, de vos gestes, de vos produits ou de votre lieu pour créer le film central de votre communication. Une pièce forte, entièrement pensée pour vous, conçue pour porter durablement votre image.',
     ],
     context: 'Pour installer votre univers, le révéler ou lui donner un nouveau souffle.',
-    receiveTitle: 'Ce que vous recevez',
+    receiveTitle: 'Ce que comprend le projet',
     receive: [
-      'Un film de marque de 60 à 90 secondes, réalisé sur mesure',
-      'Ses versions 30 et 15 secondes',
-      'Conception, écriture, direction artistique, repérage',
-      'Deux jours de tournage dans votre lieu',
-      'Montage, création sonore, étalonnage — réalisés au studio',
-      'Musique licenciée incluse',
+      'Un film de marque sur mesure de 60 à 90 secondes',
+      'Selon le périmètre retenu, une ou deux versions horizontales de 30 et 15 secondes',
+      'La conception, l’écriture, la direction artistique et les repérages',
+      'Un à deux jours de tournage, dans les lieux définis pour le projet',
+      'Le montage, la création sonore et l’étalonnage, réalisés au studio',
+      'Une musique licenciée, choisie pour le film',
     ],
     cadre: [
-      'Livraison deux semaines après le dernier jour de tournage',
-      'Deux allers-retours de validation inclus',
-      'Diffusion incluse : deux ans, France, digital et réseaux sociaux',
-      'Un seul projet à la fois',
+      'Première version présentée sous deux semaines après le tournage',
+      'Deux séries de retours incluses',
+      'Droits d’utilisation inclus pendant deux ans en France : site internet, réseaux sociaux, présentations et salons',
+      'Votre projet est suivi directement par les deux fondateurs',
     ],
     consoleTitle: 'Extensions possibles',
     consoleIntro: 'Cochez ce qui vous intéresse — chiffré dans la proposition.',
     itemsMode: 'options',
+    itemGroups: [
+      {
+        label: 'Création',
+        items: ['Déclinaisons verticales', 'Voix off', 'Musique originale', 'Prises de vues aériennes'],
+      },
+      {
+        label: 'Production',
+        items: ['Journée de tournage supplémentaire'],
+      },
+      {
+        label: 'Droits d’utilisation',
+        items: ['Télévision, affichage ou cinéma', 'Diffusion internationale', 'Durée d’utilisation étendue'],
+      },
+    ],
     items: [
-      'Déclinaisons verticales supplémentaires',
+      'Déclinaisons verticales',
       'Voix off',
       'Musique originale',
-      'Images aériennes',
+      'Prises de vues aériennes',
       'Journée de tournage supplémentaire',
-      'Diffusion télévision ou affichage',
-      'Diffusion cinéma',
-      'Diffusion internationale ou durée étendue',
+      'Télévision, affichage ou cinéma',
+      'Diffusion internationale',
+      'Durée d’utilisation étendue',
     ],
     cta: 'Prendre rendez-vous',
   },
@@ -227,6 +241,64 @@ export default function Offres({ setDark, onNavigate }) {
     ? 'w-full cursor-pointer rounded-full border border-or/55 py-3.5 text-[13px] font-normal tracking-[0.06em] text-creme transition-colors duration-500 hover:border-or hover:bg-or hover:text-encre'
     : 'w-full cursor-pointer rounded-full border border-encre/55 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-500 hover:border-encre hover:bg-encre hover:text-creme'
 
+  // Une entrée de console (case ou ligne « incluse »). L'index reste global sur
+  // offre.items pour que la sélection et la demande de devis restent alignées,
+  // même lorsque les items sont présentés en sous-groupes.
+  const renderConsoleItem = (item, i) => {
+    const included = offre.itemsMode === 'included'
+    const checked = included || !!sel[i]
+    const inner = (
+      <>
+        <span
+          aria-hidden="true"
+          className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
+            checked
+              ? ink ? 'border-or bg-or text-encre' : 'border-encre bg-encre text-or'
+              : ink ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70' : 'border-orfonce/45 bg-black/[0.03] group-hover:border-orfonce/70'
+          }`}
+        >
+          {checked && (
+            <span className={included ? undefined : 'check-draw'}>
+              <IconCheck />
+            </span>
+          )}
+        </span>
+        <span className="min-w-0">
+          <span className={`block text-[13.5px] font-light leading-[1.5] transition-colors duration-300 ${checked ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/85' : 'text-encre/85'}`}>
+            {item}
+          </span>
+          {!included && (
+            <span
+              aria-hidden="true"
+              className={`mt-1 block h-px origin-left ${ink ? 'bg-or/70' : 'bg-encre/70'}`}
+              style={{
+                transform: checked ? 'scaleX(1)' : 'scaleX(0)',
+                transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
+              }}
+            />
+          )}
+        </span>
+      </>
+    )
+    return (
+      <li key={item} className={`flex items-center gap-4 border-b py-3.5 ${ink ? 'border-creme/10' : 'border-encre/12'}`}>
+        {included ? (
+          <span className="flex flex-1 items-start gap-3.5">{inner}</span>
+        ) : (
+          <button
+            type="button"
+            role="checkbox"
+            aria-checked={checked}
+            onClick={() => toggle(i)}
+            className={`group flex flex-1 cursor-pointer items-start gap-3.5 rounded-md text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'}`}
+          >
+            {inner}
+          </button>
+        )}
+      </li>
+    )
+  }
+
   return (
     <section
       ref={ref}
@@ -380,60 +452,21 @@ export default function Offres({ setDark, onNavigate }) {
                     </div>
 
                     <ul data-console className="mt-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
-                      {offre.items.map((item, i) => {
-                        const included = offre.itemsMode === 'included'
-                        const checked = included || !!sel[i]
-                        const inner = (
-                          <>
-                            <span
-                              aria-hidden="true"
-                              className={`mt-[0.05em] flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-300 ${
-                                checked
-                                  ? ink ? 'border-or bg-or text-encre' : 'border-encre bg-encre text-or'
-                                  : ink ? 'border-creme/40 bg-creme/[0.04] group-hover:border-creme/70' : 'border-orfonce/45 bg-black/[0.03] group-hover:border-orfonce/70'
-                              }`}
-                            >
-                              {checked && (
-                                <span className={included ? undefined : 'check-draw'}>
-                                  <IconCheck />
-                                </span>
-                              )}
-                            </span>
-                            <span className="min-w-0">
-                              <span className={`block text-[13.5px] font-light leading-[1.5] transition-colors duration-300 ${checked ? (ink ? 'text-creme' : 'text-encre') : ink ? 'text-sable/85' : 'text-encre/85'}`}>
-                                {item}
-                              </span>
-                              {!included && (
-                                <span
-                                  aria-hidden="true"
-                                  className={`mt-1 block h-px origin-left ${ink ? 'bg-or/70' : 'bg-encre/70'}`}
-                                  style={{
-                                    transform: checked ? 'scaleX(1)' : 'scaleX(0)',
-                                    transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
-                                  }}
-                                />
-                              )}
-                            </span>
-                          </>
-                        )
-                        return (
-                          <li key={item} className={`flex items-center gap-4 border-b py-3.5 ${ink ? 'border-creme/10' : 'border-encre/12'}`}>
-                            {included ? (
-                              <span className="flex flex-1 items-start gap-3.5">{inner}</span>
-                            ) : (
-                              <button
-                                type="button"
-                                role="checkbox"
-                                aria-checked={checked}
-                                onClick={() => toggle(i)}
-                                className={`group flex flex-1 cursor-pointer items-start gap-3.5 rounded-md text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${ink ? 'focus-visible:outline-or' : 'focus-visible:outline-encre'}`}
-                              >
-                                {inner}
-                              </button>
-                            )}
-                          </li>
-                        )
-                      })}
+                      {offre.itemGroups
+                        ? (() => {
+                            let gi = 0
+                            return offre.itemGroups.map((g, idx) => (
+                              <li key={g.label} className="list-none">
+                                <p
+                                  className={`${idx === 0 ? 'pt-0.5' : 'pt-5'} pb-0.5 text-[10px] font-normal uppercase tracking-[0.22em] ${ink ? 'text-or/70' : 'text-orfonce/70'}`}
+                                >
+                                  {g.label}
+                                </p>
+                                <ul>{g.items.map((item) => renderConsoleItem(item, gi++))}</ul>
+                              </li>
+                            ))
+                          })()
+                        : offre.items.map((item, i) => renderConsoleItem(item, i))}
                     </ul>
                   </>
                 )}
