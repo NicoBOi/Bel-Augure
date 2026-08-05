@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
 
@@ -192,11 +192,42 @@ const CTA_LIGHT =
 const CTA_INK =
   'inline-flex cursor-pointer items-center justify-center rounded-full border border-or/55 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-creme transition-colors duration-300 hover:bg-or hover:text-encre'
 
-// Un chapitre d'offre. L'en-tête (numéro, identité, description) reste fixe ;
-// le détail devient un RUBAN de panneaux qui défile horizontalement. Au-dessus
-// de la bande, la molette est convertie en défilement latéral et n'est relâchée
-// (retour au scroll vertical de la page) qu'une fois arrivé au début ou à la
-// fin du ruban. Le tactile utilise le swipe horizontal natif.
+// Révélation au scroll : quand l'élément entre dans le viewport, on lui ajoute
+// `is-visible` et son contenu `.reveal-up` s'anime (fondu + léger glissement).
+// Mouvement réduit : révélé immédiatement, sans animation.
+function Reveal({ children, delay = 0, className = '' }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.classList.add('is-visible')
+      return
+    }
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          el.classList.add('is-visible')
+          io.disconnect()
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  return (
+    <div ref={ref} className={className}>
+      <div className="reveal-up" style={{ '--d': `${delay}ms` }}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// Un chapitre d'offre. Tout se dévoile au scroll : le grand numéro d'abord, puis
+// l'identité et la promesse, la description, et chaque bloc d'info apparaît au
+// fur et à mesure qu'on descend. Vertical, structuré, sans fioriture.
 function OfferChapter({ o, i, onContact }) {
   const ink = o.id === 'campagne'
   const band = ink ? '#1a1512' : i % 2 === 1 ? '#E6D8C1' : '#F4ECDF'
@@ -208,178 +239,132 @@ function OfferChapter({ o, i, onContact }) {
   const cAccent = ink ? 'text-or' : 'text-orfonce'
   const cSection = ink ? 'text-sable/70' : 'text-encre/70'
   const cNum = ink ? 'text-creme/20' : 'text-encre/20'
-  const cRule = ink ? 'border-or/25' : 'border-orfonce/30'
-  const cTrack = ink ? 'bg-or/15' : 'bg-orfonce/15'
-  const cFill = ink ? 'bg-or' : 'bg-orfonce'
-
-  const bandRef = useRef(null)
-  const stripRef = useRef(null)
-  const [prog, setProg] = useState(0)
-  const [overflow, setOverflow] = useState(false)
-
-  useEffect(() => {
-    const bandEl = bandRef.current
-    const strip = stripRef.current
-    if (!bandEl || !strip) return
-    const measure = () => setOverflow(strip.scrollWidth - strip.clientWidth > 4)
-    measure()
-    const onWheel = (e) => {
-      if (e.ctrlKey) return // pincer-zoomer
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return // trackpad horizontal : natif
-      const max = strip.scrollWidth - strip.clientWidth
-      if (max <= 0) return
-      const down = e.deltaY > 0
-      const atStart = strip.scrollLeft <= 0
-      const atEnd = strip.scrollLeft >= max - 1
-      if ((down && !atEnd) || (!down && !atStart)) {
-        e.preventDefault()
-        strip.scrollLeft += e.deltaY
-      }
-    }
-    bandEl.addEventListener('wheel', onWheel, { passive: false })
-    window.addEventListener('resize', measure)
-    return () => {
-      bandEl.removeEventListener('wheel', onWheel)
-      window.removeEventListener('resize', measure)
-    }
-  }, [])
-
-  const onStripScroll = () => {
-    const strip = stripRef.current
-    if (!strip) return
-    const max = strip.scrollWidth - strip.clientWidth
-    setProg(max > 0 ? Math.min(1, strip.scrollLeft / max) : 0)
-  }
-
-  const panelCls = `snap-start shrink-0 basis-[86vw] border-l pl-8 pr-8 first:border-l-0 first:pl-0 last:pr-0 sm:basis-[28rem] ${cRule}`
-
-  const panels = []
-  if (o.formats) {
-    o.formats.forEach((f) => {
-      panels.push(
-        <div key={`f-${f.label}`} className={panelCls}>
-          <div className="flex min-h-[1.2em] items-baseline">
-            {f.tag && <span className={`text-[9.5px] font-normal uppercase tracking-[0.2em] ${cAccent}`}>{f.tag}</span>}
-          </div>
-          <span className={`mt-1 block font-display text-[clamp(1.3rem,1.8vw,1.6rem)] font-light leading-[1.1] ${cTitle}`}>{f.label}</span>
-          <p className={`mt-4 text-[14px] font-light leading-[1.6] ${cBody}`}>{f.desc}</p>
-          <p className={`mt-2 text-[13px] font-light leading-[1.6] ${cMuted}`}>{f.usage}</p>
-          <p className={`mt-5 text-[15px] font-normal tabular-nums ${cTitle}`}>{f.price}</p>
-        </div>,
-      )
-    })
-  }
-  if (o.receive) {
-    panels.push(
-      <div key="receive" className={panelCls}>
-        <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
-        <DashList items={o.receive} ink={ink} className="mt-6" />
-        {o.receiveNote && (
-          <div className={`mt-6 space-y-2 text-[12.5px] font-light leading-[1.65] ${cMuted}`}>
-            {o.receiveNote.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
-          </div>
-        )}
-      </div>,
-    )
-  }
-  if (o.rhythm) {
-    panels.push(
-      <div key="rhythm" className={panelCls}>
-        <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.rhythm.title}</h3>
-        <div className={`mt-5 space-y-3 text-[15px] font-light leading-[1.75] ${cBody}`}>
-          {o.rhythm.body.map((p) => (
-            <p key={p}>{p}</p>
-          ))}
-        </div>
-      </div>,
-    )
-  }
-  if (o.cadre) {
-    panels.push(
-      <div key="cadre" className={panelCls}>
-        <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>Délais, retours et droits</h3>
-        <DashList items={o.cadre} muted ink={ink} className="mt-6" />
-      </div>,
-    )
-  }
-  if (o.extensions) {
-    panels.push(
-      <div key="ext" className={panelCls}>
-        <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.extensionsTitle}</h3>
-        <DashList items={o.extensions} muted ink={ink} className="mt-6" />
-      </div>,
-    )
-  }
-  panels.push(
-    <div key="price" className={`${panelCls} flex flex-col`}>
-      <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
-      <p className={`mt-1.5 font-display text-[clamp(1.5rem,2.4vw,2rem)] font-light tabular-nums leading-none ${cTitle}`}>{o.price}</p>
-      {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
-      <button type="button" onClick={() => onContact(o.name)} className={`mt-7 self-start ${ink ? CTA_INK : CTA_LIGHT}`}>
-        {o.cta}
-      </button>
-    </div>,
-  )
+  const cRule = ink ? 'border-or/20' : 'border-orfonce/25'
 
   return (
     <div
-      ref={bandRef}
       id={`detail-${o.id}`}
-      className="-mx-6 scroll-mt-24 px-6 py-20 md:-mx-16 md:px-16 md:py-24"
+      className="-mx-6 scroll-mt-24 px-6 py-24 md:-mx-16 md:px-16 md:py-32"
       style={{ backgroundColor: band }}
     >
       <article className="mx-auto w-full max-w-[1180px]">
+        {/* En-tête : le grand numéro se révèle, puis l'identité et la description */}
         <div className="flex items-start gap-6 sm:gap-10">
-          <span className={`shrink-0 font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
-            {o.num}
-          </span>
+          <Reveal className="shrink-0">
+            <span className={`block font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
+              {o.num}
+            </span>
+          </Reveal>
           <div className="min-w-0 flex-1">
             <div className="grid gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-center">
-              <header className="max-w-[46ch] pt-1">
+              <Reveal delay={90} className="max-w-[46ch] pt-1">
                 <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>{o.label}</p>
-                <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>{o.name}</h2>
+                <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
+                  {o.name}
+                </h2>
                 <p className={`mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}>{o.promise}</p>
-              </header>
+              </Reveal>
               {o.description && (
-                <p className={`max-w-[56ch] text-[16px] font-light leading-[1.75] lg:pt-2 ${cBody}`}>{o.description.join(' ')}</p>
+                <Reveal delay={180}>
+                  <p className={`max-w-[56ch] text-[16px] font-light leading-[1.75] lg:pt-2 ${cBody}`}>
+                    {o.description.join(' ')}
+                  </p>
+                </Reveal>
               )}
             </div>
           </div>
         </div>
 
-        {/* Ruban horizontal du détail */}
-        <div className="relative mt-12">
-          <div
-            ref={stripRef}
-            onScroll={onStripScroll}
-            className="flex snap-x snap-mandatory overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {panels}
-          </div>
-          {overflow && (
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 right-0 w-16 transition-opacity duration-300"
-              style={{ background: `linear-gradient(to right, transparent, ${band})`, opacity: prog > 0.98 ? 0 : 1 }}
-            />
+        {/* Détail : chaque bloc apparaît en descendant */}
+        <div className="mt-16 space-y-12 md:mt-20">
+          {o.formats && (
+            <Reveal>
+              <section className={`border-t pt-9 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
+                <div className="mt-7 grid gap-x-10 gap-y-7 sm:grid-cols-3">
+                  {o.formats.map((f) => (
+                    <div
+                      key={f.label}
+                      className={`flex flex-col rounded-lg border p-5 ${f.tag ? 'border-orfonce/50 bg-black/[0.02]' : 'border-encre/12'}`}
+                    >
+                      <div className="flex min-h-[1.2em] items-baseline">
+                        {f.tag && <span className="text-[9.5px] font-normal uppercase tracking-[0.2em] text-orfonce">{f.tag}</span>}
+                      </div>
+                      <span className="mt-1 font-display text-[clamp(1.2rem,1.7vw,1.45rem)] font-light leading-[1.1] text-encre">
+                        {f.label}
+                      </span>
+                      <p className="mt-3 flex-1 text-[14px] font-light leading-[1.55] text-encre/80">{f.desc}</p>
+                      <p className="mt-4 text-[15px] font-normal tabular-nums text-encre">{f.price}</p>
+                      <p className="mt-1 text-[12px] font-light leading-[1.5] text-encre/65">{f.usage}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
           )}
-        </div>
 
-        {overflow && (
-          <div className="mt-8 flex items-center gap-5">
-            <span className={`relative h-px w-40 overflow-hidden ${cTrack}`}>
-              <span className={`absolute inset-y-0 left-0 ${cFill}`} style={{ width: `${Math.max(8, prog * 100)}%` }} />
-            </span>
-            <span
-              className={`text-[10px] font-normal uppercase tracking-[0.2em] transition-opacity duration-300 ${cFaint}`}
-              style={{ opacity: prog > 0.05 ? 0 : 1 }}
-            >
-              Faites défiler pour tout voir →
-            </span>
-          </div>
-        )}
+          {o.receive && (
+            <Reveal>
+              <section className={`border-t pt-9 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
+                <DashList items={o.receive} cols={2} ink={ink} className="mt-6" />
+                {o.receiveNote && (
+                  <div className={`mt-6 max-w-[72ch] space-y-2 text-[12.5px] font-light leading-[1.65] ${cMuted}`}>
+                    {o.receiveNote.map((p) => (
+                      <p key={p}>{p}</p>
+                    ))}
+                  </div>
+                )}
+              </section>
+            </Reveal>
+          )}
+
+          {o.rhythm && (
+            <Reveal>
+              <section className={`border-t pt-9 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.rhythm.title}</h3>
+                <div className={`mt-5 max-w-[72ch] space-y-3 text-[15px] font-light leading-[1.75] ${cBody}`}>
+                  {o.rhythm.body.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
+          )}
+
+          {o.cadre && (
+            <Reveal>
+              <section className={`border-t pt-9 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>Délais, retours et droits</h3>
+                <DashList items={o.cadre} cols={2} muted ink={ink} className="mt-6" />
+              </section>
+            </Reveal>
+          )}
+
+          {o.extensions && (
+            <Reveal>
+              <section className={`border-t pt-9 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.extensionsTitle}</h3>
+                <DashList items={o.extensions} cols={2} muted ink={ink} className="mt-6" />
+              </section>
+            </Reveal>
+          )}
+
+          <Reveal>
+            <div className={`flex flex-col items-start gap-6 border-t pt-9 sm:flex-row sm:items-end sm:justify-between ${cRule}`}>
+              <div>
+                <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
+                <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light tabular-nums leading-none ${cTitle}`}>
+                  {o.price}
+                </p>
+                {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
+              </div>
+              <button type="button" onClick={() => onContact(o.name)} className={ink ? CTA_INK : CTA_LIGHT}>
+                {o.cta}
+              </button>
+            </div>
+          </Reveal>
+        </div>
       </article>
     </div>
   )
