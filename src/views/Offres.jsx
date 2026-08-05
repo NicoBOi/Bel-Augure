@@ -391,25 +391,36 @@ export default function Offres({ setDark, onNavigate }) {
                 {/* Détail replié dans un accordéon : le prix, ce que comprend
                     l'offre, le cadre et les extensions apparaissent à l'ouverture. */}
                 <details className="group mt-10">
-                  {/* Une action claire et soulignée (« Afficher le détail ») +,
-                      en dessous, un aperçu des sections que l'on va dévoiler. */}
-                  <summary className="group/sum inline-flex cursor-pointer list-none">
-                    <span className="flex flex-col gap-2.5">
-                      <span className={`inline-flex items-center gap-2.5 text-[12px] font-normal uppercase tracking-[0.18em] ${ink ? 'text-creme' : 'text-encre'}`}>
-                        <span className={`pb-1 ${ink ? 'border-b border-or/50' : 'border-b border-orfonce/50'}`}>
-                          <span className="group-open:hidden">Afficher le détail</span>
-                          <span className="hidden group-open:inline">Réduire le détail</span>
-                        </span>
-                        <span
-                          aria-hidden="true"
-                          className={`text-[13px] leading-none transition-transform duration-300 group-hover/sum:translate-x-0.5 group-open:rotate-90 ${ink ? 'text-or' : 'text-orfonce'}`}
-                        >
-                          →
-                        </span>
+                  {/* Bouton premium : contour fin qui se remplit d'un balayage au
+                      survol (l'encre glisse de la gauche, le texte passe en crème).
+                      Dessous, un aperçu discret des sections à dévoiler. */}
+                  <summary className="group/sum inline-flex cursor-pointer list-none flex-col items-start gap-3.5">
+                    <span
+                      className={`relative inline-flex items-center gap-3.5 overflow-hidden rounded-full border px-9 py-3.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-500 ${
+                        ink
+                          ? 'border-or/50 text-creme group-hover/sum:text-encre'
+                          : 'border-encre/40 text-encre group-hover/sum:text-creme'
+                      }`}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`absolute inset-0 origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/sum:scale-x-100 ${
+                          ink ? 'bg-or' : 'bg-encre'
+                        }`}
+                      />
+                      <span className="relative">
+                        <span className="group-open:hidden">Afficher le détail</span>
+                        <span className="hidden group-open:inline">Réduire</span>
                       </span>
-                      <span className={`group-open:hidden text-[10px] font-normal uppercase tracking-[0.18em] ${ink ? 'text-sable/55' : 'text-encre/50'}`}>
-                        {sectionIndex.join('   ·   ')}
+                      <span
+                        aria-hidden="true"
+                        className="relative text-[13px] leading-none transition-transform duration-500 group-open:rotate-90"
+                      >
+                        →
                       </span>
+                    </span>
+                    <span className={`pl-1 text-[9.5px] font-normal uppercase tracking-[0.2em] group-open:hidden ${ink ? 'text-sable/60' : 'text-encre/55'}`}>
+                      {sectionIndex.join('   ·   ')}
                     </span>
                   </summary>
 
