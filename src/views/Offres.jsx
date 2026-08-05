@@ -333,33 +333,36 @@ export default function Offres({ setDark, onNavigate }) {
           style={{ backgroundColor: band }}
         >
           <article className="mx-auto w-full max-w-[1180px]">
-            {/* Grand numéro : signal de nouvelle offre */}
-            <header className="flex items-start gap-6 sm:gap-10">
-              <span className={`font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
-                {o.num}
-              </span>
-              <div className="max-w-[46ch] pt-1">
-                <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>
-                  {o.label}
+            {/* En-tête (grand numéro + identité) à gauche, description à droite :
+                le paragraphe équilibre le vide à côté du numéro. */}
+            <div className="grid gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-start">
+              <header className="flex items-start gap-6 sm:gap-10">
+                <span className={`font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums ${cNum}`}>
+                  {o.num}
+                </span>
+                <div className="max-w-[46ch] pt-1">
+                  <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>
+                    {o.label}
+                  </p>
+                  <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
+                    {o.name}
+                  </h2>
+                  <p className={`mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}>
+                    {o.promise}
+                  </p>
+                </div>
+              </header>
+
+              {o.description && (
+                <p className={`max-w-[56ch] text-[16px] font-light leading-[1.75] lg:pt-2 ${cBody}`}>
+                  {o.description.join(' ')}
                 </p>
-                <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
-                  {o.name}
-                </h2>
-                <p className={`mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}>
-                  {o.promise}
-                </p>
-              </div>
-            </header>
+              )}
+            </div>
 
           {/* Détail : sections empilées pleine largeur, listes sur deux colonnes
               pour combler l'espace et garder un rythme régulier. */}
-          <div className="mt-12 space-y-11">
-            {o.description && (
-              <p className={`max-w-[62ch] text-[16px] font-light leading-[1.75] ${cBody}`}>
-                {o.description.join(' ')}
-              </p>
-            )}
-
+          <div className="mt-14 space-y-11">
             {o.formats && (
               <section className={`border-t pt-9 ${RULE}`}>
                 <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.formatsTitle}</h3>
