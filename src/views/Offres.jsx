@@ -122,25 +122,43 @@ const OFFRES = [
     ink: true,
     accroche: 'Donnez à votre prochain temps fort toute son ampleur.',
     description: [
-      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons une campagne audiovisuelle complète : un film principal, des histoires courtes et leurs déclinaisons. Tout est créé autour d’une même idée, pour former un univers fort sur chacun de vos supports.',
+      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons l’idée qui donnera sa cohérence à toute votre prise de parole.',
+      'Elle prend vie dans un film principal, plusieurs films courts et les formats conçus pour vos différents supports. Chaque création a son propre rôle : annoncer, révéler ou prolonger le lancement. Ensemble, elles forment une campagne immédiatement reconnaissable.',
     ],
     context: null,
-    receive: null,
+    receiveTitle: 'Ce que comprend la campagne',
+    receive: [
+      'Une idée directrice et une direction créative commune',
+      'Un film principal de 60 à 90 secondes',
+      'Une série de trois films courts minimum, de 15 à 30 secondes',
+      'Les adaptations horizontales et verticales prévues pour les supports retenus',
+      'La conception, l’écriture, la direction artistique et la préparation du tournage',
+      'La production et la postproduction de l’ensemble',
+      'Les musiques licenciées pour les usages prévus',
+    ],
+    receiveNote: [
+      'Les films courts sont conçus comme des pièces à part entière, et non comme de simples extraits du film principal.',
+      'Le nombre de films, leurs durées et leurs formats sont définis précisément dans la proposition.',
+    ],
+    rhythm: {
+      title: 'Photographie de campagne',
+      body: [
+        'Une série photographique peut être imaginée dans la même direction artistique et réalisée pendant la production avec un photographe partenaire.',
+        'Selon le concept retenu, le casting, le stylisme, la coiffure-maquillage, les décors, les prises de vues aériennes, la musique originale et les moyens techniques particuliers sont définis et chiffrés dès la proposition.',
+      ],
+    },
     cadre: [
-      'Huit à dix semaines entre la validation de la proposition et la livraison',
-      'La campagne est suivie directement par les deux fondateurs',
-      'Diffusion incluse : deux ans, France, digital et réseaux sociaux ; les autres usages sont chiffrés dès la proposition',
+      'Un calendrier construit à partir de votre date de lancement',
+      'Environ huit à dix semaines entre la validation de la proposition et la livraison finale',
+      'Validation de l’idée et du traitement créatif avant le tournage',
+      'Deux séries de retours regroupées en postproduction',
+      'Une campagne suivie directement par les deux fondateurs',
+      'Droits d’utilisation inclus pendant deux ans en France : site internet, réseaux sociaux et campagnes digitales sponsorisées',
+      'Télévision, affichage, cinéma, international ou durée étendue chiffrés dès la proposition',
     ],
-    consoleTitle: 'Elle réunit',
-    consoleIntro: 'Chaque campagne fait l’objet d’une proposition dédiée.',
-    itemsMode: 'included',
-    items: [
-      'Une idée directrice',
-      'Un Film Signature',
-      'Une collection d’Histoires de marque',
-      'Les déclinaisons horizontales et verticales de l’ensemble',
-      'La photographie de campagne, avec un photographe partenaire, en option',
-    ],
+    note: 'Chaque campagne fait l’objet d’une proposition dédiée.',
+    itemsMode: 'none',
+    items: [],
     cta: 'Écrire au studio',
   },
 ]
@@ -417,10 +435,17 @@ export default function Offres({ setDark, onNavigate }) {
                     </li>
                   ))}
                 </ul>
+                {offre.receiveNote && (
+                  <div className={`mt-5 max-w-[56ch] space-y-2.5 text-[12.5px] font-light leading-[1.7] ${ink ? 'text-sable/60' : 'text-encre/60'}`}>
+                    {offre.receiveNote.map((p) => (
+                      <p key={p}>{p}</p>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Le rythme (Histoires) */}
+            {/* Le rythme (Histoires) / Photographie (Campagne) */}
             {offre.rhythm && (
               <div className={`mt-8 border-t pt-8 ${line}`}>
                 <h2 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${label}`}>
@@ -502,7 +527,13 @@ export default function Offres({ setDark, onNavigate }) {
                   </div>
                 )}
 
-                <div className={`shrink-0 ${hasConsole || offre.starter ? `mt-6 border-t pt-5 ${line}` : ''}`}>
+                {offre.note && (
+                  <p className={`shrink-0 text-[13px] font-light italic leading-[1.7] ${ink ? 'text-sable/75' : 'text-encre/70'}`}>
+                    {offre.note}
+                  </p>
+                )}
+
+                <div className={`shrink-0 ${hasConsole || offre.starter || offre.note ? `mt-6 border-t pt-5 ${line}` : ''}`}>
                   <button type="button" onClick={requestQuote} className={ctaClass}>
                     {offre.cta}
                   </button>
