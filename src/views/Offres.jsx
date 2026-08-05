@@ -343,6 +343,15 @@ export default function Offres({ setDark, onNavigate }) {
         const cSection = ink ? 'text-sable/70' : 'text-encre/70'
         const cNum = ink ? 'text-creme/20' : 'text-encre/20'
         const cRule = ink ? 'border-or/20' : 'border-orfonce/20'
+        // Sommaire de ce qui se cache sous l'accordéon, propre à chaque offre.
+        const sectionIndex = [
+          o.formats && 'Les trois formats',
+          o.receive && 'Ce qui est compris',
+          o.rhythm && 'Photographie',
+          o.cadre && 'Le cadre',
+          o.extensionGroups && 'Extensions',
+          'Prix',
+        ].filter(Boolean)
         return (
         <div
           key={o.id}
@@ -382,18 +391,27 @@ export default function Offres({ setDark, onNavigate }) {
                 {/* Détail replié dans un accordéon : le prix, ce que comprend
                     l'offre, le cadre et les extensions apparaissent à l'ouverture. */}
                 <details className="group mt-10">
-                  <summary className="flex list-none">
-                    <span
-                      className={`inline-flex cursor-pointer items-center gap-3 rounded-full border px-7 py-3.5 text-[12.5px] font-normal uppercase tracking-[0.14em] transition-colors duration-300 ${
-                        ink
-                          ? 'border-or/45 text-creme hover:border-or hover:bg-or hover:text-encre'
-                          : 'border-encre/40 text-encre hover:border-encre hover:bg-encre hover:text-creme'
-                      }`}
-                    >
-                      <span className="group-open:hidden">Afficher le détail</span>
-                      <span className="hidden group-open:inline">Réduire</span>
-                      <span aria-hidden="true" className="text-[16px] leading-none transition-transform duration-300 group-open:rotate-45">
-                        +
+                  {/* Ouverture par « index des sections » : un sommaire de ce qui
+                      se trouve dessous, plus engageant qu'un bouton générique. */}
+                  <summary className="group/sum inline-flex cursor-pointer list-none">
+                    <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10.5px] font-normal uppercase tracking-[0.2em]">
+                      {sectionIndex.map((label, k) => (
+                        <span key={label} className="inline-flex items-center gap-x-2.5">
+                          {k > 0 && (
+                            <span aria-hidden="true" className={ink ? 'text-or/40' : 'text-orfonce/45'}>
+                              ·
+                            </span>
+                          )}
+                          <span className={`transition-colors duration-300 ${ink ? 'text-sable/70 group-hover/sum:text-creme' : 'text-encre/55 group-hover/sum:text-encre'}`}>
+                            {label}
+                          </span>
+                        </span>
+                      ))}
+                      <span
+                        aria-hidden="true"
+                        className={`ml-1.5 text-[13px] leading-none transition-transform duration-300 group-hover/sum:translate-x-0.5 group-open:rotate-90 ${ink ? 'text-or' : 'text-orfonce'}`}
+                      >
+                        →
                       </span>
                     </span>
                   </summary>
