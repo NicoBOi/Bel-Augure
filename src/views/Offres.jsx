@@ -231,11 +231,13 @@ export default function Offres({ setDark, onNavigate }) {
         <div className="reveal-up grid flex-1 items-center gap-10 lg:grid-cols-2 lg:gap-16" style={{ '--d': '0.08s' }}>
           <div>
             <p className="text-[11px] font-normal uppercase tracking-[0.32em] text-orfonce">Nos offres</p>
-            <h2 className="mt-5 max-w-[15ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
-              Un film fondateur. Un univers qui vit. Un déploiement complet.
+            <h2 className="mt-5 max-w-[16ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
+              Trois façons d’écrire <span className="text-orfonce">votre histoire</span>
             </h2>
-            <p className="mt-6 max-w-[46ch] text-[16px] font-light leading-[1.7] text-encre/75">
-              Trois façons de travailler ensemble, du film unique au dispositif de campagne. Choisissez l’ampleur ; nous écrivons le reste avec vous.
+            <p className="mt-6 max-w-[48ch] text-[16px] font-light leading-[1.7] text-encre/75">
+              <span className="font-medium text-encre">Un film</span> pour en révéler l’essence,{' '}
+              <span className="font-medium text-encre">des récits</span> pour en dévoiler les facettes,{' '}
+              <span className="font-medium text-encre">une campagne</span> pour lui donner toute son ampleur.
             </p>
           </div>
 
@@ -257,7 +259,7 @@ export default function Offres({ setDark, onNavigate }) {
                 {o.name}
               </h3>
               <p className="mt-2 flex-1 text-[14.5px] font-light leading-[1.5] text-encre/80">{o.cardPhrase}</p>
-              <p className="mt-5 text-[14px] font-normal text-encre">{o.price}</p>
+              <p className="mt-5 text-[14px] font-medium tabular-nums text-orfonce">{o.price}</p>
               <button
                 type="button"
                 onClick={() => scrollToDetail(o.id)}
@@ -293,7 +295,7 @@ export default function Offres({ setDark, onNavigate }) {
             </div>
             <div className="shrink-0 sm:pb-1 sm:text-right">
               <p className="text-[10px] font-normal uppercase tracking-[0.22em] text-encre/45">Tarif</p>
-              <p className="mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light tabular-nums leading-none text-encre">
+              <p className="mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light tabular-nums leading-none text-orfonce">
                 {o.price}
               </p>
               {o.priceNote && <p className="mt-2 text-[12.5px] font-light text-encre/55">{o.priceNote}</p>}
@@ -311,7 +313,7 @@ export default function Offres({ setDark, onNavigate }) {
 
             {o.formats && (
               <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.formatsTitle}</h3>
+                <h3 className="text-[11px] font-medium uppercase tracking-[0.28em] text-orfonce">{o.formatsTitle}</h3>
                 <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-3">
                   {o.formats.map((f) => (
                     <div
@@ -327,7 +329,7 @@ export default function Offres({ setDark, onNavigate }) {
                         {f.label}
                       </span>
                       <p className="mt-3 flex-1 text-[14px] font-light leading-[1.55] text-encre/80">{f.desc}</p>
-                      <p className="mt-4 text-[15px] font-normal tabular-nums text-encre">{f.price}</p>
+                      <p className="mt-4 text-[15px] font-medium tabular-nums text-orfonce">{f.price}</p>
                       <p className="mt-1 text-[12px] font-light leading-[1.5] text-encre/50">{f.usage}</p>
                     </div>
                   ))}
@@ -337,7 +339,7 @@ export default function Offres({ setDark, onNavigate }) {
 
             {o.receive && (
               <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.receiveTitle}</h3>
+                <h3 className="text-[11px] font-medium uppercase tracking-[0.28em] text-orfonce">{o.receiveTitle}</h3>
                 <DashList items={o.receive} cols={2} className="mt-6" />
                 {o.receiveNote && (
                   <div className="mt-6 max-w-[72ch] space-y-2 text-[12.5px] font-light leading-[1.65] text-encre/55">
@@ -351,7 +353,7 @@ export default function Offres({ setDark, onNavigate }) {
 
             {o.rhythm && (
               <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.rhythm.title}</h3>
+                <h3 className="text-[11px] font-medium uppercase tracking-[0.28em] text-orfonce">{o.rhythm.title}</h3>
                 <div className="mt-5 max-w-[72ch] space-y-3 text-[15px] font-light leading-[1.75] text-encre/80">
                   {o.rhythm.body.map((p) => (
                     <p key={p}>{p}</p>
@@ -362,7 +364,7 @@ export default function Offres({ setDark, onNavigate }) {
 
             {o.cadre && (
               <section className={`border-t pt-9 ${RULE}`}>
-                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">Le cadre</h3>
+                <h3 className="text-[11px] font-medium uppercase tracking-[0.28em] text-orfonce">Le cadre</h3>
                 <DashList items={o.cadre} cols={2} muted className="mt-6" />
               </section>
             )}
@@ -370,7 +372,7 @@ export default function Offres({ setDark, onNavigate }) {
             {o.extensionGroups && (
               <section className={`border-t pt-9 ${RULE}`}>
                 <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                  <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.extensionsTitle}</h3>
+                  <h3 className="text-[11px] font-medium uppercase tracking-[0.28em] text-orfonce">{o.extensionsTitle}</h3>
                   {o.extensionsIntro && (
                     <p className="text-[12px] font-light text-encre/50">{o.extensionsIntro}</p>
                   )}
