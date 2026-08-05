@@ -60,7 +60,7 @@ const OFFERS = [
     num: '02',
     name: 'Histoires de marque',
     label: 'Des récits ciblés',
-    cardPhrase: 'Mettez en lumière chacune de vos expériences pour donner envie de venir — et de revenir.',
+    cardPhrase: 'Mettez en lumière chacune de vos expériences pour donner envie de venir (et de revenir).',
     price: 'À partir de 3 500 € HT',
     priceNote: 'pour une histoire',
     promise: 'Des films courts qui révèlent, un à un, ce qui vous distingue.',
