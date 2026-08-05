@@ -18,6 +18,8 @@ const OFFERS = [
     num: '01',
     name: 'Film Signature',
     label: 'Un film central',
+    image: '/offres/film.webp',
+    imageAlt: 'Au bord de l’eau au crépuscule, une main effleure la surface et y trace des cercles.',
     cardPhrase: 'Le film central qui installe votre univers.',
     price: 'À partir de 5 500 € HT',
     promise: 'Faites ressentir ce qui vous distingue.',
@@ -60,6 +62,8 @@ const OFFERS = [
     num: '02',
     name: 'Histoires de marque',
     label: 'Des récits ciblés',
+    image: '/offres/histoires.webp',
+    imageAlt: 'Une femme marche dans l’eau calme d’un marais, dans la lumière rose du couchant.',
     cardPhrase: 'Un ou plusieurs récits consacrés à ce qui vous distingue.',
     price: 'À partir de 3 500 € HT',
     priceNote: 'pour une histoire',
@@ -110,6 +114,8 @@ const OFFERS = [
     num: '03',
     name: 'Campagne Sensorielle',
     label: 'Un dispositif complet',
+    image: '/offres/campagne.webp',
+    imageAlt: 'Une femme assise sur un rocher au bord de l’eau, dans la lumière dorée du soir.',
     cardPhrase: 'Un dispositif complet conçu autour d’un temps fort.',
     price: 'À partir de 15 000 € HT',
     promise: 'Donnez à votre prochain temps fort toute son ampleur.',
@@ -278,6 +284,19 @@ export default function Offres({ setDark, onNavigate }) {
           id={`detail-${o.id}`}
           className={`mx-auto w-full max-w-[1180px] scroll-mt-28 border-t py-14 md:py-20 ${RULE}`}
         >
+          {/* Grand plan du film : montrer avant d'expliquer */}
+          {o.image && (
+            <div className="mb-10 aspect-video w-full overflow-hidden rounded-2xl bg-encre md:mb-12 lg:rounded-3xl">
+              <img
+                src={o.image}
+                alt={o.imageAlt}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
           {/* En-tête de chapitre */}
           <header>
             <div className="flex items-baseline gap-5">
