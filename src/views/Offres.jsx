@@ -185,9 +185,9 @@ const DASH = 'bg-orfonce/70'
 const RULE = 'border-orfonce/20'
 const BG = '#EFE4D5'
 
-function DashList({ items, className = '', muted = false }) {
+function DashList({ items, className = '', muted = false, cols = 1 }) {
   return (
-    <ul className={`space-y-3 ${className}`}>
+    <ul className={`${cols === 2 ? 'grid gap-x-10 gap-y-3 sm:grid-cols-2' : 'space-y-3'} ${className}`}>
       {items.map((it) => (
         <li
           key={it}
@@ -277,119 +277,126 @@ export default function Offres({ setDark, onNavigate }) {
           id={`detail-${o.id}`}
           className={`mx-auto w-full max-w-[1180px] scroll-mt-28 border-t py-14 md:py-20 ${RULE}`}
         >
-          {/* En-tête de chapitre */}
-          <header>
-            <div className="flex items-baseline gap-5">
-              <span className="font-display text-[clamp(2.2rem,6vw,4rem)] font-light tabular-nums leading-none text-orfonce/25">
-                {o.num}
-              </span>
-              <span className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">{o.label}</span>
+          {/* Bandeau essentiel : identité + promesse à gauche, prix à droite.
+              Tout ce qui compte est lisible d'un coup d'œil, aligné. */}
+          <header className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-[34ch]">
+              <p className="text-[11px] font-normal uppercase tracking-[0.28em] text-orfonce">
+                {o.num} · {o.label}
+              </p>
+              <h2 className="mt-4 font-display text-[clamp(2.1rem,4.6vw,3.1rem)] font-light leading-[1.03] text-encre">
+                {o.name}
+              </h2>
+              <p className="mt-4 text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] text-encre/90">
+                {o.promise}
+              </p>
             </div>
-            <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3rem)] font-light leading-[1.05] text-encre">
-              {o.name}
-            </h2>
-            <p className="mt-5 max-w-[30ch] text-[clamp(1.25rem,2.2vw,1.8rem)] font-light leading-[1.2] text-encre">
-              {o.promise}
-            </p>
-            <p className="mt-3 max-w-[52ch] text-[13.5px] font-light leading-[1.6] text-encre/55">{o.usage}</p>
+            <div className="shrink-0 sm:pb-1 sm:text-right">
+              <p className="text-[10px] font-normal uppercase tracking-[0.22em] text-encre/45">Tarif</p>
+              <p className="mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light tabular-nums leading-none text-encre">
+                {o.price}
+              </p>
+              {o.priceNote && <p className="mt-2 text-[12.5px] font-light text-encre/55">{o.priceNote}</p>}
+            </div>
           </header>
 
-          {/* Détail affiché en entier */}
-          <div className="mt-10 grid gap-x-16 gap-y-10 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              {o.description && (
-                <div className="max-w-[56ch] space-y-4 text-[16px] font-light leading-[1.8] text-encre/80">
-                  {o.description.map((p) => (
-                    <p key={p}>{p}</p>
-                  ))}
-                </div>
-              )}
+          {/* Détail : sections empilées pleine largeur, listes sur deux colonnes
+              pour combler l'espace et garder un rythme régulier. */}
+          <div className="mt-12 space-y-11">
+            {o.description && (
+              <p className="max-w-[62ch] text-[16px] font-light leading-[1.75] text-encre/80">
+                {o.description.join(' ')}
+              </p>
+            )}
 
-              {o.formats && (
-                <div className={`mt-9 space-y-7 border-t pt-8 ${RULE}`}>
-                  <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.formatsTitle}</h3>
+            {o.formats && (
+              <section className={`border-t pt-9 ${RULE}`}>
+                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.formatsTitle}</h3>
+                <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-3">
                   {o.formats.map((f) => (
-                    <div key={f.label} className={`border-l-2 pl-5 ${f.tag ? 'border-orfonce' : 'border-orfonce/25'}`}>
-                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                        <span className="font-display text-[clamp(1.15rem,1.8vw,1.4rem)] font-light leading-[1.15] text-encre">
-                          {f.label}
-                        </span>
+                    <div
+                      key={f.label}
+                      className={`flex flex-col rounded-lg border p-5 ${f.tag ? 'border-orfonce/50 bg-black/[0.02]' : 'border-encre/12'}`}
+                    >
+                      <div className="flex min-h-[1.4em] items-baseline">
                         {f.tag && (
-                          <span className="text-[10px] font-normal uppercase tracking-[0.2em] text-orfonce">— {f.tag}</span>
+                          <span className="text-[9.5px] font-normal uppercase tracking-[0.2em] text-orfonce">{f.tag}</span>
                         )}
                       </div>
-                      <p className="mt-2 max-w-[52ch] text-[15px] font-light leading-[1.6] text-encre/85">{f.desc}</p>
-                      <p className="mt-1.5 max-w-[52ch] text-[13.5px] font-light leading-[1.6] text-encre/55">{f.usage}</p>
-                      <p className="mt-2.5 text-[14px] font-normal text-encre">{f.price}</p>
+                      <span className="mt-1 font-display text-[clamp(1.2rem,1.7vw,1.45rem)] font-light leading-[1.1] text-encre">
+                        {f.label}
+                      </span>
+                      <p className="mt-3 flex-1 text-[14px] font-light leading-[1.55] text-encre/80">{f.desc}</p>
+                      <p className="mt-4 text-[15px] font-normal tabular-nums text-encre">{f.price}</p>
+                      <p className="mt-1 text-[12px] font-light leading-[1.5] text-encre/50">{f.usage}</p>
                     </div>
                   ))}
                 </div>
-              )}
+              </section>
+            )}
 
-              {o.receive && (
-                <div className={`mt-9 border-t pt-8 ${RULE}`}>
-                  <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.receiveTitle}</h3>
-                  <DashList items={o.receive} className="mt-5" />
-                  {o.receiveNote && (
-                    <div className="mt-5 max-w-[56ch] space-y-2.5 text-[12.5px] font-light leading-[1.7] text-encre/60">
-                      {o.receiveNote.map((p) => (
-                        <p key={p}>{p}</p>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {o.rhythm && (
-                <div className={`mt-8 border-t pt-8 ${RULE}`}>
-                  <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.rhythm.title}</h3>
-                  <div className="mt-5 max-w-[56ch] space-y-4 text-[15px] font-light leading-[1.75] text-encre/80">
-                    {o.rhythm.body.map((p) => (
+            {o.receive && (
+              <section className={`border-t pt-9 ${RULE}`}>
+                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.receiveTitle}</h3>
+                <DashList items={o.receive} cols={2} className="mt-6" />
+                {o.receiveNote && (
+                  <div className="mt-6 max-w-[72ch] space-y-2 text-[12.5px] font-light leading-[1.65] text-encre/55">
+                    {o.receiveNote.map((p) => (
                       <p key={p}>{p}</p>
                     ))}
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </section>
+            )}
 
-            <div className="lg:col-span-5">
-              {o.cadre && (
-                <div className={`border-t pt-8 ${RULE} lg:border-t-0 lg:pt-0`}>
-                  <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">Le cadre</h3>
-                  <DashList items={o.cadre} className="mt-5" muted />
+            {o.rhythm && (
+              <section className={`border-t pt-9 ${RULE}`}>
+                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.rhythm.title}</h3>
+                <div className="mt-5 max-w-[72ch] space-y-3 text-[15px] font-light leading-[1.75] text-encre/80">
+                  {o.rhythm.body.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
                 </div>
-              )}
+              </section>
+            )}
 
-              {o.extensionGroups && (
-                <div className={`mt-8 border-t pt-8 ${RULE}`}>
+            {o.cadre && (
+              <section className={`border-t pt-9 ${RULE}`}>
+                <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">Le cadre</h3>
+                <DashList items={o.cadre} cols={2} muted className="mt-6" />
+              </section>
+            )}
+
+            {o.extensionGroups && (
+              <section className={`border-t pt-9 ${RULE}`}>
+                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                   <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-encre/70">{o.extensionsTitle}</h3>
                   {o.extensionsIntro && (
-                    <p className="mt-2 text-[12.5px] font-light leading-[1.6] text-encre/60">{o.extensionsIntro}</p>
+                    <p className="text-[12px] font-light text-encre/50">{o.extensionsIntro}</p>
                   )}
-                  <div className="mt-5 space-y-5">
-                    {o.extensionGroups.map((g) => (
-                      <div key={g.label}>
-                        <p className="text-[10px] font-normal uppercase tracking-[0.22em] text-orfonce/70">{g.label}</p>
-                        <DashList items={g.items} className="mt-3" muted />
-                      </div>
-                    ))}
-                  </div>
                 </div>
-              )}
+                <div className="mt-6 grid gap-x-10 gap-y-6 sm:grid-cols-3">
+                  {o.extensionGroups.map((g) => (
+                    <div key={g.label}>
+                      <p className="text-[10px] font-normal uppercase tracking-[0.22em] text-orfonce/70">{g.label}</p>
+                      <DashList items={g.items} className="mt-3" muted />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
-              {o.note && (
-                <p className={`mt-8 border-t pt-8 text-[13px] font-light italic leading-[1.7] text-encre/70 ${RULE}`}>
-                  {o.note}
-                </p>
-              )}
-            </div>
+            {o.note && (
+              <p className={`border-t pt-9 text-[13px] font-light italic leading-[1.7] text-encre/60 ${RULE}`}>
+                {o.note}
+              </p>
+            )}
           </div>
 
-          {/* Prix + appel à l'action, en bas de fiche */}
-          <div className={`mt-12 flex flex-col gap-6 border-t pt-8 sm:flex-row sm:items-center sm:justify-between ${RULE}`}>
-            <p className="text-[clamp(1.05rem,1.6vw,1.3rem)] font-normal text-encre">
-              {o.price}
-              {o.priceNote && <span className="ml-2 text-[13px] font-light text-encre/55">{o.priceNote}</span>}
+          {/* Appel à l'action, en bas de fiche */}
+          <div className={`mt-12 flex flex-col items-start gap-4 border-t pt-8 sm:flex-row sm:items-center sm:justify-between ${RULE}`}>
+            <p className="text-[13.5px] font-light text-encre/60">
+              {o.price} {o.priceNote ? `· ${o.priceNote}` : ''}
             </p>
             <button type="button" onClick={() => goContact(o.name)} className={cta}>
               {o.cta}
