@@ -285,7 +285,7 @@ export default function Offres({ setDark, onNavigate }) {
             bouton). Le détail se trouve plus bas. */}
         <div className="reveal-up grid gap-px pt-12 sm:grid-cols-3 md:pt-16" style={{ '--d': '0.16s' }}>
           {OFFERS.map((o) => (
-            <div key={o.id} className={`flex flex-col items-center border-t px-4 py-7 text-center sm:border-r sm:px-8 ${RULE}`}>
+            <div key={o.id} className={`flex flex-col items-center px-4 py-7 text-center sm:border-r sm:px-8 sm:last:border-r-0 ${RULE}`}>
               <p className="text-[10px] font-normal uppercase tracking-[0.24em] text-orfonce">{o.label}</p>
               <h3 className="mt-3 font-display text-[clamp(1.15rem,1.8vw,1.4rem)] font-light leading-[1.15] text-encre">
                 {o.name}
