@@ -295,15 +295,23 @@ export default function Offres({ setDark, onNavigate }) {
           ))}
         </div>
 
-        {/* Indicateur unique : tout le détail des offres est plus bas */}
-        <div className="reveal-up flex justify-center pb-6 pt-10 md:pt-12" style={{ '--d': '0.22s' }}>
+        {/* Indicateur unique étendu sur toute la largeur : les filets de part et
+            d'autre passent sous les trois cartes, si bien que la flèche (unique)
+            se rapporte aux trois offres, pas seulement à celle du milieu. */}
+        <div className="reveal-up pb-4 pt-10 md:pt-12" style={{ '--d': '0.22s' }}>
           <button
             type="button"
             onClick={() => scrollToDetail('film')}
-            aria-label="Voir le détail des offres, plus bas"
-            className="group flex cursor-pointer flex-col items-center gap-2 text-orfonce transition-colors duration-300 hover:text-encre"
+            aria-label="Voir le détail des trois offres, plus bas"
+            className="group flex w-full cursor-pointer flex-col items-center gap-3"
           >
-            <span className="text-[10px] font-normal uppercase tracking-[0.24em]">Le détail des offres</span>
+            <span className="flex w-full items-center gap-5">
+              <span className="h-px flex-1 bg-orfonce/25 transition-colors duration-300 group-hover:bg-orfonce/45" />
+              <span className="whitespace-nowrap text-[10px] font-normal uppercase tracking-[0.24em] text-orfonce transition-colors duration-300 group-hover:text-encre">
+                Le détail des trois offres
+              </span>
+              <span className="h-px flex-1 bg-orfonce/25 transition-colors duration-300 group-hover:bg-orfonce/45" />
+            </span>
             <svg
               width="22"
               height="22"
@@ -314,7 +322,7 @@ export default function Offres({ setDark, onNavigate }) {
               strokeLinecap="round"
               strokeLinejoin="round"
               aria-hidden="true"
-              className="motion-safe:animate-bounce"
+              className="text-orfonce transition-colors duration-300 group-hover:text-encre motion-safe:animate-bounce"
             >
               <path d="M12 5v14M6 13l6 6 6-6" />
             </svg>
