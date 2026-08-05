@@ -233,20 +233,23 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         {/* Le paragraphe épouse la largeur du titre : le conteneur prend la
             largeur du titre (max-content, le titre étant sur une ligne), et
             le paragraphe la remplit via w-0 + min-w-full. */}
-        <div className="mx-auto w-max max-w-full text-center">
-        <h2 className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.25] text-encre lg:whitespace-nowrap">
-          Notre film devient votre signature<span className="text-or">.</span>
+        <div className="mx-auto max-w-[48ch] text-center">
+        <h2 className="mx-auto max-w-[20ch] font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.25] text-encre">
+          Faites de votre image une raison de vous choisir<span className="text-or">.</span>
         </h2>
 
-        <p className="mt-7 w-0 min-w-full text-[14px] font-light leading-[1.9] text-encre/80">
-          Tout se décide sur une image, c'est le seul moyen de ressentir
-          avant d'expérimenter. Mais aujourd'hui la plupart des marques
-          confient la leur à du contenu jetable. Bel Augure travaille avec
-          les moyens du cinéma : de l'écriture au montage en passant par le
-          tournage, nous construisons chaque étape pour qu'on retrouve à
-          l'écran ce que l'on éprouve chez vous. Nos films sont la preuve
-          que votre enseigne est mémorable.
-        </p>
+        <div className="mt-7 space-y-4 text-[14px] font-light leading-[1.9] text-encre/80">
+          <p>
+            Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se
+            projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite
+            pour eux.
+          </p>
+          <p>
+            Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui
+            créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de
+            marque et donner envie de venir (puis de revenir).
+          </p>
+        </div>
         </div>
 
         {/* Une seule vignette, comme un photogramme posé sur la table */}
