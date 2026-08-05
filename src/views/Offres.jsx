@@ -1,6 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
+
+gsap.registerPlugin(ScrollTrigger)
 
 // Page /offres — direction éditoriale « montrer puis expliquer ».
 // Premier écran en deux temps : à gauche le titre, à droite le film ; en bas
@@ -244,7 +248,7 @@ function OfferChapter({ o, i, onContact }) {
   return (
     <div
       id={`detail-${o.id}`}
-      className="-mx-6 scroll-mt-24 px-6 py-24 md:-mx-16 md:px-16 md:py-32"
+      className="scroll-mt-24 px-6 py-24 md:px-16 md:py-32"
       style={{ backgroundColor: band }}
     >
       <article className="mx-auto w-full max-w-[1180px]">
@@ -370,14 +374,259 @@ function OfferChapter({ o, i, onContact }) {
   )
 }
 
-export default function Offres({ setDark, onNavigate }) {
-  const ref = useReveal(0.35)
+// ══════════════════════════════════════════════════════════════════════════
+// Scrollytelling épinglé (bureau) — la section reste fixée pendant qu'on
+// traverse les trois offres. Chaque offre est un chapitre animé, lié à la
+// progression du scroll (scrub) : son numéro apparaît immense au centre, puis
+// rétrécit vers sa place ; le titre, le sous-titre, la description, le détail
+// et l'appel à l'action arrivent avec un léger décalage et forment une
+// composition lisible ; au chapitre suivant l'offre sort en fondu et le numéro
+// suivant prend sa place. transform/opacité uniquement, réversible au scroll.
+// ══════════════════════════════════════════════════════════════════════════
 
-  // La page vit dans la lumière, sauf la dernière offre (Campagne) qui passe
-  // en sombre : quand sa bande glisse sous le header transparent, on bascule
-  // l'en-tête en clair pour garder le contraste, puis on revient au clair
-  // dès qu'on la quitte.
+// Progression (en hauteurs d'écran) accordée à chaque offre pendant l'épingle.
+const STEP = 1.4
+
+// Un chapitre de la version épinglée. Reprend la direction artistique du
+// chapitre classique (mêmes couleurs, types, boutons) mais recentré : contenu
+// resserré à l'essentiel, composé pour tenir dans un seul écran. Les attributs
+// data-* servent de prises à la timeline ; rien n'est masqué en CSS, GSAP pose
+// les états initiaux avant la première peinture (useLayoutEffect).
+function EnhancedChapter({ o, i, onContact }) {
+  const ink = o.id === 'campagne'
+  const band = ink ? '#1a1512' : i % 2 === 1 ? '#E6D8C1' : '#F4ECDF'
+  const cTitle = ink ? 'text-creme' : 'text-encre'
+  const cBody = ink ? 'text-sable/85' : 'text-encre/80'
+  const cMuted = ink ? 'text-sable/70' : 'text-encre/70'
+  const cFaint = ink ? 'text-sable/55' : 'text-encre/55'
+  const cPromise = ink ? 'text-sable/90' : 'text-encre/90'
+  const cAccent = ink ? 'text-or' : 'text-orfonce'
+  const cSection = ink ? 'text-sable/70' : 'text-encre/70'
+  const cRule = ink ? 'border-or/20' : 'border-orfonce/25'
+  const numColor = ink ? '#F3E9DA' : '#1a1512'
+
+  return (
+    <div data-chapter={i} data-ink={ink ? '1' : '0'} className="absolute inset-0">
+      <div data-bg className="absolute inset-0" style={{ backgroundColor: band }} />
+      <div
+        data-content
+        className="pointer-events-none relative z-10 mx-auto flex h-full w-full max-w-[1180px] flex-col justify-center px-6 pb-10 pt-28 md:px-16"
+      >
+        {/* En-tête : le grand numéro (qui vient du centre), l'identité, la promesse */}
+        <div className="flex items-start gap-6 sm:gap-10">
+          <span
+            data-num
+            aria-hidden="true"
+            className="block shrink-0 font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums"
+            style={{ color: numColor, willChange: 'transform' }}
+          >
+            {o.num}
+          </span>
+          <div className="min-w-0 flex-1">
+            <div data-el className="max-w-[46ch]">
+              <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>{o.label}</p>
+              <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
+                {o.name}
+              </h2>
+            </div>
+            <p
+              data-el
+              className={`mt-4 max-w-[42ch] text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}
+            >
+              {o.promise}
+            </p>
+          </div>
+        </div>
+
+        {/* Description + détail resserré (formats pour Histoires, sinon « Ce que
+            vous recevez »). Le cadre complet reste dans la version repliée. */}
+        <div className="mt-8 grid gap-x-16 gap-y-8 lg:grid-cols-2">
+          <div data-el className={`max-w-[56ch] space-y-3 text-[16px] font-light leading-[1.75] ${cBody}`}>
+            {o.description.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </div>
+
+          <div data-el>
+            {o.formats ? (
+              <section className={`border-t pt-6 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
+                <ul className={`mt-4 divide-y ${ink ? 'divide-or/15' : 'divide-encre/12'}`}>
+                  {o.formats.map((f) => (
+                    <li key={f.label} className="flex items-baseline justify-between gap-6 py-3">
+                      <span className={`min-w-0 flex-1 font-display text-[16px] font-light ${cTitle}`}>
+                        {f.label}
+                        {f.tag && (
+                          <span className="ml-2 align-middle text-[9px] uppercase tracking-[0.2em] text-orfonce">
+                            {f.tag}
+                          </span>
+                        )}
+                      </span>
+                      <span className={`w-[38%] shrink-0 text-right text-[13px] font-normal leading-[1.4] tabular-nums ${cMuted}`}>
+                        {f.price}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : (
+              <section className={`border-t pt-6 ${cRule}`}>
+                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
+                <DashList items={o.receive} cols={2} ink={ink} className="mt-4" />
+              </section>
+            )}
+          </div>
+        </div>
+
+        {/* Prix + appel à l'action */}
+        <div
+          data-el
+          className={`mt-9 flex flex-col items-start gap-5 border-t pt-6 sm:flex-row sm:items-end sm:justify-between ${cRule}`}
+        >
+          <div>
+            <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
+            <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light leading-none tabular-nums ${cTitle}`}>
+              {o.price}
+            </p>
+            {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
+          </div>
+          <button
+            type="button"
+            onClick={() => onContact(o.name)}
+            className={`pointer-events-auto ${ink ? CTA_INK : CTA_LIGHT}`}
+          >
+            {o.cta}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Construit la timeline scrubbée + l'épingle, dans le scroller de la section
+// (le scroll vit à l'intérieur de <section>, d'où le `scroller` explicite et
+// `pinType: 'transform'`). Rythme par chapitre (fractions locales, base = i) :
+// ~0–20% le numéro apparaît immense ; 20–42% il rétrécit et rejoint sa place ;
+// 34–62% titre, sous-titre, description, détail, CTA arrivent en cascade ;
+// 62–85% composition posée et lisible ; 85–100% sortie douce (sauf la dernière
+// offre, qui reste lisible et glisse ensuite vers le bas de page).
+function buildOffersTimeline(root, scroller) {
+  const chapters = Array.from(root.querySelectorAll('[data-chapter]'))
+  const N = chapters.length
+
+  // Point de départ du numéro : immense et centré dans l'écran. Mesuré (origine
+  // au centre) pour rester juste à toute taille ; réévalué à chaque refresh via
+  // les valeurs-fonctions ci-dessous + invalidateOnRefresh.
+  const heroFrom = (num) => {
+    const saved = num.style.transform
+    num.style.transform = 'none'
+    const r = num.getBoundingClientRect()
+    const s = root.getBoundingClientRect()
+    num.style.transform = saved
+    if (!r.height) return { x: 0, y: 0, scale: 3 }
+    return {
+      x: s.left + s.width / 2 - (r.left + r.width / 2),
+      y: s.top + s.height / 2 - (r.top + r.height / 2),
+      scale: (s.height * 0.62) / r.height,
+    }
+  }
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: root,
+      scroller,
+      start: 'top top',
+      end: () => '+=' + Math.round(scroller.clientHeight * STEP * N),
+      pin: true,
+      pinType: 'transform',
+      anticipatePin: 1,
+      scrub: 0.8,
+      invalidateOnRefresh: true,
+    },
+  })
+
+  chapters.forEach((ch, i) => {
+    const b = i
+    const isLast = i === N - 1
+    const bg = ch.querySelector('[data-bg]')
+    const num = ch.querySelector('[data-num]')
+    const content = ch.querySelector('[data-content]')
+    const els = ch.querySelectorAll('[data-el]')
+    const faint = ch.dataset.ink === '1' ? 0.16 : 0.12
+
+    // États initiaux — posés avant peinture, pas de flash de composition
+    gsap.set(bg, { autoAlpha: i === 0 ? 1 : 0 })
+    gsap.set(num, { autoAlpha: 0, transformOrigin: '50% 50%' })
+    gsap.set(els, { autoAlpha: 0, y: 26 })
+
+    // Apparition légèrement anticipée : le numéro naît pendant la sortie de
+    // l'offre précédente, si bien qu'il « prend sa place ».
+    const appear = Math.max(0, b - 0.1)
+
+    if (i !== 0) tl.to(bg, { autoAlpha: 1, duration: 0.18, ease: 'none' }, appear)
+    tl.fromTo(
+      num,
+      {
+        autoAlpha: 0,
+        x: () => heroFrom(num).x,
+        y: () => heroFrom(num).y,
+        scale: () => heroFrom(num).scale,
+      },
+      { autoAlpha: 1, duration: 0.14, ease: 'power1.out' },
+      appear,
+    )
+    // Le numéro rétrécit, rejoint sa place et s'estompe en filigrane
+    tl.to(num, { x: 0, y: 0, scale: 1, autoAlpha: faint, duration: 0.22, ease: 'power2.inOut' }, b + 0.2)
+    // Titre, sous-titre, description, détail, CTA : arrivée en cascade
+    tl.to(els, { autoAlpha: 1, y: 0, duration: 0.16, ease: 'power2.out', stagger: 0.06 }, b + 0.34)
+
+    // Sortie douce vers l'offre suivante — la dernière reste lisible et se
+    // laisse dépasser vers le bloc « Comment nous travaillons ».
+    if (!isLast) {
+      tl.to(content, { autoAlpha: 0, y: -30, duration: 0.16, ease: 'power1.in' }, b + 0.85)
+      tl.to(bg, { autoAlpha: 0, duration: 0.16, ease: 'none' }, b + 0.85)
+    }
+  })
+
+  // Verrouille la durée totale à N : chaque offre occupe exactement 1/N du
+  // défilement épinglé (répartition régulière, ~STEP hauteurs d'écran chacune),
+  // et la dernière garde un temps de lecture avant de se laisser dépasser.
+  tl.to(root, { duration: 0.001 }, N)
+
+  return tl
+}
+
+// Choisit la mise en scène et gère le thème sombre du header.
+// - Bureau, écran assez grand, mouvement non réduit → scrollytelling épinglé.
+// - Sinon (mobile, écran court, prefers-reduced-motion) → repli : les chapitres
+//   classiques, dévoilés au scroll, où tout le détail reste présent.
+function OffersExperience({ offers, onContact, setDark }) {
+  const [enhanced, setEnhanced] = useState(false)
+  const rootRef = useRef(null)
+
+  // Mode d'affichage — recalculé au redimensionnement et au changement de
+  // préférence de mouvement. Épinglé seulement si la fenêtre est confortable.
   useEffect(() => {
+    const mqW = window.matchMedia('(min-width: 1024px)')
+    const mqH = window.matchMedia('(min-height: 720px)')
+    const mqR = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const compute = () => setEnhanced(mqW.matches && mqH.matches && !mqR.matches)
+    compute()
+    mqW.addEventListener('change', compute)
+    mqH.addEventListener('change', compute)
+    mqR.addEventListener('change', compute)
+    return () => {
+      mqW.removeEventListener('change', compute)
+      mqH.removeEventListener('change', compute)
+      mqR.removeEventListener('change', compute)
+    }
+  }, [])
+
+  // Repli : le header bascule en clair quand la bande sombre (Campagne) passe
+  // sous lui, puis revient au clair. (Même logique qu'avant, ici quand la
+  // version épinglée n'est pas active.)
+  useEffect(() => {
+    if (enhanced) return
     const NAV = 90
     let raf = 0
     const check = () => {
@@ -400,7 +649,79 @@ export default function Offres({ setDark, onNavigate }) {
       scroller?.removeEventListener('scroll', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
-  }, [setDark])
+  }, [enhanced, setDark])
+
+  // Version épinglée : construit la timeline (nettoyée via gsap.context) et
+  // pilote le thème sombre en lisant l'état réel de la bande Campagne (son
+  // opacité animée et sa position sous le header) — valable pendant l'épingle
+  // comme après, quand la scène glisse vers le bas.
+  useLayoutEffect(() => {
+    if (!enhanced) return
+    const root = rootRef.current
+    const scroller = document.querySelector('section[aria-label="Offres"]')
+    if (!root || !scroller) return
+
+    const ctx = gsap.context(() => buildOffersTimeline(root, scroller), root)
+
+    // Le thème sombre suit l'état réel de la bande Campagne (opacité animée +
+    // position sous le header). On l'évalue à chaque frame via le ticker GSAP
+    // — et non sur l'évènement scroll — car l'opacité est posée par le scrub,
+    // qui continue de se stabiliser après l'arrêt du scroll (aucun évènement
+    // scroll pendant ce temps). Couvre aussi la sortie, quand la scène glisse
+    // vers le bas et cesse de couvrir le header. On ne remonte l'état qu'au
+    // changement, pour ne pas relancer de rendu inutilement.
+    const inkBg = root.querySelector('[data-chapter][data-ink="1"] [data-bg]')
+    const NAV = 90
+    let lastDark = null
+    const tick = () => {
+      if (!inkBg) return
+      const r = inkBg.getBoundingClientRect()
+      let d = false
+      if (r.top <= NAV && r.bottom > NAV) {
+        d = parseFloat(getComputedStyle(inkBg).opacity || '0') > 0.5
+      }
+      if (d !== lastDark) {
+        lastDark = d
+        setDark?.(d)
+      }
+    }
+    gsap.ticker.add(tick)
+
+    // L'iframe de l'intro modifie la hauteur au chargement : on recadre les
+    // repères de scroll une fois posée.
+    const refreshT = setTimeout(() => ScrollTrigger.refresh(), 400)
+
+    return () => {
+      clearTimeout(refreshT)
+      gsap.ticker.remove(tick)
+      ctx.revert()
+      setDark?.(false)
+    }
+  }, [enhanced, setDark])
+
+  if (!enhanced) {
+    return offers.map((o, i) => <OfferChapter key={o.id} o={o} i={i} onContact={onContact} />)
+  }
+
+  // La scène épinglée est enveloppée dans un conteneur stable, appartenant à
+  // React. GSAP entoure `rootRef` d'un « pin-spacer » (il le déplace dans le
+  // DOM) : si React devait démonter ce nœud-là au passage vers le repli, son
+  // parent enregistré ne correspondrait plus (removeChild échouerait). En
+  // démontant plutôt l'enveloppe, que GSAP ne touche jamais, la bascule reste
+  // propre.
+  return (
+    <div className="w-full">
+      <div ref={rootRef} id="detail-film" className="relative h-[100dvh] w-full overflow-hidden">
+        {offers.map((o, i) => (
+          <EnhancedChapter key={o.id} o={o} i={i} onContact={onContact} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function Offres({ setDark, onNavigate }) {
+  const ref = useReveal(0.35)
 
   const goContact = (name) => onNavigate?.('contact', { offer: name })
   const scrollToDetail = (id) =>
@@ -410,13 +731,13 @@ export default function Offres({ setDark, onNavigate }) {
     <section
       ref={ref}
       aria-label="Offres"
-      className="h-full overflow-y-auto scroll-smooth px-6 pt-28 md:px-16"
+      className="h-full overflow-y-auto pt-28"
       style={{ backgroundColor: BG }}
     >
       <h1 className="sr-only">Nos offres — Bel Augure</h1>
 
       {/* ══ Premier écran : titre + film, puis trois cartes condensées ══ */}
-      <div className="mx-auto flex min-h-[calc(100dvh-9rem)] w-full max-w-[1180px] flex-col">
+      <div className="mx-auto flex min-h-[calc(100dvh-9rem)] w-full max-w-[1180px] flex-col px-6 md:px-16">
         {/* Haut : titre à gauche, film à droite */}
         <div className="reveal-up grid flex-1 items-center gap-10 lg:grid-cols-2 lg:gap-16" style={{ '--d': '0.08s' }}>
           <div>
@@ -489,15 +810,14 @@ export default function Offres({ setDark, onNavigate }) {
         </div>
       </div>
 
-      {/* ══ Chapitres ══ Chaque offre est une bande pleine largeur (fond
-          alterné, sombre pour la Campagne). Le détail défile horizontalement
-          — voir le composant OfferChapter. */}
-      {OFFERS.map((o, i) => (
-        <OfferChapter key={o.id} o={o} i={i} onContact={goContact} />
-      ))}
+      {/* ══ Chapitres ══ Bureau : scrollytelling épinglé, chaque offre est un
+          chapitre animé au scroll (voir OffersExperience → EnhancedChapter).
+          Mobile / mouvement réduit : repli sur les chapitres classiques
+          dévoilés au scroll (OfferChapter), tout le détail présent. */}
+      <OffersExperience offers={OFFERS} onContact={goContact} setDark={setDark} />
 
       {/* ══ Bloc transverse : comment nous travaillons ══ */}
-      <div className="mx-auto w-full max-w-[1180px] pb-40 lg:pb-24">
+      <div className="mx-auto w-full max-w-[1180px] px-6 pb-40 md:px-16 lg:pb-24">
         <div className={`border-t pt-14 ${RULE}`}>
           <h2 className="text-[11px] font-normal uppercase tracking-[0.3em] text-encre/70">Comment nous travaillons</h2>
           <ol className="mt-8 grid gap-x-14 gap-y-9 sm:grid-cols-2">
