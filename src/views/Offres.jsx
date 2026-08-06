@@ -49,7 +49,7 @@ const OFFERS = [
     formatsTitle: 'Deux manières de les faire vivre',
     formats: [
       {
-        title: 'La collection',
+        title: 'Collection',
         sub: 'Une même idée, plusieurs récits.',
         body: [
           'Nous choisissons avec vous une facette de la marque, puis nous imaginons plusieurs films courts conçus et tournés ensemble.',
@@ -58,7 +58,7 @@ const OFFERS = [
         price: 'À partir de 3 500 € HT',
       },
       {
-        title: 'Le partenariat annuel',
+        title: 'Quatre saisons',
         sub: 'Une nouvelle histoire chaque mois.',
         body: [
           'Nous construisons une ligne éditoriale filmée autour des saisons, des lancements et des expériences qui rythment votre marque.',
