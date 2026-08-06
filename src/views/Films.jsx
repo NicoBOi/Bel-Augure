@@ -15,7 +15,7 @@ const FILMS = [
   },
 ]
 
-export default function Films({ setDark }) {
+export default function Films({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
   const [ready, setReady] = useState({})
   const [sound, setSound] = useState({})
@@ -149,6 +149,14 @@ export default function Films({ setDark }) {
               >
                 {film.desc}
               </p>
+              <button
+                type="button"
+                onClick={() => onNavigate?.('contact')}
+                className="reveal-up mt-9 inline-flex cursor-pointer items-center justify-center rounded-full border border-encre/45 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-300 hover:bg-encre hover:text-creme"
+                style={{ '--d': '0.42s' }}
+              >
+                Écrivons votre film
+              </button>
             </div>
           </div>
         ))}

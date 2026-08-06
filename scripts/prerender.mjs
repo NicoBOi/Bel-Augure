@@ -25,7 +25,7 @@ const ROUTES = [
       <p>Les films signature du bien-être d'exception.</p>
       <h2>Faites de votre image une raison de vous choisir.</h2>
       <p>Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite pour eux.</p>
-      <p>Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de marque et donner envie de venir (puis de revenir).</p>
+      <p>Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de marque et donner envie de vous découvrir, de vous choisir et de revenir vers vous.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },
   {
@@ -44,8 +44,8 @@ const ROUTES = [
     desc: "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
     h1: 'Le studio — Nicolas & Corentin, à Bordeaux',
     body: `
-      <p>Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans qu'on se connaît. L'un vient de l'événementiel, l'autre du cinéma et de la mode. On a longtemps travaillé chacun de notre côté avant de se décider à monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme vos enseignes à deux pour continuer notre aventure.</p>
-      <p>Chaque film avec vous est un bout de notre histoire.</p>`,
+      <p>Bel Augure, c'est nous deux : Nicolas et Corentin. Quinze ans d'amitié et deux parcours qui se complètent — l'un vient de l'événementiel, l'autre du cinéma et de la mode. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée à Bordeaux dans notre studio. Un seul interlocuteur, deux regards sur chaque plan.</p>
+      <p>Filmer celles et ceux qui prennent soin des autres, c'est exactement ce que nous avons choisi de faire.</p>`,
   },
   {
     path: '/offres',

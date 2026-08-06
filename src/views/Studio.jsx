@@ -20,18 +20,19 @@ export default function Studio() {
         </h1>
 
         <div
-          className="reveal-up mt-12 max-w-[60ch] space-y-5 text-[14px] font-light leading-[1.95] text-encre/80 md:mx-auto md:mt-14"
+          className="reveal-up mt-12 max-w-[60ch] space-y-5 text-[15px] font-light leading-[1.95] text-encre/85 md:mx-auto md:mt-14"
           style={{ '--d': '0.42s' }}
         >
           <p>
-            Bel Augure c'est nous deux, Nicolas et Corentin. Quinze ans qu'on
-            se connaît. L'un vient de l'événementiel, l'autre du cinéma et de
-            la mode.
+            Bel Augure, c'est nous deux&nbsp;: Nicolas et Corentin. Quinze ans
+            d'amitié et deux parcours qui se complètent — l'un vient de
+            l'événementiel, l'autre du cinéma et de la mode.
           </p>
           <p>
-            On a longtemps travaillé chacun de notre côté avant de se décider
-            à monter quelque chose ensemble, à Bordeaux. Aujourd'hui on filme
-            vos enseignes à deux pour continuer notre aventure.
+            Ensemble, nous prenons en charge tout votre film, de la première
+            idée à la dernière image&nbsp;: l'écriture et la direction, le
+            tournage, puis toute la postproduction, réalisée à Bordeaux dans
+            notre studio. Un seul interlocuteur, deux regards sur chaque plan.
           </p>
         </div>
 
@@ -39,7 +40,8 @@ export default function Studio() {
           className="reveal-up mt-12 max-w-[46ch] font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:mx-auto md:mt-14"
           style={{ '--d': '0.55s' }}
         >
-          Chaque film avec vous est un bout de notre histoire
+          Filmer celles et ceux qui prennent soin des autres, c'est exactement
+          ce que nous avons choisi de faire
           <span className="text-or">.</span>
         </p>
       </div>

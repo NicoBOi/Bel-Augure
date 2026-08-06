@@ -7,20 +7,18 @@ import { useReveal } from '../hooks/useReveal.js'
 // Vercel — cf. commentaire de api/contact.js.
 const ENDPOINT = '/api/contact'
 
-// Champs qualifiants du rendez-vous (audit v2) : orientent le projet, filtrent
-// les leads sous-budgétés (champ budget) et amorcent la pédagogie droits
-// (champ diffusion) avant même le devis.
+// Champs qualifiants du rendez-vous : orientent le projet et filtrent les
+// leads sous-budgétés (champ budget). La diffusion se précise de vive voix
+// lors du premier échange, pas dans le formulaire.
 const PROJETS = ['Film Signature', 'Histoires de marque', 'Campagne Sensorielle', 'Je ne sais pas encore']
 const ECHEANCES = ['Une date précise', 'Dans les 3 mois', 'Dans l’année', 'Pas d’échéance']
 const BUDGETS = [
-  'Moins de 8 000 €',
-  '8 000 – 12 000 €',
-  '12 000 – 20 000 €',
-  '20 000 – 35 000 €',
-  'Plus de 35 000 €',
-  'À définir',
+  '3 500 – 6 000 €',
+  '6 000 – 10 000 €',
+  '10 000 – 15 000 €',
+  '15 000 € et plus',
+  'À définir ensemble',
 ]
-const DIFFUSIONS = ['Site et réseaux', 'Télévision ou affichage', 'Je ne sais pas encore']
 
 export default function Contact({ onNavigate, prefill }) {
   const ref = useReveal(0.35)
@@ -203,7 +201,7 @@ export default function Contact({ onNavigate, prefill }) {
                 htmlFor="contact-maison"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
               >
-                Votre établissement
+                Votre marque ou établissement
               </label>
               <input
                 id="contact-maison"
@@ -299,28 +297,6 @@ export default function Contact({ onNavigate, prefill }) {
               </select>
             </div>
 
-            <div>
-              <label
-                htmlFor="contact-diffusion"
-                className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
-              >
-                Diffusion prévue
-              </label>
-              <select
-                id="contact-diffusion"
-                className="field mt-1 cursor-pointer"
-                value={form.diffusion}
-                onChange={update('diffusion')}
-              >
-                <option value="">À préciser</option>
-                {DIFFUSIONS.map((o) => (
-                  <option key={o} value={o}>
-                    {o}
-                  </option>
-                ))}
-              </select>
-            </div>
-
             <div className="md:col-span-2">
               <label
                 htmlFor="contact-message"
@@ -358,7 +334,7 @@ export default function Contact({ onNavigate, prefill }) {
             disabled={sending}
             className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
           >
-            {sending ? 'Envoi en cours…' : 'Demander un rendez-vous'}
+            {sending ? 'Envoi en cours…' : 'Envoyer votre demande'}
           </button>
 
           {/* Retour d'état, annoncé aux lecteurs d'écran (envoi / erreur ;
@@ -370,6 +346,11 @@ export default function Contact({ onNavigate, prefill }) {
           >
             {sending && <span className="text-grege">Envoi en cours…</span>}
             {status === 'error' && <span className="text-encre/80">{errorMsg}</span>}
+          </p>
+
+          <p className="mt-2 max-w-[46ch] text-[12.5px] font-light leading-[1.7] text-encre/60">
+            Nous vous répondons sous deux jours ouvrés pour convenir d’un premier échange de
+            trente minutes.
           </p>
         </form>
         )}

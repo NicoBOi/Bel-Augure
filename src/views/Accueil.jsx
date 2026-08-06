@@ -252,7 +252,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           <p>
             Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui
             créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de
-            marque et donner envie de venir (puis de revenir).
+            marque et donner envie de vous découvrir, de vous choisir et de revenir vers vous.
           </p>
         </div>
         </div>

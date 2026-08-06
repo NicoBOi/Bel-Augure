@@ -32,14 +32,14 @@ const OFFERS = [
       'L’écriture, la réalisation et toute la postproduction',
       'La musique et deux séries de retours',
     ],
-    cta: 'Prendre rendez-vous',
+    cta: 'Parler de votre projet',
   },
   {
     id: 'histoires',
     num: '02',
     name: 'Histoires de marque',
     label: 'Pour faire vivre vos réseaux',
-    cardPhrase: 'Mettez en lumière chacune de vos expériences pour donner envie de venir (et de revenir).',
+    cardPhrase: 'Mettez en lumière chacune de vos expériences pour donner envie de vous découvrir, de vous choisir et de revenir vers vous.',
     promise: 'Chaque film donne une nouvelle raison de vous choisir.',
     description: [
       'Un soin, un lieu, un produit ou un savoir-faire peut devenir une histoire à part entière.',
@@ -52,9 +52,9 @@ const OFFERS = [
         sub: 'Un sujet, plusieurs films.',
         body: [
           'Vous choisissez ce que vous souhaitez mettre en lumière. Nous le racontons à travers plusieurs films courts, imaginés et tournés ensemble.',
-          'Une production ponctuelle pour présenter une expérience, une gamme, une personne ou un savoir-faire.',
+          'Une même idée pour présenter une expérience, une gamme, une personne ou un savoir-faire.',
         ],
-        price: 'À partir de 3 500 € HT',
+        closing: 'Une production ponctuelle',
       },
       {
         title: 'Quatre saisons',
@@ -63,9 +63,13 @@ const OFFERS = [
           'Nous préparons l’année autour de vos saisons, de vos nouveautés et de vos temps forts.',
           'Votre image reste cohérente et vous travaillez avec un studio qui connaît déjà votre marque.',
         ],
-        price: 'À partir de 3 000 € HT par mois',
-        priceNote: 'Engagement de douze mois',
+        closing: 'Un partenariat sur douze mois',
       },
+    ],
+    budgetTitle: 'Repères budgétaires',
+    budget: [
+      'Collection — à partir de 3 500 € HT',
+      'Quatre saisons — à partir de 3 000 € HT par mois, engagement de douze mois',
     ],
     receiveTitle: 'Dans les deux formules',
     receive: [
@@ -77,7 +81,7 @@ const OFFERS = [
     receiveNote: [
       'Quatre saisons comprend également le calendrier annuel et les livraisons mensuelles.',
     ],
-    cta: 'Parler de vos prochains films',
+    cta: 'Parler de votre projet',
   },
   {
     id: 'campagne',
@@ -101,7 +105,7 @@ const OFFERS = [
       'L’écriture, la réalisation et toute la postproduction',
       'La musique et deux séries de retours par étape',
     ],
-    cta: 'Écrire au studio',
+    cta: 'Parler de votre projet',
   },
 ]
 
@@ -205,11 +209,12 @@ function OfferChapter({ o, i, onContact }) {
               <section className={`border-t pt-8 ${cRule}`}>
                 <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
                 {/* Cartes verticales : on comprend qu'on choisit une formule.
-                    Chacune porte son intitulé, son récit et son prix. */}
+                    Chacune porte son intitulé et son récit ; les prix sont
+                    rassemblés plus bas dans un seul bloc de repères. */}
                 <div className="mt-6 grid gap-5 sm:grid-cols-2">
                   {o.formats.map((f) => (
                     <div
-                      key={f.kicker}
+                      key={f.title}
                       className="flex h-full flex-col rounded-xl border border-encre/12 bg-[#F4ECDF] p-7"
                     >
                       <h4 className="font-display text-[clamp(1.5rem,2vw,1.9rem)] font-light leading-[1.1] text-encre">
@@ -221,15 +226,30 @@ function OfferChapter({ o, i, onContact }) {
                           <p key={p}>{p}</p>
                         ))}
                       </div>
-                      <div className="mt-7 border-t border-encre/10 pt-5">
-                        <p className="font-display text-[clamp(1.15rem,1.6vw,1.35rem)] font-light tabular-nums text-encre">
-                          {f.price}
-                        </p>
-                        {f.priceNote && <p className="mt-1.5 text-[12.5px] font-light text-encre/60">{f.priceNote}</p>}
-                      </div>
+                      <p className="mt-7 border-t border-encre/10 pt-5 text-[11px] font-normal uppercase tracking-[0.22em] text-orfonce">
+                        {f.closing}
+                      </p>
                     </div>
                   ))}
                 </div>
+
+                {/* Un seul bloc de repères tarifaires, sous les deux cartes,
+                    dans le même esprit que le Tarif des autres offres. */}
+                {o.budget && (
+                  <div className={`mt-6 border-t pt-8 ${cRule}`}>
+                    <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>{o.budgetTitle}</p>
+                    <ul className="mt-4 space-y-2.5">
+                      {o.budget.map((b) => (
+                        <li
+                          key={b}
+                          className={`font-display text-[clamp(1.05rem,1.5vw,1.3rem)] font-light leading-[1.35] tabular-nums ${cTitle}`}
+                        >
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </section>
             )}
 

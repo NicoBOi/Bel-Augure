@@ -131,7 +131,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
               dark ? 'border-creme/30 text-creme/85' : 'border-encre/25 text-encre/85'
             }`}
           >
-            Écrire au studio
+            Parler de votre projet
           </button>
         </div>
       </div>
