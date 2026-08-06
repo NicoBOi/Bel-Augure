@@ -49,8 +49,8 @@ const OFFERS = [
     formatsTitle: 'Deux manières de les faire vivre',
     formats: [
       {
-        kicker: 'La collection',
-        title: 'Une même idée, plusieurs récits.',
+        title: 'La collection',
+        sub: 'Une même idée, plusieurs récits.',
         body: [
           'Nous choisissons avec vous une facette de la marque, puis nous imaginons plusieurs films courts conçus et tournés ensemble.',
           'Une production ponctuelle pour révéler une expérience, un produit, un lieu ou un savoir-faire avec une écriture cohérente.',
@@ -58,8 +58,8 @@ const OFFERS = [
         price: 'À partir de 3 500 € HT',
       },
       {
-        kicker: 'Le partenariat annuel',
-        title: 'Une nouvelle histoire chaque mois.',
+        title: 'Le partenariat annuel',
+        sub: 'Une nouvelle histoire chaque mois.',
         body: [
           'Nous construisons une ligne éditoriale filmée autour des saisons, des lancements et des expériences qui rythment votre marque.',
           'Les productions sont anticipées et regroupées aux moments les plus justes de l’année, puis les films sont livrés progressivement pour nourrir votre présence avec régularité.',
@@ -214,10 +214,10 @@ function OfferChapter({ o, i, onContact }) {
                       key={f.kicker}
                       className="flex h-full flex-col rounded-xl border border-encre/12 bg-[#F4ECDF] p-7"
                     >
-                      <p className="text-[10px] font-normal uppercase tracking-[0.24em] text-orfonce">{f.kicker}</p>
-                      <h4 className="mt-3 font-display text-[clamp(1.4rem,1.9vw,1.75rem)] font-light leading-[1.15] text-encre">
+                      <h4 className="font-display text-[clamp(1.5rem,2vw,1.9rem)] font-light leading-[1.1] text-encre">
                         {f.title}
                       </h4>
+                      <p className="mt-2.5 text-[14.5px] font-light leading-[1.45] text-encre/60">{f.sub}</p>
                       <div className="mt-4 flex-1 space-y-3 text-[14px] font-light leading-[1.7] text-encre/75">
                         {f.body.map((p) => (
                           <p key={p}>{p}</p>
