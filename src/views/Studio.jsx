@@ -26,8 +26,8 @@ export default function Studio() {
         </h1>
 
         <div
-          className="reveal-up mt-12 max-w-[60ch] space-y-5 text-[15px] font-light leading-[1.95] text-encre/85 md:mx-auto md:mt-14"
-          style={{ '--d': '0.42s' }}
+          className="reveal-up mx-auto mt-8 max-w-[38rem] space-y-4 text-[15px] font-light leading-[1.85] text-encre/80"
+          style={{ '--d': '0.42s', textWrap: 'pretty' }}
         >
           <p>
             Bel Augure, c'est nous deux&nbsp;: Nicolas et Corentin. Quinze ans
@@ -43,8 +43,8 @@ export default function Studio() {
         </div>
 
         <p
-          className="reveal-up mt-12 max-w-[46ch] font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85 md:mx-auto md:mt-14"
-          style={{ '--d': '0.55s' }}
+          className="reveal-up mx-auto mt-9 max-w-[38rem] font-display text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.75] text-encre/85"
+          style={{ '--d': '0.55s', textWrap: 'balance' }}
         >
           Filmer celles et ceux qui prennent soin des autres, c'est exactement
           ce que nous avons choisi de faire
