@@ -238,24 +238,37 @@ function OfferChapter({ o, i, onContact }) {
             {o.formats && (
               <section className={`border-t pt-8 ${cRule}`}>
                 <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
-                <ul className={`mt-5 divide-y ${ink ? 'divide-or/15' : 'divide-encre/12'}`}>
-                  {o.formats.map((f) => (
-                    <li key={f.label} className="grid gap-1 py-4 sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-10">
-                      <div className="min-w-0">
-                        <span className={`font-display text-[17px] font-light ${cTitle}`}>
-                          {f.label}
+                {/* Trois cartes verticales : on comprend qu'on choisit une formule.
+                    Celle « conseillée » est mise en avant (bordure + pastille). */}
+                <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                  {o.formats.map((f) => {
+                    const reco = Boolean(f.tag)
+                    return (
+                      <div
+                        key={f.label}
+                        className={`flex h-full flex-col rounded-xl border p-6 transition-colors ${
+                          reco ? 'border-orfonce/50 bg-orfonce/[0.05]' : 'border-encre/12 bg-[#F4ECDF]'
+                        }`}
+                      >
+                        <div className="min-h-[1.6em]">
                           {f.tag && (
-                            <span className="ml-2.5 align-middle text-[9px] uppercase tracking-[0.2em] text-orfonce">
+                            <span className="inline-block rounded-full bg-orfonce px-2.5 py-1 text-[8.5px] font-normal uppercase tracking-[0.2em] text-creme">
                               {f.tag}
                             </span>
                           )}
-                        </span>
-                        <p className={`mt-1.5 max-w-[54ch] text-[13.5px] font-light leading-[1.55] ${cMuted}`}>{f.desc}</p>
+                        </div>
+                        <h4 className="mt-4 font-display text-[clamp(1.3rem,1.5vw,1.5rem)] font-light leading-[1.1] text-encre">
+                          {f.label}
+                        </h4>
+                        <p className="mt-3 flex-1 text-[13.5px] font-light leading-[1.6] text-encre/70">{f.desc}</p>
+                        <div className="mt-6 border-t border-encre/10 pt-4">
+                          <p className="text-[15px] font-normal leading-[1.4] tabular-nums text-encre">{f.price}</p>
+                          {f.usage && <p className="mt-2 text-[12px] font-light leading-[1.5] text-encre/55">{f.usage}</p>}
+                        </div>
                       </div>
-                      <span className={`shrink-0 text-[14px] font-normal tabular-nums sm:text-right ${cBody}`}>{f.price}</span>
-                    </li>
-                  ))}
-                </ul>
+                    )
+                  })}
+                </div>
               </section>
             )}
 
