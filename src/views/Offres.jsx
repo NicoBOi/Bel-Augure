@@ -1,10 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollToPlugin)
 
 // Page /offres — direction éditoriale « montrer puis expliquer ».
 // Premier écran en deux temps : à gauche le titre, à droite le film ; en bas
@@ -375,19 +375,15 @@ function OfferChapter({ o, i, onContact }) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
-// Scrollytelling épinglé (bureau) — une seule scène `position: sticky` (100svh)
-// reste fixée pendant qu'on traverse les trois offres, posées en absolute.
-// L'épingle est native (pas de `pin` GSAP → pas de transform suivant le scroll
-// → pas de tremblement) ; ScrollTrigger ne fait que mapper le scroll sur la
-// timeline (scrub 0.8). Chaque offre est une petite mise en scène en tableaux :
-// numéro monumental (compteur partagé) → réduction vers son repère → promesse
-// révélée au masque → panneau ouvert au clip-path → précisions puis CTA →
-// maintien → transition continue (masque + roulement du compteur vers le
-// numéro suivant). transform / opacity / clip-path uniquement.
+// Offres épinglées « pas à pas » (bureau) — une seule scène `position: sticky`
+// (100svh) reste fixée pendant qu'on traverse les trois offres, posées en
+// absolute. L'épingle est native (pas de `pin` GSAP → pas de tremblement) et le
+// scroll est verrouillé pendant la séquence : chaque geste de scroll déroule
+// UNE offre entière d'un coup (le numéro monumental → réduction vers son repère
+// → promesse au masque → panneau au clip-path → précisions → CTA), puis un
+// indicateur invite à continuer. La timeline est en pause et jouée d'un repère
+// au suivant (tweenTo), jamais scrubbée. transform / opacity / clip-path.
 // ══════════════════════════════════════════════════════════════════════════
-
-// Progression (en hauteurs d'écran) accordée à chaque offre pendant l'épingle.
-const STEP = 1.4
 
 // Une ligne révélée au masque : le texte part caché sous un conteneur
 // overflow-hidden et remonte (yPercent), piloté par GSAP. Net et éditorial.
@@ -523,30 +519,27 @@ function EnhancedChapter({ o, i, onContact }) {
   )
 }
 
-// Construit la timeline scrubbée. L'épingle N'EST PAS faite par GSAP mais par
-// `position: sticky` (natif) sur la scène : plus de « transform-follow » du
-// scroll interne, donc plus de tremblement. ScrollTrigger ne sert qu'à mapper
-// la progression du scroll sur la timeline (scrub), sans `pin`.
+// Construit la timeline (EN PAUSE, non scrubbée) et pose des repères de lecture.
+// Elle n'est PAS liée à la progression du scroll : chaque offre se déroule d'un
+// seul geste (voir le « stepper » dans OffersExperience), en jouant d'un repère
+// au suivant. La scène est épinglée nativement (`position: sticky`) et le scroll
+// est verrouillé pendant la séquence.
 //
-// Rythme par offre (fractions locales, base = i, durée verrouillée à N pour une
-// répartition régulière) :
-//   0–15 %  numéro monumental (compteur partagé, centré)
-//   15–35 % le numéro rétrécit (scale) et rejoint son repère
-//   28–48 % la promesse se révèle au masque (label, titre, sous-titre, texte)
-//   40–65 % le panneau de détail s'ouvre (clip-path) + léger scale interne
-//   50–75 % la ligne se déploie, les précisions arrivent, le CTA en dernier
-//   75–88 % composition complète maintenue
-//   88–100 % transition continue : le contenu est repris au masque, le
-//            compteur grandit à nouveau et roule vers le numéro suivant.
-function buildOffersTimeline(scene, track, scroller) {
+// Repères : s0 = affiche (numéro monumental) ; s1 = offre 0 lisible ; s2 = offre
+// 1 lisible ; s3 = offre 2 lisible. Un geste de scroll = un segment joué.
+// Déroulé d'un segment : le numéro rétrécit et rejoint son repère → la promesse
+// se révèle au masque → le panneau s'ouvre (clip-path) → la ligne se déploie,
+// les précisions puis le CTA ; à l'offre suivante le contenu est repris au
+// masque et le compteur roule vers le numéro suivant.
+function buildOffersTimeline(scene) {
   const chapters = Array.from(scene.querySelectorAll('[data-chapter]'))
   const N = chapters.length
   const counter = scene.querySelector('[data-counter]')
   const strip = scene.querySelector('[data-counter-strip]')
 
   // Transform « monumental » du compteur : sa boîte naturelle (échelle 1)
-  // ramenée au centre de la scène. Mesuré (jamais pendant le scroll), réévalué
-  // à chaque refresh via valeurs-fonctions + invalidateOnRefresh.
+  // ramenée au centre de la scène. Réévalué via valeurs-fonctions (invalidate
+  // au redimensionnement).
   const centered = () => {
     const saved = counter.style.transform
     counter.style.transform = 'none'
@@ -563,17 +556,7 @@ function buildOffersTimeline(scene, track, scroller) {
   const MARK = 0.15 // échelle du repère (numéro réduit)
   const inkColor = (el) => (el.dataset.ink === '1' ? '#F3E9DA' : '#1a1512')
 
-  const tl = gsap.timeline({
-    defaults: { ease: 'power2.out' },
-    scrollTrigger: {
-      trigger: track,
-      scroller,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.8,
-      invalidateOnRefresh: true,
-    },
-  })
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } })
 
   // ── Compteur partagé — état de départ : monumental, sur l'offre 1 ──
   gsap.set(counter, {
@@ -647,8 +630,11 @@ function buildOffersTimeline(scene, track, scroller) {
     }
   })
 
-  // Verrouille la durée totale à N (répartition régulière, ~STEP écrans/offre).
+  // Verrouille la durée totale à N puis pose les repères de lecture : s0 =
+  // affiche (numéro monumental, rien de dévoilé) ; s(i+1) = offre i lisible.
   tl.to({}, { duration: 0.001 }, N)
+  tl.addLabel('s0', 0)
+  chapters.forEach((_, i) => tl.addLabel('s' + (i + 1), i + 0.85))
 
   return tl
 }
@@ -709,10 +695,11 @@ function OffersExperience({ offers, onContact, setDark }) {
     }
   }, [enhanced, setDark])
 
-  // Version épinglée. L'épingle est native (`position: sticky` sur la scène) :
-  // GSAP ne pilote que la timeline scrubbée, sans `pin`, donc sans transform
-  // suivant le scroll — c'est ce qui supprime le tremblement. gsap.context()
-  // nettoie tout au démontage.
+  // Version épinglée « pas à pas ». L'épingle est NATIVE (`position: sticky`) et
+  // le scroll est verrouillé pendant la séquence : un geste (molette, doigt,
+  // clavier) = une offre entière qui se déroule d'un coup, du numéro à tout le
+  // reste. Entre chaque, un indicateur invite à continuer. Aucun scrub : la
+  // timeline (en pause) est jouée d'un repère au suivant (tweenTo).
   useLayoutEffect(() => {
     if (!enhanced) return
     const scene = sceneRef.current
@@ -720,30 +707,178 @@ function OffersExperience({ offers, onContact, setDark }) {
     const scroller = document.querySelector('section[aria-label="Offres"]')
     if (!scene || !track || !scroller) return
 
+    const N = offers.length
+    const hint = scene.querySelector('[data-hint]')
+    let tl
     const ctx = gsap.context(() => {
-      buildOffersTimeline(scene, track, scroller)
-
-      // Thème sombre du header : un ScrollTrigger dédié, à bascule (onToggle).
-      // Aucune mise à jour d'état React dans onUpdate — la bascule ne se
-      // déclenche qu'aux deux bornes. Actif dès que Campagne (offre sombre)
-      // domine, jusqu'à ce que la scène quitte le header en sortie.
-      const pin = () => scroller.clientHeight * STEP * offers.length
-      ScrollTrigger.create({
-        trigger: track,
-        scroller,
-        start: () => 'top top-=' + Math.round(pin() * ((offers.length - 1) / offers.length)),
-        end: () => 'top top-=' + Math.round(pin() + scene.clientHeight - 90),
-        onToggle: (self) => setDark?.(self.isActive),
-        invalidateOnRefresh: true,
-      })
+      tl = buildOffersTimeline(scene)
     }, scene)
+    gsap.set(hint, { autoAlpha: 0 })
 
-    // Recalage seulement après chargement des médias de l'intro (hauteur
-    // changeante) — jamais pendant le scroll.
-    const refreshT = setTimeout(() => ScrollTrigger.refresh(), 400)
+    // Thème sombre du header : lu sur l'état réel de la bande Campagne (opacité
+    // animée + position sous le header), évalué au ticker et remonté uniquement
+    // au changement. Couvre le déroulé animé comme la sortie vers le bas de page.
+    const inkBg = scene.querySelector('[data-chapter][data-ink="1"] [data-bg]')
+    let darkOn = false
+    const tickDark = () => {
+      if (!inkBg) return
+      const r = inkBg.getBoundingClientRect()
+      let d = false
+      if (r.top <= 90 && r.bottom > 90) d = parseFloat(getComputedStyle(inkBg).opacity || '0') > 0.5
+      if (d !== darkOn) {
+        darkOn = d
+        setDark?.(d)
+        gsap.set(hint, { color: d ? '#F3E9DA' : '#1a1512' })
+      }
+    }
+    gsap.ticker.add(tickDark)
+
+    // ── État du « stepper » ──
+    let step = 0 // 0 = affiche (numéro), 1..N = offre lisible
+    let engaged = false
+    let animating = false
+    let cooldown = false
+    let lastY = scroller.scrollTop
+    let exitTween = null
+
+    const pinStart = () => track.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop
+    const pinRange = () => scroller.clientHeight * 0.5 // trackH(1.5·écran) − scène(1·écran)
+    const lock = () => {
+      const s = pinStart()
+      if (Math.abs(scroller.scrollTop - s) > 0.5) scroller.scrollTop = s
+    }
+    const showHint = (v) => gsap.to(hint, { autoAlpha: v ? 1 : 0, y: v ? 0 : 8, duration: v ? 0.45 : 0.15, ease: 'power2.out' })
+
+    const gotoStep = (s) => {
+      step = s
+      animating = true
+      showHint(false)
+      tl.tweenTo('s' + s, {
+        duration: 1.25,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          animating = false
+          cooldown = true
+          window.setTimeout(() => {
+            cooldown = false
+          }, 260)
+          showHint(true)
+        },
+      })
+    }
+
+    const disengage = (dir) => {
+      engaged = false
+      animating = false
+      cooldown = true
+      showHint(false)
+      const trackH = scroller.clientHeight * 1.5
+      const to = dir > 0 ? pinStart() + trackH - 4 : pinStart() - scroller.clientHeight * 0.75
+      exitTween = gsap.to(scroller, {
+        scrollTo: { y: Math.max(0, to) },
+        duration: 0.75,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          cooldown = false
+        },
+      })
+    }
+
+    const advance = (dir) => {
+      if (!engaged || animating || cooldown) return
+      if (dir > 0) step < N ? gotoStep(step + 1) : disengage(1)
+      else step > 0 ? gotoStep(step - 1) : disengage(-1)
+    }
+
+    const engage = (fromBelow) => {
+      if (engaged) return
+      engaged = true
+      step = fromBelow ? N : 0
+      tl.seek('s' + step).pause()
+      lock()
+      showHint(true)
+      // Court répit : l'élan (molette/pavé) qui a amené dans la zone ne doit pas
+      // enchaîner tout de suite — on se pose d'abord sur le numéro / l'offre.
+      cooldown = true
+      window.setTimeout(() => {
+        cooldown = false
+      }, 320)
+    }
+
+    // Engagement : quand le scroll natif (intro / bas de page) entre dans la
+    // zone épinglée, on prend la main.
+    const onScroll = () => {
+      const y = scroller.scrollTop
+      if (!engaged && !cooldown) {
+        const s = pinStart()
+        if (y >= s - 4 && y <= s + pinRange()) engage(y < lastY)
+      }
+      lastY = y
+    }
+    scroller.addEventListener('scroll', onScroll, { passive: true })
+
+    const onWheel = (e) => {
+      if (!engaged) return
+      e.preventDefault()
+      lock()
+      if (Math.abs(e.deltaY) < 4) return
+      advance(e.deltaY > 0 ? 1 : -1)
+    }
+    scroller.addEventListener('wheel', onWheel, { passive: false })
+
+    let touchY = null
+    const onTouchStart = (e) => {
+      if (engaged) touchY = e.touches[0].clientY
+    }
+    const onTouchMove = (e) => {
+      if (!engaged) return
+      e.preventDefault()
+      lock()
+      if (touchY === null) return
+      const dy = touchY - e.touches[0].clientY
+      if (Math.abs(dy) > 26) {
+        advance(dy > 0 ? 1 : -1)
+        touchY = null
+      }
+    }
+    scroller.addEventListener('touchstart', onTouchStart, { passive: true })
+    scroller.addEventListener('touchmove', onTouchMove, { passive: false })
+
+    // Clavier (accessibilité, puisque le scroll est capté)
+    const onKey = (e) => {
+      if (!engaged) return
+      if (['ArrowDown', 'PageDown', ' ', 'Spacebar'].includes(e.key)) {
+        e.preventDefault()
+        advance(1)
+      } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
+        e.preventDefault()
+        advance(-1)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+
+    // Redimensionnement : on ré-évalue les mesures (centre du compteur) et on
+    // repose l'état courant. Jamais pendant le scroll.
+    let rz
+    const onResize = () => {
+      window.clearTimeout(rz)
+      rz = window.setTimeout(() => {
+        tl.invalidate().seek('s' + step).pause()
+        if (engaged) lock()
+      }, 160)
+    }
+    window.addEventListener('resize', onResize)
 
     return () => {
-      clearTimeout(refreshT)
+      scroller.removeEventListener('scroll', onScroll)
+      scroller.removeEventListener('wheel', onWheel)
+      scroller.removeEventListener('touchstart', onTouchStart)
+      scroller.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('resize', onResize)
+      window.clearTimeout(rz)
+      exitTween && exitTween.kill()
+      gsap.ticker.remove(tickDark)
       ctx.revert()
       setDark?.(false)
     }
@@ -754,17 +889,12 @@ function OffersExperience({ offers, onContact, setDark }) {
   }
 
   // Un seul conteneur épinglé (la scène `sticky`, 100svh, offres en absolute).
-  // La piste (track) donne la longueur de défilement : sa hauteur dépasse la
-  // scène d'exactement N·STEP écrans, ce qui devient la plage de scrub.
-  const scenes = offers.length * STEP + 1
+  // La piste dépasse la scène d'une demi-hauteur d'écran : assez pour que
+  // `sticky` accroche, le reste du parcours étant piloté au geste (scroll
+  // verrouillé), pas à la position.
   return (
     <div className="w-full">
-      <div
-        ref={trackRef}
-        id="detail-film"
-        className="relative w-full"
-        style={{ height: `calc(100svh * ${scenes})` }}
-      >
+      <div ref={trackRef} id="detail-film" className="relative w-full" style={{ height: 'calc(100svh * 1.5)' }}>
         <div
           ref={sceneRef}
           className="sticky top-0 h-[100svh] w-full overflow-hidden"
@@ -796,6 +926,32 @@ function OffersExperience({ offers, onContact, setDark }) {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Indicateur : « faites défiler » pour passer à l'offre suivante.
+              Masqué pendant l'animation, réaffiché quand l'offre est posée. */}
+          <div
+            data-hint
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-[5vh] z-30 flex justify-center"
+            style={{ color: '#1a1512' }}
+          >
+            <span className="flex flex-col items-center gap-2">
+              <span className="text-[10px] font-normal uppercase tracking-[0.28em] opacity-70">Faites défiler</span>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="motion-safe:animate-bounce"
+              >
+                <path d="M12 5v14M6 13l6 6 6-6" />
+              </svg>
+            </span>
           </div>
         </div>
       </div>
