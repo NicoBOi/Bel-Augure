@@ -596,8 +596,8 @@ function buildOffersTimeline(scene) {
     // prochain univers commence à poindre avant la disparition du précédent.
     if (i !== 0) tl.to(bg, { autoAlpha: 1, duration: 0.16, ease: 'none' }, Math.max(0, b - 0.1))
 
-    // ── Le numéro rétrécit vers son repère (15–35 %) ──
-    tl.to(counter, { x: 0, y: 0, scale: MARK, duration: 0.2, ease: 'power2.inOut' }, b + 0.15)
+    // ── Le numéro rétrécit vers son repère (démarre tôt : réaction instantanée) ──
+    tl.to(counter, { x: 0, y: 0, scale: MARK, duration: 0.24, ease: 'power2.out' }, b + 0.06)
 
     // ── Tableau 3 — la promesse se révèle au masque (28–48 %) ──
     tl.to(lines, { yPercent: 0, duration: 0.16, ease: 'power3.out', stagger: 0.06 }, b + 0.28)
@@ -740,6 +740,7 @@ function OffersExperience({ offers, onContact, setDark }) {
     let cooldown = false
     let lastY = scroller.scrollTop
     let exitTween = null
+    let pending = 0 // geste mémorisé si reçu pendant une animation (jamais perdu)
 
     const pinStart = () => track.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop
     const pinRange = () => scroller.clientHeight * 0.5 // trackH(1.5·écran) − scène(1·écran)
@@ -753,15 +754,27 @@ function OffersExperience({ offers, onContact, setDark }) {
       step = s
       animating = true
       showHint(false)
+      // Réaction instantanée (ease-out doux : la scène part tout de suite, sans
+      // temps mort), puis un déroulé long, régulier et posé — décélération
+      // légère (power1.out) pour rester doux sans être abrupt au départ.
       tl.tweenTo('s' + s, {
-        duration: 1.25,
-        ease: 'power2.inOut',
+        duration: 1.9,
+        ease: 'power1.out',
         onComplete: () => {
           animating = false
+          // Débounce minimal : juste de quoi ne pas ré-enchaîner sur la même
+          // impulsion. Assez court pour rester instantané au geste suivant.
           cooldown = true
           window.setTimeout(() => {
             cooldown = false
-          }, 260)
+            // Un geste reçu pendant l'animation n'est jamais perdu : on
+            // l'applique dès qu'on est prêt (impression de réactivité).
+            if (pending !== 0) {
+              const d = pending
+              pending = 0
+              doStep(d)
+            }
+          }, 60)
           showHint(true)
         },
       })
@@ -776,18 +789,27 @@ function OffersExperience({ offers, onContact, setDark }) {
       const to = dir > 0 ? pinStart() + trackH - 4 : pinStart() - scroller.clientHeight * 0.75
       exitTween = gsap.to(scroller, {
         scrollTo: { y: Math.max(0, to) },
-        duration: 0.75,
-        ease: 'power2.inOut',
+        duration: 0.9,
+        ease: 'power2.out',
         onComplete: () => {
           cooldown = false
         },
       })
     }
 
-    const advance = (dir) => {
-      if (!engaged || animating || cooldown) return
+    const doStep = (dir) => {
       if (dir > 0) step < N ? gotoStep(step + 1) : disengage(1)
       else step > 0 ? gotoStep(step - 1) : disengage(-1)
+    }
+    const advance = (dir) => {
+      if (!engaged) return
+      // Pendant l'animation (ou le bref débounce), on mémorise le geste au lieu
+      // de l'ignorer : il sera joué dès la fin — rien n'est perdu.
+      if (animating || cooldown) {
+        pending = dir
+        return
+      }
+      doStep(dir)
     }
 
     const engage = (fromBelow) => {
@@ -797,12 +819,13 @@ function OffersExperience({ offers, onContact, setDark }) {
       tl.seek('s' + step).pause()
       lock()
       showHint(true)
-      // Court répit : l'élan (molette/pavé) qui a amené dans la zone ne doit pas
-      // enchaîner tout de suite — on se pose d'abord sur le numéro / l'offre.
+      // Très court répit : l'impulsion qui a amené dans la zone ne doit pas
+      // enchaîner tout de suite (on se pose sur le numéro), mais assez bref pour
+      // que le premier vrai geste réponde instantanément.
       cooldown = true
       window.setTimeout(() => {
         cooldown = false
-      }, 320)
+      }, 130)
     }
 
     // Engagement : quand le scroll natif (intro / bas de page) entre dans la
