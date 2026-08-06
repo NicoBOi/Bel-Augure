@@ -20,30 +20,18 @@ const OFFERS = [
     cardPhrase: 'Devenez le premier choix avant même la première visite.',
     price: 'À partir de 5 500 € HT',
     promise: 'Faites ressentir ce qui vous distingue.',
-    usage: 'Pour une ouverture, un repositionnement ou un nouveau souffle.',
     description: [
-      'Nous partons de votre vision, de vos gestes, de vos produits ou de votre lieu pour créer le film central de votre communication. Une pièce forte, entièrement pensée pour vous, conçue pour porter durablement votre image.',
+      'Nous partons de votre vision, de vos gestes, de vos produits ou de votre lieu pour créer le film central de votre communication.',
+      'Une pièce forte, entièrement pensée pour vous, conçue pour porter durablement votre image et devenir le point d’ancrage de votre univers.',
     ],
     receiveTitle: 'Ce que vous recevez',
     receive: [
-      'Un film de marque sur mesure, de 60 à 90 secondes',
-      'Ses versions courtes de 30 et 15 secondes pour vos réseaux',
+      'Un film de marque sur mesure de 60 à 90 secondes',
+      'Ses versions courtes de 30 et 15 secondes',
+      'Les formats prévus pour votre site et vos réseaux',
       'Une musique choisie pour votre film',
-      'De l’écriture au montage, tout est pris en charge',
-    ],
-    cadre: [
-      'Première version deux semaines après le tournage',
-      'Deux séries de retours incluses',
-      'Droits d’utilisation : deux ans, en France, web et réseaux',
-      'Un suivi assuré directement par les deux fondateurs',
-    ],
-    extensionsTitle: 'En option',
-    extensions: [
-      'Déclinaisons verticales, voix off ou musique originale',
-      'Images aériennes',
-      'Journée de tournage supplémentaire',
-      'Diffusion TV, cinéma, affichage ou à l’international',
-      'Durée d’utilisation étendue',
+      'L’écriture, la réalisation et toute la postproduction',
+      'Deux séries de retours',
     ],
     cta: 'Prendre rendez-vous',
   },
@@ -53,48 +41,43 @@ const OFFERS = [
     name: 'Histoires de marque',
     label: 'Des récits ciblés',
     cardPhrase: 'Mettez en lumière chacune de vos expériences pour donner envie de venir (et de revenir).',
-    price: 'À partir de 3 500 € HT',
-    priceNote: 'pour une histoire',
-    promise: 'Des films courts qui révèlent, un à un, ce qui vous distingue.',
-    usage: 'Pour une communication régulière, plusieurs sujets à valoriser.',
+    promise: 'Faites vivre, une à une, les facettes de votre univers.',
     description: [
-      'Vos gestes, vos lieux, vos savoir-faire, celles et ceux qui les incarnent : chaque histoire en isole un et lui donne toute la place, dans une écriture qui prolonge votre identité au fil de la saison.',
+      'Un geste, un lieu, un soin, une matière, une personne ou un savoir-faire : chaque histoire choisit un sujet précis et lui donne toute la place.',
+      'Des films courts pensés pour les réseaux, avec la même exigence de narration, de lumière et de finition qu’un film de marque.',
     ],
-    formatsTitle: 'Trois formats au choix',
+    formatsTitle: 'Deux manières de les faire vivre',
     formats: [
       {
-        label: 'Une histoire',
+        kicker: 'La collection',
+        title: 'Une même idée, plusieurs récits.',
+        body: [
+          'Nous choisissons avec vous une facette de la marque, puis nous imaginons plusieurs films courts conçus et tournés ensemble.',
+          'Une production ponctuelle pour révéler une expérience, un produit, un lieu ou un savoir-faire avec une écriture cohérente.',
+        ],
         price: 'À partir de 3 500 € HT',
-        desc: 'Un film autonome consacré à un sujet précis.',
-        usage: 'Pour mettre en lumière une expérience, un produit, une personne ou un savoir-faire.',
       },
       {
-        label: 'Une collection',
-        tag: 'Format conseillé',
-        price: 'À partir de 8 500 € HT',
-        desc: 'Trois histoires imaginées et tournées ensemble autour de plusieurs facettes de la marque.',
-        usage: 'Pour construire une prise de parole cohérente tout en optimisant la production.',
-      },
-      {
-        label: 'Un partenariat saisonnier',
-        price: 'À partir de 3 000 € HT / mois · engagement de trois mois',
-        desc: 'Une nouvelle collection planifiée sur trois mois, avec des livraisons progressives.',
-        usage: 'Engagement d’une saison, renouvelable d’un commun accord.',
+        kicker: 'Le partenariat annuel',
+        title: 'Une nouvelle histoire chaque mois.',
+        body: [
+          'Nous construisons une ligne éditoriale filmée autour des saisons, des lancements et des expériences qui rythment votre marque.',
+          'Les productions sont anticipées et regroupées aux moments les plus justes de l’année, puis les films sont livrés progressivement pour nourrir votre présence avec régularité.',
+        ],
+        price: 'À partir de 3 000 € HT par mois',
+        priceNote: 'Engagement de douze mois',
       },
     ],
     receiveTitle: 'Ce que vous recevez',
     receive: [
-      'Un format principal et une adaptation verticale ou horizontale',
-      'Un à deux extraits courts par histoire',
-      'Musique et postproduction incluses',
+      'Une direction narrative pensée pour votre marque',
+      'Des films courts conçus nativement pour les réseaux',
+      'Les adaptations prévues pour vos principaux formats',
+      'La musique, l’étalonnage et le travail sonore',
+      'Deux séries de retours',
+      'Pour le partenariat : un calendrier éditorial et des livraisons mensuelles',
     ],
-    cadre: [
-      'Tournages groupés, une à deux journées par vague',
-      'Deux séries de retours par vague',
-      'Droits d’utilisation : deux ans à compter de chaque livraison',
-      'Casting, stylisme et décors en supplément selon les besoins',
-    ],
-    cta: 'Prendre rendez-vous',
+    cta: 'Découvrir les Histoires de marque',
   },
   {
     id: 'campagne',
@@ -104,37 +87,22 @@ const OFFERS = [
     cardPhrase: 'Créez l’engouement autour de votre prochaine ouverture ou de votre prochain lancement.',
     price: 'À partir de 15 000 € HT',
     promise: 'Donnez à votre prochain temps fort toute son ampleur.',
-    usage: 'Pour un temps fort à fort enjeu.',
     description: [
-      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons l’idée qui donnera sa cohérence à toute votre prise de parole.',
-      'Elle prend vie dans un film principal, plusieurs films courts et les formats conçus pour vos différents supports. Chaque création a son propre rôle : annoncer, révéler ou prolonger le lancement. Ensemble, elles forment une campagne immédiatement reconnaissable.',
+      'Pour une ouverture, un lancement, une nouvelle expérience ou une nouvelle identité, nous imaginons l’idée qui donnera sa cohérence à toute votre prise de parole.',
+      'Elle prend vie dans un film principal, plusieurs films courts et les formats conçus pour vos différents supports.',
+      'Chaque création a son propre rôle : annoncer, révéler ou prolonger. Ensemble, elles forment une campagne immédiatement reconnaissable.',
     ],
     receiveTitle: 'Ce que vous recevez',
     receive: [
       'Une idée directrice et une direction créative commune',
       'Un film principal de 60 à 90 secondes',
-      'Trois films courts minimum, de 15 à 30 secondes',
-      'Les formats adaptés à vos différents supports',
-      'De l’idée à la livraison, tout est pris en charge',
-      'Musique incluse',
+      'Trois films courts minimum de 15 à 30 secondes',
+      'Des films courts pensés comme de véritables pièces, et non comme de simples extraits',
+      'Les formats définis pour vos différents supports',
+      'La musique et toute la postproduction',
+      'La prise en charge du projet, de l’idée à la livraison',
+      'Deux séries de retours par étape',
     ],
-    receiveNote: [
-      'Les films courts sont de vraies pièces à part entière, pas de simples extraits du film principal.',
-    ],
-    rhythm: {
-      title: 'Photographie de campagne — en option',
-      body: [
-        'Une série photographique, dans la même direction artistique, peut être réalisée pendant le tournage avec un photographe partenaire.',
-      ],
-    },
-    cadre: [
-      'Un calendrier construit sur votre date de lancement',
-      'Environ huit à dix semaines, de la validation à la livraison',
-      'Deux séries de retours incluses',
-      'Un suivi assuré directement par les deux fondateurs',
-      'Droits d’utilisation : deux ans, France, web et campagnes sponsorisées',
-    ],
-    note: 'Chaque campagne fait l’objet d’une proposition dédiée.',
     cta: 'Écrire au studio',
   },
 ]
@@ -238,36 +206,31 @@ function OfferChapter({ o, i, onContact }) {
             {o.formats && (
               <section className={`border-t pt-8 ${cRule}`}>
                 <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
-                {/* Trois cartes verticales : on comprend qu'on choisit une formule.
-                    Celle « conseillée » est mise en avant (bordure + pastille). */}
-                <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                  {o.formats.map((f) => {
-                    const reco = Boolean(f.tag)
-                    return (
-                      <div
-                        key={f.label}
-                        className={`flex h-full flex-col rounded-xl border p-6 transition-colors ${
-                          reco ? 'border-orfonce/50 bg-orfonce/[0.05]' : 'border-encre/12 bg-[#F4ECDF]'
-                        }`}
-                      >
-                        <div className="min-h-[1.6em]">
-                          {f.tag && (
-                            <span className="inline-block rounded-full bg-orfonce px-2.5 py-1 text-[8.5px] font-normal uppercase tracking-[0.2em] text-creme">
-                              {f.tag}
-                            </span>
-                          )}
-                        </div>
-                        <h4 className="mt-4 font-display text-[clamp(1.3rem,1.5vw,1.5rem)] font-light leading-[1.1] text-encre">
-                          {f.label}
-                        </h4>
-                        <p className="mt-3 flex-1 text-[13.5px] font-light leading-[1.6] text-encre/70">{f.desc}</p>
-                        <div className="mt-6 border-t border-encre/10 pt-4">
-                          <p className="text-[15px] font-normal leading-[1.4] tabular-nums text-encre">{f.price}</p>
-                          {f.usage && <p className="mt-2 text-[12px] font-light leading-[1.5] text-encre/55">{f.usage}</p>}
-                        </div>
+                {/* Cartes verticales : on comprend qu'on choisit une formule.
+                    Chacune porte son intitulé, son récit et son prix. */}
+                <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                  {o.formats.map((f) => (
+                    <div
+                      key={f.kicker}
+                      className="flex h-full flex-col rounded-xl border border-encre/12 bg-[#F4ECDF] p-7"
+                    >
+                      <p className="text-[10px] font-normal uppercase tracking-[0.24em] text-orfonce">{f.kicker}</p>
+                      <h4 className="mt-3 font-display text-[clamp(1.4rem,1.9vw,1.75rem)] font-light leading-[1.15] text-encre">
+                        {f.title}
+                      </h4>
+                      <div className="mt-4 flex-1 space-y-3 text-[14px] font-light leading-[1.7] text-encre/75">
+                        {f.body.map((p) => (
+                          <p key={p}>{p}</p>
+                        ))}
                       </div>
-                    )
-                  })}
+                      <div className="mt-7 border-t border-encre/10 pt-5">
+                        <p className="font-display text-[clamp(1.15rem,1.6vw,1.35rem)] font-light tabular-nums text-encre">
+                          {f.price}
+                        </p>
+                        {f.priceNote && <p className="mt-1.5 text-[12.5px] font-light text-encre/60">{f.priceNote}</p>}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </section>
             )}
@@ -276,24 +239,23 @@ function OfferChapter({ o, i, onContact }) {
               <section className={`border-t pt-8 ${cRule}`}>
                 <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
                 <DashList items={o.receive} cols={2} ink={ink} className="mt-6" />
-                {o.receiveNote && (
-                  <div className={`mt-5 max-w-[70ch] space-y-2 text-[12.5px] font-light leading-[1.65] ${cMuted}`}>
-                    {o.receiveNote.map((p) => (
-                      <p key={p}>{p}</p>
-                    ))}
-                  </div>
-                )}
               </section>
             )}
 
-            <div className={`flex flex-col items-start gap-6 border-t pt-8 sm:flex-row sm:items-end sm:justify-between ${cRule}`}>
-              <div>
-                <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
-                <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light leading-none tabular-nums ${cTitle}`}>
-                  {o.price}
-                </p>
-                {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
-              </div>
+            <div
+              className={`flex flex-col items-start gap-6 border-t pt-8 sm:flex-row sm:items-end ${
+                o.price ? 'sm:justify-between' : ''
+              } ${cRule}`}
+            >
+              {o.price && (
+                <div>
+                  <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
+                  <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light leading-none tabular-nums ${cTitle}`}>
+                    {o.price}
+                  </p>
+                  {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
+                </div>
+              )}
               <button type="button" onClick={() => onContact(o.name)} className={ink ? CTA_INK : CTA_LIGHT}>
                 {o.cta}
               </button>
