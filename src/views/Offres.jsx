@@ -54,7 +54,7 @@ const OFFERS = [
           'Vous choisissez ce que vous souhaitez mettre en lumière. Nous le racontons à travers plusieurs films courts, imaginés et tournés ensemble.',
           'Une même idée pour présenter une expérience, une gamme, une personne ou un savoir-faire.',
         ],
-        closing: 'Une production ponctuelle',
+        closing: 'Ponctuel',
       },
       {
         title: 'Quatre saisons',
@@ -63,14 +63,10 @@ const OFFERS = [
           'Nous préparons l’année autour de vos saisons, de vos nouveautés et de vos temps forts.',
           'Votre image reste cohérente et vous travaillez avec un studio qui connaît déjà votre marque.',
         ],
-        closing: 'Un partenariat sur douze mois',
+        closing: 'Mensuel',
       },
     ],
-    budgetTitle: 'Repères budgétaires',
-    budget: [
-      'Collection — à partir de 3 500 € HT',
-      'Quatre saisons — à partir de 3 000 € HT par mois, engagement de douze mois',
-    ],
+    price: 'À partir de 3 000 € HT',
     receiveTitle: 'Dans les deux formules',
     receive: [
       'Des films courts écrits et réalisés pour votre marque',
@@ -209,8 +205,8 @@ function OfferChapter({ o, i, onContact }) {
               <section className={`border-t pt-8 ${cRule}`}>
                 <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
                 {/* Cartes verticales : on comprend qu'on choisit une formule.
-                    Chacune porte son intitulé et son récit ; les prix sont
-                    rassemblés plus bas dans un seul bloc de repères. */}
+                    Chacune porte son intitulé et son récit ; le tarif de
+                    l'offre est donné plus bas, comme pour les autres. */}
                 <div className="mt-6 grid gap-5 sm:grid-cols-2">
                   {o.formats.map((f) => (
                     <div
@@ -232,24 +228,6 @@ function OfferChapter({ o, i, onContact }) {
                     </div>
                   ))}
                 </div>
-
-                {/* Un seul bloc de repères tarifaires, sous les deux cartes,
-                    dans le même esprit que le Tarif des autres offres. */}
-                {o.budget && (
-                  <div className={`mt-6 border-t pt-8 ${cRule}`}>
-                    <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>{o.budgetTitle}</p>
-                    <ul className="mt-4 space-y-2.5">
-                      {o.budget.map((b) => (
-                        <li
-                          key={b}
-                          className={`font-display text-[clamp(1.05rem,1.5vw,1.3rem)] font-light leading-[1.35] tabular-nums ${cTitle}`}
-                        >
-                          {b}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </section>
             )}
 
