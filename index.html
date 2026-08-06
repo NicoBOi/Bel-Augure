@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux."
+      content="Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux."
     />
     <meta name="theme-color" content="#f2ede4" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Bel Augure · Films pour hôtels, spas et maisons de bien-être · Bordeaux" />
+    <meta property="og:title" content="Bel Augure · Studio de production de films bien-être à Bordeaux" />
     <meta
       property="og:description"
-      content="Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux."
+      content="Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux."
     />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:url" content="https://www.belaugure.studio/" />
@@ -23,29 +23,98 @@
     <meta name="twitter:image" content="https://www.belaugure.studio/og.png" />
     <link rel="canonical" href="https://www.belaugure.studio/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <!-- Données structurées : le studio comme service local, offres bornées -->
+    <!-- Données structurées : le studio comme service local (entité de marque
+         « Bel Augure »), ses fondateurs, ses offres bornées et le site. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "Bel Augure",
-        "description": "Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux.",
-        "url": "https://www.belaugure.studio/",
-        "email": "nicolas@belaugure.studio",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Bordeaux",
-          "addressRegion": "Nouvelle-Aquitaine",
-          "addressCountry": "FR"
-        },
-        "areaServed": "FR",
-        "knowsAbout": [
-          "film de marque",
-          "film signature",
-          "hôtellerie de luxe",
-          "bien-être",
-          "spa",
-          "thermes"
+        "@graph": [
+          {
+            "@type": ["ProfessionalService", "VideoProductionCompany"],
+            "@id": "https://www.belaugure.studio/#studio",
+            "name": "Bel Augure",
+            "alternateName": "BelAugure",
+            "description": "Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux.",
+            "url": "https://www.belaugure.studio/",
+            "email": "nicolas@belaugure.studio",
+            "logo": "https://www.belaugure.studio/og.png",
+            "image": "https://www.belaugure.studio/og.png",
+            "slogan": "Les films signature du bien-être d’exception",
+            "priceRange": "€€€",
+            "founder": [
+              { "@type": "Person", "name": "Nicolas" },
+              { "@type": "Person", "name": "Corentin" }
+            ],
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Bordeaux",
+              "addressRegion": "Nouvelle-Aquitaine",
+              "addressCountry": "FR"
+            },
+            "areaServed": [
+              { "@type": "Country", "name": "France" }
+            ],
+            "serviceType": [
+              "Studio de production",
+              "Film de marque",
+              "Film signature",
+              "Production audiovisuelle",
+              "Vidéo pour hôtellerie, spa et bien-être"
+            ],
+            "knowsAbout": [
+              "studio de production",
+              "film de marque",
+              "film signature",
+              "hôtellerie de luxe",
+              "bien-être",
+              "spa",
+              "thermes",
+              "maison de cosmétique"
+            ],
+            "makesOffer": [
+              {
+                "@type": "Offer",
+                "name": "Film Signature",
+                "description": "Le film de référence de votre marque, pour votre site, vos présentations et vos réseaux.",
+                "priceCurrency": "EUR",
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": "5500",
+                  "priceCurrency": "EUR"
+                }
+              },
+              {
+                "@type": "Offer",
+                "name": "Histoires de marque",
+                "description": "Des films courts pensés pour les réseaux, ponctuellement ou toute l’année.",
+                "priceCurrency": "EUR",
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": "3500",
+                  "priceCurrency": "EUR"
+                }
+              },
+              {
+                "@type": "Offer",
+                "name": "Campagne Sensorielle",
+                "description": "Un dispositif complet pour une ouverture, un lancement ou une nouvelle identité.",
+                "priceCurrency": "EUR",
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": "15000",
+                  "priceCurrency": "EUR"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.belaugure.studio/#website",
+            "url": "https://www.belaugure.studio/",
+            "name": "Bel Augure",
+            "inLanguage": "fr-FR",
+            "publisher": { "@id": "https://www.belaugure.studio/#studio" }
+          }
         ]
       }
     </script>
@@ -62,7 +131,7 @@
       type="font/woff2"
       crossorigin
     />
-    <title>Bel Augure · Films pour hôtels, spas et maisons de bien-être · Bordeaux</title>
+    <title>Bel Augure · Studio de production de films bien-être à Bordeaux</title>
     <!-- Mesure d'audience : décommenter après avoir créé le site sur
          plausible.io (sans cookie, conforme à la politique de
          confidentialité annoncée dans les mentions légales).

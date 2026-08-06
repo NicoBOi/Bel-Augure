@@ -30,9 +30,9 @@ const VIEWS = {
 }
 
 const TITLES = {
-  accueil: 'Bel Augure · Films pour hôtels, spas et maisons de bien-être · Bordeaux',
-  films: 'Films · Bel Augure',
-  studio: 'Studio · Bel Augure',
+  accueil: 'Bel Augure · Studio de production de films bien-être à Bordeaux',
+  films: 'Films de marque pour hôtels, spas & bien-être · Bel Augure',
+  studio: 'Studio de production à Bordeaux · Bel Augure',
   offres: 'Offres · Bel Augure',
   contact: 'Contact · Bel Augure',
   mentions: 'Mentions légales · Bel Augure',
@@ -42,11 +42,11 @@ const TITLES = {
 // aux moteurs et aux aperçus de lien.
 const DESCRIPTIONS = {
   accueil:
-    'Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux.',
+    'Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux.',
   films:
-    "Les Pieds dans l'eau : le premier film de Bel Augure, tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
+    "Les Pieds dans l'eau : le premier film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
   studio:
-    "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
+    "Bel Augure, studio de production à Bordeaux : Nicolas et Corentin filment les hôtels, spas et maisons de bien-être d'exception.",
   offres:
     'Trois façons de travailler ensemble : Film Signature, le film fondateur ; Histoires de marque, un programme de récits courts ; Campagne Sensorielle, un déploiement complet sur mesure. Diffusion deux ans France incluse.',
   contact:

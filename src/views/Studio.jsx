@@ -11,6 +11,12 @@ export default function Studio() {
     >
       {/* Le titre, ferré à gauche en mobile, centré en desktop, sur une ligne. */}
       <div className="flex flex-1 flex-col justify-center text-left md:text-center">
+        <p
+          className="reveal-up mb-5 text-[11px] font-normal uppercase tracking-[0.3em] text-orfonce md:mb-6"
+          style={{ '--d': '0.06s' }}
+        >
+          Studio de production · Bordeaux
+        </p>
         <h1 className="font-display text-[clamp(1.55rem,8.5vw,4.6rem)] leading-[1.1] text-encre">
           <span className="mask" style={{ '--d': '0.12s' }}>
             <span className="whitespace-nowrap">

@@ -18,9 +18,9 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, 
 const ROUTES = [
   {
     path: '/',
-    title: 'Bel Augure · Films pour hôtels, spas et maisons de bien-être · Bordeaux',
-    desc: 'Films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne. Bordeaux.',
-    h1: 'Bel Augure — studio de films pour hôtels, spas et maisons de bien-être à Bordeaux',
+    title: 'Bel Augure · Studio de production de films bien-être à Bordeaux',
+    desc: 'Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux.',
+    h1: 'Bel Augure — studio de production de films pour hôtels, spas et maisons de bien-être à Bordeaux',
     body: `
       <p>Les films signature du bien-être d'exception.</p>
       <h2>Faites de votre image une raison de vous choisir.</h2>
@@ -30,8 +30,8 @@ const ROUTES = [
   },
   {
     path: '/films',
-    title: 'Films · Bel Augure',
-    desc: "Les Pieds dans l'eau : le premier film de Bel Augure, tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
+    title: 'Films de marque pour hôtels, spas & bien-être · Bel Augure',
+    desc: "Les Pieds dans l'eau : le premier film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
     h1: "Films — Les Pieds dans l'eau, sur le bassin d'Arcachon",
     body: `
       <h2>Les Pieds dans l'eau — bassin d'Arcachon</h2>
@@ -40,9 +40,9 @@ const ROUTES = [
   },
   {
     path: '/studio',
-    title: 'Studio · Bel Augure',
-    desc: "Nicolas et Corentin, deux réalisateurs à Bordeaux qui filment les maisons de bien-être d'exception.",
-    h1: 'Le studio — Nicolas & Corentin, à Bordeaux',
+    title: 'Studio de production à Bordeaux · Bel Augure',
+    desc: "Bel Augure, studio de production à Bordeaux : Nicolas et Corentin filment les hôtels, spas et maisons de bien-être d'exception.",
+    h1: 'Studio de production à Bordeaux — Nicolas & Corentin',
     body: `
       <p>Bel Augure, c'est nous deux : Nicolas et Corentin. Quinze ans d'amitié et deux parcours qui se complètent — l'un vient de l'événementiel, l'autre du cinéma et de la mode. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée à Bordeaux dans notre studio. Un seul interlocuteur, deux regards sur chaque plan.</p>
       <p>Filmer celles et ceux qui prennent soin des autres, c'est exactement ce que nous avons choisi de faire.</p>`,
@@ -86,9 +86,57 @@ const ROUTES = [
 
 const FOOTER = `<p>Studio de production basé à Bordeaux</p>`
 
+// VideoObject de la page /films : aide Google à afficher le film en résultat
+// vidéo. Les métadonnées réelles (date de mise en ligne, durée, vignette)
+// sont demandées à Vimeo au moment du build ; si le réseau est indisponible,
+// on retombe sur un objet minimal, toujours valide.
+const FILM_VIMEO_ID = '1211391558'
+async function filmVideoJsonLd() {
+  const base = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: "Les Pieds dans l'eau",
+    description:
+      "Le premier film de Bel Augure, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
+    thumbnailUrl: `${SITE}/og.png`,
+    embedUrl: `https://player.vimeo.com/video/${FILM_VIMEO_ID}`,
+    contentUrl: `https://vimeo.com/${FILM_VIMEO_ID}`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Bel Augure',
+      logo: { '@type': 'ImageObject', url: `${SITE}/og.png` },
+    },
+  }
+  try {
+    const res = await fetch(
+      `https://vimeo.com/api/oembed.json?url=https%3A%2F%2Fvimeo.com%2F${FILM_VIMEO_ID}&width=1280`,
+    )
+    if (res.ok) {
+      const d = await res.json()
+      if (d.thumbnail_url) base.thumbnailUrl = d.thumbnail_url
+      // upload_date : « 2025-01-31 12:00:00 » → date ISO seule
+      if (d.upload_date) base.uploadDate = String(d.upload_date).slice(0, 10)
+      if (typeof d.duration === 'number') {
+        base.duration = `PT${Math.floor(d.duration / 60)}M${d.duration % 60}S`
+      }
+      console.log('vimeo oembed ok — uploadDate', base.uploadDate || 'n/a')
+    } else {
+      console.log('vimeo oembed non-ok', res.status)
+    }
+  } catch (e) {
+    console.log('vimeo oembed indisponible, VideoObject minimal :', e.message)
+  }
+  return base
+}
+const JSONLD = {
+  '/films': `<script type="application/ld+json">${JSON.stringify(await filmVideoJsonLd())}</script>`,
+}
+
 for (const route of ROUTES) {
   const url = SITE + (route.path === '/' ? '/' : route.path)
   let html = template
+  const extraHead = JSONLD[route.path]
+  if (extraHead) html = html.replace('</head>', `    ${extraHead}\n  </head>`)
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(route.title)}</title>`)
   html = html.replace(
     /(<meta\s+name="description"\s+content=")[^"]*(")/,
