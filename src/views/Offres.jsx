@@ -16,22 +16,21 @@ const OFFERS = [
     id: 'film',
     num: '01',
     name: 'Film Signature',
-    label: 'Un film central',
+    label: 'Pour présenter votre marque',
     cardPhrase: 'Devenez le premier choix avant même la première visite.',
     price: 'À partir de 5 500 € HT',
     promise: 'Faites ressentir ce qui vous distingue.',
     description: [
-      'Nous partons de votre vision, de vos gestes, de vos produits ou de votre lieu pour créer le film central de votre communication.',
-      'Une pièce forte, entièrement pensée pour vous, conçue pour porter durablement votre image et devenir le point d’ancrage de votre univers.',
+      'Une atmosphère, un geste, une manière de prendre soin : le Film Signature réunit ce que vos clients doivent ressentir pour avoir envie de vous choisir.',
+      'Il devient le film de référence de votre site, de vos présentations et de vos réseaux.',
     ],
     receiveTitle: 'Ce que vous recevez',
     receive: [
-      'Un film de marque sur mesure de 60 à 90 secondes',
+      'Un film de marque de 60 à 90 secondes',
       'Ses versions courtes de 30 et 15 secondes',
-      'Les formats prévus pour votre site et vos réseaux',
-      'Une musique choisie pour votre film',
+      'Les versions horizontales et verticales convenues',
       'L’écriture, la réalisation et toute la postproduction',
-      'Deux séries de retours',
+      'La musique et deux séries de retours',
     ],
     cta: 'Prendre rendez-vous',
   },
@@ -39,69 +38,68 @@ const OFFERS = [
     id: 'histoires',
     num: '02',
     name: 'Histoires de marque',
-    label: 'Des récits ciblés',
+    label: 'Pour faire vivre vos réseaux',
     cardPhrase: 'Mettez en lumière chacune de vos expériences pour donner envie de venir (et de revenir).',
-    promise: 'Faites vivre, une à une, les facettes de votre univers.',
+    promise: 'Chaque film donne une nouvelle raison de vous choisir.',
     description: [
-      'Un geste, un lieu, un soin, une matière, une personne ou un savoir-faire : chaque histoire choisit un sujet précis et lui donne toute la place.',
-      'Des films courts pensés pour les réseaux, avec la même exigence de narration, de lumière et de finition qu’un film de marque.',
+      'Un soin, un lieu, un produit ou un savoir-faire peut devenir une histoire à part entière.',
+      'Nous en faisons des films courts capables d’attirer l’attention sur les réseaux sans banaliser votre image.',
     ],
-    formatsTitle: 'Deux manières de les faire vivre',
+    formatsTitle: 'Ponctuellement ou toute l’année',
     formats: [
       {
-        title: 'Collection',
-        sub: 'Une même idée, plusieurs récits.',
+        title: 'La collection',
+        sub: 'Un sujet, plusieurs films.',
         body: [
-          'Nous choisissons avec vous une facette de la marque, puis nous imaginons plusieurs films courts conçus et tournés ensemble.',
-          'Une production ponctuelle pour révéler une expérience, un produit, un lieu ou un savoir-faire avec une écriture cohérente.',
+          'Vous choisissez ce que vous souhaitez mettre en lumière. Nous le racontons à travers plusieurs films courts, imaginés et tournés ensemble.',
+          'Une production ponctuelle pour présenter une expérience, une gamme, une personne ou un savoir-faire.',
         ],
         price: 'À partir de 3 500 € HT',
       },
       {
-        title: 'Quatre saisons',
-        sub: 'Une nouvelle histoire chaque mois.',
+        title: 'Le partenariat annuel',
+        sub: 'Un nouveau film chaque mois, sans repartir de zéro.',
         body: [
-          'Nous construisons une ligne éditoriale filmée autour des saisons, des lancements et des expériences qui rythment votre marque.',
-          'Les productions sont anticipées et regroupées aux moments les plus justes de l’année, puis les films sont livrés progressivement pour nourrir votre présence avec régularité.',
+          'Nous préparons l’année autour de vos saisons, de vos nouveautés et de vos temps forts.',
+          'Votre image reste cohérente et vous travaillez avec un studio qui connaît déjà votre marque.',
         ],
         price: 'À partir de 3 000 € HT par mois',
         priceNote: 'Engagement de douze mois',
       },
     ],
-    receiveTitle: 'Ce que vous recevez',
+    receiveTitle: 'Dans les deux formules',
     receive: [
-      'Une direction narrative pensée pour votre marque',
-      'Des films courts conçus nativement pour les réseaux',
-      'Les adaptations prévues pour vos principaux formats',
-      'La musique, l’étalonnage et le travail sonore',
+      'Des films courts écrits et réalisés pour votre marque',
+      'Les versions horizontales et verticales convenues',
+      'La musique, le montage, l’étalonnage et le travail sonore',
       'Deux séries de retours',
-      'Pour le partenariat : un calendrier éditorial et des livraisons mensuelles',
     ],
-    cta: 'Découvrir les Histoires de marque',
+    receiveNote: [
+      'Le partenariat comprend également le calendrier annuel et les livraisons mensuelles.',
+    ],
+    cta: 'Parler de vos prochains films',
   },
   {
     id: 'campagne',
     num: '03',
     name: 'Campagne Sensorielle',
-    label: 'Un dispositif complet',
+    label: 'Pour un lancement',
     cardPhrase: 'Créez l’engouement autour de votre prochaine ouverture ou de votre prochain lancement.',
     price: 'À partir de 15 000 € HT',
-    promise: 'Donnez à votre prochain temps fort toute son ampleur.',
+    promise: 'Faites de votre prochain temps fort un moment que l’on retient.',
     description: [
-      'Pour une ouverture, un lancement, une nouvelle expérience ou une nouvelle identité, nous imaginons l’idée qui donnera sa cohérence à toute votre prise de parole.',
-      'Elle prend vie dans un film principal, plusieurs films courts et les formats conçus pour vos différents supports.',
-      'Chaque création a son propre rôle : annoncer, révéler ou prolonger. Ensemble, elles forment une campagne immédiatement reconnaissable.',
+      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons une idée forte, déclinée dans un film principal et plusieurs films courts.',
+      'Le film principal révèle le projet. Les autres l’annoncent, en dévoilent les détails et prolongent le lancement.',
+      'Chaque film peut vivre seul, mais tous se reconnaissent au premier regard.',
     ],
     receiveTitle: 'Ce que vous recevez',
     receive: [
-      'Une idée directrice et une direction créative commune',
+      'Une idée créative commune à toute la campagne',
       'Un film principal de 60 à 90 secondes',
-      'Trois films courts minimum de 15 à 30 secondes',
-      'Des films courts pensés comme de véritables pièces, et non comme de simples extraits',
-      'Les formats définis pour vos différents supports',
-      'La musique et toute la postproduction',
-      'La prise en charge du projet, de l’idée à la livraison',
-      'Deux séries de retours par étape',
+      'Au moins trois films courts de 15 à 30 secondes',
+      'Les versions horizontales et verticales convenues',
+      'L’écriture, la réalisation et toute la postproduction',
+      'La musique et deux séries de retours par étape',
     ],
     cta: 'Écrire au studio',
   },
@@ -239,6 +237,13 @@ function OfferChapter({ o, i, onContact }) {
               <section className={`border-t pt-8 ${cRule}`}>
                 <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
                 <DashList items={o.receive} cols={2} ink={ink} className="mt-6" />
+                {o.receiveNote && (
+                  <div className={`mt-6 max-w-[70ch] space-y-2 text-[12.5px] font-light leading-[1.65] ${cMuted}`}>
+                    {o.receiveNote.map((p) => (
+                      <p key={p}>{p}</p>
+                    ))}
+                  </div>
+                )}
               </section>
             )}
 
