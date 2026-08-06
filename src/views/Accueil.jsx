@@ -30,6 +30,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
   const wordRef = useRef(null)
   const hintRef = useRef(null)
   const studioRef = useRef(null)
+  const footerRef = useRef(null)
   const target = useRef(0)
   const current = useRef(0)
   const wasDark = useRef(true)
@@ -74,6 +75,11 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         studioRef.current.style.pointerEvents = q > 0.6 ? 'auto' : 'none'
         // Invisible = hors du parcours clavier
         studioRef.current.inert = q < 0.5
+      }
+      // La signature de pied de page suit la même montée du jour que le studio.
+      if (footerRef.current) {
+        const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
+        footerRef.current.style.opacity = String(q)
       }
       // Le site entier passe au jour à mi-course, header compris
       const darkNow = p < 0.5
@@ -281,6 +287,16 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           </button>
         </div>
       </div>
+
+      {/* Signature de pied de page, révélée avec le jour (comme les pages
+          Studio, Films et Contact). Masquée sur la scène d'ouverture sombre. */}
+      <p
+        ref={footerRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-[3.5vh] z-[2] text-center text-[11px] font-light tracking-[0.04em] text-grege opacity-0"
+      >
+        Studio de production basé à Bordeaux
+      </p>
     </section>
   )
 }

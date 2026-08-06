@@ -396,7 +396,7 @@ export default function Offres({ setDark, onNavigate }) {
       <OffersExperience offers={OFFERS} onContact={goContact} setDark={setDark} />
 
       {/* ══ Bloc transverse : comment nous travaillons ══ */}
-      <div className="mx-auto w-full max-w-[1180px] px-6 pb-40 md:px-16 lg:pb-24">
+      <div className="mx-auto w-full max-w-[1180px] px-6 pb-16 md:px-16">
         <div className={`border-t pt-14 ${RULE}`}>
           <h2 className="text-[11px] font-normal uppercase tracking-[0.3em] text-encre/70">Comment nous travaillons</h2>
           <ol className="mt-8 grid gap-x-14 gap-y-9 sm:grid-cols-2">
@@ -419,6 +419,11 @@ export default function Offres({ setDark, onNavigate }) {
           </div>
         </div>
       </div>
+
+      {/* Signature de pied de page, comme les pages Studio, Films et Contact. */}
+      <p className="px-6 pb-28 text-center text-[11px] font-light tracking-[0.04em] text-grege md:px-16 lg:pb-20">
+        Studio de production basé à Bordeaux
+      </p>
     </section>
   )
 }
