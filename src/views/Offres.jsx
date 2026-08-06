@@ -375,23 +375,38 @@ function OfferChapter({ o, i, onContact }) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
-// Scrollytelling épinglé (bureau) — la section reste fixée pendant qu'on
-// traverse les trois offres. Chaque offre est un chapitre animé, lié à la
-// progression du scroll (scrub) : son numéro apparaît immense au centre, puis
-// rétrécit vers sa place ; le titre, le sous-titre, la description, le détail
-// et l'appel à l'action arrivent avec un léger décalage et forment une
-// composition lisible ; au chapitre suivant l'offre sort en fondu et le numéro
-// suivant prend sa place. transform/opacité uniquement, réversible au scroll.
+// Scrollytelling épinglé (bureau) — une seule scène `position: sticky` (100svh)
+// reste fixée pendant qu'on traverse les trois offres, posées en absolute.
+// L'épingle est native (pas de `pin` GSAP → pas de transform suivant le scroll
+// → pas de tremblement) ; ScrollTrigger ne fait que mapper le scroll sur la
+// timeline (scrub 0.8). Chaque offre est une petite mise en scène en tableaux :
+// numéro monumental (compteur partagé) → réduction vers son repère → promesse
+// révélée au masque → panneau ouvert au clip-path → précisions puis CTA →
+// maintien → transition continue (masque + roulement du compteur vers le
+// numéro suivant). transform / opacity / clip-path uniquement.
 // ══════════════════════════════════════════════════════════════════════════
 
 // Progression (en hauteurs d'écran) accordée à chaque offre pendant l'épingle.
 const STEP = 1.4
 
-// Un chapitre de la version épinglée. Reprend la direction artistique du
-// chapitre classique (mêmes couleurs, types, boutons) mais recentré : contenu
-// resserré à l'essentiel, composé pour tenir dans un seul écran. Les attributs
-// data-* servent de prises à la timeline ; rien n'est masqué en CSS, GSAP pose
-// les états initiaux avant la première peinture (useLayoutEffect).
+// Une ligne révélée au masque : le texte part caché sous un conteneur
+// overflow-hidden et remonte (yPercent), piloté par GSAP. Net et éditorial.
+function MaskLine({ children, className = '' }) {
+  return (
+    <span className="block overflow-hidden pb-[0.09em]">
+      <span data-line className={`block ${className}`}>
+        {children}
+      </span>
+    </span>
+  )
+}
+
+// Un chapitre de la version épinglée. Le numéro n'est plus ici : c'est le
+// compteur partagé (voir OffersExperience) qui l'incarne pour toute la
+// séquence. Chaque offre pose sa composition en deux colonnes — la promesse à
+// gauche (révélée au masque), le panneau de détail à droite (ouvert au
+// clip-path) — puis le pied (prix + CTA). Les attributs data-* sont les prises
+// de la timeline ; GSAP pose les états initiaux avant la première peinture.
 function EnhancedChapter({ o, i, onContact }) {
   const ink = o.id === 'campagne'
   const band = ink ? '#1a1512' : i % 2 === 1 ? '#E6D8C1' : '#F4ECDF'
@@ -399,199 +414,241 @@ function EnhancedChapter({ o, i, onContact }) {
   const cBody = ink ? 'text-sable/85' : 'text-encre/80'
   const cMuted = ink ? 'text-sable/70' : 'text-encre/70'
   const cFaint = ink ? 'text-sable/55' : 'text-encre/55'
-  const cPromise = ink ? 'text-sable/90' : 'text-encre/90'
+  const cPromise = ink ? 'text-sable/92' : 'text-encre/90'
   const cAccent = ink ? 'text-or' : 'text-orfonce'
   const cSection = ink ? 'text-sable/70' : 'text-encre/70'
   const cRule = ink ? 'border-or/20' : 'border-orfonce/25'
-  const numColor = ink ? '#F3E9DA' : '#1a1512'
+  const panelTint = ink ? 'rgba(255,255,255,0.045)' : 'rgba(26,21,18,0.035)'
+  const ruleColor = ink ? 'bg-or/35' : 'bg-orfonce/40'
 
   return (
     <div data-chapter={i} data-ink={ink ? '1' : '0'} className="absolute inset-0">
       <div data-bg className="absolute inset-0" style={{ backgroundColor: band }} />
-      <div
-        data-content
-        className="pointer-events-none relative z-10 mx-auto flex h-full w-full max-w-[1180px] flex-col justify-center px-6 pb-10 pt-28 md:px-16"
-      >
-        {/* En-tête : le grand numéro (qui vient du centre), l'identité, la promesse */}
-        <div className="flex items-start gap-6 sm:gap-10">
-          <span
-            data-num
-            aria-hidden="true"
-            className="block shrink-0 font-display text-[clamp(3rem,9vw,6.5rem)] font-light leading-[0.75] tabular-nums"
-            style={{ color: numColor, willChange: 'transform' }}
-          >
-            {o.num}
-          </span>
-          <div className="min-w-0 flex-1">
-            <div data-el className="max-w-[46ch]">
-              <p className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cAccent}`}>{o.label}</p>
-              <h2 className={`mt-2 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-light leading-[1.02] ${cTitle}`}>
-                {o.name}
-              </h2>
-            </div>
-            <p
-              data-el
-              className={`mt-4 max-w-[42ch] text-[clamp(1.2rem,2vw,1.6rem)] font-light leading-[1.2] ${cPromise}`}
-            >
-              {o.promise}
-            </p>
-          </div>
-        </div>
-
-        {/* Description + détail resserré (formats pour Histoires, sinon « Ce que
-            vous recevez »). Le cadre complet reste dans la version repliée. */}
-        <div className="mt-8 grid gap-x-16 gap-y-8 lg:grid-cols-2">
-          <div data-el className={`max-w-[56ch] space-y-3 text-[16px] font-light leading-[1.75] ${cBody}`}>
-            {o.description.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
-          </div>
-
-          <div data-el>
-            {o.formats ? (
-              <section className={`border-t pt-6 ${cRule}`}>
-                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
-                <ul className={`mt-4 divide-y ${ink ? 'divide-or/15' : 'divide-encre/12'}`}>
-                  {o.formats.map((f) => (
-                    <li key={f.label} className="flex items-baseline justify-between gap-6 py-3">
-                      <span className={`min-w-0 flex-1 font-display text-[16px] font-light ${cTitle}`}>
-                        {f.label}
-                        {f.tag && (
-                          <span className="ml-2 align-middle text-[9px] uppercase tracking-[0.2em] text-orfonce">
-                            {f.tag}
-                          </span>
-                        )}
-                      </span>
-                      <span className={`w-[38%] shrink-0 text-right text-[13px] font-normal leading-[1.4] tabular-nums ${cMuted}`}>
-                        {f.price}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ) : (
-              <section className={`border-t pt-6 ${cRule}`}>
-                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.receiveTitle}</h3>
-                <DashList items={o.receive} cols={2} ink={ink} className="mt-4" />
-              </section>
-            )}
-          </div>
-        </div>
-
-        {/* Prix + appel à l'action */}
+      <div className="pointer-events-none absolute inset-0">
         <div
-          data-el
-          className={`mt-9 flex flex-col items-start gap-5 border-t pt-6 sm:flex-row sm:items-end sm:justify-between ${cRule}`}
+          data-content
+          className="mx-auto flex h-full w-full max-w-[1180px] flex-col justify-center px-6 pb-10 pt-28 md:px-16"
         >
-          <div>
-            <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
-            <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light leading-none tabular-nums ${cTitle}`}>
-              {o.price}
-            </p>
-            {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
+          <div className="grid gap-x-14 gap-y-10 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+            {/* Colonne gauche : la promesse, révélée au masque. Marge à gauche
+                pour laisser le compteur partagé vivre dans la gouttière. */}
+            <div className="lg:pl-[clamp(3.5rem,8vw,7rem)]">
+              <MaskLine className={`text-[11px] font-normal uppercase tracking-[0.3em] ${cAccent}`}>
+                {o.label}
+              </MaskLine>
+              <h2 className={`mt-4 font-display text-[clamp(2.4rem,4.9vw,3.5rem)] font-light leading-[1.02] ${cTitle}`}>
+                <MaskLine>{o.name}</MaskLine>
+              </h2>
+              <p className={`mt-5 max-w-[24ch] font-display text-[clamp(1.3rem,2.1vw,1.75rem)] font-light leading-[1.2] ${cPromise}`}>
+                <MaskLine>{o.promise}</MaskLine>
+              </p>
+              <div data-desc className={`mt-7 max-w-[46ch] space-y-3 text-[15px] font-light leading-[1.75] ${cBody}`}>
+                {o.description.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+            </div>
+
+            {/* Colonne droite : le panneau de détail qui s'ouvre au clip-path. */}
+            <div
+              data-panel
+              className="relative overflow-hidden rounded-[3px]"
+              style={{ backgroundColor: panelTint }}
+            >
+              <div data-panel-inner className="px-6 py-7 md:px-8 md:py-8">
+                <div data-rule className={`h-px w-full origin-left ${ruleColor}`} />
+                <h3 className={`mt-6 text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>
+                  {o.formats ? o.formatsTitle : o.receiveTitle}
+                </h3>
+                {o.formats ? (
+                  <ul className={`mt-4 divide-y ${ink ? 'divide-or/15' : 'divide-encre/12'}`}>
+                    {o.formats.map((f) => (
+                      <li data-detail key={f.label} className="flex items-baseline justify-between gap-6 py-3">
+                        <span className={`min-w-0 flex-1 font-display text-[16px] font-light ${cTitle}`}>
+                          {f.label}
+                          {f.tag && (
+                            <span className="ml-2 align-middle text-[9px] uppercase tracking-[0.2em] text-orfonce">
+                              {f.tag}
+                            </span>
+                          )}
+                        </span>
+                        <span className={`w-[38%] shrink-0 text-right text-[13px] font-normal leading-[1.4] tabular-nums ${cMuted}`}>
+                          {f.price}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <ul className="mt-5 grid gap-x-10 gap-y-3 sm:grid-cols-2">
+                    {o.receive.map((it) => (
+                      <li
+                        data-detail
+                        key={it}
+                        className={`flex items-start gap-3.5 text-[14.5px] font-light leading-[1.5] ${ink ? 'text-sable/90' : 'text-encre/85'}`}
+                      >
+                        <span aria-hidden="true" className={`mt-[0.6em] h-px w-4 shrink-0 ${ink ? 'bg-or/60' : 'bg-orfonce/70'}`} />
+                        <span>{it}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
           </div>
-          <button
-            type="button"
-            onClick={() => onContact(o.name)}
-            className={`pointer-events-auto ${ink ? CTA_INK : CTA_LIGHT}`}
+
+          {/* Pied : prix + appel à l'action (le CTA arrive en dernier). */}
+          <div
+            data-footer
+            className={`mt-9 flex flex-col items-start gap-5 border-t pt-6 sm:flex-row sm:items-end sm:justify-between ${cRule}`}
           >
-            {o.cta}
-          </button>
+            <div>
+              <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
+              <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light leading-none tabular-nums ${cTitle}`}>
+                {o.price}
+              </p>
+              {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
+            </div>
+            <button
+              data-cta
+              type="button"
+              onClick={() => onContact(o.name)}
+              className={`pointer-events-auto ${ink ? CTA_INK : CTA_LIGHT}`}
+            >
+              {o.cta}
+            </button>
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-// Construit la timeline scrubbée + l'épingle, dans le scroller de la section
-// (le scroll vit à l'intérieur de <section>, d'où le `scroller` explicite et
-// `pinType: 'transform'`). Rythme par chapitre (fractions locales, base = i) :
-// ~0–20% le numéro apparaît immense ; 20–42% il rétrécit et rejoint sa place ;
-// 34–62% titre, sous-titre, description, détail, CTA arrivent en cascade ;
-// 62–85% composition posée et lisible ; 85–100% sortie douce (sauf la dernière
-// offre, qui reste lisible et glisse ensuite vers le bas de page).
-function buildOffersTimeline(root, scroller) {
-  const chapters = Array.from(root.querySelectorAll('[data-chapter]'))
+// Construit la timeline scrubbée. L'épingle N'EST PAS faite par GSAP mais par
+// `position: sticky` (natif) sur la scène : plus de « transform-follow » du
+// scroll interne, donc plus de tremblement. ScrollTrigger ne sert qu'à mapper
+// la progression du scroll sur la timeline (scrub), sans `pin`.
+//
+// Rythme par offre (fractions locales, base = i, durée verrouillée à N pour une
+// répartition régulière) :
+//   0–15 %  numéro monumental (compteur partagé, centré)
+//   15–35 % le numéro rétrécit (scale) et rejoint son repère
+//   28–48 % la promesse se révèle au masque (label, titre, sous-titre, texte)
+//   40–65 % le panneau de détail s'ouvre (clip-path) + léger scale interne
+//   50–75 % la ligne se déploie, les précisions arrivent, le CTA en dernier
+//   75–88 % composition complète maintenue
+//   88–100 % transition continue : le contenu est repris au masque, le
+//            compteur grandit à nouveau et roule vers le numéro suivant.
+function buildOffersTimeline(scene, track, scroller) {
+  const chapters = Array.from(scene.querySelectorAll('[data-chapter]'))
   const N = chapters.length
+  const counter = scene.querySelector('[data-counter]')
+  const strip = scene.querySelector('[data-counter-strip]')
 
-  // Point de départ du numéro : immense et centré dans l'écran. Mesuré (origine
-  // au centre) pour rester juste à toute taille ; réévalué à chaque refresh via
-  // les valeurs-fonctions ci-dessous + invalidateOnRefresh.
-  const heroFrom = (num) => {
-    const saved = num.style.transform
-    num.style.transform = 'none'
-    const r = num.getBoundingClientRect()
-    const s = root.getBoundingClientRect()
-    num.style.transform = saved
-    if (!r.height) return { x: 0, y: 0, scale: 3 }
+  // Transform « monumental » du compteur : sa boîte naturelle (échelle 1)
+  // ramenée au centre de la scène. Mesuré (jamais pendant le scroll), réévalué
+  // à chaque refresh via valeurs-fonctions + invalidateOnRefresh.
+  const centered = () => {
+    const saved = counter.style.transform
+    counter.style.transform = 'none'
+    const r = counter.getBoundingClientRect()
+    const s = scene.getBoundingClientRect()
+    counter.style.transform = saved
+    // Le chiffre repose bas dans sa boîte de ligne : on remonte de ~0.14em
+    // (fraction de la hauteur) pour centrer le glyphe, pas la boîte.
     return {
       x: s.left + s.width / 2 - (r.left + r.width / 2),
-      y: s.top + s.height / 2 - (r.top + r.height / 2),
-      scale: (s.height * 0.62) / r.height,
+      y: s.top + s.height / 2 - (r.top + r.height / 2) - r.height * 0.14,
     }
   }
+  const MARK = 0.15 // échelle du repère (numéro réduit)
+  const inkColor = (el) => (el.dataset.ink === '1' ? '#F3E9DA' : '#1a1512')
 
   const tl = gsap.timeline({
+    defaults: { ease: 'power2.out' },
     scrollTrigger: {
-      trigger: root,
+      trigger: track,
       scroller,
       start: 'top top',
-      end: () => '+=' + Math.round(scroller.clientHeight * STEP * N),
-      pin: true,
-      pinType: 'transform',
-      anticipatePin: 1,
+      end: 'bottom bottom',
       scrub: 0.8,
       invalidateOnRefresh: true,
     },
   })
 
+  // ── Compteur partagé — état de départ : monumental, sur l'offre 1 ──
+  gsap.set(counter, {
+    transformOrigin: 'left top',
+    color: inkColor(chapters[0]),
+    x: () => centered().x,
+    y: () => centered().y,
+    scale: 1,
+  })
+  gsap.set(strip, { yPercent: 0 })
+
   chapters.forEach((ch, i) => {
     const b = i
     const isLast = i === N - 1
     const bg = ch.querySelector('[data-bg]')
-    const num = ch.querySelector('[data-num]')
     const content = ch.querySelector('[data-content]')
-    const els = ch.querySelectorAll('[data-el]')
-    const faint = ch.dataset.ink === '1' ? 0.16 : 0.12
+    const lines = ch.querySelectorAll('[data-line]')
+    const desc = ch.querySelector('[data-desc]')
+    const panel = ch.querySelector('[data-panel]')
+    const panelInner = ch.querySelector('[data-panel-inner]')
+    const rule = ch.querySelector('[data-rule]')
+    const details = ch.querySelectorAll('[data-detail]')
+    const footer = ch.querySelector('[data-footer]')
+    const cta = ch.querySelector('[data-cta]')
 
-    // États initiaux — posés avant peinture, pas de flash de composition
+    // États initiaux (posés avant peinture) — transform/opacity/clip uniquement
     gsap.set(bg, { autoAlpha: i === 0 ? 1 : 0 })
-    gsap.set(num, { autoAlpha: 0, transformOrigin: '50% 50%' })
-    gsap.set(els, { autoAlpha: 0, y: 26 })
+    gsap.set(content, { clipPath: 'inset(0% 0% 0% 0%)' })
+    gsap.set(lines, { yPercent: 115 })
+    gsap.set([desc, footer, cta], { autoAlpha: 0, y: 20 })
+    gsap.set(panel, { clipPath: 'inset(50% 0% 50% 0%)' })
+    gsap.set(panelInner, { scale: 1.06, transformOrigin: '50% 50%' })
+    gsap.set(rule, { scaleX: 0 })
+    gsap.set(details, { autoAlpha: 0, y: 16 })
 
-    // Apparition légèrement anticipée : le numéro naît pendant la sortie de
-    // l'offre précédente, si bien qu'il « prend sa place ».
-    const appear = Math.max(0, b - 0.1)
+    // Le fond en fondu croisé (l'offre 0 est déjà là). Anticipé pour que le
+    // prochain univers commence à poindre avant la disparition du précédent.
+    if (i !== 0) tl.to(bg, { autoAlpha: 1, duration: 0.16, ease: 'none' }, Math.max(0, b - 0.1))
 
-    if (i !== 0) tl.to(bg, { autoAlpha: 1, duration: 0.18, ease: 'none' }, appear)
-    tl.fromTo(
-      num,
-      {
-        autoAlpha: 0,
-        x: () => heroFrom(num).x,
-        y: () => heroFrom(num).y,
-        scale: () => heroFrom(num).scale,
-      },
-      { autoAlpha: 1, duration: 0.14, ease: 'power1.out' },
-      appear,
-    )
-    // Le numéro rétrécit, rejoint sa place et s'estompe en filigrane
-    tl.to(num, { x: 0, y: 0, scale: 1, autoAlpha: faint, duration: 0.22, ease: 'power2.inOut' }, b + 0.2)
-    // Titre, sous-titre, description, détail, CTA : arrivée en cascade
-    tl.to(els, { autoAlpha: 1, y: 0, duration: 0.16, ease: 'power2.out', stagger: 0.06 }, b + 0.34)
+    // ── Le numéro rétrécit vers son repère (15–35 %) ──
+    tl.to(counter, { x: 0, y: 0, scale: MARK, duration: 0.2, ease: 'power2.inOut' }, b + 0.15)
 
-    // Sortie douce vers l'offre suivante — la dernière reste lisible et se
-    // laisse dépasser vers le bloc « Comment nous travaillons ».
+    // ── Tableau 3 — la promesse se révèle au masque (28–48 %) ──
+    tl.to(lines, { yPercent: 0, duration: 0.16, ease: 'power3.out', stagger: 0.06 }, b + 0.28)
+    tl.to(desc, { autoAlpha: 1, y: 0, duration: 0.16 }, b + 0.42)
+
+    // ── Tableau 4 — le panneau s'ouvre au clip-path (40–65 %) ──
+    tl.to(panel, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.22, ease: 'power2.inOut' }, b + 0.4)
+    tl.to(panelInner, { scale: 1, duration: 0.26, ease: 'power2.out' }, b + 0.4)
+
+    // ── Tableau 5 — la ligne se déploie, les précisions, puis le CTA (50–75 %) ──
+    tl.to(rule, { scaleX: 1, duration: 0.16, ease: 'power2.inOut' }, b + 0.5)
+    tl.to(details, { autoAlpha: 1, y: 0, duration: 0.14, stagger: 0.05 }, b + 0.55)
+    tl.to(footer, { autoAlpha: 1, y: 0, duration: 0.12 }, b + 0.62)
+    tl.to(cta, { autoAlpha: 1, y: 0, duration: 0.12 }, b + 0.69)
+
+    // 75–88 % : composition complète maintenue (aucune animation)
+
+    // ── Tableau 6 — transition continue vers l'offre suivante (88–100 %) ──
     if (!isLast) {
-      tl.to(content, { autoAlpha: 0, y: -30, duration: 0.16, ease: 'power1.in' }, b + 0.85)
-      tl.to(bg, { autoAlpha: 0, duration: 0.16, ease: 'none' }, b + 0.85)
+      // Le contenu est repris par un masque (clip vers le haut)
+      tl.to(content, { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.12, ease: 'power2.in' }, b + 0.88)
+      tl.to(bg, { autoAlpha: 0, duration: 0.16, ease: 'none' }, b + 0.9)
+      // Le compteur grandit à nouveau et roule vers le numéro suivant
+      tl.to(counter, { x: () => centered().x, y: () => centered().y, scale: 1, duration: 0.12, ease: 'power2.inOut' }, b + 0.88)
+      tl.to(strip, { yPercent: -(100 / N) * (i + 1), duration: 0.12, ease: 'power2.inOut' }, b + 0.88)
+      // La couleur du numéro suit l'univers de l'offre suivante (crème si sombre)
+      if (inkColor(chapters[i + 1]) !== inkColor(ch)) {
+        tl.to(counter, { color: inkColor(chapters[i + 1]), duration: 0.12, ease: 'none' }, b + 0.9)
+      }
     }
   })
 
-  // Verrouille la durée totale à N : chaque offre occupe exactement 1/N du
-  // défilement épinglé (répartition régulière, ~STEP hauteurs d'écran chacune),
-  // et la dernière garde un temps de lecture avant de se laisser dépasser.
-  tl.to(root, { duration: 0.001 }, N)
+  // Verrouille la durée totale à N (répartition régulière, ~STEP écrans/offre).
+  tl.to({}, { duration: 0.001 }, N)
 
   return tl
 }
@@ -602,7 +659,8 @@ function buildOffersTimeline(root, scroller) {
 //   classiques, dévoilés au scroll, où tout le détail reste présent.
 function OffersExperience({ offers, onContact, setDark }) {
   const [enhanced, setEnhanced] = useState(false)
-  const rootRef = useRef(null)
+  const sceneRef = useRef(null)
+  const trackRef = useRef(null)
 
   // Mode d'affichage — recalculé au redimensionnement et au changement de
   // préférence de mouvement. Épinglé seulement si la fenêtre est confortable.
@@ -651,70 +709,95 @@ function OffersExperience({ offers, onContact, setDark }) {
     }
   }, [enhanced, setDark])
 
-  // Version épinglée : construit la timeline (nettoyée via gsap.context) et
-  // pilote le thème sombre en lisant l'état réel de la bande Campagne (son
-  // opacité animée et sa position sous le header) — valable pendant l'épingle
-  // comme après, quand la scène glisse vers le bas.
+  // Version épinglée. L'épingle est native (`position: sticky` sur la scène) :
+  // GSAP ne pilote que la timeline scrubbée, sans `pin`, donc sans transform
+  // suivant le scroll — c'est ce qui supprime le tremblement. gsap.context()
+  // nettoie tout au démontage.
   useLayoutEffect(() => {
     if (!enhanced) return
-    const root = rootRef.current
+    const scene = sceneRef.current
+    const track = trackRef.current
     const scroller = document.querySelector('section[aria-label="Offres"]')
-    if (!root || !scroller) return
+    if (!scene || !track || !scroller) return
 
-    const ctx = gsap.context(() => buildOffersTimeline(root, scroller), root)
+    const ctx = gsap.context(() => {
+      buildOffersTimeline(scene, track, scroller)
 
-    // Le thème sombre suit l'état réel de la bande Campagne (opacité animée +
-    // position sous le header). On l'évalue à chaque frame via le ticker GSAP
-    // — et non sur l'évènement scroll — car l'opacité est posée par le scrub,
-    // qui continue de se stabiliser après l'arrêt du scroll (aucun évènement
-    // scroll pendant ce temps). Couvre aussi la sortie, quand la scène glisse
-    // vers le bas et cesse de couvrir le header. On ne remonte l'état qu'au
-    // changement, pour ne pas relancer de rendu inutilement.
-    const inkBg = root.querySelector('[data-chapter][data-ink="1"] [data-bg]')
-    const NAV = 90
-    let lastDark = null
-    const tick = () => {
-      if (!inkBg) return
-      const r = inkBg.getBoundingClientRect()
-      let d = false
-      if (r.top <= NAV && r.bottom > NAV) {
-        d = parseFloat(getComputedStyle(inkBg).opacity || '0') > 0.5
-      }
-      if (d !== lastDark) {
-        lastDark = d
-        setDark?.(d)
-      }
-    }
-    gsap.ticker.add(tick)
+      // Thème sombre du header : un ScrollTrigger dédié, à bascule (onToggle).
+      // Aucune mise à jour d'état React dans onUpdate — la bascule ne se
+      // déclenche qu'aux deux bornes. Actif dès que Campagne (offre sombre)
+      // domine, jusqu'à ce que la scène quitte le header en sortie.
+      const pin = () => scroller.clientHeight * STEP * offers.length
+      ScrollTrigger.create({
+        trigger: track,
+        scroller,
+        start: () => 'top top-=' + Math.round(pin() * ((offers.length - 1) / offers.length)),
+        end: () => 'top top-=' + Math.round(pin() + scene.clientHeight - 90),
+        onToggle: (self) => setDark?.(self.isActive),
+        invalidateOnRefresh: true,
+      })
+    }, scene)
 
-    // L'iframe de l'intro modifie la hauteur au chargement : on recadre les
-    // repères de scroll une fois posée.
+    // Recalage seulement après chargement des médias de l'intro (hauteur
+    // changeante) — jamais pendant le scroll.
     const refreshT = setTimeout(() => ScrollTrigger.refresh(), 400)
 
     return () => {
       clearTimeout(refreshT)
-      gsap.ticker.remove(tick)
       ctx.revert()
       setDark?.(false)
     }
-  }, [enhanced, setDark])
+  }, [enhanced, offers, setDark])
 
   if (!enhanced) {
     return offers.map((o, i) => <OfferChapter key={o.id} o={o} i={i} onContact={onContact} />)
   }
 
-  // La scène épinglée est enveloppée dans un conteneur stable, appartenant à
-  // React. GSAP entoure `rootRef` d'un « pin-spacer » (il le déplace dans le
-  // DOM) : si React devait démonter ce nœud-là au passage vers le repli, son
-  // parent enregistré ne correspondrait plus (removeChild échouerait). En
-  // démontant plutôt l'enveloppe, que GSAP ne touche jamais, la bascule reste
-  // propre.
+  // Un seul conteneur épinglé (la scène `sticky`, 100svh, offres en absolute).
+  // La piste (track) donne la longueur de défilement : sa hauteur dépasse la
+  // scène d'exactement N·STEP écrans, ce qui devient la plage de scrub.
+  const scenes = offers.length * STEP + 1
   return (
     <div className="w-full">
-      <div ref={rootRef} id="detail-film" className="relative h-[100dvh] w-full overflow-hidden">
-        {offers.map((o, i) => (
-          <EnhancedChapter key={o.id} o={o} i={i} onContact={onContact} />
-        ))}
+      <div
+        ref={trackRef}
+        id="detail-film"
+        className="relative w-full"
+        style={{ height: `calc(100svh * ${scenes})` }}
+      >
+        <div
+          ref={sceneRef}
+          className="sticky top-0 h-[100svh] w-full overflow-hidden"
+          style={{ backgroundColor: BG }}
+        >
+          {offers.map((o, i) => (
+            <EnhancedChapter key={o.id} o={o} i={i} onContact={onContact} />
+          ))}
+
+          {/* Compteur éditorial partagé : un seul numéro pour toute la séquence,
+              monumental puis repère, qui roule 01 → 02 → 03 aux transitions.
+              Taille CSS fixe : seule l'échelle (scale) est animée. */}
+          <div className="pointer-events-none absolute inset-0 z-20">
+            <div className="relative mx-auto h-full w-full max-w-[1180px]">
+              <div
+                data-counter
+                aria-hidden="true"
+                className="absolute left-6 top-[27vh] font-display font-light leading-[1] tabular-nums md:left-16"
+                style={{ fontSize: '62vh', willChange: 'transform' }}
+              >
+                <div className="overflow-hidden" style={{ height: '1em' }}>
+                  <div data-counter-strip>
+                    {offers.map((o) => (
+                      <div key={o.id} className="leading-[1]">
+                        {o.num}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -731,13 +814,15 @@ export default function Offres({ setDark, onNavigate }) {
     <section
       ref={ref}
       aria-label="Offres"
-      className="h-full overflow-y-auto pt-28"
+      className="h-full overflow-y-auto"
       style={{ backgroundColor: BG }}
     >
       <h1 className="sr-only">Nos offres — Bel Augure</h1>
 
-      {/* ══ Premier écran : titre + film, puis trois cartes condensées ══ */}
-      <div className="mx-auto flex min-h-[calc(100dvh-9rem)] w-full max-w-[1180px] flex-col px-6 md:px-16">
+      {/* ══ Premier écran : titre + film, puis trois cartes condensées ══
+          Le padding haut (dégagement du header) vit ici, plus sur la section :
+          ainsi la scène épinglée `sticky top-0` colle bien au bord du viewport. */}
+      <div className="mx-auto flex min-h-[calc(100dvh-7rem)] w-full max-w-[1180px] flex-col px-6 pt-28 md:px-16">
         {/* Haut : titre à gauche, film à droite */}
         <div className="reveal-up grid flex-1 items-center gap-10 lg:grid-cols-2 lg:gap-16" style={{ '--d': '0.08s' }}>
           <div>
