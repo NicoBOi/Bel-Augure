@@ -48,7 +48,7 @@ const OFFERS = [
     formatsTitle: 'Ponctuellement ou toute l’année',
     formats: [
       {
-        title: 'La collection',
+        title: 'Collection',
         sub: 'Un sujet, plusieurs films.',
         body: [
           'Vous choisissez ce que vous souhaitez mettre en lumière. Nous le racontons à travers plusieurs films courts, imaginés et tournés ensemble.',
@@ -57,7 +57,7 @@ const OFFERS = [
         price: 'À partir de 3 500 € HT',
       },
       {
-        title: 'Le partenariat annuel',
+        title: 'Quatre saisons',
         sub: 'Un nouveau film chaque mois, sans repartir de zéro.',
         body: [
           'Nous préparons l’année autour de vos saisons, de vos nouveautés et de vos temps forts.',
@@ -75,7 +75,7 @@ const OFFERS = [
       'Deux séries de retours',
     ],
     receiveNote: [
-      'Le partenariat comprend également le calendrier annuel et les livraisons mensuelles.',
+      'Quatre saisons comprend également le calendrier annuel et les livraisons mensuelles.',
     ],
     cta: 'Parler de vos prochains films',
   },
