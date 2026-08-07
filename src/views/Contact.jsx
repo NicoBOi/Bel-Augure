@@ -332,13 +332,29 @@ export default function Contact({ onNavigate, prefill }) {
             onChange={update('website')}
           />
 
-          <button
-            type="submit"
-            disabled={sending}
-            className="cta mt-6 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
-          >
-            {sending ? 'Envoi en cours…' : 'Envoyer votre demande'}
-          </button>
+          {/* Le bouton et sa note vivent sur la même ligne : la page ne
+              s'allonge pas d'un paragraphe sous l'appel à l'action. */}
+          <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-7">
+            <button
+              type="submit"
+              disabled={sending}
+              className="cta w-max shrink-0 cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
+            >
+              {sending ? 'Envoi en cours…' : 'Envoyer votre demande'}
+            </button>
+            <p className="max-w-[34ch] text-[11.5px] font-light leading-[1.6] text-encre/55">
+              Réponse sous deux jours ouvrés. Vos informations servent uniquement à vous
+              répondre —{' '}
+              <button
+                type="button"
+                onClick={() => onNavigate?.('confidentialite')}
+                className="cursor-pointer underline decoration-encre/25 underline-offset-2 transition-colors duration-300 hover:text-encre"
+              >
+                politique de confidentialité
+              </button>
+              .
+            </p>
+          </div>
 
           {/* Retour d'état, annoncé aux lecteurs d'écran (envoi / erreur ;
               le succès bascule sur l'annonce de confirmation). */}
@@ -349,21 +365,6 @@ export default function Contact({ onNavigate, prefill }) {
           >
             {sending && <span className="text-grege">Envoi en cours…</span>}
             {status === 'error' && <span className="text-encre/80">{errorMsg}</span>}
-          </p>
-
-          <p className="mt-2 max-w-[52ch] text-[12.5px] font-light leading-[1.7] text-encre/60">
-            Nous vous répondons sous deux jours ouvrés pour convenir d’un premier échange de
-            trente minutes.{' '}
-            <span className="text-[11px] text-encre/45">
-              Vos informations servent uniquement à vous répondre — jamais de prospection.{' '}
-              <button
-                type="button"
-                onClick={() => onNavigate?.('mentions')}
-                className="cursor-pointer underline decoration-encre/30 underline-offset-2 transition-colors duration-300 hover:text-encre"
-              >
-                En savoir plus
-              </button>
-            </span>
           </p>
         </form>
         )}

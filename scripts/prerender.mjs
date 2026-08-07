@@ -107,11 +107,32 @@ const ROUTES = [
   {
     path: '/mentions-legales',
     title: 'Mentions légales · Bel Augure',
-    desc: 'Mentions légales et politique de confidentialité de Bel Augure.',
+    desc: 'Mentions légales de Bel Augure : éditeur, hébergeur et propriété intellectuelle.',
     h1: 'Mentions légales',
     body: `
-      <p>Éditeur : Bel Augure, SARL au capital de 1 000 € — RCS Bordeaux 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux. TVA intracommunautaire : FR45 108 264 524. Directeur de la publication : Nicolas Sempere, gérant (nicolas@belaugure.studio · 06 68 49 95 04). Hébergeur : Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — +1 559 288 7060.</p>
-      <p>Les informations du formulaire de contact sont traitées aux seules fins de répondre à votre message (art. 6-1-b du RGPD) et conservées au plus trois ans après notre dernier échange. Vous disposez de droits d'accès, de rectification, d'effacement, d'opposition, de limitation et de portabilité auprès de nicolas@belaugure.studio, et pouvez adresser une réclamation à la CNIL. Ce site ne dépose aucun cookie de suivi ; la lecture des films fait appel au lecteur Vimeo en mode « Do Not Track ».</p>`,
+      <h2>Éditeur</h2>
+      <p>Bel Augure, SARL au capital de 1 000 € — RCS Bordeaux 108 264 524 — TVA intracommunautaire FR45 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux. Directeur de la publication : Nicolas Sempere, gérant — nicolas@belaugure.studio · 06 68 49 95 04.</p>
+      <h2>Hébergement</h2>
+      <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — +1 559 288 7060 — vercel.com.</p>
+      <h2>Propriété intellectuelle</h2>
+      <p>L'ensemble du site est la propriété de Bel Augure ou de ses clients pour les œuvres qui leur ont été cédées. Toute reproduction sans accord écrit est interdite. © Bel Augure 2026.</p>
+      <p><a href="/confidentialite">Politique de confidentialité</a></p>`,
+  },
+  {
+    path: '/confidentialite',
+    title: 'Confidentialité · Bel Augure',
+    desc: 'Politique de confidentialité de Bel Augure : données collectées, durée de conservation, destinataires et exercice de vos droits.',
+    h1: 'Confidentialité',
+    body: `
+      <h2>Ce que nous collectons, et pourquoi</h2>
+      <p>Le formulaire de contact recueille votre nom, votre établissement, votre email, la nature de votre projet, votre échéance, votre budget et votre message. Ces informations sont traitées par Bel Augure sur la base de mesures précontractuelles prises à votre demande (art. 6-1-b du RGPD), aux seules fins de répondre à votre message. Elles ne sont jamais cédées ni utilisées à des fins de prospection. Seuls le nom, l'email et le message sont nécessaires pour envoyer une demande.</p>
+      <h2>Destinataires et conservation</h2>
+      <p>Votre message est transmis par email et conservé dans notre messagerie ainsi que chez notre prestataire d'envoi Resend Inc. (États-Unis). Le site est hébergé par Vercel Inc. (États-Unis). Ces transferts hors Union européenne sont encadrés par les garanties contractuelles de ces prestataires. Les messages sont conservés au plus trois ans après notre dernier échange.</p>
+      <h2>Vos droits</h2>
+      <p>Vous disposez de droits d'accès, de rectification, d'effacement, d'opposition, de limitation et de portabilité. Ces droits s'exercent auprès de nicolas@belaugure.studio. Vous pouvez également adresser une réclamation à la CNIL (cnil.fr).</p>
+      <h2>Cookies et lecteur vidéo</h2>
+      <p>Ce site ne dépose aucun cookie de suivi et ne mesure pas votre audience. La lecture des films fait appel au lecteur Vimeo (Vimeo.com Inc., États-Unis), configuré en mode « Do Not Track ».</p>
+      <p><a href="/mentions-legales">Mentions légales</a></p>`,
   },
 ]
 
@@ -218,6 +239,7 @@ const SITEMAP_ROUTES = [
   ['/studio', 'yearly', '0.7'],
   ['/contact', 'yearly', '0.8'],
   ['/mentions-legales', 'yearly', '0.2'],
+  ['/confidentialite', 'yearly', '0.2'],
 ]
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

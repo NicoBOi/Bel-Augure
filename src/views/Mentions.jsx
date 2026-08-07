@@ -1,6 +1,9 @@
-// Mentions légales et confidentialité : page sobre, hors navigation
-// principale, accessible depuis le pied de la page Contact (#mentions).
-// Données d'identification issues du Kbis (RCS Bordeaux, 03/08/2026).
+import LegalPage from '../components/LegalPage.jsx'
+
+// Mentions légales — identité de l'éditeur, hébergeur et propriété
+// intellectuelle. La protection des données vit sur sa propre page
+// (/confidentialite) : deux liens de pied de page, deux pages distinctes.
+// Données issues du Kbis (RCS Bordeaux, 03/08/2026).
 const BLOCS = [
   {
     titre: 'Éditeur',
@@ -28,59 +31,20 @@ const BLOCS = [
   },
   {
     titre: 'Données personnelles',
-    ancre: 'confidentialite',
     lignes: [
-      "Les informations du formulaire de contact (nom, établissement, email, projet, échéance, budget, message) sont traitées par Bel Augure sur la base de mesures précontractuelles prises à votre demande (art. 6-1-b du RGPD), aux seules fins de répondre à votre message. Elles ne sont jamais cédées ni utilisées à des fins de prospection.",
-      "Votre message est transmis par email et conservé dans notre messagerie et chez notre prestataire d'envoi Resend Inc. (États-Unis) ; le site est hébergé par Vercel Inc. (États-Unis). Ces transferts sont encadrés par les garanties contractuelles de ces prestataires. Les messages sont conservés au plus trois ans après notre dernier échange.",
-      "Vous disposez de droits d'accès, de rectification, d'effacement, d'opposition, de limitation et de portabilité, à exercer auprès de nicolas@belaugure.studio. Vous pouvez également adresser une réclamation à la CNIL (cnil.fr).",
-      "Ce site ne dépose aucun cookie de suivi. La lecture des films fait appel au lecteur Vimeo (Vimeo.com Inc., États-Unis), configuré en mode « Do Not Track ».",
+      'Le traitement de vos informations est décrit en détail sur la page Confidentialité.',
     ],
   },
 ]
 
 export default function Mentions({ onNavigate }) {
   return (
-    <section
-      aria-label="Mentions légales"
-      className="flex h-full flex-col overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[9vh]"
-    >
-      <p className="text-[11px] font-normal uppercase tracking-[0.3em] text-grege">
-        Mentions légales
-      </p>
-
-      <h1 className="mt-7 font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
-        Le cadre, posé<span className="text-or">.</span>
-      </h1>
-
-      <div className="mt-10 grid max-w-4xl gap-10 md:grid-cols-2">
-        {BLOCS.map((bloc) => (
-          <div key={bloc.titre} id={bloc.ancre} className="scroll-mt-28">
-            <p className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege">
-              {bloc.titre}
-            </p>
-            <div className="mt-3 space-y-3">
-              {bloc.lignes.map((ligne) => (
-                <p key={ligne} className="text-[13px] font-light leading-[1.85] text-encre/80">
-                  {ligne}
-                </p>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <p className="mt-auto pt-16 text-center text-[11px] font-light tracking-[0.04em] text-grege">
-        Studio de production basé à Bordeaux · SIREN 108 264 524
-      </p>
-      <p className="pt-4 text-center">
-        <button
-          type="button"
-          onClick={() => onNavigate?.('contact')}
-          className="cursor-pointer py-2 -my-2 text-[11px] font-light tracking-[0.04em] text-grege transition-colors duration-500 hover:text-encre"
-        >
-          Nous écrire
-        </button>
-      </p>
-    </section>
+    <LegalPage
+      titre="Mentions légales"
+      blocs={BLOCS}
+      onNavigate={onNavigate}
+      lienVue="confidentialite"
+      lienLabel="Confidentialité"
+    />
   )
 }

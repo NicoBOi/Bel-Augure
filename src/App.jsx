@@ -10,6 +10,7 @@ const Studio = lazy(() => import('./views/Studio.jsx'))
 const Offres = lazy(() => import('./views/Offres.jsx'))
 const Contact = lazy(() => import('./views/Contact.jsx'))
 const Mentions = lazy(() => import('./views/Mentions.jsx'))
+const Confidentialite = lazy(() => import('./views/Confidentialite.jsx'))
 
 // Film de fond du héros. Monté ici, au niveau de l'application : il ne se
 // démonte jamais quand on navigue, la lecture continue en coulisse et le
@@ -27,6 +28,7 @@ const VIEWS = {
   offres: Offres,
   contact: Contact,
   mentions: Mentions,
+  confidentialite: Confidentialite,
 }
 
 const TITLES = {
@@ -36,6 +38,7 @@ const TITLES = {
   offres: 'Offres · Bel Augure',
   contact: 'Contact · Bel Augure',
   mentions: 'Mentions légales · Bel Augure',
+  confidentialite: 'Confidentialité · Bel Augure',
 }
 
 // La description suit la vue : chaque page raconte sa propre promesse
@@ -51,7 +54,9 @@ const DESCRIPTIONS = {
     'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Tous les droits sont cédés à durée illimitée dès la livraison.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
-  mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
+  mentions: 'Mentions légales de Bel Augure : éditeur, hébergeur et propriété intellectuelle.',
+  confidentialite:
+    'Politique de confidentialité de Bel Augure : données collectées, durée de conservation, destinataires et exercice de vos droits.',
 }
 
 // Chaque vue vit à sa propre URL (/films, /offres…) : indexable,
@@ -64,6 +69,7 @@ const VIEW_PATHS = {
   offres: '/offres',
   contact: '/contact',
   mentions: '/mentions-legales',
+  confidentialite: '/confidentialite',
 }
 
 const PATH_VIEWS = Object.fromEntries(
@@ -101,6 +107,10 @@ export default function App() {
   // Pré-remplissage du formulaire Contact : la page Offres y dépose le
   // récapitulatif du devis composé, repris à l'arrivée sur Contact.
   const [contactPrefill, setContactPrefill] = useState(null)
+  // Profondeur de navigation interne : tant qu'elle est nulle, la page a été
+  // ouverte directement (lien, moteur de recherche) et « Retour » ramène à
+  // l'accueil plutôt que de faire quitter le site.
+  const [depth, setDepth] = useState(0)
   const bootAt = useRef(performance.now())
   // Zone de contenu principal : reçoit le focus après chaque navigation pour
   // que les utilisateurs clavier / lecteur d'écran atterrissent dans la
@@ -134,7 +144,15 @@ export default function App() {
     // la vue déjà active — cliquer le logo depuis l'accueil scrollé remet
     // donc bien la scène en haut au lieu de rester sur place.
     setNavTick((t) => t + 1)
+    setDepth((d) => d + 1)
     window.history.pushState(null, '', VIEW_PATHS[next])
+  }
+
+  // Retour : on remonte l'historique tant qu'on reste dans le site, sinon
+  // on rejoint l'accueil (arrivée directe sur une page profonde).
+  const goBack = () => {
+    if (depth > 0) window.history.back()
+    else navigate('accueil')
   }
 
   // Ancien lien en #hash : réécrit une fois vers le chemin propre.
@@ -155,6 +173,7 @@ export default function App() {
       import('./views/Studio.jsx')
       import('./views/Contact.jsx')
       import('./views/Mentions.jsx')
+      import('./views/Confidentialite.jsx')
     }
     const ric = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500))
     const cancel = window.cancelIdleCallback || clearTimeout
@@ -169,6 +188,7 @@ export default function App() {
       setDark(next === 'accueil')
       setView(next)
       setNavTick((t) => t + 1)
+      setDepth((d) => Math.max(0, d - 1))
     }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
@@ -267,7 +287,7 @@ export default function App() {
         </div>
       </div>
 
-      <Navbar activeView={view} onNavigate={navigate} dark={dark} />
+      <Navbar activeView={view} onNavigate={navigate} onBack={goBack} dark={dark} />
       <main className="relative z-[1] h-full">
         <div ref={mainRef} tabIndex={-1} key={`${view}-${navTick}`} className="view-enter h-full outline-none">
           <Suspense fallback={null}>
