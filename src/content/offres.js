@@ -82,7 +82,7 @@ export const OFFERS = [
     price: 'À partir de 15 000 € HT',
     promise: 'Donnez à votre prochain temps fort toute l’ampleur qu’il mérite.',
     description: [
-      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons un concept créatif capable de donner une identité forte à votre lancement.',
+      'Pour une ouverture, une nouvelle gamme ou une nouvelle identité, nous imaginons le concept créatif qui fera de ce moment un véritable événement.',
       'Un film principal en révèle l’univers. Une série de films courts l’annonce, en dévoile les détails et prolonge son impact sur vos différents points de contact.',
       'Une seule idée, déclinée en plusieurs films qui se répondent et se reconnaissent au premier regard.',
     ],
