@@ -240,7 +240,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           Même logique d'effacement que l'invite mobile (fondu dans apply). */}
       <div
         ref={deskHintRef}
-        className="pointer-events-none absolute inset-x-0 bottom-[2.5vh] z-[2] hidden justify-center md:flex"
+        className="pointer-events-none absolute inset-x-6 bottom-[2vh] z-[2] hidden justify-end md:inset-x-16 md:flex"
       >
         <button
           type="button"
@@ -249,22 +249,14 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             ensureRef.current?.()
           }}
           aria-label="Découvrir le studio"
-          className="pointer-events-auto group flex cursor-pointer flex-col items-center px-8 py-3"
+          className="pointer-events-auto group -mr-4 flex cursor-pointer flex-col items-center px-4 py-3"
         >
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          {/* Un filet, comme partout ailleurs sur le site, parcouru d'une
+              lueur d'or qui descend : le geste est indiqué sans icône. */}
+          <span
             aria-hidden="true"
-            className="hero-arrow text-creme/70 transition-colors duration-500 group-hover:text-creme"
-          >
-            <path d="M12 4v16M6.5 14.5 12 20l5.5-5.5" />
-          </svg>
+            className="hero-scroll-line block h-8 w-px bg-creme/20 transition-colors duration-500 group-hover:bg-creme/45"
+          />
         </button>
       </div>
 
