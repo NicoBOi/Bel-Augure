@@ -75,11 +75,11 @@ const ROUTES = [
   {
     path: '/studio',
     title: 'Studio de production à Bordeaux · Bel Augure',
-    desc: "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempéré et Corentin Crestia : des films de marque pour l'hôtellerie et le bien-être haut de gamme.",
+    desc: "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia : des films de marque pour l'hôtellerie et le bien-être haut de gamme.",
     h1: 'Derrière chaque film, nous sommes deux',
     body: `
-      <p>Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempéré et Corentin Crestia. Nous concevons des films de marque pour l'hôtellerie et le bien-être haut de gamme. Nous nous connaissons depuis quinze ans. Après avoir développé séparément nos métiers, nous avons créé Bel Augure pour réunir l'écriture, la réalisation et la postproduction au sein d'un même studio.</p>
-      <h2>Nicolas Sempéré — réalisateur, directeur de la photographie, coloriste</h2>
+      <p>Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia. Nous concevons des films de marque pour l'hôtellerie et le bien-être haut de gamme. Nous nous connaissons depuis quinze ans. Après avoir développé séparément nos métiers, nous avons créé Bel Augure pour réunir l'écriture, la réalisation et la postproduction au sein d'un même studio.</p>
+      <h2>Nicolas Sempere — réalisateur, directeur de la photographie, coloriste</h2>
       <p>Formé au son et au motion design, Nicolas a travaillé en freelance puis chez Betclic, Open Zone et Smart Brain. Il a également collaboré avec Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, il dirige la réalisation, l'image, la lumière et l'étalonnage.</p>
       <h2>Corentin Crestia — auteur, monteur, motion designer</h2>
       <p>Corentin s'est spécialisé dans l'écriture, le montage et la création de contenus destinés aux entreprises et aux réseaux sociaux. Chez Bel Augure, il conçoit et écrit les films, puis prend en charge le montage et le sound design.</p>
@@ -91,7 +91,7 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Diffusion digitale et réseaux sans limite de durée incluse. Proposition détaillée après un échange de trente minutes.',
+    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Droits de diffusion offerts à vie. Proposition détaillée après un échange de trente minutes.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: offresBody(),
   },

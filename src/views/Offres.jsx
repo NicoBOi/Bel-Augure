@@ -312,9 +312,9 @@ export default function Offres({ setDark, onNavigate }) {
             ))}
           </ol>
 
-          <div className={`mt-12 border-t pt-8 ${RULE}`}>
+          <div className={`mt-12 border-t pt-8 text-center ${RULE}`}>
             <h3 className="font-display text-[16px] leading-[1.4] text-encre">{DIFFUSION.title}</h3>
-            <p className="mt-3 max-w-[70ch] text-[14px] font-light leading-[1.85] text-encre/80">{DIFFUSION.body}</p>
+            <p className="mx-auto mt-3 max-w-[70ch] text-[14px] font-light leading-[1.85] text-encre/80">{DIFFUSION.body}</p>
           </div>
         </div>
       </div>

@@ -122,5 +122,5 @@ export const PROCESS = [
 
 export const DIFFUSION = {
   title: 'La diffusion, en clair',
-  body: 'Tous nos prix incluent l’utilisation de vos films sur le digital et les réseaux sociaux, en France et sans limite de durée. Télévision, affichage, cinéma ou international : ces usages sont définis et chiffrés dès la proposition.',
+  body: 'Tous nos films sont livrés avec leurs droits de diffusion offerts, à vie.',
 }

@@ -5,7 +5,7 @@ import { useReveal } from '../hooks/useReveal.js'
 // Texte fourni par le studio (août 2026).
 const FONDATEURS = [
   {
-    nom: 'Nicolas Sempéré',
+    nom: 'Nicolas Sempere',
     roles: 'Réalisateur — Directeur de la photographie — Coloriste',
     bio: [
       'Formé au son et au motion design, Nicolas a travaillé en freelance puis chez Betclic, Open Zone et Smart Brain. Il a également collaboré avec Better Feeling, Sephora et Showroomprivé.',
@@ -72,7 +72,7 @@ export default function Studio({ onNavigate }) {
             style={{ '--d': '0.35s', textWrap: 'pretty' }}
           >
             <p>
-              Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempéré et
+              Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempere et
               Corentin Crestia. Nous concevons des films de marque pour l’hôtellerie et le
               bien-être haut de gamme.
             </p>
