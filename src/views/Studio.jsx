@@ -95,7 +95,7 @@ export default function Studio({ onNavigate }) {
           {FONDATEURS.map((f) => (
             <div
               key={f.nom}
-              className="rounded-xl border border-encre/12 p-7 md:p-9"
+              className="rounded-xl border border-encre/12 p-7 text-center md:p-9"
               style={{ backgroundColor: f.teinte }}
             >
               <h2 className="font-display text-[clamp(1.5rem,2.4vw,2rem)] font-light leading-[1.1] text-encre">
@@ -104,7 +104,7 @@ export default function Studio({ onNavigate }) {
               <p className="mt-3 text-[10px] font-normal uppercase tracking-[0.22em] leading-[1.9] text-orfonce">
                 {f.roles}
               </p>
-              <div className="mt-5 space-y-3 text-[14px] font-light leading-[1.8] text-encre/80">
+              <div className="mx-auto mt-5 max-w-[42ch] space-y-3 text-[14px] font-light leading-[1.8] text-encre/80">
                 {f.bio.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
