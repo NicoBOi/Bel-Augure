@@ -6,7 +6,6 @@ import { useReveal } from '../hooks/useReveal.js'
 const FONDATEURS = [
   {
     nom: 'Nicolas Sempere',
-    monogramme: 'NS',
     teinte: '#F4ECDF',
     roles: 'Réalisateur — Directeur de la photographie — Coloriste',
     bio: [
@@ -16,7 +15,6 @@ const FONDATEURS = [
   },
   {
     nom: 'Corentin Crestia',
-    monogramme: 'CC',
     teinte: '#E6D8C1',
     roles: 'Auteur — Monteur — Motion designer',
     bio: [
@@ -100,13 +98,7 @@ export default function Studio({ onNavigate }) {
               className="rounded-xl border border-encre/12 p-7 md:p-9"
               style={{ backgroundColor: f.teinte }}
             >
-              <span
-                aria-hidden="true"
-                className="block font-display text-[clamp(3rem,6vw,4.5rem)] font-light leading-[0.9] text-encre"
-              >
-                {f.monogramme}
-              </span>
-              <h2 className="mt-6 font-display text-[clamp(1.5rem,2.4vw,2rem)] font-light leading-[1.1] text-encre">
+              <h2 className="font-display text-[clamp(1.5rem,2.4vw,2rem)] font-light leading-[1.1] text-encre">
                 {f.nom}
               </h2>
               <p className="mt-3 text-[10px] font-normal uppercase tracking-[0.22em] leading-[1.9] text-orfonce">
