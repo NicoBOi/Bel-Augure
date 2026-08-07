@@ -10,7 +10,6 @@ const FONDATEURS = [
     roles: 'Réalisateur — Directeur de la photographie — Coloriste',
     bio: [
       'Formé au son et au motion design, Nicolas a travaillé en freelance puis chez Betclic, Open Zone et Smart Brain. Il a également collaboré avec Better Feeling, Sephora et Showroomprivé.',
-      'Chez Bel Augure, il dirige la réalisation, l’image, la lumière et l’étalonnage.',
     ],
   },
   {
@@ -19,7 +18,6 @@ const FONDATEURS = [
     roles: 'Auteur — Monteur — Motion designer',
     bio: [
       'Corentin s’est spécialisé dans l’écriture, le montage et la création de contenus destinés aux entreprises et aux réseaux sociaux.',
-      'Chez Bel Augure, il conçoit et écrit les films, puis prend en charge le montage et le sound design.',
     ],
   },
 ]
