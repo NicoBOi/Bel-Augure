@@ -6,9 +6,10 @@ const BLOCS = [
     titre: 'Éditeur',
     lignes: [
       'Bel Augure, société à responsabilité limitée au capital de 1 000 €.',
-      'RCS Bordeaux 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux.',
+      'RCS Bordeaux 108 264 524 — TVA intracommunautaire : FR45 108 264 524.',
+      'Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux.',
       'Directeur de la publication : Nicolas Sempere, gérant.',
-      'Contact : nicolas@belaugure.studio.',
+      'Contact : nicolas@belaugure.studio · 06 68 49 95 04.',
     ],
   },
   {

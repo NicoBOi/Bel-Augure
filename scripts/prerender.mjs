@@ -76,7 +76,7 @@ const ROUTES = [
     desc: "Bel Augure, studio de production à Bordeaux : Nicolas Sempere et Corentin Crestia filment les hôtels, spas et maisons de bien-être d'exception.",
     h1: 'Studio de production à Bordeaux — Nicolas Sempere & Corentin Crestia',
     body: `
-      <p>Bel Augure est un studio neuf ; ses fondateurs ne le sont pas. Nicolas Sempere et Corentin Crestia, quinze ans d'amitié, ont chacun fait leurs armes de leur côté — Nicolas dans l'événementiel, Corentin sur les plateaux, entre cinéma et mode — avant de réunir leurs deux métiers dans un même studio. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée en interne, à Bordeaux. Un seul interlocuteur, deux regards sur chaque plan.</p>
+      <p>Bel Augure est un studio neuf ; ses fondateurs ne le sont pas. Nicolas Sempere, venu de la 3D puis passé par la photographie et le film, a travaillé pour des artistes comme MadeinParis, des marques comme A Better Feeling, et signé des campagnes FOOH avec Sephora et Showroomprivé. Corentin Crestia a fait ses armes dans le film institutionnel, en interne pour les écoles Ynov et MJM. Quinze ans d'amitié, deux métiers réunis dans un même studio. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée en interne, à Bordeaux. Un seul interlocuteur, deux regards sur chaque plan.</p>
       <p>Filmer celles et ceux qui prennent soin des autres, c'est exactement ce que nous avons choisi de faire.</p>`,
   },
   {
@@ -93,7 +93,7 @@ const ROUTES = [
     h1: 'Contact — parlons de votre prochain film',
     body: `
       <p>Écrivez-nous en quelques lignes : votre maison, votre projet, votre échéance. Nous vous répondons généralement sous deux jours ouvrés pour convenir d'un premier échange de trente minutes.</p>
-      <p><a href="mailto:nicolas@belaugure.studio">nicolas@belaugure.studio</a> · Bordeaux · Nouvelle-Aquitaine</p>`,
+      <p><a href="mailto:nicolas@belaugure.studio">nicolas@belaugure.studio</a> · <a href="tel:+33668499504">06 68 49 95 04</a> · Bordeaux · Nouvelle-Aquitaine</p>`,
   },
   {
     path: '/mentions-legales',
@@ -101,7 +101,7 @@ const ROUTES = [
     desc: 'Mentions légales et politique de confidentialité de Bel Augure.',
     h1: 'Mentions légales',
     body: `
-      <p>Éditeur : Bel Augure, SARL au capital de 1 000 € — RCS Bordeaux 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux. Directeur de la publication : Nicolas Sempere, gérant (nicolas@belaugure.studio). Hébergeur : Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
+      <p>Éditeur : Bel Augure, SARL au capital de 1 000 € — RCS Bordeaux 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux. TVA intracommunautaire : FR45 108 264 524. Directeur de la publication : Nicolas Sempere, gérant (nicolas@belaugure.studio · 06 68 49 95 04). Hébergeur : Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
       <p>Les informations du formulaire de contact sont traitées aux seules fins de répondre à votre message (art. 6-1-b du RGPD) et conservées au plus trois ans après notre dernier échange. Vous disposez de droits d'accès, de rectification, d'effacement, d'opposition, de limitation et de portabilité auprès de nicolas@belaugure.studio, et pouvez adresser une réclamation à la CNIL. Ce site ne dépose aucun cookie de suivi ; la lecture des films fait appel au lecteur Vimeo en mode « Do Not Track ».</p>`,
   },
 ]

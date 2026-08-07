@@ -124,6 +124,17 @@ export default function Contact({ onNavigate, prefill }) {
               <span className="nav-label">nicolas@belaugure.studio</span>
             </a>
           </p>
+          <p
+            className="reveal-up mt-2 text-[13px] font-light tracking-[0.04em] text-grege"
+            style={{ '--d': '0.1s' }}
+          >
+            <a
+              href="tel:+33668499504"
+              className="nav-link text-encre/80 transition-colors duration-500 hover:text-encre"
+            >
+              <span className="nav-label">06 68 49 95 04</span>
+            </a>
+          </p>
           <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.32s' }}>
             Bordeaux · Nouvelle-Aquitaine
           </p>

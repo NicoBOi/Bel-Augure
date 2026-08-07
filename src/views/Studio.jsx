@@ -31,10 +31,12 @@ export default function Studio({ onNavigate }) {
         >
           <p>
             Bel Augure est un studio neuf&nbsp;; ses fondateurs ne le sont pas.
-            Nicolas Sempere et Corentin Crestia, quinze ans d'amitié, ont chacun
-            fait leurs armes de leur côté — Nicolas dans l'événementiel,
-            Corentin sur les plateaux, entre cinéma et mode — avant de réunir
-            leurs deux métiers dans un même studio.
+            Nicolas Sempere, venu de la 3D puis passé par la photographie et le
+            film, a travaillé pour des artistes comme MadeinParis, des marques
+            comme A Better Feeling, et signé des campagnes FOOH avec Sephora et
+            Showroomprivé. Corentin Crestia a fait ses armes dans le film
+            institutionnel, en interne pour les écoles Ynov et MJM. Quinze ans
+            d'amitié, deux métiers réunis dans un même studio.
           </p>
           <p>
             Ensemble, nous prenons en charge tout votre film, de la première
