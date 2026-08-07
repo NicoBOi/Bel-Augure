@@ -75,11 +75,18 @@ const ROUTES = [
   {
     path: '/studio',
     title: 'Studio de production à Bordeaux · Bel Augure',
-    desc: "Bel Augure, studio de production à Bordeaux : Nicolas et Corentin filment les hôtels, spas et maisons de bien-être d'exception.",
-    h1: 'Studio de production à Bordeaux — Nicolas & Corentin',
+    desc: "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempéré et Corentin Crestia : des films de marque pour l'hôtellerie et le bien-être haut de gamme.",
+    h1: 'Derrière chaque film, nous sommes deux',
     body: `
-      <p>Bel Augure, c'est nous deux : Nicolas et Corentin. Quinze ans d'amitié et deux parcours qui se complètent — l'un vient de l'événementiel, l'autre du cinéma et de la mode. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée à Bordeaux dans notre studio. Un seul interlocuteur, deux regards sur chaque plan.</p>
-      <p>Filmer celles et ceux qui prennent soin des autres, c'est exactement ce que nous avons choisi de faire.</p>`,
+      <p>Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempéré et Corentin Crestia. Nous concevons des films de marque pour l'hôtellerie et le bien-être haut de gamme. Nous nous connaissons depuis quinze ans. Après avoir développé séparément nos métiers, nous avons créé Bel Augure pour réunir l'écriture, la réalisation et la postproduction au sein d'un même studio.</p>
+      <h2>Nicolas Sempéré — réalisateur, directeur de la photographie, coloriste</h2>
+      <p>Formé au son et au motion design, Nicolas a travaillé en freelance puis chez Betclic, Open Zone et Smart Brain. Il a également collaboré avec Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, il dirige la réalisation, l'image, la lumière et l'étalonnage.</p>
+      <h2>Corentin Crestia — auteur, monteur, motion designer</h2>
+      <p>Corentin s'est spécialisé dans l'écriture, le montage et la création de contenus destinés aux entreprises et aux réseaux sociaux. Chez Bel Augure, il conçoit et écrit les films, puis prend en charge le montage et le sound design.</p>
+      <h2>Pourquoi ce secteur</h2>
+      <p>Dans l'hôtellerie et le bien-être, l'image doit transmettre une expérience avant la visite ou l'achat. Pourtant, beaucoup de films montrent un lieu ou un produit sans parvenir à en faire ressentir la singularité. Nous réunissons une image exigeante et une narration précise pour créer des films qui donnent envie de vivre cette expérience.</p>
+      <h2>Deux interlocuteurs, du début à la fin</h2>
+      <p>Nous réalisons l'écriture, le tournage et la postproduction en interne. Nous sommes tous les deux présents à chaque étape importante du projet. Lorsque la production le demande, nous constituons une équipe adaptée : techniciens, comédiens ou équipe dédiée aux coulisses. Cette organisation légère nous permet de travailler avec discrétion, y compris dans des établissements en activité, tout en maintenant une direction claire du premier échange à la livraison.</p>`,
   },
   {
     path: '/offres',
