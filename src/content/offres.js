@@ -43,10 +43,9 @@ export const OFFERS = [
     formats: [
       {
         title: 'Collection',
-        sub: 'Une journée pour créer votre prochaine collection de contenus.',
+        sub: 'Créez une collection de contenus autour d’un même sujet.',
         body: [
-          'Une journée de tournage consacrée à une expérience, une gamme ou un temps fort de votre marque.',
-          'À partir de trois films principaux et leurs déclinaisons courtes, pensés pour multiplier les prises de parole sur vos réseaux.',
+          'À partir de trois films et leurs déclinaisons courtes, autour d’une expérience, d’une gamme, d’un savoir-faire ou d’un temps fort.',
         ],
         closing: 'Ponctuel',
         price: 'À partir de 3 500 € HT',
@@ -56,7 +55,7 @@ export const OFFERS = [
         sub: 'De nouvelles histoires à raconter chaque mois.',
         body: [
           'Une journée de tournage chaque mois pour renouveler les images de votre marque au rythme de vos saisons, nouveautés et temps forts.',
-          'Chaque tournage produit une collection de films et formats courts prêts à alimenter vos réseaux pendant le mois.',
+          'Chaque mois, au moins quatre films et leurs déclinaisons courtes, prêts à alimenter vos réseaux.',
         ],
         closing: 'Récurrent',
         price: 'À partir de 3 000 € HT par mois',
@@ -83,7 +82,7 @@ export const OFFERS = [
     price: 'À partir de 15 000 € HT',
     promise: 'Donnez à votre prochain temps fort toute l’ampleur qu’il mérite.',
     description: [
-      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons un concept créatif capable de porter toute votre communication.',
+      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons un concept créatif capable de donner une identité forte à votre lancement.',
       'Un film principal en révèle l’univers. Une série de films courts l’annonce, en dévoile les détails et prolonge son impact sur vos différents points de contact.',
       'Une seule idée, déclinée en plusieurs films qui se répondent et se reconnaissent au premier regard.',
     ],

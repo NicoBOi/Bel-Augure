@@ -46,8 +46,8 @@ Trois ans de conception de contenus pour l'entreprise et l'événementiel.
 | Offre | Pour | Prix |
 | --- | --- | --- |
 | **Film Signature** | Présenter la marque — film de référence de 60 à 90 s, plus versions courtes 30 s et 15 s | à partir de **5 500 €** |
-| **Histoires de marque — Collection** | Une journée de tournage : au moins trois films principaux et leurs déclinaisons courtes | à partir de **3 500 €** |
-| **Histoires de marque — Quatre saisons** | Une journée de tournage par mois, calendrier annuel des sujets | à partir de **3 000 € / mois**, engagement 12 mois |
+| **Histoires de marque — Collection** | Au moins trois films et leurs déclinaisons courtes, autour d'un même sujet | à partir de **3 500 €** |
+| **Histoires de marque — Quatre saisons** | Une journée de tournage par mois — **au moins quatre films et leurs déclinaisons courtes chaque mois** — calendrier annuel des sujets | à partir de **3 000 € / mois**, engagement 12 mois |
 | **Campagne** | Ouverture, lancement ou nouvelle identité — un film principal et au moins trois films courts | à partir de **15 000 €** |
 
 Toute modification de prix doit être répercutée au même moment dans
