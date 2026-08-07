@@ -44,11 +44,11 @@ const DESCRIPTIONS = {
   accueil:
     'Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux.',
   films:
-    "Les Pieds dans l'eau : le premier film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
+    "Les Pieds dans l'eau : le film-manifeste de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
   studio:
-    "Bel Augure, studio de production à Bordeaux : Nicolas et Corentin filment les hôtels, spas et maisons de bien-être d'exception.",
+    "Bel Augure, studio de production à Bordeaux : Nicolas Sempere et Corentin Crestia filment les hôtels, spas et maisons de bien-être d'exception.",
   offres:
-    'Trois façons de travailler ensemble : Film Signature, le film fondateur ; Histoires de marque, un programme de récits courts ; Campagne Sensorielle, un déploiement complet sur mesure. Diffusion deux ans France incluse.',
+    'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Diffusion deux ans France incluse.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',
@@ -183,7 +183,7 @@ export default function App() {
   // heroReady est le vrai signal (événement 'play' réel du player, avec ses
   // propres filets côté VimeoBackground) : sur connexion lente le voile attend
   // donc que le film démarre vraiment, au lieu de se lever sur un écran noir.
-  // Le plafond de 11 s n'est qu'un ultime garde-fou anti-blocage, au-delà du
+  // Le plafond de 10 s n'est qu'un ultime garde-fou anti-blocage, au-delà du
   // recours interne du player (9 s) — il ne se déclenche jamais en usage normal.
   useEffect(() => {
     if (!veiled) return
@@ -191,7 +191,7 @@ export default function App() {
     let lifted = false
     const loop = () => {
       const p = progressRef.current
-      const done = heroReady || performance.now() - bootAt.current > 11000
+      const done = heroReady || performance.now() - bootAt.current > 10000
       const goal = done ? 100 : 92
       progressRef.current = p + (goal - p) * 0.08
       if (barRef.current) barRef.current.style.width = `${progressRef.current}%`

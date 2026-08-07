@@ -5,6 +5,9 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+// Source de vérité unique des offres (textes + prix), partagée avec la page
+// React : le corps SEO de /offres est généré depuis ces données.
+import { OFFERS, PROCESS, DIFFUSION } from '../src/content/offres.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = resolve(root, 'dist')
@@ -13,6 +16,35 @@ const SITE = 'https://www.belaugure.studio'
 const template = readFileSync(resolve(dist, 'index.html'), 'utf8')
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')
+
+
+// Corps SEO de /offres, généré depuis src/content/offres.js : impossible de
+// publier un prix ici différent de celui affiché à l'écran.
+function offresBody() {
+  const offers = OFFERS.map((o) => {
+    const parts = [`<h2>${o.name} — ${o.label.toLowerCase()}</h2>`]
+    const price = o.price || o.cardPrice
+    const desc = o.description.join(' ')
+    let formats = ''
+    if (o.formats) {
+      formats =
+        ' ' +
+        o.formats
+          .map((f) => {
+            const note = f.priceNote ? `, ${f.priceNote.toLowerCase()}` : ''
+            return `${f.title} (${f.sub.toLowerCase().replace(/\.$/, '')}) : ${f.price}${note}.`
+          })
+          .join(' ')
+    }
+    const receive = ` ${o.receiveTitle} : ${o.receive.map((r) => r.toLowerCase()).join(', ')}.`
+    const note = o.receiveNote ? ` ${o.receiveNote.join(' ')}` : ''
+    parts.push(`<p>${price}. ${desc}${formats}${receive}${note}</p>`)
+    return parts.join('\n      ')
+  })
+  const process = `<h2>Comment nous travaillons</h2>\n      <p>${PROCESS.map((st) => `${st.t} : ${st.d}`).join(' ')}</p>`
+  const diffusion = `<h2>${DIFFUSION.title}</h2>\n      <p>${DIFFUSION.body}</p>`
+  return `\n      ${offers.join('\n      ')}\n      ${process}\n      ${diffusion}`
+}
 
 // Le texte du site, tel qu'il existe dans les vues React.
 const ROUTES = [
@@ -24,53 +56,43 @@ const ROUTES = [
     body: `
       <p>Les films signature du bien-être d'exception.</p>
       <h2>Faites de votre image une raison de vous choisir.</h2>
-      <p>Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite pour eux.</p>
-      <p>Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de marque et donner envie de vous découvrir, de vous choisir et de revenir vers vous.</p>
+      <p>Avant de réserver un séjour ou un soin, vos clients cherchent à se projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre maison est faite pour eux.</p>
+      <p>Bel Augure crée les films des hôtels, des spas, des thermes et des maisons de bien-être : vos lieux, vos gestes et votre savoir-faire, filmés pour attirer les bons clients et donner envie de réserver.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },
   {
     path: '/films',
     title: 'Films de marque pour hôtels, spas & bien-être · Bel Augure',
-    desc: "Les Pieds dans l'eau : le premier film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
+    desc: "Les Pieds dans l'eau : le film-manifeste de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
     h1: "Films — Les Pieds dans l'eau, sur le bassin d'Arcachon",
     body: `
       <h2>Les Pieds dans l'eau — bassin d'Arcachon</h2>
-      <p>Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, au crépuscule d'une marée montante.</p>
+      <p>Notre film-manifeste, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante — sans commande et sans client, uniquement pour montrer notre regard. Celui que nous poserons sur votre maison.</p>
       <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a></p>`,
   },
   {
     path: '/studio',
     title: 'Studio de production à Bordeaux · Bel Augure',
-    desc: "Bel Augure, studio de production à Bordeaux : Nicolas et Corentin filment les hôtels, spas et maisons de bien-être d'exception.",
-    h1: 'Studio de production à Bordeaux — Nicolas & Corentin',
+    desc: "Bel Augure, studio de production à Bordeaux : Nicolas Sempere et Corentin Crestia filment les hôtels, spas et maisons de bien-être d'exception.",
+    h1: 'Studio de production à Bordeaux — Nicolas Sempere & Corentin Crestia',
     body: `
-      <p>Bel Augure, c'est nous deux : Nicolas et Corentin. Quinze ans d'amitié et deux parcours qui se complètent — l'un vient de l'événementiel, l'autre du cinéma et de la mode. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée à Bordeaux dans notre studio. Un seul interlocuteur, deux regards sur chaque plan.</p>
+      <p>Bel Augure est un studio neuf ; ses fondateurs ne le sont pas. Nicolas Sempere et Corentin Crestia, quinze ans d'amitié, ont chacun fait leurs armes de leur côté — Nicolas dans l'événementiel, Corentin sur les plateaux, entre cinéma et mode — avant de réunir leurs deux métiers dans un même studio. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée en interne, à Bordeaux. Un seul interlocuteur, deux regards sur chaque plan.</p>
       <p>Filmer celles et ceux qui prennent soin des autres, c'est exactement ce que nous avons choisi de faire.</p>`,
   },
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Trois façons de travailler ensemble : Film Signature, un film central à partir de 5 500 € HT ; Histoires de marque, des récits ciblés à partir de 3 500 € HT ; Campagne Sensorielle, un dispositif complet à partir de 15 000 € HT. Diffusion deux ans France incluse. Proposition détaillée après un échange de trente minutes.',
+    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Diffusion deux ans France incluse. Proposition détaillée après un échange de trente minutes.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
-    body: `
-      <h2>Film Signature — pour présenter votre marque</h2>
-      <p>À partir de 5 500 € HT. Faites ressentir ce qui vous distingue : une atmosphère, un geste, une manière de prendre soin, réunis dans le film de référence de votre marque — pour votre site, vos présentations et vos réseaux. Vous recevez un film de marque de 60 à 90 secondes, ses versions courtes de 30 et 15 secondes, les versions horizontales et verticales convenues, l'écriture, la réalisation et toute la postproduction, la musique et deux séries de retours.</p>
-      <h2>Histoires de marque — pour faire vivre vos réseaux</h2>
-      <p>À partir de 3 500 € HT. Chaque film donne une nouvelle raison de vous choisir : un soin, un lieu, un produit ou un savoir-faire devient une histoire à part entière, en films courts pensés pour les réseaux. Ponctuellement ou toute l'année, deux formules : Collection, un sujet raconté en plusieurs films imaginés et tournés ensemble, à partir de 3 500 € HT ; Quatre saisons, un nouveau film chaque mois préparé autour de vos saisons et de vos temps forts, à partir de 3 000 € HT par mois pour un engagement de douze mois. Dans les deux formules : des films courts écrits et réalisés pour votre marque, les versions horizontales et verticales convenues, la musique, le montage, l'étalonnage et le travail sonore, deux séries de retours.</p>
-      <h2>Campagne Sensorielle — pour un lancement</h2>
-      <p>À partir de 15 000 € HT. Faites de votre prochain temps fort un moment que l'on retient : pour une ouverture, un lancement ou une nouvelle identité, une idée forte déclinée dans un film principal et plusieurs films courts. Vous recevez une idée créative commune à toute la campagne, un film principal de 60 à 90 secondes, au moins trois films courts de 15 à 30 secondes, les versions horizontales et verticales convenues, l'écriture, la réalisation et toute la postproduction, la musique et deux séries de retours par étape.</p>
-      <h2>Comment nous travaillons</h2>
-      <p>Un échange de trente minutes pour cadrer votre projet, votre échéance et votre budget. Une proposition détaillée où livrables, calendrier et prix sont écrits avant de commencer. Un tournage mené par une équipe légère, deux à trois personnes, dans le respect de votre lieu et de vos clients. Une postproduction entièrement réalisée au studio, avec deux allers-retours de validation inclus.</p>
-      <h2>La diffusion, en clair</h2>
-      <p>Tous nos prix incluent deux ans d'utilisation en France, sur le digital et les réseaux sociaux. Télévision, affichage, cinéma, international ou durée étendue : ces usages sont définis et chiffrés dès la proposition.</p>`,
+    body: offresBody(),
   },
   {
     path: '/contact',
     title: 'Contact · Bel Augure',
     desc: 'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
-    h1: 'Contact — on discute de votre prochain film ?',
+    h1: 'Contact — parlons de votre prochain film',
     body: `
-      <p>Un café, des idées, quelques notes et le projet commence. Dites-nous où vous êtes et ce que vous aimeriez montrer.</p>
+      <p>Écrivez-nous en quelques lignes : votre maison, votre projet, votre échéance. Nous vous répondons généralement sous deux jours ouvrés pour convenir d'un premier échange de trente minutes.</p>
       <p><a href="mailto:nicolas@belaugure.studio">nicolas@belaugure.studio</a> · Bordeaux · Nouvelle-Aquitaine</p>`,
   },
   {
@@ -79,8 +101,8 @@ const ROUTES = [
     desc: 'Mentions légales et politique de confidentialité de Bel Augure.',
     h1: 'Mentions légales',
     body: `
-      <p>Éditeur : Bel Augure, Bordeaux. Directeur de la publication : Nicolas (nicolas@belaugure.studio).</p>
-      <p>Le formulaire de contact transmet votre message par email au studio via notre prestataire d'envoi ; aucune donnée n'est conservée dans une base de données du site. Ce site ne dépose aucun cookie de suivi.</p>`,
+      <p>Éditeur : Bel Augure, SARL au capital de 1 000 € — RCS Bordeaux 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux. Directeur de la publication : Nicolas Sempere, gérant (nicolas@belaugure.studio). Hébergeur : Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
+      <p>Les informations du formulaire de contact sont traitées aux seules fins de répondre à votre message (art. 6-1-b du RGPD) et conservées au plus trois ans après notre dernier échange. Vous disposez de droits d'accès, de rectification, d'effacement, d'opposition, de limitation et de portabilité auprès de nicolas@belaugure.studio, et pouvez adresser une réclamation à la CNIL. Ce site ne dépose aucun cookie de suivi ; la lecture des films fait appel au lecteur Vimeo en mode « Do Not Track ».</p>`,
   },
 ]
 
@@ -97,14 +119,14 @@ async function filmVideoJsonLd() {
     '@type': 'VideoObject',
     name: "Les Pieds dans l'eau",
     description:
-      "Le premier film de Bel Augure, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
+      "Le film-manifeste de Bel Augure, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
     thumbnailUrl: `${SITE}/og.png`,
     embedUrl: `https://player.vimeo.com/video/${FILM_VIMEO_ID}`,
     contentUrl: `https://vimeo.com/${FILM_VIMEO_ID}`,
     publisher: {
       '@type': 'Organization',
       name: 'Bel Augure',
-      logo: { '@type': 'ImageObject', url: `${SITE}/og.png` },
+      logo: { '@type': 'ImageObject', url: `${SITE}/logo.png` },
     },
   }
   try {
@@ -176,3 +198,22 @@ notFound = notFound.replace(
 )
 writeFileSync(resolve(dist, '404.html'), notFound)
 console.log('prerendu /404')
+
+// Sitemap daté du build : écrit dans dist/ par-dessus la copie de public/,
+// pour que <lastmod> suive réellement les mises en production.
+const lastmod = new Date().toISOString().slice(0, 10)
+const SITEMAP_ROUTES = [
+  ['/', 'monthly', '1.0'],
+  ['/films', 'monthly', '0.9'],
+  ['/offres', 'monthly', '0.9'],
+  ['/studio', 'yearly', '0.7'],
+  ['/contact', 'yearly', '0.8'],
+  ['/mentions-legales', 'yearly', '0.2'],
+]
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${SITEMAP_ROUTES.map(([p2, freq, prio]) => `  <url><loc>${SITE}${p2 === '/' ? '/' : p2}</loc><lastmod>${lastmod}</lastmod><changefreq>${freq}</changefreq><priority>${prio}</priority></url>`).join('\n')}
+</urlset>
+`
+writeFileSync(resolve(dist, 'sitemap.xml'), sitemap)
+console.log('sitemap daté', lastmod)

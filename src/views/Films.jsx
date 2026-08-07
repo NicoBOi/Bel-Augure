@@ -11,7 +11,7 @@ const FILMS = [
     vimeoId: '1211391558',
     title: "Les Pieds dans l'eau",
     world: "Bassin d'Arcachon",
-    desc: "Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
+    desc: "Notre film-manifeste, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante — sans commande et sans client, uniquement pour montrer notre regard. Celui que nous poserons sur votre maison.",
   },
 ]
 
@@ -95,7 +95,10 @@ export default function Films({ setDark, onNavigate }) {
 
               {/* data-ctrl : ces boutons sont ignorés par le clic-pause. */}
               {ready[film.id] && (
-                <div data-ctrl className="absolute bottom-4 right-4 z-[2] flex items-center gap-1">
+                <div
+                  data-ctrl
+                  className="absolute bottom-4 right-4 z-[2] flex items-center gap-1 rounded-full bg-encre/35 px-1.5 py-1 backdrop-blur-sm"
+                >
                   <button
                     type="button"
                     aria-pressed={!!paused[film.id]}

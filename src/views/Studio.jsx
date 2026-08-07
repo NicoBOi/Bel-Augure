@@ -1,6 +1,6 @@
 import { useReveal } from '../hooks/useReveal.js'
 
-export default function Studio() {
+export default function Studio({ onNavigate }) {
   const ref = useReveal(0.35)
 
   return (
@@ -30,15 +30,17 @@ export default function Studio() {
           style={{ '--d': '0.42s', textWrap: 'pretty' }}
         >
           <p>
-            Bel Augure, c'est nous deux&nbsp;: Nicolas et Corentin. Quinze ans
-            d'amitié et deux parcours qui se complètent — l'un vient de
-            l'événementiel, l'autre du cinéma et de la mode.
+            Bel Augure est un studio neuf&nbsp;; ses fondateurs ne le sont pas.
+            Nicolas Sempere et Corentin Crestia, quinze ans d'amitié, ont chacun
+            fait leurs armes de leur côté — Nicolas dans l'événementiel,
+            Corentin sur les plateaux, entre cinéma et mode — avant de réunir
+            leurs deux métiers dans un même studio.
           </p>
           <p>
             Ensemble, nous prenons en charge tout votre film, de la première
             idée à la dernière image&nbsp;: l'écriture et la direction, le
-            tournage, puis toute la postproduction, réalisée à Bordeaux dans
-            notre studio. Un seul interlocuteur, deux regards sur chaque plan.
+            tournage, puis toute la postproduction, réalisée en interne, à
+            Bordeaux. Un seul interlocuteur, deux regards sur chaque plan.
           </p>
         </div>
 
@@ -49,6 +51,16 @@ export default function Studio() {
           Filmer celles et ceux qui prennent soin des autres, c'est exactement
           ce que nous avons choisi de faire
           <span className="text-or">.</span>
+        </p>
+
+        <p className="reveal-up mx-auto mt-10 text-left md:text-center" style={{ '--d': '0.65s' }}>
+          <button
+            type="button"
+            onClick={() => onNavigate?.('contact')}
+            className="inline-flex cursor-pointer items-center justify-center rounded-full border border-encre/45 px-8 py-3.5 text-[13px] font-normal tracking-[0.06em] text-encre transition-colors duration-300 hover:bg-encre hover:text-creme"
+          >
+            Parler de votre projet
+          </button>
         </p>
       </div>
 

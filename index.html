@@ -30,23 +30,30 @@
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": ["ProfessionalService", "VideoProductionCompany"],
+            "@type": ["ProfessionalService", "LocalBusiness"],
             "@id": "https://www.belaugure.studio/#studio",
             "name": "Bel Augure",
             "alternateName": "BelAugure",
             "description": "Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux.",
             "url": "https://www.belaugure.studio/",
             "email": "nicolas@belaugure.studio",
-            "logo": "https://www.belaugure.studio/og.png",
+            "logo": "https://www.belaugure.studio/logo.png",
             "image": "https://www.belaugure.studio/og.png",
             "slogan": "Les films signature du bien-être d’exception",
             "priceRange": "€€€",
             "founder": [
-              { "@type": "Person", "name": "Nicolas" },
-              { "@type": "Person", "name": "Corentin" }
+              { "@type": "Person", "name": "Nicolas Sempere" },
+              { "@type": "Person", "name": "Corentin Crestia" }
             ],
+            "identifier": {
+              "@type": "PropertyValue",
+              "propertyID": "SIREN",
+              "value": "108264524"
+            },
             "address": {
               "@type": "PostalAddress",
+              "streetAddress": "83 rue Marcelin Jourdan",
+              "postalCode": "33200",
               "addressLocality": "Bordeaux",
               "addressRegion": "Nouvelle-Aquitaine",
               "addressCountry": "FR"
@@ -86,7 +93,7 @@
               {
                 "@type": "Offer",
                 "name": "Histoires de marque",
-                "description": "Des films courts pensés pour les réseaux, ponctuellement ou toute l’année.",
+                "description": "Des films courts pensés pour les réseaux : Collection dès 3 500 € HT, ou Quatre saisons à 3 000 € HT par mois avec un engagement de douze mois.",
                 "priceCurrency": "EUR",
                 "priceSpecification": {
                   "@type": "PriceSpecification",
@@ -96,7 +103,7 @@
               },
               {
                 "@type": "Offer",
-                "name": "Campagne Sensorielle",
+                "name": "Campagne",
                 "description": "Un dispositif complet pour une ouverture, un lancement ou une nouvelle identité.",
                 "priceCurrency": "EUR",
                 "priceSpecification": {

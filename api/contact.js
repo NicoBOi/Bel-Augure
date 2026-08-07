@@ -16,7 +16,23 @@ const TO = process.env.CONTACT_TO || 'nicolas@belaugure.studio'
 const FROM = process.env.CONTACT_FROM || 'Site Bel Augure <site@belaugure.studio>'
 
 const isEmail = (v) => typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-const clean = (v) => (typeof v === 'string' ? v.trim() : '')
+// Chaque champ est borné : un corps de plusieurs mégaoctets ou un « nom » de
+// 100 000 caractères ne doit jamais partir tel quel dans un email.
+const clean = (v, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
+
+// Garde-fou anti-rafale, en mémoire du conteneur : au mieux il tient sur une
+// lambda chaude, au pire il ne bloque personne de légitime. 5 envois par
+// minute et par IP suffisent très largement pour un formulaire de contact.
+const hits = new Map()
+const tooMany = (ip) => {
+  const now = Date.now()
+  const windowStart = now - 60_000
+  const list = (hits.get(ip) || []).filter((t) => t > windowStart)
+  list.push(now)
+  hits.set(ip, list)
+  if (hits.size > 1000) hits.clear()
+  return list.length > 5
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -24,15 +40,27 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Méthode non autorisée.' })
   }
 
+  // Le formulaire vit sur belaugure.studio : une origine tierce explicite est
+  // refusée (les requêtes sans Origin — curl, tests — restent acceptées).
+  const origin = req.headers.origin
+  if (origin && !/^https?:\/\/(www\.)?belaugure\.studio$|^http:\/\/localhost(:\d+)?$/.test(origin)) {
+    return res.status(403).json({ error: 'Origine non autorisée.' })
+  }
+
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'inconnue'
+  if (tooMany(ip)) {
+    return res.status(429).json({ error: 'Trop de messages d’affilée. Réessayez dans une minute.' })
+  }
+
   const body = typeof req.body === 'string' ? safeParse(req.body) : req.body || {}
   const nom = clean(body.nom)
   const maison = clean(body.maison)
-  const email = clean(body.email)
-  const projet = clean(body.projet)
-  const echeance = clean(body.echeance)
-  const budget = clean(body.budget)
-  const diffusion = clean(body.diffusion)
-  const message = clean(body.message)
+  const email = clean(body.email, 320)
+  const projet = clean(body.projet, 100)
+  const echeance = clean(body.echeance, 100)
+  const budget = clean(body.budget, 100)
+  const diffusion = clean(body.diffusion, 200)
+  const message = clean(body.message, 5000)
 
   // Pot de miel anti-spam : un champ invisible que seuls les robots remplissent.
   // Rempli → on répond « ok » sans rien envoyer (le robot croit avoir réussi).

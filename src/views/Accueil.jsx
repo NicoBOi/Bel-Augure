@@ -29,11 +29,15 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
   const creamRef = useRef(null)
   const wordRef = useRef(null)
   const hintRef = useRef(null)
+  const deskHintRef = useRef(null)
   const studioRef = useRef(null)
   const footerRef = useRef(null)
   const target = useRef(0)
   const current = useRef(0)
   const wasDark = useRef(true)
+  // Relance de la boucle rAF depuis l'extérieur de l'effet (bouton « lever le
+  // jour » du bureau) : l'effet y dépose sa fonction ensure().
+  const ensureRef = useRef(null)
 
   // Le héros s'ouvre dans l'encre : la salle obscure avant le film.
   useEffect(() => {
@@ -67,6 +71,10 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         // s'efface vite dès qu'un geste de scroll commence.
         hintRef.current.style.opacity = String(Math.max(1 - p * 3, 0))
         hintRef.current.inert = p > 0.15
+      }
+      if (deskHintRef.current) {
+        deskHintRef.current.style.opacity = String(Math.max(1 - p * 3, 0))
+        deskHintRef.current.inert = p > 0.15
       }
       if (studioRef.current) {
         const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
@@ -107,6 +115,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
     const ensure = () => {
       if (raf == null) raf = requestAnimationFrame(loop)
     }
+    ensureRef.current = ensure
     ensure()
 
     // La molette agit proportionnellement (comme le doigt) plutôt que de
@@ -208,6 +217,10 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
                   Bel Augure<span className="dot-breathe text-or">.</span>
                 </span>
               </span>
+              <span className="sr-only">
+                — studio de production de films pour hôtels, spas, thermes et maisons de
+                bien-être, à Bordeaux
+              </span>
             </h1>
           </div>
 
@@ -217,6 +230,42 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Invite bureau : la scène d'ouverture attend un geste de molette que
+          rien n'annonce — ce bouton le dit et le déclenche (lever le jour).
+          Même logique d'effacement que l'invite mobile (fondu dans apply). */}
+      <div
+        ref={deskHintRef}
+        className="pointer-events-none absolute inset-x-0 bottom-[2.5vh] z-[2] hidden justify-center md:flex"
+      >
+        <button
+          type="button"
+          onClick={() => {
+            target.current = 1
+            ensureRef.current?.()
+          }}
+          aria-label="Découvrir le studio"
+          className="pointer-events-auto group flex cursor-pointer flex-col items-center gap-1.5 px-6 py-2"
+        >
+          <span className="text-[10px] font-normal uppercase tracking-[0.24em] text-creme/70 transition-colors duration-300 group-hover:text-creme">
+            Découvrir le studio
+          </span>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            className="text-creme/60 transition-colors duration-300 group-hover:text-creme motion-safe:animate-bounce"
+          >
+            <path d="M12 5v14M6 13l6 6 6-6" />
+          </svg>
+        </button>
       </div>
 
       {/* Invite discrète, mobile seulement : dans la zone du pouce, un
@@ -251,14 +300,13 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
 
         <div className="mt-8 space-y-4 text-[15px] font-light leading-[1.85] text-encre/80" style={{ textWrap: 'pretty' }}>
           <p>
-            Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se
-            projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite
-            pour eux.
+            Avant de réserver un séjour ou un soin, vos clients cherchent à se projeter. Ils veulent
+            comprendre ce qui vous distingue et sentir que votre maison est faite pour eux.
           </p>
           <p>
-            Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui
-            créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de
-            marque et donner envie de vous découvrir, de vous choisir et de revenir vers vous.
+            Bel Augure crée les films des hôtels, des spas, des thermes et des maisons de bien-être :
+            vos lieux, vos gestes et votre savoir-faire, filmés pour attirer les bons clients et donner
+            envie de réserver.
           </p>
         </div>
         </div>

@@ -10,7 +10,7 @@ const ENDPOINT = '/api/contact'
 // Champs qualifiants du rendez-vous : orientent le projet et filtrent les
 // leads sous-budgétés (champ budget). La diffusion se précise de vive voix
 // lors du premier échange, pas dans le formulaire.
-const PROJETS = ['Film Signature', 'Histoires de marque', 'Campagne Sensorielle', 'Je ne sais pas encore']
+const PROJETS = ['Film Signature', 'Histoires de marque', 'Campagne', 'Je ne sais pas encore']
 const ECHEANCES = ['Une date précise', 'Dans les 3 mois', 'Dans l’année', 'Pas d’échéance']
 const BUDGETS = [
   '3 500 – 6 000 €',
@@ -96,11 +96,11 @@ export default function Contact({ onNavigate, prefill }) {
           <div>
           <h1 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>On discute de votre</span>
+              <span>Parlons de votre</span>
             </span>
             <span className="mask md:ml-[3vw]" style={{ '--d': '0.2s' }}>
               <span>
-                prochain film<span className="text-or">{' '}?</span>
+                prochain film<span className="text-or">.</span>
               </span>
             </span>
           </h1>
@@ -109,8 +109,8 @@ export default function Contact({ onNavigate, prefill }) {
             className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
             style={{ '--d': '0.12s' }}
           >
-            Un café, des idées, quelques notes et le projet commence
-            <span className="text-or">{' '}!</span>
+            Écrivez-nous en quelques lignes : votre maison, votre projet, votre échéance. Nous
+            revenons vers vous avec un premier avis et une proposition de rendez-vous.
           </p>
 
           <p
@@ -154,8 +154,8 @@ export default function Contact({ onNavigate, prefill }) {
               C'est envoyé<span className="text-or">.</span>
             </h2>
             <p className="mt-4 max-w-[42ch] text-[14px] font-light leading-[1.85] text-encre/80">
-              On s'occupe de tout. On revient vers vous très vite avec votre devis — et le
-              café, c'est nous qui l'offrons.
+              Votre message est bien arrivé. Nous revenons vers vous, généralement sous deux
+              jours ouvrés, pour convenir d'un premier échange de trente minutes.
             </p>
             <button
               type="button"
@@ -349,8 +349,19 @@ export default function Contact({ onNavigate, prefill }) {
           </p>
 
           <p className="mt-2 max-w-[46ch] text-[12.5px] font-light leading-[1.7] text-encre/60">
-            Nous vous répondons sous deux jours ouvrés pour convenir d’un premier échange de
-            trente minutes.
+            Nous vous répondons généralement sous deux jours ouvrés pour convenir d’un premier
+            échange de trente minutes.
+          </p>
+
+          <p className="mt-3 max-w-[46ch] text-[11px] font-light leading-[1.7] text-encre/45">
+            Vos informations servent uniquement à vous répondre — jamais de prospection.{' '}
+            <button
+              type="button"
+              onClick={() => onNavigate?.('mentions')}
+              className="cursor-pointer underline decoration-encre/30 underline-offset-2 transition-colors duration-300 hover:text-encre"
+            >
+              En savoir plus
+            </button>
           </p>
         </form>
         )}

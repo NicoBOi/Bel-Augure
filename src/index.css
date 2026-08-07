@@ -1,10 +1,11 @@
 @import 'tailwindcss';
 
+/* Le woff2 suffit à tous les navigateurs actuels : l'OTF source n'est pas
+   servi (inutile au rendu, et il n'expose pas le fichier maître de la
+   fonderie au téléchargement direct). */
 @font-face {
   font-family: 'Giflika';
-  src:
-    url('/fonts/giflika.woff2') format('woff2'),
-    url('/fonts/giflika.otf') format('opentype');
+  src: url('/fonts/giflika.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -237,7 +238,10 @@ h3 {
 
 .field:focus {
   outline: none;
-  border-bottom-color: var(--color-or);
+  /* Focus nettement visible (l'or pâle seul passait sous le seuil de
+     perception) : filet bas épaissi et assombri. */
+  border-bottom-width: 2px;
+  border-bottom-color: var(--color-orfonce);
 }
 
 textarea.field {

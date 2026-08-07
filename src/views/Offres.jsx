@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
+import { HERO_FILM_ID, OFFERS, PROCESS, DIFFUSION } from '../content/offres.js'
 
 // Page /offres — direction éditoriale « montrer puis expliquer ».
 // Premier écran en deux temps : à gauche le titre, à droite le film ; en bas
@@ -9,126 +10,8 @@ import VimeoBackground from '../components/VimeoBackground.jsx'
 // droite (identité, promesse, description, détail, prix, appel à l'action).
 // Palette unique : les offres se distinguent par la composition et la teinte
 // de bande, pas par trois univers colorés.
-const HERO_FILM_ID = '1211391558'
-
-const OFFERS = [
-  {
-    id: 'film',
-    num: '01',
-    name: 'Film Signature',
-    label: 'Pour présenter votre marque',
-    cardPhrase: 'Devenez le premier choix avant même la première visite.',
-    price: 'À partir de 5 500 € HT',
-    promise: 'Faites ressentir ce qui vous distingue.',
-    description: [
-      'Une atmosphère, un geste, une manière de prendre soin : le Film Signature réunit ce que vos clients doivent ressentir pour avoir envie de vous choisir.',
-      'Il devient le film de référence de votre site, de vos présentations et de vos réseaux.',
-    ],
-    receiveTitle: 'Ce que vous recevez',
-    receive: [
-      'Un film de marque de 60 à 90 secondes',
-      'Ses versions courtes de 30 et 15 secondes',
-      'Les versions horizontales et verticales convenues',
-      'L’écriture, la réalisation et toute la postproduction',
-      'La musique et deux séries de retours',
-    ],
-    cta: 'Parler de votre projet',
-  },
-  {
-    id: 'histoires',
-    num: '02',
-    name: 'Histoires de marque',
-    label: 'Pour faire vivre vos réseaux',
-    cardPhrase: 'Mettez en lumière chacune de vos expériences pour donner envie de vous découvrir, de vous choisir et de revenir vers vous.',
-    promise: 'Chaque film donne une nouvelle raison de vous choisir.',
-    description: [
-      'Un soin, un lieu, un produit ou un savoir-faire peut devenir une histoire à part entière.',
-      'Nous en faisons des films courts capables d’attirer l’attention sur les réseaux sans banaliser votre image.',
-    ],
-    formatsTitle: 'Ponctuellement ou toute l’année',
-    formats: [
-      {
-        title: 'Collection',
-        sub: 'Un sujet, plusieurs films.',
-        body: [
-          'Vous choisissez ce que vous souhaitez mettre en lumière. Nous le racontons à travers plusieurs films courts, imaginés et tournés ensemble.',
-          'Une même idée pour présenter une expérience, une gamme, une personne ou un savoir-faire.',
-        ],
-        closing: 'Ponctuel',
-      },
-      {
-        title: 'Quatre saisons',
-        sub: 'Un nouveau film chaque mois, sans repartir de zéro.',
-        body: [
-          'Nous préparons l’année autour de vos saisons, de vos nouveautés et de vos temps forts.',
-          'Votre image reste cohérente et vous travaillez avec un studio qui connaît déjà votre marque.',
-        ],
-        closing: 'Mensuel',
-      },
-    ],
-    price: 'À partir de 3 000 € HT',
-    receiveTitle: 'Dans les deux formules',
-    receive: [
-      'Des films courts écrits et réalisés pour votre marque',
-      'Les versions horizontales et verticales convenues',
-      'La musique, le montage, l’étalonnage et le travail sonore',
-      'Deux séries de retours',
-    ],
-    receiveNote: [
-      'Quatre saisons comprend également le calendrier annuel et les livraisons mensuelles.',
-    ],
-    cta: 'Parler de votre projet',
-  },
-  {
-    id: 'campagne',
-    num: '03',
-    name: 'Campagne Sensorielle',
-    label: 'Pour un lancement',
-    cardPhrase: 'Créez l’engouement autour de votre prochaine ouverture ou de votre prochain lancement.',
-    price: 'À partir de 15 000 € HT',
-    promise: 'Faites de votre prochain temps fort un moment que l’on retient.',
-    description: [
-      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons une idée forte, déclinée dans un film principal et plusieurs films courts.',
-      'Le film principal révèle le projet. Les autres l’annoncent, en dévoilent les détails et prolongent le lancement.',
-      'Chaque film peut vivre seul, mais tous se reconnaissent au premier regard.',
-    ],
-    receiveTitle: 'Ce que vous recevez',
-    receive: [
-      'Une idée créative commune à toute la campagne',
-      'Un film principal de 60 à 90 secondes',
-      'Au moins trois films courts de 15 à 30 secondes',
-      'Les versions horizontales et verticales convenues',
-      'L’écriture, la réalisation et toute la postproduction',
-      'La musique et deux séries de retours par étape',
-    ],
-    cta: 'Parler de votre projet',
-  },
-]
-
-// Bloc transverse (bas de page) — commun aux trois offres.
-const PROCESS = [
-  {
-    t: 'Un échange de trente minutes',
-    d: 'Votre projet, votre échéance, votre budget. Nous vous disons ce qui est possible.',
-  },
-  {
-    t: 'Une proposition détaillée',
-    d: 'Livrables, calendrier, prix : tout est écrit avant de commencer.',
-  },
-  {
-    t: 'Le tournage',
-    d: 'Une équipe légère, deux à trois personnes, dans le respect de votre lieu et de vos clients.',
-  },
-  {
-    t: 'La livraison',
-    d: 'Postproduction entièrement réalisée au studio. Deux allers-retours de validation inclus.',
-  },
-]
-
-const DIFFUSION = {
-  title: 'La diffusion, en clair',
-  body: 'Tous nos prix incluent deux ans d’utilisation en France, sur le digital et les réseaux sociaux. Télévision, affichage, cinéma, international ou durée étendue : ces usages sont définis et chiffrés dès la proposition.',
-}
+// Les textes et les prix vivent dans src/content/offres.js, partagé avec le
+// prérendu SEO : une seule source de vérité.
 
 // Palette — page entièrement claire (encre sur papier chaud). Une seule teinte
 // de fond pour toute la section : la distinction se joue par la typographie,
@@ -205,8 +88,8 @@ function OfferChapter({ o, i, onContact }) {
               <section className={`border-t pt-8 ${cRule}`}>
                 <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
                 {/* Cartes verticales : on comprend qu'on choisit une formule.
-                    Chacune porte son intitulé et son récit ; le tarif de
-                    l'offre est donné plus bas, comme pour les autres. */}
+                    Chacune porte son intitulé, son récit et son propre tarif —
+                    les deux formules n'ont pas le même prix. */}
                 <div className="mt-6 grid gap-5 sm:grid-cols-2">
                   {o.formats.map((f) => (
                     <div
@@ -222,9 +105,19 @@ function OfferChapter({ o, i, onContact }) {
                           <p key={p}>{p}</p>
                         ))}
                       </div>
-                      <p className="mt-7 border-t border-encre/10 pt-5 text-[11px] font-normal uppercase tracking-[0.22em] text-orfonce">
-                        {f.closing}
-                      </p>
+                      <div className="mt-7 border-t border-encre/10 pt-5">
+                        <p className="text-[11px] font-normal uppercase tracking-[0.22em] text-orfonce">
+                          {f.closing}
+                        </p>
+                        {f.price && (
+                          <p className="mt-2.5 font-display text-[clamp(1.25rem,1.8vw,1.55rem)] font-light leading-none tabular-nums text-encre">
+                            {f.price}
+                          </p>
+                        )}
+                        {f.priceNote && (
+                          <p className="mt-2 text-[12.5px] font-light text-encre/70">{f.priceNote}</p>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -328,9 +221,10 @@ export default function Offres({ setDark, onNavigate }) {
               Trois façons d’écrire votre histoire
             </h2>
             <p className="mt-6 max-w-[48ch] text-[16px] font-light leading-[1.7] text-encre/75">
-              <span className="font-medium text-encre">Un film</span> pour en révéler l’essence,{' '}
-              <span className="font-medium text-encre">des récits</span> pour en dévoiler les facettes,{' '}
-              <span className="font-medium text-encre">une campagne</span> pour lui donner toute son ampleur.
+              <span className="font-medium text-encre">Un film de référence</span> pour votre site et vos ventes,{' '}
+              <span className="font-medium text-encre">des films courts réguliers</span> pour vos réseaux,{' '}
+              <span className="font-medium text-encre">une campagne complète</span> pour une ouverture ou un
+              lancement.
             </p>
           </div>
 
@@ -343,17 +237,26 @@ export default function Offres({ setDark, onNavigate }) {
           </div>
         </div>
 
-        {/* Bas : trois cartes très condensées, contenu centré (ni prix ni
-            bouton). Le détail se trouve plus bas. */}
+        {/* Bas : trois cartes très condensées, cliquables — chacune mène à son
+            chapitre détaillé plus bas et annonce son prix plancher. */}
         <div className="reveal-up grid gap-px pt-12 sm:grid-cols-3 md:pt-16" style={{ '--d': '0.16s' }}>
           {OFFERS.map((o) => (
-            <div key={o.id} className={`flex flex-col items-center px-4 py-7 text-center sm:border-r sm:px-8 sm:last:border-r-0 ${RULE}`}>
+            <button
+              key={o.id}
+              type="button"
+              onClick={() => scrollToDetail(o.id)}
+              aria-label={`Voir le détail de l’offre ${o.name}`}
+              className={`group flex cursor-pointer flex-col items-center px-4 py-7 text-center transition-colors duration-300 hover:bg-encre/[0.04] sm:border-r sm:px-8 sm:last:border-r-0 ${RULE}`}
+            >
               <p className="text-[10px] font-normal uppercase tracking-[0.24em] text-orfonce">{o.label}</p>
               <h3 className="mt-3 font-display text-[clamp(1.15rem,1.8vw,1.4rem)] font-light leading-[1.15] text-encre">
                 {o.name}
               </h3>
               <p className="mt-2 max-w-[32ch] text-[14.5px] font-light leading-[1.5] text-encre/80">{o.cardPhrase}</p>
-            </div>
+              <p className="mt-4 text-[12px] font-normal tracking-[0.04em] text-encre/60 tabular-nums">
+                {o.cardPrice}
+              </p>
+            </button>
           ))}
         </div>
 

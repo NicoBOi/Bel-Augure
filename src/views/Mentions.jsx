@@ -1,31 +1,36 @@
 // Mentions légales et confidentialité : page sobre, hors navigation
 // principale, accessible depuis le pied de la page Contact (#mentions).
-// Les champs entre crochets sont à compléter avant mise en ligne.
+// Données d'identification issues du Kbis (RCS Bordeaux, 03/08/2026).
 const BLOCS = [
   {
     titre: 'Éditeur',
     lignes: [
-      'Bel Augure, [forme juridique et capital à compléter]',
-      '[SIRET à compléter] · [adresse du siège à compléter], Bordeaux',
-      'Directeur de la publication : Nicolas (nicolas@belaugure.studio)',
+      'Bel Augure, société à responsabilité limitée au capital de 1 000 €.',
+      'RCS Bordeaux 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux.',
+      'Directeur de la publication : Nicolas Sempere, gérant.',
+      'Contact : nicolas@belaugure.studio.',
     ],
   },
   {
     titre: 'Hébergement',
-    lignes: ["[Nom de l'hébergeur à compléter]", "[Adresse et contact de l'hébergeur à compléter]"],
+    lignes: [
+      'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.',
+    ],
   },
   {
     titre: 'Propriété intellectuelle',
     lignes: [
       "L'ensemble du site (textes, films, photographies, identité) est la propriété de Bel Augure ou de ses clients pour les œuvres qui leur ont été cédées. Toute reproduction sans accord écrit est interdite.",
+      '© Bel Augure 2026.',
     ],
   },
   {
     titre: 'Données personnelles',
     lignes: [
-      "Le formulaire de contact transmet votre message par email au studio via notre prestataire d'envoi (Resend) ; aucune donnée n'est conservée dans une base de données du site. Les informations transmises servent uniquement à répondre à votre demande et ne sont jamais cédées à des tiers.",
-      'Ce site ne dépose aucun cookie de suivi.',
-      'Pour exercer vos droits (accès, rectification, suppression) : nicolas@belaugure.studio.',
+      "Les informations du formulaire de contact (nom, établissement, email, projet, échéance, budget, message) sont traitées par Bel Augure sur la base de mesures précontractuelles prises à votre demande (art. 6-1-b du RGPD), aux seules fins de répondre à votre message. Elles ne sont jamais cédées ni utilisées à des fins de prospection.",
+      "Votre message est transmis par email et conservé dans notre messagerie et chez notre prestataire d'envoi Resend Inc. (États-Unis) ; le site est hébergé par Vercel Inc. (États-Unis). Ces transferts sont encadrés par les garanties contractuelles de ces prestataires. Les messages sont conservés au plus trois ans après notre dernier échange.",
+      "Vous disposez de droits d'accès, de rectification, d'effacement, d'opposition, de limitation et de portabilité, à exercer auprès de nicolas@belaugure.studio. Vous pouvez également adresser une réclamation à la CNIL (cnil.fr).",
+      "Ce site ne dépose aucun cookie de suivi. La lecture des films fait appel au lecteur Vimeo (Vimeo.com Inc., États-Unis), configuré en mode « Do Not Track ».",
     ],
   },
 ]
@@ -62,7 +67,7 @@ export default function Mentions() {
       </div>
 
       <p className="mt-auto pt-16 text-center text-[11px] font-light tracking-[0.04em] text-grege">
-        Studio de production basé à Bordeaux
+        Studio de production basé à Bordeaux · SIREN 108 264 524
       </p>
     </section>
   )

@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react'
 
 const LINKS = [
-  { view: 'films', label: 'Films' },
-  { view: 'offres', label: 'Offres' },
-  { view: 'studio', label: 'Studio' },
-  { view: 'contact', label: 'Contact' },
+  { view: 'films', label: 'Films', path: '/films' },
+  { view: 'offres', label: 'Offres', path: '/offres' },
+  { view: 'studio', label: 'Studio', path: '/studio' },
+  { view: 'contact', label: 'Contact', path: '/contact' },
 ]
 
-function NavLink({ view, label, active, onNavigate, dark }) {
+// De vrais liens <a href> (les robots et le clic-molette « ouvrir dans un
+// nouvel onglet » les comprennent) ; la navigation SPA intercepte le clic
+// simple sans rechargement.
+function NavLink({ view, label, path, active, onNavigate, dark }) {
   return (
-    <button
-      type="button"
-      onClick={() => onNavigate(view)}
+    <a
+      href={path}
+      onClick={(e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
+        e.preventDefault()
+        onNavigate(view)
+      }}
       aria-current={active ? 'page' : undefined}
       className={`nav-link inline-flex min-h-[44px] cursor-pointer items-center py-2 -my-1 text-[12px] font-normal tracking-[0.08em] transition-colors duration-500 ${
         active
@@ -24,7 +31,7 @@ function NavLink({ view, label, active, onNavigate, dark }) {
       }`}
     >
       <span className="nav-label">{label}</span>
-    </button>
+    </a>
   )
 }
 
@@ -111,9 +118,13 @@ export default function Navbar({ activeView, onNavigate, dark }) {
         </button>
 
         {/* Logo centré, retour accueil depuis n'importe quelle vue */}
-        <button
-          type="button"
-          onClick={() => navigate('accueil')}
+        <a
+          href="/"
+          onClick={(e) => {
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
+            e.preventDefault()
+            navigate('accueil')
+          }}
           aria-label="Bel Augure, retour à l'accueil"
           tabIndex={logoHidden ? -1 : 0}
           className={`cursor-pointer justify-self-center font-display text-[24px] tracking-[0.02em] transition-opacity md:text-[28px] ${
@@ -121,7 +132,7 @@ export default function Navbar({ activeView, onNavigate, dark }) {
           } ${logoHidden ? 'pointer-events-none opacity-0 duration-0' : 'opacity-100 duration-500'}`}
         >
           Bel Augure<span className="text-or">.</span>
-        </button>
+        </a>
 
         <div className="hidden justify-self-end md:block">
           <button
