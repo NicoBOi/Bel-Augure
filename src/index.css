@@ -137,9 +137,10 @@ h3 {
   transition: grid-template-rows 0.55s var(--ease-augure);
 }
 
-/* Cette règle est hors layer : elle gagne sur l'utilitaire md:hidden de
-   Tailwind (layered). Le masquage desktop doit donc être explicite ici. */
-@media (min-width: 48rem) {
+/* Cette règle est hors layer : elle gagne sur l'utilitaire lg:hidden de
+   Tailwind (layered). Le masquage desktop doit donc être explicite ici,
+   au même seuil que la barre complète (1024 px). */
+@media (min-width: 64rem) {
   .menu-panel {
     display: none;
   }

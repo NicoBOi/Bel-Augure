@@ -43,12 +43,14 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
     setOpen(false)
   }
 
+  // La rangée complète (retour + quatre liens + appel à l'action) ne tient
+  // qu'à partir de 1024 px : en dessous, c'est le panneau déroulant.
   // Menu ouvert : Échap le referme, et le passage au format desktop le
   // referme aussi — sinon l'état "ouvert" survit au redimensionnement et
   // le panneau réapparaît déplié au retour en mobile.
   useEffect(() => {
     if (!open) return
-    const mq = window.matchMedia('(min-width: 48rem)')
+    const mq = window.matchMedia('(min-width: 64rem)')
     const closeOnDesktop = () => {
       if (mq.matches) setOpen(false)
     }
@@ -77,7 +79,7 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
       {/* Voile givré couvrant tout le header (rangée + panneau) quand le menu est ouvert */}
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-0 backdrop-blur-xl transition-opacity duration-500 md:hidden ${
+        className={`pointer-events-none absolute inset-0 backdrop-blur-xl transition-opacity duration-500 lg:hidden ${
           dark ? 'bg-encre/25' : 'bg-creme/25'
         } ${open ? 'opacity-100' : 'opacity-0'}`}
       />
@@ -85,19 +87,24 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
         {/* Colonne de gauche : le retour, puis le menu (rangée au bureau,
             bouton d'ouverture sur mobile). Un seul enfant de grille pour que
             le logo reste centré. */}
-        <div className="flex items-center gap-4 justify-self-start md:gap-12">
+        <div className="flex items-center gap-3 justify-self-start lg:gap-7">
           {activeView !== 'accueil' && (
+            /* Contrôle, pas destination : la pastille bordée le distingue
+               nettement des liens de menu posés juste à côté. */
             <button
               type="button"
               onClick={onBack}
               aria-label="Revenir à la page précédente"
-              className={`nav-link inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 py-2 -my-1 text-[12px] font-normal tracking-[0.08em] transition-colors duration-500 ${
-                dark ? 'text-creme/75 hover:text-creme' : 'text-encre/80 hover:text-encre'
+              title="Retour"
+              className={`flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors duration-500 ${
+                dark
+                  ? 'border-creme/25 text-creme/70 hover:border-creme/60 hover:text-creme'
+                  : 'border-encre/20 text-encre/70 hover:border-encre/50 hover:text-encre'
               }`}
             >
               <svg
-                width="15"
-                height="15"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -108,12 +115,11 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
               >
                 <path d="M15 18l-6-6 6-6" />
               </svg>
-              <span className="nav-label hidden md:inline">Retour</span>
             </button>
           )}
 
-          <nav aria-label="Navigation principale" className="hidden md:block">
-            <ul className="flex items-center gap-12">
+          <nav aria-label="Navigation principale" className="hidden lg:block">
+            <ul className="flex items-center gap-7 xl:gap-12">
               {LINKS.map((link) => (
                 <li key={link.view}>
                   <NavLink
@@ -129,7 +135,7 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
 
           <button
             type="button"
-            className="relative flex h-11 w-11 items-center justify-center md:hidden"
+            className="relative flex h-11 w-11 items-center justify-center lg:hidden"
             aria-expanded={open}
             aria-controls="menu-mobile"
             aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
@@ -165,7 +171,7 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
           Bel Augure<span className="text-or">.</span>
         </a>
 
-        <div className="hidden justify-self-end md:block">
+        <div className="hidden justify-self-end lg:block">
           <button
             type="button"
             onClick={() => navigate('contact')}
@@ -178,7 +184,7 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
         </div>
       </div>
 
-      <div id="menu-mobile" data-open={open} className="menu-panel relative md:hidden">
+      <div id="menu-mobile" data-open={open} className="menu-panel relative lg:hidden">
         <div className="menu-panel-inner">
           <nav
             aria-label="Navigation mobile"

@@ -332,17 +332,11 @@ export default function Contact({ onNavigate, prefill }) {
             onChange={update('website')}
           />
 
-          {/* Le bouton et sa note vivent sur la même ligne : la page ne
-              s'allonge pas d'un paragraphe sous l'appel à l'action. */}
-          <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-7">
-            <button
-              type="submit"
-              disabled={sending}
-              className="cta w-max shrink-0 cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
-            >
-              {sending ? 'Envoi en cours…' : 'Envoyer votre demande'}
-            </button>
-            <p className="max-w-[34ch] text-[11.5px] font-light leading-[1.6] text-encre/55">
+          {/* La note précède le bouton sur la même ligne, tenue sur deux
+              lignes : la page ne s'allonge pas d'un paragraphe sous l'appel
+              à l'action. */}
+          <div className="mt-6 flex flex-col items-start gap-4 min-[1400px]:flex-row min-[1400px]:items-center min-[1400px]:gap-7">
+            <p className="max-w-[22rem] text-[11.5px] font-light leading-[1.6] text-encre/55">
               Réponse sous deux jours ouvrés. Vos informations servent uniquement à vous
               répondre —{' '}
               <button
@@ -354,6 +348,13 @@ export default function Contact({ onNavigate, prefill }) {
               </button>
               .
             </p>
+            <button
+              type="submit"
+              disabled={sending}
+              className="cta w-max shrink-0 cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
+            >
+              {sending ? 'Envoi en cours…' : 'Envoyer votre demande'}
+            </button>
           </div>
 
           {/* Retour d'état, annoncé aux lecteurs d'écran (envoi / erreur ;
