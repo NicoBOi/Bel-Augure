@@ -237,49 +237,6 @@ h3 {
   transition: border-color 0.6s var(--ease-augure);
 }
 
-/* Invite au scroll (héros, bureau) : un filet vertical parcouru par une
-   lueur d'or qui descend lentement. Pas d'icône — le même vocabulaire de
-   filets et d'or que le reste du site. */
-@keyframes hero-scroll-travel {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(300%);
-    opacity: 0;
-  }
-}
-
-.hero-scroll-line {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-scroll-line::after {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 40%;
-  background: linear-gradient(to bottom, transparent, var(--color-or), transparent);
-  animation: hero-scroll-travel 3s cubic-bezier(0.45, 0, 0.35, 1) infinite;
-}
-
-/* Sans animation, le filet garde une amorce d'or : l'indice reste lisible. */
-@media (prefers-reduced-motion: reduce) {
-  .hero-scroll-line::after {
-    animation: none;
-    top: 30%;
-    opacity: 0.8;
-  }
-}
-
 .field:focus {
   outline: none;
   /* Focus nettement visible (l'or pâle seul passait sous le seuil de

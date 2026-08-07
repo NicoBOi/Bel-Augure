@@ -30,15 +30,11 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
   const creamRef = useRef(null)
   const wordRef = useRef(null)
   const hintRef = useRef(null)
-  const deskHintRef = useRef(null)
   const studioRef = useRef(null)
   const footerRef = useRef(null)
   const target = useRef(0)
   const current = useRef(0)
   const wasDark = useRef(true)
-  // Relance de la boucle rAF depuis l'extérieur de l'effet (bouton « lever le
-  // jour » du bureau) : l'effet y dépose sa fonction ensure().
-  const ensureRef = useRef(null)
 
   // Le héros s'ouvre dans l'encre : la salle obscure avant le film.
   useEffect(() => {
@@ -72,10 +68,6 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         // s'efface vite dès qu'un geste de scroll commence.
         hintRef.current.style.opacity = String(Math.max(1 - p * 3, 0))
         hintRef.current.inert = p > 0.15
-      }
-      if (deskHintRef.current) {
-        deskHintRef.current.style.opacity = String(Math.max(1 - p * 3, 0))
-        deskHintRef.current.inert = p > 0.15
       }
       if (studioRef.current) {
         const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
@@ -118,7 +110,6 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
     const ensure = () => {
       if (raf == null) raf = requestAnimationFrame(loop)
     }
-    ensureRef.current = ensure
     ensure()
 
     // La molette agit proportionnellement (comme le doigt) plutôt que de
@@ -233,31 +224,6 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             </p>
           </div>
         </div>
-      </div>
-
-      {/* Invite bureau : la scène d'ouverture attend un geste de molette que
-          rien n'annonce — ce bouton le dit et le déclenche (lever le jour).
-          Même logique d'effacement que l'invite mobile (fondu dans apply). */}
-      <div
-        ref={deskHintRef}
-        className="pointer-events-none absolute inset-x-6 bottom-[2vh] z-[2] hidden justify-end md:inset-x-16 md:flex"
-      >
-        <button
-          type="button"
-          onClick={() => {
-            target.current = 1
-            ensureRef.current?.()
-          }}
-          aria-label="Découvrir le studio"
-          className="pointer-events-auto group -mr-4 flex cursor-pointer flex-col items-center px-4 py-3"
-        >
-          {/* Un filet, comme partout ailleurs sur le site, parcouru d'une
-              lueur d'or qui descend : le geste est indiqué sans icône. */}
-          <span
-            aria-hidden="true"
-            className="hero-scroll-line block h-8 w-px bg-creme/20 transition-colors duration-500 group-hover:bg-creme/45"
-          />
-        </button>
       </div>
 
       {/* Invite discrète, mobile seulement : dans la zone du pouce, un
