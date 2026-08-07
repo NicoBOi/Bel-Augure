@@ -48,7 +48,7 @@ const DESCRIPTIONS = {
   studio:
     "Bel Augure, studio de production à Bordeaux : Nicolas et Corentin filment les hôtels, spas et maisons de bien-être d'exception.",
   offres:
-    'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Diffusion deux ans France incluse.',
+    'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Diffusion digitale et réseaux sans limite de durée incluse.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',

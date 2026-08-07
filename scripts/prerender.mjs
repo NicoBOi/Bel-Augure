@@ -59,7 +59,7 @@ const ROUTES = [
       <p>Les films signature du bien-être d'exception.</p>
       <h2>Faites de votre image une raison de vous choisir.</h2>
       <p>Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite pour eux.</p>
-      <p>Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de marque et donner envie de vous découvrir, de vous choisir et de revenir vers vous.</p>
+      <p>Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de marque et donner envie de vous découvrir.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },
   {
@@ -84,7 +84,7 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Diffusion deux ans France incluse. Proposition détaillée après un échange de trente minutes.',
+    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Diffusion digitale et réseaux sans limite de durée incluse. Proposition détaillée après un échange de trente minutes.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: offresBody(),
   },

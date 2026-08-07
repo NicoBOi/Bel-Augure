@@ -89,7 +89,7 @@ export default function Contact({ onNavigate, prefill }) {
     <section
       ref={ref}
       aria-label="Contact"
-      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 overflow-y-auto md:pb-[9vh] md:px-16"
+      className="flex h-full flex-col justify-start px-6 pb-14 pt-28 overflow-y-auto md:pb-[7vh] md:px-16 md:pt-32"
     >
       <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:items-center lg:gap-8">
         <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-center">
@@ -188,7 +188,7 @@ export default function Contact({ onNavigate, prefill }) {
               Ajoutez vos coordonnées, et on s'occupe du reste.
             </p>
           )}
-          <div className="grid gap-x-8 gap-y-7 md:grid-cols-2">
+          <div className="grid gap-x-8 gap-y-5 md:grid-cols-2">
             <div>
               <label
                 htmlFor="contact-nom"
@@ -320,7 +320,7 @@ export default function Contact({ onNavigate, prefill }) {
                 ref={messageRef}
                 rows={4}
                 required
-                className="field mt-1 min-h-[7rem] resize-none overflow-hidden"
+                className="field mt-1 min-h-[4.5rem] resize-none overflow-hidden"
                 value={form.message}
                 onChange={update('message')}
               />
@@ -343,7 +343,7 @@ export default function Contact({ onNavigate, prefill }) {
           <button
             type="submit"
             disabled={sending}
-            className="cta mt-9 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
+            className="cta mt-6 w-max cursor-pointer px-9 py-3.5 text-[13px] font-normal tracking-[0.06em] disabled:cursor-default disabled:opacity-60"
           >
             {sending ? 'Envoi en cours…' : 'Envoyer votre demande'}
           </button>
@@ -353,26 +353,25 @@ export default function Contact({ onNavigate, prefill }) {
           <p
             aria-live="polite"
             role="status"
-            className="mt-4 min-h-[1.3em] text-[12.5px] font-light leading-[1.6]"
+            className="mt-2 min-h-[1.3em] text-[12.5px] font-light leading-[1.6]"
           >
             {sending && <span className="text-grege">Envoi en cours…</span>}
             {status === 'error' && <span className="text-encre/80">{errorMsg}</span>}
           </p>
 
-          <p className="mt-2 max-w-[46ch] text-[12.5px] font-light leading-[1.7] text-encre/60">
+          <p className="mt-2 max-w-[52ch] text-[12.5px] font-light leading-[1.7] text-encre/60">
             Nous vous répondons sous deux jours ouvrés pour convenir d’un premier échange de
-            trente minutes.
-          </p>
-
-          <p className="mt-3 max-w-[46ch] text-[11px] font-light leading-[1.7] text-encre/45">
-            Vos informations servent uniquement à vous répondre — jamais de prospection.{' '}
-            <button
-              type="button"
-              onClick={() => onNavigate?.('mentions')}
-              className="cursor-pointer underline decoration-encre/30 underline-offset-2 transition-colors duration-300 hover:text-encre"
-            >
-              En savoir plus
-            </button>
+            trente minutes.{' '}
+            <span className="text-[11px] text-encre/45">
+              Vos informations servent uniquement à vous répondre — jamais de prospection.{' '}
+              <button
+                type="button"
+                onClick={() => onNavigate?.('mentions')}
+                className="cursor-pointer underline decoration-encre/30 underline-offset-2 transition-colors duration-300 hover:text-encre"
+              >
+                En savoir plus
+              </button>
+            </span>
           </p>
         </form>
         )}

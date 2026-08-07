@@ -246,24 +246,21 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             ensureRef.current?.()
           }}
           aria-label="Découvrir le studio"
-          className="pointer-events-auto group flex cursor-pointer flex-col items-center gap-1.5 px-6 py-2"
+          className="pointer-events-auto group flex cursor-pointer flex-col items-center px-8 py-3"
         >
-          <span className="text-[10px] font-normal uppercase tracking-[0.24em] text-creme/70 transition-colors duration-300 group-hover:text-creme">
-            Découvrir le studio
-          </span>
           <svg
-            width="18"
-            height="18"
+            width="26"
+            height="26"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.4"
+            strokeWidth="1"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
-            className="text-creme/60 transition-colors duration-300 group-hover:text-creme motion-safe:animate-bounce"
+            className="hero-arrow text-creme/70 transition-colors duration-500 group-hover:text-creme"
           >
-            <path d="M12 5v14M6 13l6 6 6-6" />
+            <path d="M12 4v16M6.5 14.5 12 20l5.5-5.5" />
           </svg>
         </button>
       </div>
@@ -307,7 +304,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           <p>
             Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui
             créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de
-            marque et donner envie de vous découvrir, de vous choisir et de revenir vers vous.
+            marque et donner envie de vous découvrir.
           </p>
         </div>
         </div>
