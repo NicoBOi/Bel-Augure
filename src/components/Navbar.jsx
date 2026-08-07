@@ -89,26 +89,24 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
             le logo reste centré. */}
         <div className="flex items-center gap-3 justify-self-start lg:gap-7">
           {activeView !== 'accueil' && (
-            /* Contrôle, pas destination : la pastille bordée le distingue
-               nettement des liens de menu posés juste à côté. */
+            /* Contrôle, pas destination : le chevron seul, sans libellé, le
+               distingue des liens de menu posés juste à côté. */
             <button
               type="button"
               onClick={onBack}
               aria-label="Revenir à la page précédente"
               title="Retour"
-              className={`flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors duration-500 ${
-                dark
-                  ? 'border-creme/25 text-creme/70 hover:border-creme/60 hover:text-creme'
-                  : 'border-encre/20 text-encre/70 hover:border-encre/50 hover:text-encre'
+              className={`flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center transition-colors duration-500 ${
+                dark ? 'text-creme/70 hover:text-creme' : 'text-encre/70 hover:text-encre'
               }`}
             >
               <svg
-                width="16"
-                height="16"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="1.5"
+                strokeWidth="1.3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 aria-hidden="true"
