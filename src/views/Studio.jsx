@@ -60,9 +60,11 @@ export default function Studio({ onNavigate }) {
           </p>
           <h1 className="font-display text-[clamp(1.9rem,5vw,3.9rem)] leading-[1.12] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
+              <span>Derrière chaque film,</span>
+            </span>
+            <span className="mask" style={{ '--d': '0.2s' }}>
               <span>
-                Derrière chaque film, nous sommes deux
-                <span className="text-or">.</span>
+                nous sommes deux<span className="text-or">.</span>
               </span>
             </span>
           </h1>
