@@ -31,7 +31,9 @@ const CONVICTIONS = [
     ],
   },
   {
-    titre: 'Deux interlocuteurs, du début à la fin',
+    // Titre en deux lignes : la coupe tombe sur la virgule, jamais au milieu
+    // d'un groupe de mots.
+    titre: ['Deux interlocuteurs,', 'du début à la fin'],
     paras: [
       'Nous réalisons l’écriture, le tournage et la postproduction en interne. Nous sommes tous les deux présents à chaque étape importante du projet.',
       'Lorsque la production le demande, nous constituons une équipe adaptée : techniciens, comédiens ou équipe dédiée aux coulisses.',
@@ -113,11 +115,17 @@ export default function Studio({ onNavigate }) {
 
         {/* ── Convictions ── */}
         <div className="mt-14 grid gap-12 md:mt-16 md:grid-cols-2 md:gap-14">
-          {CONVICTIONS.map((c) => (
-            <div key={c.titre} className="border-t border-orfonce/25 pt-7">
+          {CONVICTIONS.map((c) => {
+            const lignes = Array.isArray(c.titre) ? c.titre : [c.titre]
+            return (
+            <div key={lignes[0]} className="border-t border-orfonce/25 pt-7">
               <h2 className="font-display text-[clamp(1.3rem,1.9vw,1.65rem)] font-light leading-[1.2] text-encre">
-                {c.titre}
-                <span className="text-or">.</span>
+                {lignes.map((l, i) => (
+                  <span key={l} className="block whitespace-nowrap">
+                    {l}
+                    {i === lignes.length - 1 && <span className="text-or">.</span>}
+                  </span>
+                ))}
               </h2>
               <div className="mt-5 space-y-3 text-[14px] font-light leading-[1.8] text-encre/80">
                 {c.paras.map((p) => (
@@ -125,7 +133,8 @@ export default function Studio({ onNavigate }) {
                 ))}
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* ── Appel ── */}
