@@ -47,7 +47,7 @@ export default function Studio({ onNavigate }) {
     <section
       ref={ref}
       aria-label="Le studio"
-      className="h-full overflow-y-auto px-6 pb-14 pt-28 md:px-16 md:pb-[7vh]"
+      className="h-full overflow-y-auto px-6 pb-14 pt-32 md:px-16 md:pb-[7vh] md:pt-[16vh]"
     >
       <div className="mx-auto w-full max-w-[62rem]">
         {/* ── Manifeste ── */}
