@@ -53,7 +53,7 @@ const ROUTES = [
   {
     path: '/',
     title: 'Bel Augure · Studio de production de films bien-être à Bordeaux',
-    desc: 'Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux.',
+    desc: "Studio de production de films de marque pour l'hôtellerie, les spas, les thermes et les marques de bien-être haut de gamme, à Bordeaux et partout en France.",
     h1: 'Bel Augure — studio de production de films pour hôtels, spas et maisons de bien-être à Bordeaux',
     body: `
       <p>Les films signature du bien-être d'exception.</p>
@@ -91,7 +91,7 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Offres · Bel Augure',
-    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Droits de diffusion offerts à vie. Proposition détaillée après un échange de trente minutes.',
+    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Tous les droits sont cédés à durée illimitée dès la livraison. Proposition détaillée après un échange de trente minutes.',
     h1: 'Offres — films pour hôtel, spa et maison de bien-être',
     body: offresBody(),
   },
@@ -110,7 +110,7 @@ const ROUTES = [
     desc: 'Mentions légales et politique de confidentialité de Bel Augure.',
     h1: 'Mentions légales',
     body: `
-      <p>Éditeur : Bel Augure, SARL au capital de 1 000 € — RCS Bordeaux 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux. TVA intracommunautaire : FR45 108 264 524. Directeur de la publication : Nicolas Sempere, gérant (nicolas@belaugure.studio · 06 68 49 95 04). Hébergeur : Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
+      <p>Éditeur : Bel Augure, SARL au capital de 1 000 € — RCS Bordeaux 108 264 524 — Siège social : 83 rue Marcelin Jourdan, 33200 Bordeaux. TVA intracommunautaire : FR45 108 264 524. Directeur de la publication : Nicolas Sempere, gérant (nicolas@belaugure.studio · 06 68 49 95 04). Hébergeur : Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — +1 559 288 7060.</p>
       <p>Les informations du formulaire de contact sont traitées aux seules fins de répondre à votre message (art. 6-1-b du RGPD) et conservées au plus trois ans après notre dernier échange. Vous disposez de droits d'accès, de rectification, d'effacement, d'opposition, de limitation et de portabilité auprès de nicolas@belaugure.studio, et pouvez adresser une réclamation à la CNIL. Ce site ne dépose aucun cookie de suivi ; la lecture des films fait appel au lecteur Vimeo en mode « Do Not Track ».</p>`,
   },
 ]

@@ -42,13 +42,13 @@ const TITLES = {
 // aux moteurs et aux aperçus de lien.
 const DESCRIPTIONS = {
   accueil:
-    'Studio de production de films pour hôtels, spas, thermes et maisons de bien-être. Deux réalisateurs, toute la chaîne, à Bordeaux.',
+    "Studio de production de films de marque pour l'hôtellerie, les spas, les thermes et les marques de bien-être haut de gamme, à Bordeaux et partout en France.",
   films:
     "Les Pieds dans l'eau : le premier film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
   studio:
     "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia : des films de marque pour l'hôtellerie et le bien-être haut de gamme.",
   offres:
-    'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Droits de diffusion offerts à vie.',
+    'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Tous les droits sont cédés à durée illimitée dès la livraison.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales et politique de confidentialité de Bel Augure.',

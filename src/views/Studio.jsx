@@ -1,4 +1,5 @@
 import { useReveal } from '../hooks/useReveal.js'
+import SiteFooter from '../components/SiteFooter.jsx'
 
 // Page Studio — éditoriale et scrollable : le manifeste des deux fondateurs,
 // leurs deux portraits côte à côte, puis les deux convictions du studio.
@@ -148,9 +149,7 @@ export default function Studio({ onNavigate }) {
           </button>
         </p>
 
-        <p className="pt-14 text-center text-[11px] font-light tracking-[0.04em] text-grege">
-          Studio de production basé à Bordeaux
-        </p>
+        <SiteFooter onNavigate={onNavigate} className="pt-14" />
       </div>
     </section>
   )

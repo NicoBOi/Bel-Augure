@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
+import SiteFooter from '../components/SiteFooter.jsx'
 
 // Le message est envoyé côté serveur par la fonction /api/contact (voir
 // api/contact.js) : le studio reçoit un vrai email, sans ouvrir la messagerie
@@ -137,15 +138,6 @@ export default function Contact({ onNavigate, prefill }) {
           </p>
           <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.32s' }}>
             Bordeaux · Nouvelle-Aquitaine
-          </p>
-          <p className="reveal-up mt-6" style={{ '--d': '0.36s' }}>
-            <button
-              type="button"
-              onClick={() => onNavigate?.('mentions')}
-              className="cursor-pointer py-2 -my-2 text-[10px] font-light uppercase tracking-[0.2em] text-grege/80 transition-colors duration-500 hover:text-encre"
-            >
-              Mentions légales
-            </button>
           </p>
           </div>
         </div>
@@ -377,9 +369,7 @@ export default function Contact({ onNavigate, prefill }) {
         )}
       </div>
 
-      <p className="mt-auto pt-16 text-center text-[11px] font-light tracking-[0.04em] text-grege">
-        Studio de production basé à Bordeaux
-      </p>
+      <SiteFooter onNavigate={onNavigate} className="mt-auto pt-16" />
     </section>
   )
 }

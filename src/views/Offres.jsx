@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
 import { HERO_FILM_ID, OFFERS, PROCESS, DIFFUSION } from '../content/offres.js'
+import SiteFooter from '../components/SiteFooter.jsx'
 
 // Page /offres — direction éditoriale « montrer puis expliquer ».
 // Premier écran en deux temps : à gauche le titre, à droite le film ; en bas
@@ -319,10 +320,8 @@ export default function Offres({ setDark, onNavigate }) {
         </div>
       </div>
 
-      {/* Signature de pied de page, comme les pages Studio, Films et Contact. */}
-      <p className="px-6 pb-28 text-center text-[11px] font-light tracking-[0.04em] text-grege md:px-16 lg:pb-20">
-        Studio de production basé à Bordeaux
-      </p>
+      {/* Signature et accès légaux, communs à toutes les pages. */}
+      <SiteFooter onNavigate={onNavigate} className="px-6 pb-28 md:px-16 lg:pb-20" />
     </section>
   )
 }

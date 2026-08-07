@@ -15,7 +15,8 @@ const BLOCS = [
   {
     titre: 'Hébergement',
     lignes: [
-      'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.',
+      'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.',
+      'Téléphone : +1 559 288 7060 — vercel.com.',
     ],
   },
   {
@@ -27,6 +28,7 @@ const BLOCS = [
   },
   {
     titre: 'Données personnelles',
+    ancre: 'confidentialite',
     lignes: [
       "Les informations du formulaire de contact (nom, établissement, email, projet, échéance, budget, message) sont traitées par Bel Augure sur la base de mesures précontractuelles prises à votre demande (art. 6-1-b du RGPD), aux seules fins de répondre à votre message. Elles ne sont jamais cédées ni utilisées à des fins de prospection.",
       "Votre message est transmis par email et conservé dans notre messagerie et chez notre prestataire d'envoi Resend Inc. (États-Unis) ; le site est hébergé par Vercel Inc. (États-Unis). Ces transferts sont encadrés par les garanties contractuelles de ces prestataires. Les messages sont conservés au plus trois ans après notre dernier échange.",
@@ -36,7 +38,7 @@ const BLOCS = [
   },
 ]
 
-export default function Mentions() {
+export default function Mentions({ onNavigate }) {
   return (
     <section
       aria-label="Mentions légales"
@@ -52,7 +54,7 @@ export default function Mentions() {
 
       <div className="mt-10 grid max-w-4xl gap-10 md:grid-cols-2">
         {BLOCS.map((bloc) => (
-          <div key={bloc.titre}>
+          <div key={bloc.titre} id={bloc.ancre} className="scroll-mt-28">
             <p className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege">
               {bloc.titre}
             </p>
@@ -69,6 +71,15 @@ export default function Mentions() {
 
       <p className="mt-auto pt-16 text-center text-[11px] font-light tracking-[0.04em] text-grege">
         Studio de production basé à Bordeaux · SIREN 108 264 524
+      </p>
+      <p className="pt-4 text-center">
+        <button
+          type="button"
+          onClick={() => onNavigate?.('contact')}
+          className="cursor-pointer py-2 -my-2 text-[11px] font-light tracking-[0.04em] text-grege transition-colors duration-500 hover:text-encre"
+        >
+          Nous écrire
+        </button>
       </p>
     </section>
   )

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
+import SiteFooter from '../components/SiteFooter.jsx'
 
 // Le film de fond vit dans App (calque persistant) : ici on ne fait que
 // scruter son opacité via mediaRef pendant la transition au scroll.
@@ -88,6 +89,8 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       if (footerRef.current) {
         const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
         footerRef.current.style.opacity = String(q)
+        footerRef.current.style.pointerEvents = q > 0.6 ? 'auto' : 'none'
+        footerRef.current.inert = q < 0.5
       }
       // Le site entier passe au jour à mi-course, header compris
       const darkNow = p < 0.5
@@ -334,15 +337,15 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         </div>
       </div>
 
-      {/* Signature de pied de page, révélée avec le jour (comme les pages
-          Studio, Films et Contact). Masquée sur la scène d'ouverture sombre. */}
-      <p
+      {/* Signature et accès légaux, révélés avec le jour. Invisibles sur la
+          scène d'ouverture sombre : hors clic et hors parcours clavier tant
+          qu'ils ne sont pas là (piloté dans apply, comme le bloc studio). */}
+      <div
         ref={footerRef}
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-[3.5vh] z-[2] text-center text-[11px] font-light tracking-[0.04em] text-grege opacity-0"
+        className="pointer-events-none absolute inset-x-0 bottom-[3.5vh] z-[2] opacity-0"
       >
-        Studio de production basé à Bordeaux
-      </p>
+        <SiteFooter onNavigate={onNavigate} />
+      </div>
     </section>
   )
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
 import VideoLoader from '../components/VideoLoader.jsx'
+import SiteFooter from '../components/SiteFooter.jsx'
 
 // Un seul film pour l'instant, montré en grand et centré. En ajouter un ici
 // suffit : la page empile les films les uns sous les autres, même mise en scène.
@@ -165,9 +166,11 @@ export default function Films({ setDark, onNavigate }) {
         ))}
       </div>
 
-      <p className="mx-auto mt-auto w-full px-6 pt-16 text-center text-[11px] font-light tracking-[0.04em] text-encre/50 lg:max-w-[1500px] lg:px-16">
-        Studio de production basé à Bordeaux
-      </p>
+      <SiteFooter
+        onNavigate={onNavigate}
+        tone="or"
+        className="mx-auto mt-auto w-full px-6 pt-16 lg:max-w-[1500px] lg:px-16"
+      />
     </section>
   )
 }

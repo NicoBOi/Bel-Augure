@@ -42,9 +42,9 @@ export const OFFERS = [
     formats: [
       {
         title: 'Collection',
-        sub: 'Un sujet, plusieurs films.',
+        sub: 'Trois films tournés en une journée.',
         body: [
-          'Vous choisissez ce que vous souhaitez mettre en lumière. Nous le racontons à travers plusieurs films courts, imaginés et tournés ensemble.',
+          'Trois films courts tournés en une journée autour d’un même sujet, déclinés en formats verticaux pour les réseaux.',
           'Une même idée pour présenter une expérience, une gamme, une personne ou un savoir-faire.',
         ],
         closing: 'Ponctuel',
@@ -122,5 +122,5 @@ export const PROCESS = [
 
 export const DIFFUSION = {
   title: 'La diffusion, en clair',
-  body: 'Tous nos films sont livrés avec leurs droits de diffusion offerts, à vie.',
+  body: 'Tous les droits sont cédés à durée illimitée dès la livraison du film.',
 }
