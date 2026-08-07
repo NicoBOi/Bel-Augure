@@ -17,7 +17,7 @@ const FONDATEURS = [
   {
     nom: 'Corentin Crestia',
     monogramme: 'CC',
-    teinte: '#E9DCC6',
+    teinte: '#E6D8C1',
     roles: 'Auteur — Monteur — Motion designer',
     bio: [
       'Corentin s’est spécialisé dans l’écriture, le montage et la création de contenus destinés aux entreprises et aux réseaux sociaux.',
@@ -90,29 +90,29 @@ export default function Studio({ onNavigate }) {
           </div>
         </div>
 
-        {/* ── Les deux fondateurs : cartes jumelles mais non identiques.
-            Deux tons chauds voisins (la gamme des bandes d'offres) et un
-            monogramme en filigrane — chacun son identité, aucune hiérarchie. */}
-        <div className="reveal-up mt-16 grid gap-6 md:mt-20 md:grid-cols-2 md:gap-8" style={{ '--d': '0.5s' }}>
+        {/* ── Les deux fondateurs : le langage des chapitres d'offres — les
+            deux mêmes teintes de bande, le liseré fin, et le grand caractère
+            display en tête (le monogramme joue le rôle du numéro). */}
+        <div className="reveal-up mt-16 grid gap-5 md:mt-20 md:grid-cols-2 md:gap-8" style={{ '--d': '0.5s' }}>
           {FONDATEURS.map((f) => (
             <div
               key={f.nom}
-              className="relative overflow-hidden rounded-2xl border border-encre/10 p-8 md:p-9"
+              className="rounded-xl border border-encre/12 p-7 md:p-9"
               style={{ backgroundColor: f.teinte }}
             >
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute -right-3 -top-7 select-none font-display text-[7.5rem] leading-none text-encre/[0.06]"
+                className="block font-display text-[clamp(3rem,6vw,4.5rem)] font-light leading-[0.9] text-encre"
               >
                 {f.monogramme}
               </span>
-              <h2 className="relative font-display text-[clamp(1.5rem,2.4vw,2rem)] font-light leading-[1.1] text-encre">
+              <h2 className="mt-6 font-display text-[clamp(1.5rem,2.4vw,2rem)] font-light leading-[1.1] text-encre">
                 {f.nom}
               </h2>
-              <p className="relative mt-3 text-[10px] font-normal uppercase tracking-[0.22em] leading-[1.9] text-orfonce">
+              <p className="mt-3 text-[10px] font-normal uppercase tracking-[0.22em] leading-[1.9] text-orfonce">
                 {f.roles}
               </p>
-              <div className="relative mt-5 space-y-3 text-[14px] font-light leading-[1.8] text-encre/80">
+              <div className="mt-5 space-y-3 text-[14px] font-light leading-[1.8] text-encre/80">
                 {f.bio.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
