@@ -543,6 +543,20 @@ textarea.field {
 
 /* Plein écran de la scène film : on garde le rapport 16:9 de la vidéo,
    lettrage à l'encre autour au lieu d'étirer ou rogner l'image. */
+/* La scène du film se pilote au clic (pause / reprise) : le navigateur ne
+   doit jamais y répondre par une sélection bleue, un halo de tap mobile ou
+   un glisser-déposer de l'image. Seuls les contrôles réagissent. */
+.film-stage,
+.film-stage * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.film-stage {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .film-stage:fullscreen,
 .film-stage:-webkit-full-screen {
   display: flex;
