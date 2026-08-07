@@ -221,10 +221,9 @@ export default function Offres({ setDark, onNavigate }) {
               Trois façons d’écrire votre histoire
             </h2>
             <p className="mt-6 max-w-[48ch] text-[16px] font-light leading-[1.7] text-encre/75">
-              <span className="font-medium text-encre">Un film de référence</span> pour votre site et vos ventes,{' '}
-              <span className="font-medium text-encre">des films courts réguliers</span> pour vos réseaux,{' '}
-              <span className="font-medium text-encre">une campagne complète</span> pour une ouverture ou un
-              lancement.
+              <span className="font-medium text-encre">Un film</span> pour en révéler l’essence,{' '}
+              <span className="font-medium text-encre">des récits</span> pour en dévoiler les facettes,{' '}
+              <span className="font-medium text-encre">une campagne</span> pour lui donner toute son ampleur.
             </p>
           </div>
 
@@ -238,7 +237,7 @@ export default function Offres({ setDark, onNavigate }) {
         </div>
 
         {/* Bas : trois cartes très condensées, cliquables — chacune mène à son
-            chapitre détaillé plus bas et annonce son prix plancher. */}
+            chapitre détaillé plus bas. */}
         <div className="reveal-up grid gap-px pt-12 sm:grid-cols-3 md:pt-16" style={{ '--d': '0.16s' }}>
           {OFFERS.map((o) => (
             <button
@@ -253,9 +252,6 @@ export default function Offres({ setDark, onNavigate }) {
                 {o.name}
               </h3>
               <p className="mt-2 max-w-[32ch] text-[14.5px] font-light leading-[1.5] text-encre/80">{o.cardPhrase}</p>
-              <p className="mt-4 text-[12px] font-normal tracking-[0.04em] text-encre/60 tabular-nums">
-                {o.cardPrice}
-              </p>
             </button>
           ))}
         </div>

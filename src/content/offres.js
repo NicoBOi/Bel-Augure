@@ -11,7 +11,6 @@ export const OFFERS = [
     name: 'Film Signature',
     label: 'Pour présenter votre marque',
     cardPhrase: 'Devenez le premier choix avant même la première visite.',
-    cardPrice: 'À partir de 5 500 € HT',
     price: 'À partir de 5 500 € HT',
     promise: 'Faites ressentir ce qui vous distingue.',
     description: [
@@ -33,8 +32,7 @@ export const OFFERS = [
     num: '02',
     name: 'Histoires de marque',
     label: 'Pour faire vivre vos réseaux',
-    cardPhrase: 'Un film court par soin, par saison ou par nouveauté, pour des réseaux qui ressemblent à votre maison.',
-    cardPrice: 'À partir de 3 500 € HT',
+    cardPhrase: 'Mettez en lumière chacune de vos expériences pour donner envie de vous découvrir, de vous choisir et de revenir vers vous.',
     promise: 'Chaque film donne une nouvelle raison de vous choisir.',
     description: [
       'Un soin, un lieu, un produit ou un savoir-faire peut devenir une histoire à part entière.',
@@ -82,11 +80,10 @@ export const OFFERS = [
     name: 'Campagne',
     label: 'Pour un lancement',
     cardPhrase: 'Créez l’engouement autour de votre prochaine ouverture ou de votre prochain lancement.',
-    cardPrice: 'À partir de 15 000 € HT',
     price: 'À partir de 15 000 € HT',
     promise: 'Faites de votre prochain temps fort un moment que l’on retient.',
     description: [
-      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons une idée forte et sensorielle, déclinée dans un film principal et plusieurs films courts.',
+      'Pour une ouverture, un lancement ou une nouvelle identité, nous imaginons une idée forte, déclinée dans un film principal et plusieurs films courts.',
       'Le film principal révèle le projet. Les autres l’annoncent, en dévoilent les détails et prolongent le lancement.',
       'Chaque film peut vivre seul, mais tous se reconnaissent au premier regard.',
     ],

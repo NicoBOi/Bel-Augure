@@ -300,13 +300,14 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
 
         <div className="mt-8 space-y-4 text-[15px] font-light leading-[1.85] text-encre/80" style={{ textWrap: 'pretty' }}>
           <p>
-            Avant de réserver un séjour ou un soin, vos clients cherchent à se projeter. Ils veulent
-            comprendre ce qui vous distingue et sentir que votre maison est faite pour eux.
+            Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se
+            projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite
+            pour eux.
           </p>
           <p>
-            Bel Augure crée les films des hôtels, des spas, des thermes et des maisons de bien-être :
-            vos lieux, vos gestes et votre savoir-faire, filmés pour attirer les bons clients et donner
-            envie de réserver.
+            Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui
+            créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de
+            marque et donner envie de vous découvrir, de vous choisir et de revenir vers vous.
           </p>
         </div>
         </div>

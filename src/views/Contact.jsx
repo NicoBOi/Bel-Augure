@@ -96,11 +96,11 @@ export default function Contact({ onNavigate, prefill }) {
           <div>
           <h1 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
-              <span>Parlons de votre</span>
+              <span>On discute de votre</span>
             </span>
             <span className="mask md:ml-[3vw]" style={{ '--d': '0.2s' }}>
               <span>
-                prochain film<span className="text-or">.</span>
+                prochain film<span className="text-or">{' '}?</span>
               </span>
             </span>
           </h1>
@@ -109,8 +109,8 @@ export default function Contact({ onNavigate, prefill }) {
             className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
             style={{ '--d': '0.12s' }}
           >
-            Écrivez-nous en quelques lignes : votre maison, votre projet, votre échéance. Nous
-            revenons vers vous avec un premier avis et une proposition de rendez-vous.
+            Un café, des idées, quelques notes et le projet commence
+            <span className="text-or">{' '}!</span>
           </p>
 
           <p
@@ -165,8 +165,8 @@ export default function Contact({ onNavigate, prefill }) {
               C'est envoyé<span className="text-or">.</span>
             </h2>
             <p className="mt-4 max-w-[42ch] text-[14px] font-light leading-[1.85] text-encre/80">
-              Votre message est bien arrivé. Nous revenons vers vous, généralement sous deux
-              jours ouvrés, pour convenir d'un premier échange de trente minutes.
+              On s'occupe de tout. On revient vers vous très vite avec votre devis — et le
+              café, c'est nous qui l'offrons.
             </p>
             <button
               type="button"
@@ -360,8 +360,8 @@ export default function Contact({ onNavigate, prefill }) {
           </p>
 
           <p className="mt-2 max-w-[46ch] text-[12.5px] font-light leading-[1.7] text-encre/60">
-            Nous vous répondons généralement sous deux jours ouvrés pour convenir d’un premier
-            échange de trente minutes.
+            Nous vous répondons sous deux jours ouvrés pour convenir d’un premier échange de
+            trente minutes.
           </p>
 
           <p className="mt-3 max-w-[46ch] text-[11px] font-light leading-[1.7] text-encre/45">

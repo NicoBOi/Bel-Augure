@@ -23,7 +23,9 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, 
 function offresBody() {
   const offers = OFFERS.map((o) => {
     const parts = [`<h2>${o.name} — ${o.label.toLowerCase()}</h2>`]
-    const price = o.price || o.cardPrice
+    // Offre sans tarif global (Histoires) : on annonce le plancher de sa
+    // première formule.
+    const price = o.price || (o.formats && o.formats[0].price)
     const desc = o.description.join(' ')
     let formats = ''
     if (o.formats) {
@@ -56,27 +58,27 @@ const ROUTES = [
     body: `
       <p>Les films signature du bien-être d'exception.</p>
       <h2>Faites de votre image une raison de vous choisir.</h2>
-      <p>Avant de réserver un séjour ou un soin, vos clients cherchent à se projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre maison est faite pour eux.</p>
-      <p>Bel Augure crée les films des hôtels, des spas, des thermes et des maisons de bien-être : vos lieux, vos gestes et votre savoir-faire, filmés pour attirer les bons clients et donner envie de réserver.</p>
+      <p>Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite pour eux.</p>
+      <p>Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de marque et donner envie de vous découvrir, de vous choisir et de revenir vers vous.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },
   {
     path: '/films',
     title: 'Films de marque pour hôtels, spas & bien-être · Bel Augure',
-    desc: "Les Pieds dans l'eau : le film-manifeste de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
+    desc: "Les Pieds dans l'eau : le premier film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
     h1: "Films — Les Pieds dans l'eau, sur le bassin d'Arcachon",
     body: `
       <h2>Les Pieds dans l'eau — bassin d'Arcachon</h2>
-      <p>Notre film-manifeste, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante — sans commande et sans client, uniquement pour montrer notre regard. Celui que nous poserons sur votre maison.</p>
+      <p>Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, au crépuscule d'une marée montante.</p>
       <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a></p>`,
   },
   {
     path: '/studio',
     title: 'Studio de production à Bordeaux · Bel Augure',
-    desc: "Bel Augure, studio de production à Bordeaux : Nicolas Sempere et Corentin Crestia filment les hôtels, spas et maisons de bien-être d'exception.",
-    h1: 'Studio de production à Bordeaux — Nicolas Sempere & Corentin Crestia',
+    desc: "Bel Augure, studio de production à Bordeaux : Nicolas et Corentin filment les hôtels, spas et maisons de bien-être d'exception.",
+    h1: 'Studio de production à Bordeaux — Nicolas & Corentin',
     body: `
-      <p>Bel Augure est un studio neuf ; ses fondateurs ne le sont pas. Nicolas Sempere, venu de la 3D puis passé par la photographie et le film, a travaillé pour des artistes comme MadeinParis, des marques comme A Better Feeling, et signé des campagnes FOOH avec Sephora et Showroomprivé. Corentin Crestia a fait ses armes dans le film institutionnel, en interne pour les écoles Ynov et MJM. Quinze ans d'amitié, deux métiers réunis dans un même studio. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée en interne, à Bordeaux. Un seul interlocuteur, deux regards sur chaque plan.</p>
+      <p>Bel Augure, c'est nous deux : Nicolas et Corentin. Quinze ans d'amitié et deux parcours qui se complètent — l'un vient de l'événementiel, l'autre du cinéma et de la mode. Ensemble, nous prenons en charge tout votre film, de la première idée à la dernière image : l'écriture et la direction, le tournage, puis toute la postproduction, réalisée à Bordeaux dans notre studio. Un seul interlocuteur, deux regards sur chaque plan.</p>
       <p>Filmer celles et ceux qui prennent soin des autres, c'est exactement ce que nous avons choisi de faire.</p>`,
   },
   {
@@ -90,9 +92,9 @@ const ROUTES = [
     path: '/contact',
     title: 'Contact · Bel Augure',
     desc: 'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
-    h1: 'Contact — parlons de votre prochain film',
+    h1: 'Contact — on discute de votre prochain film ?',
     body: `
-      <p>Écrivez-nous en quelques lignes : votre maison, votre projet, votre échéance. Nous vous répondons généralement sous deux jours ouvrés pour convenir d'un premier échange de trente minutes.</p>
+      <p>Un café, des idées, quelques notes et le projet commence. Dites-nous où vous êtes et ce que vous aimeriez montrer.</p>
       <p><a href="mailto:nicolas@belaugure.studio">nicolas@belaugure.studio</a> · <a href="tel:+33668499504">06 68 49 95 04</a> · Bordeaux · Nouvelle-Aquitaine</p>`,
   },
   {
@@ -119,7 +121,7 @@ async function filmVideoJsonLd() {
     '@type': 'VideoObject',
     name: "Les Pieds dans l'eau",
     description:
-      "Le film-manifeste de Bel Augure, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
+      "Le premier film de Bel Augure, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
     thumbnailUrl: `${SITE}/og.png`,
     embedUrl: `https://player.vimeo.com/video/${FILM_VIMEO_ID}`,
     contentUrl: `https://vimeo.com/${FILM_VIMEO_ID}`,

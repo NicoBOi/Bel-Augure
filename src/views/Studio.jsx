@@ -30,19 +30,15 @@ export default function Studio({ onNavigate }) {
           style={{ '--d': '0.42s', textWrap: 'pretty' }}
         >
           <p>
-            Bel Augure est un studio neuf&nbsp;; ses fondateurs ne le sont pas.
-            Nicolas Sempere, venu de la 3D puis passé par la photographie et le
-            film, a travaillé pour des artistes comme MadeinParis, des marques
-            comme A Better Feeling, et signé des campagnes FOOH avec Sephora et
-            Showroomprivé. Corentin Crestia a fait ses armes dans le film
-            institutionnel, en interne pour les écoles Ynov et MJM. Quinze ans
-            d'amitié, deux métiers réunis dans un même studio.
+            Bel Augure, c'est nous deux&nbsp;: Nicolas et Corentin. Quinze ans
+            d'amitié et deux parcours qui se complètent — l'un vient de
+            l'événementiel, l'autre du cinéma et de la mode.
           </p>
           <p>
             Ensemble, nous prenons en charge tout votre film, de la première
             idée à la dernière image&nbsp;: l'écriture et la direction, le
-            tournage, puis toute la postproduction, réalisée en interne, à
-            Bordeaux. Un seul interlocuteur, deux regards sur chaque plan.
+            tournage, puis toute la postproduction, réalisée à Bordeaux dans
+            notre studio. Un seul interlocuteur, deux regards sur chaque plan.
           </p>
         </div>
 
