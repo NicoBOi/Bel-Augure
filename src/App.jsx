@@ -166,7 +166,11 @@ export default function App() {
   // Les vues découpées sont préchargées pendant un temps mort, une fois la
   // scène d'ouverture posée : le bundle initial reste léger, mais la
   // navigation vers Films/Offres/Studio… est ensuite instantanée.
+  // Le chargement n'est lancé qu'après le lever du voile, puis un temps de
+  // repos : évaluer cinq fragments pendant le premier scroll du héros se
+  // payait en images sautées, soit exactement la première impression.
   useEffect(() => {
+    if (veiled) return undefined
     const warm = () => {
       import('./views/Films.jsx')
       import('./views/Offres.jsx')
@@ -177,9 +181,15 @@ export default function App() {
     }
     const ric = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500))
     const cancel = window.cancelIdleCallback || clearTimeout
-    const id = ric(warm)
-    return () => cancel(id)
-  }, [])
+    let id
+    const delai = setTimeout(() => {
+      id = ric(warm)
+    }, 1600)
+    return () => {
+      clearTimeout(delai)
+      if (id !== undefined) cancel(id)
+    }
+  }, [veiled])
 
   // Navigation historique (précédent/suivant) : on suit.
   useEffect(() => {

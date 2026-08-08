@@ -1,6 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
+import VideoLoader from '../components/VideoLoader.jsx'
+import { useVimeoThumb } from '../hooks/useVimeoThumb.js'
 import { HERO_FILM_ID, OFFERS, PROCESS, DIFFUSION } from '../content/offres.js'
 import SiteFooter from '../components/SiteFooter.jsx'
 
@@ -198,6 +200,10 @@ function OffersExperience({ offers, onContact, setDark }) {
 
 export default function Offres({ setDark, onNavigate }) {
   const ref = useReveal(0.35)
+  // Le film met un instant à démarrer : d'ici là, sa propre vignette tient
+  // l'écran, avec le chargeur maison par-dessus. Plus de rectangle noir.
+  const [heroReady, setHeroReady] = useState(false)
+  const heroThumb = useVimeoThumb(HERO_FILM_ID)
 
   const goContact = (name) => onNavigate?.('contact', { offer: name })
   const scrollToDetail = (id) =>
@@ -229,9 +235,27 @@ export default function Offres({ setDark, onNavigate }) {
           </div>
 
           <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-encre lg:rounded-3xl">
+            {/* Écran d'attente : la vignette du film, puis le chargeur.
+                Il s'efface en fondu quand la lecture démarre vraiment. */}
+            <div
+              aria-hidden="true"
+              className={`pointer-events-none absolute inset-0 z-[1] transition-opacity duration-700 ${
+                heroReady ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
+              {heroThumb && (
+                <img
+                  src={heroThumb}
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover opacity-55"
+                />
+              )}
+              <VideoLoader />
+            </div>
             <VimeoBackground
               id={HERO_FILM_ID}
               title="Film Bel Augure"
+              onPlaying={() => setHeroReady(true)}
               className="absolute inset-0 h-full w-full"
             />
           </div>

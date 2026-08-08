@@ -1,31 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useReveal } from '../hooks/useReveal.js'
 import SiteFooter from '../components/SiteFooter.jsx'
+import { useVimeoThumb } from '../hooks/useVimeoThumb.js'
 
 // Le film de fond vit dans App (calque persistant) : ici on ne fait que
 // scruter son opacité via mediaRef pendant la transition au scroll.
-// La vignette du CTA : une frame du film, demandée à Vimeo (oEmbed, CORS
-// ouvert). Si la requête échoue, la pastille encre reste — rien ne casse.
-const FILM_VIMEO_URL = 'https://vimeo.com/1211391558'
+const FILM_VIMEO_ID = '1211391558'
 
 export default function Accueil({ onNavigate, setDark, mediaRef }) {
   const reveal = useReveal(0.35)
-  const [filmThumb, setFilmThumb] = useState(null)
-
-  useEffect(() => {
-    let alive = true
-    fetch(
-      `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(FILM_VIMEO_URL)}&width=320`,
-    )
-      .then((r) => r.json())
-      .then((d) => {
-        if (alive && d.thumbnail_url) setFilmThumb(d.thumbnail_url)
-      })
-      .catch(() => {})
-    return () => {
-      alive = false
-    }
-  }, [])
+  // Vignette du film pour le photogramme du bouton « Découvrir le film ».
+  const filmThumb = useVimeoThumb(FILM_VIMEO_ID, 320)
   const sectionRef = useRef(null)
   const creamRef = useRef(null)
   const wordRef = useRef(null)
@@ -40,7 +25,10 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
   useEffect(() => {
     setDark(true)
     wasDark.current = true
-  }, [setDark])
+    // Filet : si un rendu précédent avait laissé une opacité en ligne sur le
+    // calque vidéo, on la rend au navigateur.
+    if (mediaRef?.current) mediaRef.current.style.opacity = ''
+  }, [setDark, mediaRef])
 
   // Le scroll scrute la transition : la vidéo s'estompe, le site passe au
   // jour et le texte du studio se révèle. Boucle rAF, transforms et
@@ -51,39 +39,43 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     let raf
 
+    // Une écriture DOM n'a lieu que si la valeur change vraiment : sans ce
+    // filtre, `inert` et `pointer-events` étaient réécrits soixante fois par
+    // seconde et invalidaient le style à chaque image.
+    const memo = new WeakMap()
+    const write = (el, prop, value) => {
+      if (!el) return
+      let seen = memo.get(el)
+      if (!seen) memo.set(el, (seen = {}))
+      if (seen[prop] === value) return
+      seen[prop] = value
+      if (prop === 'inert') el.inert = value
+      else el.style[prop] = value
+    }
+    // Trois décimales suffisent à l'œil et divisent d'autant les écritures.
+    const r3 = (v) => Math.round(v * 1000) / 1000
+
     const apply = (p) => {
-      if (mediaRef?.current) {
-        mediaRef.current.style.opacity = String(Math.max(1 - p * 1.15, 0))
+      // Le calque crème suffit à couvrir le film : on ne touche plus à
+      // l'opacité du calque vidéo. Faire varier l'opacité d'une iframe en
+      // lecture oblige le navigateur à recomposer la vidéo à chaque image —
+      // c'était le vrai coût de la transition.
+      write(creamRef.current, 'opacity', String(r3(p)))
+      write(wordRef.current, 'opacity', String(r3(Math.max(1 - p * 1.6, 0))))
+      write(wordRef.current, 'transform', `translateY(${r3(-p * 8)}vh)`)
+      write(wordRef.current, 'inert', p > 0.5)
+      // L'invite au film ne vit que sur la scène d'ouverture : elle s'efface
+      // vite dès qu'un geste de scroll commence.
+      write(hintRef.current, 'opacity', String(r3(Math.max(1 - p * 3, 0))))
+      write(hintRef.current, 'inert', p > 0.15)
+      // Le studio et la signature montent ensemble avec le jour.
+      const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
+      for (const el of [studioRef.current, footerRef.current]) {
+        write(el, 'opacity', String(r3(q)))
+        write(el, 'pointerEvents', q > 0.6 ? 'auto' : 'none')
+        write(el, 'inert', q < 0.5) // invisible = hors du parcours clavier
       }
-      if (creamRef.current) {
-        creamRef.current.style.opacity = String(p)
-      }
-      if (wordRef.current) {
-        wordRef.current.style.opacity = String(Math.max(1 - p * 1.6, 0))
-        wordRef.current.style.transform = `translateY(${-p * 8}vh)`
-        wordRef.current.inert = p > 0.5
-      }
-      if (hintRef.current) {
-        // L'invite au film ne vit que sur la scène d'ouverture : elle
-        // s'efface vite dès qu'un geste de scroll commence.
-        hintRef.current.style.opacity = String(Math.max(1 - p * 3, 0))
-        hintRef.current.inert = p > 0.15
-      }
-      if (studioRef.current) {
-        const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
-        studioRef.current.style.opacity = String(q)
-        studioRef.current.style.transform = `translateY(${(1 - q) * 24}px)`
-        studioRef.current.style.pointerEvents = q > 0.6 ? 'auto' : 'none'
-        // Invisible = hors du parcours clavier
-        studioRef.current.inert = q < 0.5
-      }
-      // La signature de pied de page suit la même montée du jour que le studio.
-      if (footerRef.current) {
-        const q = Math.min(Math.max((p - 0.55) / 0.45, 0), 1)
-        footerRef.current.style.opacity = String(q)
-        footerRef.current.style.pointerEvents = q > 0.6 ? 'auto' : 'none'
-        footerRef.current.inert = q < 0.5
-      }
+      write(studioRef.current, 'transform', `translateY(${r3((1 - q) * 24)}px)`)
       // Le site entier passe au jour à mi-course, header compris
       const darkNow = p < 0.5
       if (darkNow !== wasDark.current) {
@@ -92,39 +84,59 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       }
     }
 
+    // Les deux grands calques animés sont promus en couche compositée le
+    // temps du geste seulement : le navigateur n'a plus à repeindre le plein
+    // écran à chaque image, et la mémoire est rendue une fois la scène posée.
+    const promote = (on) => {
+      if (creamRef.current) creamRef.current.style.willChange = on ? 'opacity' : ''
+    }
+
     // La boucle ne tourne que tant qu'il reste du chemin : arrivée à
     // destination, elle s'arrête, et un geste (molette/doigt/clavier) la
-    // relance. Plus d'écritures de style à chaque frame en permanence.
-    const loop = () => {
+    // relance. Le rattrapage est exprimé en temps réel, donc identique à
+    // 60 comme à 120 Hz, et assez vif pour que le geste réponde tout de suite.
+    let lastT = 0
+    const loop = (now) => {
+      const dt = lastT ? Math.min(now - lastT, 50) : 16.7
+      lastT = now
       const t = target.current
       const c = current.current
-      const next = reduce ? t : c + (t - c) * 0.11
+      const k = reduce ? 1 : 1 - Math.pow(1 - 0.22, dt / 16.6667)
+      const next = c + (t - c) * k
       current.current = Math.abs(next - t) < 0.0005 ? t : next
       apply(current.current)
       if (current.current === t) {
         raf = null
+        lastT = 0
+        promote(false)
         return
       }
       raf = requestAnimationFrame(loop)
     }
     const ensure = () => {
-      if (raf == null) raf = requestAnimationFrame(loop)
+      if (raf == null) {
+        promote(true)
+        raf = requestAnimationFrame(loop)
+      }
     }
     ensure()
 
-    // La molette agit proportionnellement (comme le doigt) plutôt que de
-    // basculer d'un coup : chaque cran fait avancer la lumière un peu, et à
-    // l'arrêt de la molette la scène se pose sur le jour ou la nuit le plus
-    // proche. Plus doux qu'un tout-ou-rien au moindre cran.
+    // La molette agit proportionnellement, comme le doigt : la lumière suit le
+    // geste. À l'arrêt, la scène se pose dans le SENS du geste — vers le bas
+    // le jour se lève, vers le haut la nuit revient. Aucune zone morte : un
+    // seul cran suffit. L'ancien seuil « à mi-course » renvoyait un petit
+    // scroll en arrière, ce qui se lisait comme un temps de latence.
     let wheelSettle
+    let wheelDir = 0
     const onWheel = (e) => {
-      target.current = Math.min(Math.max(target.current + e.deltaY / 900, 0), 1)
+      if (e.deltaY !== 0) wheelDir = e.deltaY > 0 ? 1 : -1
+      target.current = Math.min(Math.max(target.current + e.deltaY / 700, 0), 1)
       ensure()
       clearTimeout(wheelSettle)
       wheelSettle = setTimeout(() => {
-        target.current = target.current > 0.5 ? 1 : 0
+        target.current = wheelDir >= 0 ? 1 : 0
         ensure()
-      }, 150)
+      }, 110)
     }
     section.addEventListener('wheel', onWheel, { passive: true })
 
