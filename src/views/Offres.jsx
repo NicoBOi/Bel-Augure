@@ -235,29 +235,31 @@ export default function Offres({ setDark, onNavigate }) {
           </div>
 
           <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-encre lg:rounded-3xl">
-            {/* Écran d'attente : la vignette du film, puis le chargeur.
-                Il s'efface en fondu quand la lecture démarre vraiment. */}
-            <div
-              aria-hidden="true"
-              className={`pointer-events-none absolute inset-0 z-[1] transition-opacity duration-700 ${
-                heroReady ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
-              {heroThumb && (
-                <img
-                  src={heroThumb}
-                  alt=""
-                  className="absolute inset-0 h-full w-full object-cover opacity-55"
-                />
-              )}
-              <VideoLoader />
-            </div>
+            {/* Le photogramme tient le fond en permanence ; le film joue
+                par-dessus. Seul le chargeur s'efface, une fois la lecture
+                réellement lancée. */}
+            {heroThumb && (
+              <img
+                src={heroThumb}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
             <VimeoBackground
               id={HERO_FILM_ID}
               title="Film Bel Augure"
               onPlaying={() => setHeroReady(true)}
               className="absolute inset-0 h-full w-full"
             />
+            <div
+              aria-hidden="true"
+              className={`pointer-events-none absolute inset-0 z-[1] bg-encre/45 transition-opacity duration-700 ${
+                heroReady ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
+              <VideoLoader />
+            </div>
           </div>
         </div>
 

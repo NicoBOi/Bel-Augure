@@ -5,6 +5,7 @@ import VimeoBackground from './components/VimeoBackground.jsx'
 // surtout textuelles, sont découpées en fragments à part et ne sont
 // téléchargées qu'à la première visite — le bundle initial fond d'autant.
 import Accueil from './views/Accueil.jsx'
+import { useVimeoThumb } from './hooks/useVimeoThumb.js'
 const Films = lazy(() => import('./views/Films.jsx'))
 const Studio = lazy(() => import('./views/Studio.jsx'))
 const Offres = lazy(() => import('./views/Offres.jsx'))
@@ -130,6 +131,11 @@ export default function App() {
     mq.addEventListener('change', onChange)
     return () => mq.removeEventListener('change', onChange)
   }, [])
+  // Photogramme du film, dans la déclinaison correspondant à l'écran : il
+  // tient le fond tant que la lecture n'a pas démarré, à la place de l'encre
+  // nue. Pas de libellé de chargement ici — le héros porte déjà le
+  // mot-symbole et la catchline.
+  const heroThumb = useVimeoThumb(isMobile ? HERO_VIMEO_ID_MOBILE : HERO_VIMEO_ID, 1280)
   const View = VIEWS[view]
 
   const navigate = (next, payload) => {
@@ -278,6 +284,17 @@ export default function App() {
       >
         <div ref={heroMediaRef} className="absolute inset-0 isolate overflow-hidden">
           <div className="h-full w-full bg-encre" />
+          {/* Le photogramme reste posé sous le film, sans état ni fondu : la
+              vidéo joue par-dessus quand elle démarre, et si elle ne démarre
+              jamais le fond reste une image, jamais un rectangle noir. */}
+          {heroThumb && (
+            <img
+              src={heroThumb}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          )}
           <VimeoBackground
             key={isMobile ? 'mobile' : 'desktop'}
             id={isMobile ? HERO_VIMEO_ID_MOBILE : HERO_VIMEO_ID}
