@@ -56,10 +56,9 @@ const ROUTES = [
     desc: "Studio de production de films de marque pour l'hôtellerie, les spas, les thermes et les marques de bien-être haut de gamme, à Bordeaux et partout en France.",
     h1: 'Bel Augure — studio de production de films pour hôtels, spas et maisons de bien-être à Bordeaux',
     body: `
-      <p>Les films signature du bien-être d'exception.</p>
-      <h2>Faites de votre image une raison de vous choisir.</h2>
-      <p>Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite pour eux.</p>
-      <p>Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de marque et donner envie de vous découvrir.</p>
+      <p>Studio de production pour le bien-être d'exception.</p>
+      <h2>À la hauteur de votre expérience.</h2>
+      <p>Bel Augure crée des films qui révèlent vos lieux, vos produits et votre savoir-faire. Pour que votre image porte la même exigence que ce que vous offrez.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },
   {

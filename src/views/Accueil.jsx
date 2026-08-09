@@ -231,8 +231,8 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           </div>
 
           <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.05s' }}>
-            <p className="max-w-[22ch] font-display text-[clamp(1.2rem,1.7vw,1.7rem)] leading-[1.45] text-or">
-              Les films signature du bien-être d'exception
+            <p className="max-w-[30ch] font-display text-[clamp(0.9rem,1.15vw,1.15rem)] uppercase leading-[1.6] tracking-[0.13em] text-or">
+              Studio de production pour le bien-être d’exception
             </p>
           </div>
         </div>
@@ -265,19 +265,15 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.2] text-encre"
           style={{ textWrap: 'balance' }}
         >
-          Faites de votre image une raison de vous choisir<span className="text-or">.</span>
+          À la hauteur de votre expérience<span className="text-or">.</span>
         </h2>
 
         <div className="mt-8 space-y-4 text-[15px] font-light leading-[1.85] text-encre/80" style={{ textWrap: 'pretty' }}>
           <p>
-            Avant de réserver un séjour, un soin ou de commander un produit, vos clients cherchent à se
-            projeter. Ils veulent comprendre ce qui vous distingue et sentir que votre marque est faite
-            pour eux.
+            Bel Augure crée des films qui révèlent vos lieux, vos produits et votre savoir-faire.
           </p>
           <p>
-            Bel Augure transforme vos lieux, vos gestes, vos produits et votre savoir-faire en films qui
-            créent ce désir. Des films pensés pour attirer les bons clients, renforcer votre image de
-            marque et donner envie de vous découvrir.
+            Pour que votre image porte la même exigence que ce que vous offrez.
           </p>
         </div>
         </div>
