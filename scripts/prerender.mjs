@@ -57,7 +57,7 @@ const ROUTES = [
     h1: 'Bel Augure — studio de production de films pour hôtels, spas et maisons de bien-être à Bordeaux',
     body: `
       <p>Studio de production pour le bien-être d'exception.</p>
-      <h2>À la hauteur de votre expérience.</h2>
+      <h2>Des films à la hauteur de votre expérience.</h2>
       <p>Bel Augure crée des films qui révèlent vos lieux, vos produits et votre savoir-faire. Pour que votre image porte la même exigence que ce que vous offrez.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },

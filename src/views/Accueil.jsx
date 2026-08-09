@@ -265,14 +265,12 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.2] text-encre"
           style={{ textWrap: 'balance' }}
         >
-          À la hauteur de votre expérience<span className="text-or">.</span>
+          Des films à la hauteur de votre expérience<span className="text-or">.</span>
         </h2>
 
         <div className="mt-8 space-y-4 text-[15px] font-light leading-[1.85] text-encre/80" style={{ textWrap: 'pretty' }}>
           <p>
             Bel Augure crée des films qui révèlent vos lieux, vos produits et votre savoir-faire.
-          </p>
-          <p>
             Pour que votre image porte la même exigence que ce que vous offrez.
           </p>
         </div>
