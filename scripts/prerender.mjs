@@ -91,7 +91,7 @@ const ROUTES = [
     path: '/offres',
     title: 'Offres · Bel Augure',
     desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Tous les droits sont cédés à durée illimitée dès la livraison. Proposition détaillée après un échange de trente minutes.',
-    h1: 'Offres — films pour hôtel, spa et maison de bien-être',
+    h1: 'Un format pour chaque ambition — films pour hôtel, spa et maison de bien-être',
     body: offresBody(),
   },
   {

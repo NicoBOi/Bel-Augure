@@ -223,9 +223,8 @@ export default function Offres({ setDark, onNavigate }) {
         {/* Haut : titre à gauche, film à droite */}
         <div className="reveal-up grid flex-1 items-center gap-10 lg:grid-cols-2 lg:gap-16" style={{ '--d': '0.08s' }}>
           <div>
-            <p className="text-[11px] font-normal uppercase tracking-[0.32em] text-orfonce">Nos offres</p>
-            <h2 className="mt-5 max-w-[16ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
-              Trois façons d’écrire votre histoire
+            <h2 className="max-w-[16ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
+              Un format pour chaque ambition
             </h2>
             <p className="mt-6 max-w-[48ch] text-[16px] font-light leading-[1.7] text-encre/75">
               <span className="font-medium text-encre">Un film</span> pour en révéler l’essence,{' '}
