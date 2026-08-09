@@ -231,7 +231,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           </div>
 
           <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.05s' }}>
-            <p className="max-w-[30ch] font-display text-[clamp(0.9rem,1.15vw,1.15rem)] uppercase leading-[1.6] tracking-[0.13em] text-or">
+            <p className="max-w-[26ch] font-display text-[clamp(1.1rem,1.6vw,1.6rem)] leading-[1.45] text-or">
               Studio de production pour le bien-être d’exception
             </p>
           </div>
