@@ -82,7 +82,7 @@ et 15 s · des formats adaptés au site et aux réseaux.
 *Pour faire vivre vos réseaux.* « Chaque film donne une nouvelle raison de vous
 choisir. »
 
-- **Collection — ponctuel · à partir de 4 500 € HT**
+- **Collection — ponctuel · à partir de 5 500 € HT**
   Au moins trois films et leurs déclinaisons courtes, autour d'une expérience,
   d'une gamme, d'un savoir-faire ou d'un temps fort.
 - **Quatre saisons — récurrent · à partir de 4 500 € HT / mois, engagement 12 mois**

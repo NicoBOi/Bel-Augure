@@ -49,7 +49,7 @@ MJM Graphic Design. Écriture, montage, travail sonore et motion design.
 | Offre | Pour | Prix |
 | --- | --- | --- |
 | **Film Signature** | Présenter la marque — film de référence de 60 à 90 s, plus deux coupes de 30 s et 15 s | à partir de **9 500 €** |
-| **Histoires de marque — Collection** | Au moins trois films et leurs déclinaisons courtes, autour d'un même sujet | à partir de **4 500 €** |
+| **Histoires de marque — Collection** | Au moins trois films et leurs déclinaisons courtes, autour d'un même sujet | à partir de **5 500 €** |
 | **Histoires de marque — Quatre saisons** | Une journée de tournage par mois — **au moins quatre films et leurs déclinaisons courtes chaque mois** — calendrier annuel des sujets | à partir de **4 500 € / mois**, engagement 12 mois |
 | **Campagne** | Ouverture, nouveau produit ou nouvelle gamme — un film principal et au moins trois films courts | à partir de **15 000 €** |
 

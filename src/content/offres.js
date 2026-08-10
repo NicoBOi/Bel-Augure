@@ -49,7 +49,7 @@ export const OFFERS = [
           'À partir de trois films autour d’un même sujet, accompagnés de leurs déclinaisons courtes.',
         ],
         closing: 'Ponctuel',
-        price: 'À partir de 4 500 € HT',
+        price: 'À partir de 5 500 € HT',
       },
       {
         title: 'Quatre saisons',
