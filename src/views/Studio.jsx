@@ -10,7 +10,7 @@ const FONDATEURS = [
     teinte: '#F4ECDF',
     roles: 'Réalisateur — Directeur de la photographie — Coloriste',
     bio: [
-      'Depuis plus de 5 ans, je travaille entre production, entreprise et freelance, notamment pour Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige la photographie, du premier échange à l’étalonnage, afin que chaque image serve le récit et reste fidèle à votre marque.',
+      'Depuis plus de 5 ans, je travaille l’image pour des marques comme Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige leur image jusqu’à l’étalonnage, pour rester fidèle à l’identité de chaque marque.',
     ],
   },
   {
@@ -18,7 +18,7 @@ const FONDATEURS = [
     teinte: '#E6D8C1',
     roles: 'Auteur — Monteur — Motion designer',
     bio: [
-      'Depuis trois ans, je conçois des contenus pour le corporate et l’événementiel. Chez Bel Augure, j’écris les films, puis j’en assure le montage, le sound design et les finitions en motion design afin de préserver l’intention du projet jusqu’à sa livraison.',
+      'Depuis trois ans, je travaille le montage et le motion design, notamment en interne à l’IRTS et à MJM Graphic Design. Chez Bel Augure, j’écris les films et j’en assure le montage, le sound design et le motion design jusqu’à leur livraison.',
     ],
   },
 ]

@@ -32,12 +32,12 @@ complétée selon les besoins (techniciens, comédiens, équipe coulisses).
 ## Rôles
 
 **Nicolas Sempere — réalisateur, directeur de la photographie, coloriste.**
-Plus de cinq ans entre production, entreprise et freelance (Betclic, Better
-Feeling, Sephora, Showroomprivé). Réalisation, image, lumière et étalonnage.
+Plus de cinq ans à travailler l'image pour des marques comme Betclic, Better
+Feeling, Sephora et Showroomprivé. Réalisation, image, lumière et étalonnage.
 
 **Corentin Crestia — auteur, monteur, motion designer.**
-Trois ans de conception de contenus pour l'entreprise et l'événementiel.
-Écriture, montage, sound design et finitions en motion design.
+Trois ans de montage et de motion design, notamment en interne à l'IRTS et à
+MJM Graphic Design. Écriture, montage, sound design et motion design.
 
 > Ne pas décrire les fondateurs comme « deux réalisateurs » : un seul l'est.
 

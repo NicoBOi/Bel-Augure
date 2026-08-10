@@ -79,9 +79,9 @@ const ROUTES = [
     body: `
       <p>Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia, spécialisé dans les films de marque pour l'hôtellerie et le bien-être haut de gamme. Nous travaillons ensemble depuis quinze ans. Bel Augure réunit aujourd'hui nos savoir-faire en écriture, réalisation et postproduction, du premier échange jusqu'au film final.</p>
       <h2>Nicolas Sempere — réalisateur, directeur de la photographie, coloriste</h2>
-      <p>Depuis plus de 5 ans, je travaille entre production, entreprise et freelance, notamment pour Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige la photographie, du premier échange à l'étalonnage, afin que chaque image serve le récit et reste fidèle à votre marque.</p>
+      <p>Depuis plus de 5 ans, je travaille l'image pour des marques comme Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige leur image jusqu'à l'étalonnage, pour rester fidèle à l'identité de chaque marque.</p>
       <h2>Corentin Crestia — auteur, monteur, motion designer</h2>
-      <p>Depuis trois ans, je conçois des contenus pour le corporate et l'événementiel. Chez Bel Augure, j'écris les films, puis j'en assure le montage, le sound design et les finitions en motion design afin de préserver l'intention du projet jusqu'à sa livraison.</p>
+      <p>Depuis trois ans, je travaille le montage et le motion design, notamment en interne à l'IRTS et à MJM Graphic Design. Chez Bel Augure, j'écris les films et j'en assure le montage, le sound design et le motion design jusqu'à leur livraison.</p>
       <h2>Pourquoi ce secteur</h2>
       <p>Dans l'hôtellerie et le bien-être, l'image doit transmettre une expérience avant la visite ou l'achat. Pourtant, beaucoup de films montrent un lieu ou un produit sans parvenir à en faire ressentir la singularité. Nous réunissons une image exigeante et une narration précise pour créer des films qui donnent envie de vivre cette expérience.</p>
       <h2>Deux interlocuteurs, du début à la fin</h2>
