@@ -33,7 +33,7 @@ const VIEWS = {
 }
 
 const TITLES = {
-  accueil: 'Bel Augure — Films de marque pour le bien-être haut de gamme',
+  accueil: 'Bel Augure — Films pour le bien-être haut de gamme',
   films: 'Films — Bel Augure',
   studio: 'Studio de production audiovisuelle à Bordeaux — Bel Augure',
   offres: 'Films de marque, réseaux & campagnes — Bel Augure',
@@ -46,7 +46,7 @@ const TITLES = {
 // aux moteurs et aux aperçus de lien.
 const DESCRIPTIONS = {
   accueil:
-    "Studio de production de films de marque pour l'hôtellerie, les spas, les thermes et les marques de bien-être haut de gamme, à Bordeaux et partout en France.",
+    "Studio de production à Bordeaux. Films de marque pour hôtels, spas, lieux de bien-être, skincare et marques de soins.",
   films:
     "Les Pieds dans l'eau, un film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
   studio:

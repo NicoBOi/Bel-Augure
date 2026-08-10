@@ -52,9 +52,9 @@ function offresBody() {
 const ROUTES = [
   {
     path: '/',
-    title: 'Bel Augure — Films de marque pour le bien-être haut de gamme',
-    desc: "Studio de production de films de marque pour l'hôtellerie, les spas, les thermes et les marques de bien-être haut de gamme, à Bordeaux et partout en France.",
-    h1: 'Bel Augure — studio de production de films pour hôtels, spas et maisons de bien-être à Bordeaux',
+    title: 'Bel Augure — Films pour le bien-être haut de gamme',
+    desc: "Studio de production à Bordeaux. Films de marque pour hôtels, spas, lieux de bien-être, skincare et marques de soins.",
+    h1: 'Bel Augure — studio de production de films pour hôtels, spas, lieux de bien-être, skincare et marques de soins à Bordeaux',
     body: `
       <p>Studio de production pour le bien-être d'exception.</p>
       <h2>Des films à la hauteur de votre expérience.</h2>
@@ -91,7 +91,7 @@ const ROUTES = [
     path: '/offres',
     title: 'Films de marque, réseaux & campagnes — Bel Augure',
     desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Proposition détaillée après un échange de trente minutes.',
-    h1: 'Un format pour chaque ambition — films pour hôtel, spa et maison de bien-être',
+    h1: 'Un format pour chaque ambition — films pour les lieux et marques de bien-être haut de gamme',
     body: offresBody(),
   },
   {
