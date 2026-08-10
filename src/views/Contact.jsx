@@ -92,14 +92,23 @@ export default function Contact({ onNavigate, prefill }) {
       aria-label="Contact"
       className="flex h-full flex-col justify-start px-6 pb-14 pt-28 overflow-y-auto md:pb-[7vh] md:px-16 md:pt-32"
     >
-      <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:items-center lg:gap-8">
-        <div className="lg:col-span-5 lg:flex lg:flex-col lg:justify-center">
-          <div>
-          <h1 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.25] text-encre">
+      <div className="grid gap-12 lg:flex-1 lg:grid-cols-12 lg:content-center lg:items-start lg:gap-8">
+        {/* Colonne éditoriale : même grammaire que les autres pages — un
+            sur-titre en petites capitales, le titre display, la phrase, puis
+            un filet qui pose le bloc de coordonnées. */}
+        <div className="lg:col-span-5">
+          <p
+            className="reveal-up mb-5 text-[11px] font-normal uppercase tracking-[0.3em] text-orfonce md:mb-6"
+            style={{ '--d': '0.06s' }}
+          >
+            Bordeaux — Nouvelle-Aquitaine
+          </p>
+
+          <h1 className="font-display text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.12] text-encre">
             <span className="mask" style={{ '--d': '0.12s' }}>
               <span>On discute de votre</span>
             </span>
-            <span className="mask md:ml-[3vw]" style={{ '--d': '0.2s' }}>
+            <span className="mask" style={{ '--d': '0.2s' }}>
               <span>
                 prochain film<span className="text-or">{' '}?</span>
               </span>
@@ -107,38 +116,32 @@ export default function Contact({ onNavigate, prefill }) {
           </h1>
 
           <p
-            className="reveal-up mt-8 max-w-[42ch] text-[14px] font-light leading-[1.9] text-encre/80"
-            style={{ '--d': '0.12s' }}
+            className="reveal-up mt-7 max-w-[34ch] text-[15px] font-light leading-[1.85] text-encre/80"
+            style={{ '--d': '0.28s' }}
           >
             Un café, des idées, quelques notes et le projet commence
             <span className="text-or">{' '}!</span>
           </p>
 
-          <p
-            className="reveal-up mt-8 text-[13px] font-light tracking-[0.04em] text-grege"
-            style={{ '--d': '0.08s' }}
+          <div
+            className="reveal-up mt-10 border-t border-orfonce/25 pt-7"
+            style={{ '--d': '0.34s' }}
           >
-            <a
-              href="mailto:nicolas@belaugure.studio"
-              className="nav-link text-encre/80 transition-colors duration-500 hover:text-encre"
-            >
-              <span className="nav-label">nicolas@belaugure.studio</span>
-            </a>
-          </p>
-          <p
-            className="reveal-up mt-2 text-[13px] font-light tracking-[0.04em] text-grege"
-            style={{ '--d': '0.1s' }}
-          >
-            <a
-              href="tel:+33668499504"
-              className="nav-link text-encre/80 transition-colors duration-500 hover:text-encre"
-            >
-              <span className="nav-label">06 68 49 95 04</span>
-            </a>
-          </p>
-          <p className="reveal-up mt-2 text-[12px] font-light tracking-[0.1em] text-grege" style={{ '--d': '0.32s' }}>
-            Bordeaux · Nouvelle-Aquitaine
-          </p>
+            <p className="text-[14px] font-light leading-[2.1] tracking-[0.02em]">
+              <a
+                href="mailto:nicolas@belaugure.studio"
+                className="nav-link text-encre/85 transition-colors duration-500 hover:text-encre"
+              >
+                <span className="nav-label">nicolas@belaugure.studio</span>
+              </a>
+              <br />
+              <a
+                href="tel:+33668499504"
+                className="nav-link text-encre/85 transition-colors duration-500 hover:text-encre"
+              >
+                <span className="nav-label">06 68 49 95 04</span>
+              </a>
+            </p>
           </div>
         </div>
 
@@ -180,8 +183,8 @@ export default function Contact({ onNavigate, prefill }) {
               Ajoutez vos coordonnées, et on s'occupe du reste.
             </p>
           )}
-          <div className="grid gap-x-8 gap-y-5 md:grid-cols-2">
-            <div>
+          <div className="grid gap-x-10 gap-y-6 md:grid-cols-2">
+            <div className="flex flex-col justify-end">
               <label
                 htmlFor="contact-nom"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
@@ -199,7 +202,7 @@ export default function Contact({ onNavigate, prefill }) {
               />
             </div>
 
-            <div>
+            <div className="flex flex-col justify-end">
               <label
                 htmlFor="contact-maison"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
@@ -216,7 +219,7 @@ export default function Contact({ onNavigate, prefill }) {
               />
             </div>
 
-            <div className="md:col-span-2">
+            <div className="flex flex-col justify-end">
               <label
                 htmlFor="contact-email"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
@@ -234,7 +237,7 @@ export default function Contact({ onNavigate, prefill }) {
               />
             </div>
 
-            <div>
+            <div className="flex flex-col justify-end">
               <label
                 htmlFor="contact-projet"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
@@ -256,7 +259,7 @@ export default function Contact({ onNavigate, prefill }) {
               </select>
             </div>
 
-            <div>
+            <div className="flex flex-col justify-end">
               <label
                 htmlFor="contact-echeance"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
@@ -278,7 +281,7 @@ export default function Contact({ onNavigate, prefill }) {
               </select>
             </div>
 
-            <div>
+            <div className="flex flex-col justify-end">
               <label
                 htmlFor="contact-budget"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
@@ -300,7 +303,7 @@ export default function Contact({ onNavigate, prefill }) {
               </select>
             </div>
 
-            <div className="md:col-span-2">
+            <div className="flex flex-col justify-end md:col-span-2">
               <label
                 htmlFor="contact-message"
                 className="text-[10px] font-normal uppercase tracking-[0.25em] text-grege"
