@@ -226,10 +226,8 @@ export default function Offres({ setDark, onNavigate }) {
             <h2 className="max-w-[16ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
               Un format pour chaque ambition
             </h2>
-            <p className="mt-6 max-w-[48ch] text-[16px] font-light leading-[1.7] text-encre/75">
-              <span className="font-medium text-encre">Un film</span> pour en révéler l’essence,{' '}
-              <span className="font-medium text-encre">des récits</span> pour en dévoiler les facettes,{' '}
-              <span className="font-medium text-encre">une campagne</span> pour lui donner toute son ampleur.
+            <p className="mt-6 max-w-[44ch] text-[16px] font-light leading-[1.7] text-encre/75">
+              Peu importe l’ampleur du projet, nous adaptons le format avec la même exigence.
             </p>
           </div>
 
