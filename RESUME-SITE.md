@@ -71,7 +71,7 @@ en révéler l'essence, des récits pour en dévoiler les facettes, une campagne
 pour lui donner toute son ampleur. »*
 
 ### 01 — Film Signature · à partir de 5 500 € HT
-*Pour présenter votre marque.* « Faites ressentir ce qui vous distingue. »
+*Pour votre image.* « Donnez à votre marque son film de référence. »
 Le film de référence, pour le site, les présentations et les réseaux.
 
 **Inclut** : l'écriture, la réalisation et toute la postproduction · la musique

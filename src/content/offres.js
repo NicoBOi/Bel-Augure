@@ -9,7 +9,7 @@ export const OFFERS = [
     id: 'film',
     num: '01',
     name: 'Film Signature',
-    label: 'Pour présenter votre marque',
+    label: 'Pour votre image',
     // La carte du haut et le chapitre portent la même promesse : le visiteur
     // retrouve mot pour mot ce qu'il a lu plus haut.
     cardPhrase: 'Donnez à votre marque son film de référence.',
