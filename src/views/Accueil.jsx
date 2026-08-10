@@ -210,40 +210,41 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       {/* Le jour se lève exactement au rythme du scroll */}
       <div ref={creamRef} aria-hidden="true" className="absolute inset-0 z-[1] bg-creme opacity-0" />
 
-      {/* Mot-symbole en bas à gauche, catchline en face : la scène d'ouverture */}
+      {/* Mot-symbole et signature en un seul bloc, en bas à gauche : la
+          catchline se lit comme la ligne de signature de la marque, et non
+          comme un texte isolé à l'autre bout de l'écran. Elle est composée
+          en Montserrat : le didone perd ses déliés en dessous de 24px. */}
       <div ref={wordRef} className="absolute inset-x-6 bottom-[9vh] z-[2] md:inset-x-16">
-        <div className="grid items-end gap-3 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-8">
-            <h1
-              id="hero-titre"
-              className="font-display text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:whitespace-nowrap"
-            >
-              <span className="mask" style={{ '--d': '0.05s' }}>
-                <span>
-                  Bel Augure<span className="dot-breathe text-or">.</span>
-                </span>
+        <div className="max-w-full">
+          <h1
+            id="hero-titre"
+            className="font-display text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:whitespace-nowrap"
+          >
+            <span className="mask" style={{ '--d': '0.05s' }}>
+              <span>
+                Bel Augure<span className="dot-breathe text-or">.</span>
               </span>
-              <span className="sr-only">
-                — studio de production de films pour hôtels, spas, lieux de bien-être,
-                skincare et marques de soins, à Bordeaux
-              </span>
-            </h1>
-          </div>
+            </span>
+            <span className="sr-only">
+              — studio de production de films pour hôtels, spas, lieux de bien-être,
+              skincare et marques de soins, à Bordeaux
+            </span>
+          </h1>
 
-          <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.05s' }}>
-            {/* La coupe est fixée après « production » : elle ne dépend plus
-                de la largeur de la colonne. */}
-            <p className="font-display text-[clamp(1.1rem,1.6vw,1.6rem)] leading-[1.45] text-or">
+          <div className="reveal-up mt-6 md:mt-7" style={{ '--d': '0.05s' }}>
+            <span
+              aria-hidden="true"
+              className="block h-px w-[clamp(5rem,12vw,11rem)] bg-or/50"
+            />
+            <p className="mt-4 text-[11px] font-light uppercase leading-[2.1] tracking-[0.28em] text-creme/85 md:mt-5 md:text-[12px]">
               <span className="block">Le studio de production</span>
-              {/* Le trait d'union est appuyé, comme le point et le point
-                  d'interrogation dorés ailleurs sur le site. */}
               <span className="block">
-                du bien<span className="font-semibold">-</span>être d’exception
+                du bien<span className="font-medium text-or">-</span>être d’exception
               </span>
             </p>
           </div>
         </div>
-      </div>
+        </div>
 
       {/* Invite discrète, mobile seulement : dans la zone du pouce, un
           bouton lecture pulsé qui ouvre le film. Disparaît au scroll. */}
