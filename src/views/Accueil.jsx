@@ -269,9 +269,11 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
         </h2>
 
         <div className="mt-8 space-y-4 text-[15px] font-light leading-[1.85] text-encre/80" style={{ textWrap: 'pretty' }}>
+          {/* Deux phrases en vis-à-vis : la coupe tombe entre elles, jamais
+              au milieu de l'une des deux. */}
           <p>
-            Bel Augure crée des films qui révèlent vos lieux, vos produits et votre savoir-faire.
-            Pour que votre image porte la même exigence que votre expérience.
+            <span className="block">Vous avez pensé chaque détail de l’expérience.</span>
+            <span className="block">Nous travaillons l’image qui donnera envie de la vivre.</span>
           </p>
         </div>
         </div>
