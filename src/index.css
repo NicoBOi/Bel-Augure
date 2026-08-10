@@ -30,6 +30,16 @@
   --ease-augure: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Le didone respire : un léger interlettrage sur tout ce qui est composé en
+   Giflika. Posé dans la couche « base », il cède la place partout où une
+   valeur de tracking est explicitement demandée (sur-titres, petites
+   capitales), qui sont des utilitaires. */
+@layer base {
+  .font-display {
+    letter-spacing: 0.03em;
+  }
+}
+
 html,
 body {
   height: 100%;
