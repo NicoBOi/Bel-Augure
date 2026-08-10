@@ -83,9 +83,9 @@ const ROUTES = [
       <h2>Corentin Crestia — auteur, monteur, motion designer</h2>
       <p>Depuis trois ans, je travaille le montage et le motion design, notamment en interne à l'IRTS et à MJM Graphic Design. Chez Bel Augure, j'écris les films et j'en assure le montage, le sound design et le motion design jusqu'à leur livraison.</p>
       <h2>Pourquoi ce secteur</h2>
-      <p>Dans l'hôtellerie et le bien-être, l'image doit transmettre une expérience avant la visite ou l'achat. Pourtant, beaucoup de films montrent un lieu ou un produit sans parvenir à en faire ressentir la singularité. Nous réunissons une image exigeante et une narration précise pour créer des films qui donnent envie de vivre cette expérience.</p>
+      <p>Dans le bien-être, l'image précède l'expérience. Elle doit en transmettre la qualité, l'attention et le caractère pour que vos clients la ressentent avant même de la vivre. C'est précisément le rôle de nos films.</p>
       <h2>Deux interlocuteurs, du début à la fin</h2>
-      <p>Nous réalisons l'écriture, le tournage et la postproduction en interne. Nous sommes tous les deux présents à chaque étape importante du projet. Lorsque la production le demande, nous constituons une équipe adaptée : techniciens, comédiens ou équipe dédiée aux coulisses. Cette organisation légère nous permet de travailler avec discrétion, y compris dans des établissements en activité, tout en maintenant une direction claire du premier échange à la livraison.</p>`,
+      <p>Nous assurons l'écriture, le tournage et la post-production en interne. Vous échangez avec nous à chaque étape du projet et quand la production l'exige, nous réunissons autour de nous les profils nécessaires. Une équipe resserrée, capable de tourner avec discrétion, même dans un établissement en activité, tout en gardant une direction claire du premier échange à la livraison.</p>`,
   },
   {
     path: '/offres',
