@@ -230,14 +230,16 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             </span>
           </h1>
 
-          {/* D'un seul tenant dès que la place le permet ; sinon la ligne se
-              replie plutôt que de rétrécir jusqu'à l'illisible. */}
+          {/* La coupe est fixée après « production » : elle ne dépend plus de
+              la largeur restante à droite du mot-symbole. */}
           <p
-            className="reveal-up text-[11px] font-light uppercase leading-[2.1] tracking-[0.24em] text-creme/85 sm:max-lg:whitespace-nowrap lg:min-w-0 lg:pb-4 lg:tracking-[0.2em] min-[1280px]:whitespace-nowrap"
+            className="reveal-up text-[11px] font-light uppercase leading-[2.1] tracking-[0.24em] text-creme/85 lg:pb-4"
             style={{ '--d': '0.05s' }}
           >
-            Le studio de production du bien
-            <span className="font-medium text-or">-</span>être d’exception
+            <span className="block whitespace-nowrap">Le studio de production</span>
+            <span className="block whitespace-nowrap">
+              du bien<span className="font-medium text-or">-</span>être d’exception
+            </span>
           </p>
         </div>
       </div>
