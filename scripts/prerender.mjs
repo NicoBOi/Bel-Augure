@@ -58,7 +58,7 @@ const ROUTES = [
     body: `
       <p>Le studio de production du bien-être d'exception.</p>
       <h2>Des films à la hauteur de votre expérience.</h2>
-      <p>Vous avez pensé chaque détail de l'expérience. Nous travaillons l'image qui donnera envie de la vivre.</p>
+      <p>Vous avez pensé chaque détail de votre univers. Nous créons l'image qui donnera envie d'y entrer.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },
   {

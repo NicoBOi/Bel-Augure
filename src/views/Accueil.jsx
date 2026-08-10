@@ -272,8 +272,8 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           {/* Deux phrases en vis-à-vis : la coupe tombe entre elles, jamais
               au milieu de l'une des deux. */}
           <p>
-            <span className="block">Vous avez pensé chaque détail de l’expérience.</span>
-            <span className="block">Nous travaillons l’image qui donnera envie de la vivre.</span>
+            <span className="block">Vous avez pensé chaque détail de votre univers.</span>
+            <span className="block">Nous créons l’image qui donnera envie d’y entrer.</span>
           </p>
         </div>
         </div>
