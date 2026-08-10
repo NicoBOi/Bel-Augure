@@ -70,7 +70,7 @@ Introduction de la page : *« Trois façons d'écrire votre histoire — un film
 en révéler l'essence, des récits pour en dévoiler les facettes, une campagne
 pour lui donner toute son ampleur. »*
 
-### 01 — Film Signature · à partir de 5 500 € HT
+### 01 — Film Signature · à partir de 9 500 € HT
 *Pour votre image.* « Donnez à votre marque son film de référence. »
 Le film de référence, pour le site, les présentations et les réseaux.
 
@@ -82,10 +82,10 @@ et 15 s · des formats adaptés au site et aux réseaux.
 *Pour faire vivre vos réseaux.* « Chaque film donne une nouvelle raison de vous
 choisir. »
 
-- **Collection — ponctuel · à partir de 3 500 € HT**
+- **Collection — ponctuel · à partir de 4 500 € HT**
   Au moins trois films et leurs déclinaisons courtes, autour d'une expérience,
   d'une gamme, d'un savoir-faire ou d'un temps fort.
-- **Quatre saisons — récurrent · à partir de 3 000 € HT / mois, engagement 12 mois**
+- **Quatre saisons — récurrent · à partir de 4 500 € HT / mois, engagement 12 mois**
   Une journée de tournage par mois. **Au moins quatre films et leurs
   déclinaisons courtes chaque mois.** Calendrier annuel des sujets.
 
@@ -153,8 +153,8 @@ le lien vers le film → menu : **Films · Offres · Studio · Contact** → app
 l'action permanent « Parler de votre projet » en haut à droite → formulaire.
 
 **Le formulaire qualifie déjà le prospect** : nom, marque ou établissement,
-email, type de projet, échéance, **budget envisagé** (tranches 3 500–6 000 /
-6 000–10 000 / 10 000–15 000 / plus de 15 000 / à définir), message.
+email, type de projet, échéance, **budget envisagé** (tranches 4 500–7 500 /
+7 500–12 000 / 12 000–20 000 / plus de 20 000 / à définir), message.
 Promesse de réponse **sous deux jours ouvrés**, puis un échange de trente
 minutes.
 

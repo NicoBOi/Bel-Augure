@@ -90,7 +90,7 @@ const ROUTES = [
   {
     path: '/offres',
     title: 'Films de marque, réseaux & campagnes — Bel Augure',
-    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Proposition détaillée après un échange de trente minutes.',
+    desc: 'Trois façons de travailler ensemble : Film Signature (dès 9 500 € HT), Histoires de marque (dès 4 500 € HT, ou 4 500 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Proposition détaillée après un échange de trente minutes.',
     h1: 'Un format pour chaque ambition — films pour les lieux et marques de bien-être haut de gamme',
     body: offresBody(),
   },

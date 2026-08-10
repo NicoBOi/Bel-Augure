@@ -13,11 +13,13 @@ const ENDPOINT = '/api/contact'
 // lors du premier échange, pas dans le formulaire.
 const PROJETS = ['Film Signature', 'Histoires de marque', 'Campagne', 'Je ne sais pas encore']
 const ECHEANCES = ['Une date précise', 'Dans les 3 mois', 'Dans l’année', 'Pas d’échéance']
+// Tranches calées sur la grille : rien en dessous du plancher affiché
+// (4 500 € HT), et une tranche haute qui couvre la Campagne.
 const BUDGETS = [
-  '3 500 – 6 000 €',
-  '6 000 – 10 000 €',
-  '10 000 – 15 000 €',
-  '15 000 € et plus',
+  '4 500 – 7 500 €',
+  '7 500 – 12 000 €',
+  '12 000 – 20 000 €',
+  '20 000 € et plus',
   'À définir ensemble',
 ]
 

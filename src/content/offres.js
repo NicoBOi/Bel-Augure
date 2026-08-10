@@ -14,7 +14,7 @@ export const OFFERS = [
     // retrouve mot pour mot ce qu'il a lu plus haut.
     cardPhrase: 'Donnez à votre marque son film de référence.',
     promise: 'Donnez à votre marque son film de référence.',
-    price: 'À partir de 5 500 € HT',
+    price: 'À partir de 9 500 € HT',
     description: [
       'Un film pensé pour présenter votre marque dans son ensemble : son univers, son savoir-faire, ses lieux ou ses produits.',
       'La pièce centrale de votre image, conçue pour votre site, vos présentations et vos rendez-vous professionnels.',
@@ -49,7 +49,7 @@ export const OFFERS = [
           'À partir de trois films autour d’un même sujet, accompagnés de leurs déclinaisons courtes.',
         ],
         closing: 'Ponctuel',
-        price: 'À partir de 3 500 € HT',
+        price: 'À partir de 4 500 € HT',
       },
       {
         title: 'Quatre saisons',
@@ -59,7 +59,7 @@ export const OFFERS = [
           'Chaque mois, au moins quatre films et leurs déclinaisons, prêts à diffuser sur vos réseaux.',
         ],
         closing: 'Récurrent',
-        price: 'À partir de 3 000 € HT / mois',
+        price: 'À partir de 4 500 € HT / mois',
         priceNote: 'Engagement de douze mois',
       },
     ],
