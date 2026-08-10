@@ -89,11 +89,15 @@ function OfferChapter({ o, i, onContact }) {
           <div className="mt-12 space-y-10 md:mt-14">
             {o.formats && (
               <section className={`border-t pt-8 ${cRule}`}>
-                <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>{o.formatsTitle}</h3>
+                {o.formatsTitle && (
+                  <h3 className={`text-[11px] font-normal uppercase tracking-[0.28em] ${cSection}`}>
+                    {o.formatsTitle}
+                  </h3>
+                )}
                 {/* Cartes verticales : on comprend qu'on choisit une formule.
                     Chacune porte son intitulé, son récit et son propre tarif —
                     les deux formules n'ont pas le même prix. */}
-                <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                <div className={`grid gap-5 sm:grid-cols-2 ${o.formatsTitle ? 'mt-6' : ''}`}>
                   {o.formats.map((f) => (
                     <div
                       key={f.title}
