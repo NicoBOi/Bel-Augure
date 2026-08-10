@@ -231,8 +231,15 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           </div>
 
           <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.05s' }}>
-            <p className="max-w-[26ch] font-display text-[clamp(1.1rem,1.6vw,1.6rem)] leading-[1.45] text-or">
-              Le studio de production du bien-être d’exception
+            {/* La coupe est fixée après « production » : elle ne dépend plus
+                de la largeur de la colonne. */}
+            <p className="font-display text-[clamp(1.1rem,1.6vw,1.6rem)] leading-[1.45] text-or">
+              <span className="block">Le studio de production</span>
+              {/* Le trait d'union est appuyé, comme le point et le point
+                  d'interrogation dorés ailleurs sur le site. */}
+              <span className="block">
+                du bien<span className="font-semibold">-</span>être d’exception
+              </span>
             </p>
           </div>
         </div>
