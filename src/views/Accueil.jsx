@@ -224,15 +224,15 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
                 </span>
               </span>
               <span className="sr-only">
-                — studio de production de films pour hôtels, spas, thermes et maisons de
-                bien-être, à Bordeaux
+                — studio de production de films pour hôtels, spas, lieux de bien-être,
+                skincare et marques de soins, à Bordeaux
               </span>
             </h1>
           </div>
 
           <div className="reveal-up lg:col-span-4 lg:pb-4" style={{ '--d': '0.05s' }}>
             <p className="max-w-[26ch] font-display text-[clamp(1.1rem,1.6vw,1.6rem)] leading-[1.45] text-or">
-              Studio de production pour le bien-être d’exception
+              Le studio de production du bien-être d’exception
             </p>
           </div>
         </div>
