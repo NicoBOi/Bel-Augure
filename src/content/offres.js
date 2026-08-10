@@ -114,7 +114,7 @@ export const PROCESS = [
   },
   {
     t: 'Le tournage',
-    d: 'Une équipe légère, deux à trois personnes, dans le respect de votre lieu et de vos clients.',
+    d: 'Une équipe resserrée, de trois à cinq personnes, dans le respect de votre lieu et de vos clients.',
   },
   {
     t: 'La livraison',

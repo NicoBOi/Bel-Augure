@@ -65,7 +65,7 @@ Ne plus employer « offerts » ni « à vie ».
 
 1. Un échange de trente minutes — projet, échéance, budget.
 2. Une proposition détaillée — livrables, calendrier, prix écrits avant de commencer.
-3. Le tournage — équipe légère de deux à trois personnes, y compris en établissement en activité.
+3. Le tournage — équipe resserrée de trois à cinq personnes, y compris en établissement en activité.
 4. La livraison — postproduction au studio, deux séries de retours incluses.
 
 ## Ce qui n'est pas vrai à ce jour

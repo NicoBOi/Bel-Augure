@@ -108,7 +108,7 @@ par étape · un film principal de 60 à 90 s · au moins trois films courts de 
 ### Processus affiché (4 étapes)
 1. **Un échange de trente minutes** — projet, échéance, budget.
 2. **Une proposition détaillée** — livrables, calendrier, prix écrits avant de commencer.
-3. **Le tournage** — équipe légère de deux à trois personnes.
+3. **Le tournage** — équipe resserrée de trois à cinq personnes.
 4. **La livraison** — postproduction au studio, deux séries de retours incluses.
 
 ---
