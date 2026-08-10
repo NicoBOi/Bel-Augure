@@ -214,7 +214,7 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
           place à droite, alignée sur le pied du mot-symbole. Elle reste
           composée en Montserrat — le didone perd ses déliés sous 24px. */}
       <div ref={wordRef} className="absolute inset-x-6 bottom-[9vh] z-[2] md:inset-x-16">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-10">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-7">
           <h1
             id="hero-titre"
             className="font-display text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:shrink-0 lg:whitespace-nowrap"
@@ -230,11 +230,13 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             </span>
           </h1>
 
-          {/* La coupe est fixée après « production » : elle ne dépend plus de
-              la largeur restante à droite du mot-symbole. */}
+          {/* Calée sur la ligne de base du mot-symbole (aucun padding ne
+              l'en écarte), et une ombre portée dédiée assure son contraste
+              indépendamment du plan du film sous elle. La coupe est fixée
+              après « production ». */}
           <p
-            className="reveal-up text-[11px] font-light uppercase leading-[2.1] tracking-[0.24em] text-creme/85 lg:pb-4"
-            style={{ '--d': '0.05s' }}
+            className="reveal-up text-[11px] font-light uppercase leading-[2.1] tracking-[0.24em] text-creme"
+            style={{ '--d': '0.05s', textShadow: '0 1px 12px rgb(0 0 0 / 0.55)' }}
           >
             <span className="block whitespace-nowrap">Le studio de production</span>
             <span className="block whitespace-nowrap">
