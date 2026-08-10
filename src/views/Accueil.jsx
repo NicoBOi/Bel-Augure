@@ -210,15 +210,14 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
       {/* Le jour se lève exactement au rythme du scroll */}
       <div ref={creamRef} aria-hidden="true" className="absolute inset-0 z-[1] bg-creme opacity-0" />
 
-      {/* Mot-symbole et signature en un seul bloc, en bas à gauche : la
-          catchline se lit comme la ligne de signature de la marque, et non
-          comme un texte isolé à l'autre bout de l'écran. Elle est composée
-          en Montserrat : le didone perd ses déliés en dessous de 24px. */}
+      {/* Mot-symbole et signature en vis-à-vis : la signature reprend sa
+          place à droite, alignée sur le pied du mot-symbole. Elle reste
+          composée en Montserrat — le didone perd ses déliés sous 24px. */}
       <div ref={wordRef} className="absolute inset-x-6 bottom-[9vh] z-[2] md:inset-x-16">
-        <div className="max-w-full">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-10">
           <h1
             id="hero-titre"
-            className="font-display text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:whitespace-nowrap"
+            className="font-display text-[clamp(3.4rem,10.5vw,10rem)] leading-[1.02] tracking-[0.005em] text-creme lg:shrink-0 lg:whitespace-nowrap"
           >
             <span className="mask" style={{ '--d': '0.05s' }}>
               <span>
@@ -231,16 +230,17 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
             </span>
           </h1>
 
-          <div className="reveal-up mt-6 md:mt-7" style={{ '--d': '0.05s' }}>
-            {/* D'un seul tenant dès que la largeur le permet ; sous 640px la
-                ligne se replie plutôt que de devenir illisible. */}
-            <p className="text-[11px] font-light uppercase leading-[2.1] tracking-[0.28em] text-creme/85 sm:whitespace-nowrap md:text-[12px]">
-              Le studio de production du bien
-              <span className="font-medium text-or">-</span>être d’exception
-            </p>
-          </div>
+          {/* D'un seul tenant dès que la place le permet ; sinon la ligne se
+              replie plutôt que de rétrécir jusqu'à l'illisible. */}
+          <p
+            className="reveal-up text-[11px] font-light uppercase leading-[2.1] tracking-[0.24em] text-creme/85 sm:max-lg:whitespace-nowrap lg:min-w-0 lg:pb-4 lg:tracking-[0.2em] min-[1280px]:whitespace-nowrap"
+            style={{ '--d': '0.05s' }}
+          >
+            Le studio de production du bien
+            <span className="font-medium text-or">-</span>être d’exception
+          </p>
         </div>
-        </div>
+      </div>
 
       {/* Invite discrète, mobile seulement : dans la zone du pouce, un
           bouton lecture pulsé qui ouvre le film. Disparaît au scroll. */}
