@@ -121,8 +121,3 @@ export const PROCESS = [
     d: 'Postproduction entièrement réalisée au studio. Deux allers-retours de validation inclus.',
   },
 ]
-
-export const DIFFUSION = {
-  title: 'La diffusion, en clair',
-  body: 'Tous les droits sont cédés à durée illimitée dès la livraison du film.',
-}

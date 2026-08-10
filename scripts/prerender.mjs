@@ -7,7 +7,7 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 // Source de vérité unique des offres (textes + prix), partagée avec la page
 // React : le corps SEO de /offres est généré depuis ces données.
-import { OFFERS, PROCESS, DIFFUSION } from '../src/content/offres.js'
+import { OFFERS, PROCESS } from '../src/content/offres.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = resolve(root, 'dist')
@@ -45,8 +45,7 @@ function offresBody() {
     return parts.join('\n      ')
   })
   const process = `<h2>Comment nous travaillons</h2>\n      <p>${PROCESS.map((st) => `${st.t} : ${st.d}`).join(' ')}</p>`
-  const diffusion = `<h2>${DIFFUSION.title}</h2>\n      <p>${DIFFUSION.body}</p>`
-  return `\n      ${offers.join('\n      ')}\n      ${process}\n      ${diffusion}`
+  return `\n      ${offers.join('\n      ')}\n      ${process}`
 }
 
 // Le texte du site, tel qu'il existe dans les vues React.

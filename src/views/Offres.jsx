@@ -3,7 +3,7 @@ import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
 import VideoLoader from '../components/VideoLoader.jsx'
 import { useVimeoThumb } from '../hooks/useVimeoThumb.js'
-import { HERO_FILM_ID, OFFERS, PROCESS, DIFFUSION } from '../content/offres.js'
+import { HERO_FILM_ID, OFFERS, PROCESS } from '../content/offres.js'
 import SiteFooter from '../components/SiteFooter.jsx'
 
 // Page /offres — direction éditoriale « montrer puis expliquer ».
@@ -340,11 +340,6 @@ export default function Offres({ setDark, onNavigate }) {
               </li>
             ))}
           </ol>
-
-          <div className={`mt-12 border-t pt-8 text-center ${RULE}`}>
-            <h3 className="font-display text-[16px] leading-[1.4] text-encre">{DIFFUSION.title}</h3>
-            <p className="mx-auto mt-3 max-w-[70ch] text-[14px] font-light leading-[1.85] text-encre/80">{DIFFUSION.body}</p>
-          </div>
         </div>
       </div>
 
