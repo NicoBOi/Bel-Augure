@@ -77,7 +77,7 @@ const ROUTES = [
     desc: "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia : des films de marque pour l'hôtellerie et le bien-être haut de gamme.",
     h1: 'Derrière chaque film, nous sommes deux',
     body: `
-      <p>Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia. Nous concevons des films de marque pour l'hôtellerie et le bien-être haut de gamme. Nous nous connaissons depuis quinze ans. Après avoir développé séparément nos métiers, nous avons créé Bel Augure pour réunir l'écriture, la réalisation et la postproduction au sein d'un même studio.</p>
+      <p>Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia, spécialisé dans les films de marque pour l'hôtellerie et le bien-être haut de gamme. Nous travaillons ensemble depuis quinze ans. Bel Augure réunit aujourd'hui nos savoir-faire en écriture, réalisation et postproduction, du premier échange jusqu'au film final.</p>
       <h2>Nicolas Sempere — réalisateur, directeur de la photographie, coloriste</h2>
       <p>Depuis plus de 5 ans, je travaille entre production, entreprise et freelance, notamment pour Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige la photographie, du premier échange à l'étalonnage, afin que chaque image serve le récit et reste fidèle à votre marque.</p>
       <h2>Corentin Crestia — auteur, monteur, motion designer</h2>
