@@ -177,7 +177,7 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
               dark ? 'border-creme/30 text-creme/85' : 'border-encre/25 text-encre/85'
             }`}
           >
-            Parler de votre projet
+            Votre projet
           </button>
         </div>
       </div>
