@@ -236,11 +236,11 @@ export default function Accueil({ onNavigate, setDark, mediaRef }) {
               aria-hidden="true"
               className="block h-px w-[clamp(5rem,12vw,11rem)] bg-or/50"
             />
-            <p className="mt-4 text-[11px] font-light uppercase leading-[2.1] tracking-[0.28em] text-creme/85 md:mt-5 md:text-[12px]">
-              <span className="block">Le studio de production</span>
-              <span className="block">
-                du bien<span className="font-medium text-or">-</span>être d’exception
-              </span>
+            {/* D'un seul tenant dès que la largeur le permet ; sous 640px la
+                ligne se replie plutôt que de devenir illisible. */}
+            <p className="mt-4 text-[11px] font-light uppercase leading-[2.1] tracking-[0.28em] text-creme/85 sm:whitespace-nowrap md:mt-5 md:text-[12px]">
+              Le studio de production du bien
+              <span className="font-medium text-or">-</span>être d’exception
             </p>
           </div>
         </div>
