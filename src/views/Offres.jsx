@@ -227,7 +227,8 @@ export default function Offres({ setDark, onNavigate }) {
               Un format pour chaque ambition
             </h2>
             <p className="mt-6 max-w-[44ch] text-[16px] font-light leading-[1.7] text-encre/75">
-              Peu importe l’ampleur du projet, nous adaptons le format avec la même exigence.
+              Peu importe <span className="font-medium text-encre">l’ampleur du projet</span>, nous
+              adaptons le format avec <span className="font-medium text-encre">la même exigence</span>.
             </p>
           </div>
 
