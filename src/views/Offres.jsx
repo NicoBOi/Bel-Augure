@@ -77,7 +77,7 @@ function OfferChapter({ o, i, onContact }) {
           <h2 className={`mt-3 font-display text-[clamp(2.3rem,4.8vw,3.4rem)] font-light leading-[1.03] ${cTitle}`}>
             {o.name}
           </h2>
-          <p className={`mt-5 max-w-[30ch] font-display text-[clamp(1.3rem,2.1vw,1.75rem)] font-light leading-[1.22] ${cPromise}`}>
+          <p className={`mt-5 max-w-[30ch] font-display text-[clamp(1.5rem,2.1vw,1.75rem)] font-light leading-[1.22] ${cPromise}`}>
             {o.promise}
           </p>
           <div className={`mt-7 max-w-[62ch] space-y-3 text-[16px] font-light leading-[1.75] ${cBody}`}>
@@ -117,7 +117,7 @@ function OfferChapter({ o, i, onContact }) {
                           {f.closing}
                         </p>
                         {f.price && (
-                          <p className="mt-2.5 font-display text-[clamp(1.25rem,1.8vw,1.55rem)] font-light leading-none tabular-nums text-encre">
+                          <p className="mt-2.5 font-display text-[clamp(1.5rem,1.8vw,1.55rem)] font-light leading-none tabular-nums text-encre">
                             {f.price}
                           </p>
                         )}
@@ -153,7 +153,7 @@ function OfferChapter({ o, i, onContact }) {
               {o.price && (
                 <div>
                   <p className={`text-[10px] font-normal uppercase tracking-[0.22em] ${cFaint}`}>Tarif</p>
-                  <p className={`mt-1.5 font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light leading-none tabular-nums ${cTitle}`}>
+                  <p className={`mt-1.5 font-display text-[clamp(1.5rem,2.2vw,1.9rem)] font-light leading-none tabular-nums ${cTitle}`}>
                     {o.price}
                   </p>
                   {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
@@ -330,11 +330,13 @@ export default function Offres({ setDark, onNavigate }) {
           <ol className="mt-8 grid gap-x-14 gap-y-9 sm:grid-cols-2">
             {PROCESS.map((step, i) => (
               <li key={step.t} className="flex items-start gap-4">
-                <span className="font-display text-[13px] tabular-nums text-orfonce">
+                <span className="text-[11px] font-normal tabular-nums tracking-[0.18em] text-orfonce">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <span>
-                  <span className="block font-display text-[16px] leading-[1.35] text-encre">{step.t}</span>
+                  <span className="block text-[12.5px] font-medium uppercase leading-[1.5] tracking-[0.16em] text-encre">
+                    {step.t}
+                  </span>
                   <span className="mt-1.5 block text-[13.5px] font-light leading-[1.7] text-encre/75">{step.d}</span>
                 </span>
               </li>

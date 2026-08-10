@@ -118,7 +118,7 @@ export default function Studio({ onNavigate }) {
             const lignes = Array.isArray(c.titre) ? c.titre : [c.titre]
             return (
             <div key={lignes[0]} className="border-t border-orfonce/25 pt-7">
-              <h2 className="font-display text-[clamp(1.3rem,1.9vw,1.65rem)] font-light leading-[1.2] text-encre">
+              <h2 className="font-display text-[clamp(1.5rem,1.9vw,1.65rem)] font-light leading-[1.2] text-encre">
                 {lignes.map((l, i) => (
                   <span key={l} className="block whitespace-nowrap">
                     {l}
