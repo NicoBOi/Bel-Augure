@@ -33,13 +33,13 @@ const VIEWS = {
 }
 
 const TITLES = {
-  accueil: 'Bel Augure · Studio de production de films bien-être à Bordeaux',
-  films: 'Films de marque pour hôtels, spas & bien-être · Bel Augure',
-  studio: 'Studio de production à Bordeaux · Bel Augure',
-  offres: 'Offres · Bel Augure',
-  contact: 'Contact · Bel Augure',
-  mentions: 'Mentions légales · Bel Augure',
-  confidentialite: 'Confidentialité · Bel Augure',
+  accueil: 'Bel Augure — Films de marque pour le bien-être haut de gamme',
+  films: 'Films — Bel Augure',
+  studio: 'Studio de production audiovisuelle à Bordeaux — Bel Augure',
+  offres: 'Films de marque, réseaux & campagnes — Bel Augure',
+  contact: 'Contact — Bel Augure',
+  mentions: 'Mentions légales — Bel Augure',
+  confidentialite: 'Confidentialité — Bel Augure',
 }
 
 // La description suit la vue : chaque page raconte sa propre promesse
@@ -48,11 +48,11 @@ const DESCRIPTIONS = {
   accueil:
     "Studio de production de films de marque pour l'hôtellerie, les spas, les thermes et les marques de bien-être haut de gamme, à Bordeaux et partout en France.",
   films:
-    "Les Pieds dans l'eau : le premier film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
+    "Les Pieds dans l'eau, un film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
   studio:
-    "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia : des films de marque pour l'hôtellerie et le bien-être haut de gamme.",
+    "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia : des films de marque pour les lieux et marques de bien-être haut de gamme.",
   offres:
-    'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Tous les droits sont cédés à durée illimitée dès la livraison.',
+    'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Proposition détaillée après un échange de trente minutes.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales de Bel Augure : éditeur, hébergeur et propriété intellectuelle.',

@@ -52,7 +52,7 @@ function offresBody() {
 const ROUTES = [
   {
     path: '/',
-    title: 'Bel Augure · Studio de production de films bien-être à Bordeaux',
+    title: 'Bel Augure — Films de marque pour le bien-être haut de gamme',
     desc: "Studio de production de films de marque pour l'hôtellerie, les spas, les thermes et les marques de bien-être haut de gamme, à Bordeaux et partout en France.",
     h1: 'Bel Augure — studio de production de films pour hôtels, spas et maisons de bien-être à Bordeaux',
     body: `
@@ -63,40 +63,40 @@ const ROUTES = [
   },
   {
     path: '/films',
-    title: 'Films de marque pour hôtels, spas & bien-être · Bel Augure',
-    desc: "Les Pieds dans l'eau : le premier film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
+    title: 'Films — Bel Augure',
+    desc: "Les Pieds dans l'eau, un film de Bel Augure, studio de production à Bordeaux, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
     h1: "Films — Les Pieds dans l'eau, sur le bassin d'Arcachon",
     body: `
       <h2>Les Pieds dans l'eau — bassin d'Arcachon</h2>
-      <p>Voici le premier film de Bel Augure. Quelques images tournées sur le bassin d'Arcachon, au crépuscule d'une marée montante.</p>
+      <p>Un film tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante.</p>
       <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a></p>`,
   },
   {
     path: '/studio',
-    title: 'Studio de production à Bordeaux · Bel Augure',
-    desc: "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia : des films de marque pour l'hôtellerie et le bien-être haut de gamme.",
+    title: 'Studio de production audiovisuelle à Bordeaux — Bel Augure',
+    desc: "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia : des films de marque pour les lieux et marques de bien-être haut de gamme.",
     h1: 'Derrière chaque film, nous sommes deux',
     body: `
-      <p>Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia, spécialisé dans les films de marque pour l'hôtellerie et le bien-être haut de gamme. Nous travaillons ensemble depuis quinze ans. Bel Augure réunit aujourd'hui nos savoir-faire en écriture, réalisation et postproduction, du premier échange jusqu'au film final.</p>
+      <p>Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia. Nous créons des films de marque pour les lieux et marques de bien-être haut de gamme. Nous travaillons ensemble depuis quinze ans et réunissons l'écriture, la réalisation et la postproduction au sein du même studio.</p>
       <h2>Nicolas Sempere — réalisateur, directeur de la photographie, coloriste</h2>
-      <p>Depuis plus de 5 ans, je travaille l'image pour des marques comme Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige leur image jusqu'à l'étalonnage, pour rester fidèle à l'identité de chaque marque.</p>
+      <p>Depuis plus de cinq ans, je travaille l'image pour des marques comme Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige leur image jusqu'à l'étalonnage, pour rester fidèle à l'identité de chaque marque.</p>
       <h2>Corentin Crestia — auteur, monteur, motion designer</h2>
-      <p>Depuis trois ans, je travaille le montage et le motion design, notamment en interne à l'IRTS et à MJM Graphic Design. Chez Bel Augure, j'écris les films et j'en assure le montage, le sound design et le motion design jusqu'à leur livraison.</p>
+      <p>Depuis trois ans, je travaille le montage et le motion design, notamment en interne à l'IRTS et à MJM Graphic Design. Chez Bel Augure, j'écris les films et j'en assure le montage, le travail sonore et le motion design jusqu'à leur livraison.</p>
       <h2>Pourquoi ce secteur</h2>
       <p>Dans le bien-être, l'image précède l'expérience. Elle doit en transmettre la qualité, l'attention et le caractère pour que vos clients la ressentent avant même de la vivre. C'est précisément le rôle de nos films.</p>
       <h2>Deux interlocuteurs, du début à la fin</h2>
-      <p>Nous assurons l'écriture, le tournage et la post-production en interne. Vous échangez avec nous à chaque étape du projet et quand la production l'exige, nous réunissons autour de nous les profils nécessaires. Une équipe resserrée, capable de tourner avec discrétion, même dans un établissement en activité, tout en gardant une direction claire du premier échange à la livraison.</p>`,
+      <p>Nous assurons l'écriture, le tournage et la postproduction en interne. Vous échangez avec nous à chaque étape du projet. Quand la production l'exige, nous réunissons autour de nous les profils nécessaires. Cette équipe resserrée nous permet de tourner avec discrétion, même dans un établissement en activité, tout en gardant une direction claire du premier échange à la livraison.</p>`,
   },
   {
     path: '/offres',
-    title: 'Offres · Bel Augure',
-    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Tous les droits sont cédés à durée illimitée dès la livraison. Proposition détaillée après un échange de trente minutes.',
+    title: 'Films de marque, réseaux & campagnes — Bel Augure',
+    desc: 'Trois façons de travailler ensemble : Film Signature (dès 5 500 € HT), Histoires de marque (dès 3 500 € HT, ou 3 000 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Proposition détaillée après un échange de trente minutes.',
     h1: 'Un format pour chaque ambition — films pour hôtel, spa et maison de bien-être',
     body: offresBody(),
   },
   {
     path: '/contact',
-    title: 'Contact · Bel Augure',
+    title: 'Contact — Bel Augure',
     desc: 'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
     h1: 'Contact — on discute de votre prochain film ?',
     body: `
@@ -105,7 +105,7 @@ const ROUTES = [
   },
   {
     path: '/mentions-legales',
-    title: 'Mentions légales · Bel Augure',
+    title: 'Mentions légales — Bel Augure',
     desc: 'Mentions légales de Bel Augure : éditeur, hébergeur et propriété intellectuelle.',
     h1: 'Mentions légales',
     body: `
@@ -119,7 +119,7 @@ const ROUTES = [
   },
   {
     path: '/confidentialite',
-    title: 'Confidentialité · Bel Augure',
+    title: 'Confidentialité — Bel Augure',
     desc: 'Politique de confidentialité de Bel Augure : données collectées, durée de conservation, destinataires et exercice de vos droits.',
     h1: 'Confidentialité',
     body: `

@@ -22,8 +22,11 @@ ou assistant doit se référer à ce document, et non à une version plus ancien
 
 ## Activité
 
-Studio de production de films de marque pour l'hôtellerie, les spas, les thermes
-et les marques de bien-être haut de gamme, à Bordeaux et partout en France.
+Studio de production de films de marque pour les **lieux et marques de bien-être
+haut de gamme** — formulation canonique dès qu'il faut décrire l'activité.
+Les termes précis (hôtels, spas, thermes, soin, skincare) servent au référencement
+et aux descriptions SEO, pas au discours de marque. « Bien-être d'exception »
+reste la formule de marque, réservée à l'accroche de l'accueil.
 
 Écriture, réalisation et postproduction sont réalisées en interne. Les deux
 fondateurs sont présents à chaque étape importante du projet ; l'équipe est
@@ -37,7 +40,7 @@ Feeling, Sephora et Showroomprivé. Réalisation, image, lumière et étalonnage
 
 **Corentin Crestia — auteur, monteur, motion designer.**
 Trois ans de montage et de motion design, notamment en interne à l'IRTS et à
-MJM Graphic Design. Écriture, montage, sound design et motion design.
+MJM Graphic Design. Écriture, montage, travail sonore et motion design.
 
 > Ne pas décrire les fondateurs comme « deux réalisateurs » : un seul l'est.
 
@@ -45,10 +48,10 @@ MJM Graphic Design. Écriture, montage, sound design et motion design.
 
 | Offre | Pour | Prix |
 | --- | --- | --- |
-| **Film Signature** | Présenter la marque — film de référence de 60 à 90 s, plus versions courtes 30 s et 15 s | à partir de **5 500 €** |
+| **Film Signature** | Présenter la marque — film de référence de 60 à 90 s, plus deux coupes de 30 s et 15 s | à partir de **5 500 €** |
 | **Histoires de marque — Collection** | Au moins trois films et leurs déclinaisons courtes, autour d'un même sujet | à partir de **3 500 €** |
 | **Histoires de marque — Quatre saisons** | Une journée de tournage par mois — **au moins quatre films et leurs déclinaisons courtes chaque mois** — calendrier annuel des sujets | à partir de **3 000 € / mois**, engagement 12 mois |
-| **Campagne** | Ouverture, lancement ou nouvelle identité — un film principal et au moins trois films courts | à partir de **15 000 €** |
+| **Campagne** | Ouverture, nouveau produit ou nouvelle gamme — un film principal et au moins trois films courts | à partir de **15 000 €** |
 
 Toute modification de prix doit être répercutée au même moment dans
 `src/content/offres.js` (source unique lue par la page et par le prérendu SEO)
@@ -58,15 +61,16 @@ et dans les données structurées de `index.html`.
 
 **Tous les droits sont cédés à durée illimitée dès la livraison du film.**
 
-Formulation identique sur le site, dans les devis et dans les contrats.
-Ne plus employer « offerts » ni « à vie ».
+Formulation identique dans les devis et dans les contrats. Ne plus employer
+« offerts » ni « à vie ». Cette mention n'est plus affichée sur le site : elle
+se dit en rendez-vous et s'écrit dans la proposition.
 
 ## Processus
 
 1. Un échange de trente minutes — projet, échéance, budget.
-2. Une proposition détaillée — livrables, calendrier, prix écrits avant de commencer.
-3. Le tournage — équipe resserrée de trois à cinq personnes, y compris en établissement en activité.
-4. La livraison — postproduction au studio, deux séries de retours incluses.
+2. Une proposition détaillée — livrables, calendrier, prix définis avant de commencer.
+3. Le tournage — équipe de trois à cinq personnes, y compris en établissement en activité.
+4. La postproduction — entièrement réalisée au studio, deux séries de retours incluses.
 
 ## Ce qui n'est pas vrai à ce jour
 
@@ -77,3 +81,27 @@ Ne plus employer « offerts » ni « à vie ».
 - aucun témoignage client ni résultat commercial mesuré.
 
 Ne pas inventer de références, de chiffres de performance ou de clients.
+
+## Vocabulaire figé
+
+À privilégier : film, image, marque, expérience, lieu, produit, soin,
+savoir-faire, projet, exigence, lancement, réseaux, tournage, réalisation,
+postproduction (jamais « post-production »), retours (jamais « allers-retours »),
+travail sonore (jamais « sound design »).
+
+À éviter : contenu, désir, essence, facettes, impact, rayonnement, sublimer,
+émotion, univers unique, expérience mémorable, storytelling, premium.
+
+Les nombres s'écrivent en toutes lettres dans les textes de marque : cinq ans,
+trois ans, quinze ans.
+
+## Frontière entre les offres
+
+À protéger dans chaque texte :
+
+- **Film Signature** présente la marque. Ses versions courtes sont des *coupes*
+  du film principal, jamais des sujets de réseaux.
+- **Histoires de marque** est le seul territoire « réseaux » : plusieurs sujets
+  indépendants.
+- **Campagne** est le seul territoire « lancement » : plusieurs films issus
+  d'une seule idée.

@@ -10,7 +10,7 @@ const FONDATEURS = [
     teinte: '#F4ECDF',
     roles: 'Réalisateur — Directeur de la photographie — Coloriste',
     bio: [
-      'Depuis plus de 5 ans, je travaille l’image pour des marques comme Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige leur image jusqu’à l’étalonnage, pour rester fidèle à l’identité de chaque marque.',
+      'Depuis plus de cinq ans, je travaille l’image pour des marques comme Betclic, Better Feeling, Sephora et Showroomprivé. Chez Bel Augure, je réalise les films et dirige leur image jusqu’à l’étalonnage, pour rester fidèle à l’identité de chaque marque.',
     ],
   },
   {
@@ -18,7 +18,7 @@ const FONDATEURS = [
     teinte: '#E6D8C1',
     roles: 'Auteur — Monteur — Motion designer',
     bio: [
-      'Depuis trois ans, je travaille le montage et le motion design, notamment en interne à l’IRTS et à MJM Graphic Design. Chez Bel Augure, j’écris les films et j’en assure le montage, le sound design et le motion design jusqu’à leur livraison.',
+      'Depuis trois ans, je travaille le montage et le motion design, notamment en interne à l’IRTS et à MJM Graphic Design. Chez Bel Augure, j’écris les films et j’en assure le montage, le travail sonore et le motion design jusqu’à leur livraison.',
     ],
   },
 ]
@@ -35,8 +35,9 @@ const CONVICTIONS = [
     // d'un groupe de mots.
     titre: ['Deux interlocuteurs,', 'du début à la fin'],
     paras: [
-      'Nous assurons l’écriture, le tournage et la post-production en interne. Vous échangez avec nous à chaque étape du projet et quand la production l’exige, nous réunissons autour de nous les profils nécessaires.',
-      'Une équipe resserrée, capable de tourner avec discrétion, même dans un établissement en activité, tout en gardant une direction claire du premier échange à la livraison.',
+      'Nous assurons l’écriture, le tournage et la postproduction en interne. Vous échangez avec nous à chaque étape du projet.',
+      'Quand la production l’exige, nous réunissons autour de nous les profils nécessaires.',
+      'Cette équipe resserrée nous permet de tourner avec discrétion, même dans un établissement en activité, tout en gardant une direction claire du premier échange à la livraison.',
     ],
   },
 ]
@@ -76,13 +77,12 @@ export default function Studio({ onNavigate }) {
           >
             <p>
               Bel Augure est un studio de production fondé à Bordeaux par Nicolas Sempere et
-              Corentin Crestia, spécialisé dans les films de marque pour{' '}
-              <span className="font-medium text-encre">l’hôtellerie et le bien-être haut de gamme</span>.
+              Corentin Crestia. Nous créons des films de marque pour les{' '}
+              <span className="font-medium text-encre">lieux et marques de bien-être haut de gamme</span>.
             </p>
             <p>
-              Nous travaillons ensemble depuis quinze ans. Bel Augure réunit aujourd’hui nos
-              savoir-faire en écriture, réalisation et postproduction,{' '}
-              <span className="font-medium text-encre">du premier échange jusqu’au film final</span>.
+              Nous travaillons ensemble depuis quinze ans et réunissons l’écriture, la réalisation
+              et la postproduction au sein du même studio.
             </p>
           </div>
         </div>

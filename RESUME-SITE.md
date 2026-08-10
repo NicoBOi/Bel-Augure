@@ -94,8 +94,8 @@ musique · des films courts conçus autour des expériences, produits et temps
 forts · des formats et déclinaisons · des versions verticales prêtes à diffuser.
 
 ### 03 — Campagne · à partir de 15 000 € HT
-*Pour un lancement.* « Donnez à votre prochain temps fort toute l'ampleur qu'il
-mérite. » Pour une ouverture, une nouvelle gamme ou une nouvelle identité.
+*Pour un lancement.* « Donnez à votre lancement toute son ampleur. » Pour une
+ouverture, un nouveau produit ou une nouvelle gamme.
 
 **Inclut** : un concept créatif pour toute la campagne · l'écriture, la
 réalisation et toute la postproduction · la musique et deux séries de retours
@@ -103,13 +103,14 @@ par étape · un film principal de 60 à 90 s · au moins trois films courts de 
 à 30 s · des formats adaptés aux différents supports.
 
 ### Droits de diffusion
-> Tous les droits sont cédés à durée illimitée dès la livraison du film.
+Cédés à durée illimitée dès la livraison, mais **plus affichés sur le site** :
+la mention se dit en rendez-vous et s'écrit dans la proposition.
 
 ### Processus affiché (4 étapes)
 1. **Un échange de trente minutes** — projet, échéance, budget.
-2. **Une proposition détaillée** — livrables, calendrier, prix écrits avant de commencer.
-3. **Le tournage** — équipe resserrée de trois à cinq personnes.
-4. **La livraison** — postproduction au studio, deux séries de retours incluses.
+2. **Une proposition détaillée** — livrables, calendrier, prix définis avant de commencer.
+3. **Le tournage** — équipe de trois à cinq personnes.
+4. **La postproduction** — entièrement réalisée au studio, deux séries de retours incluses.
 
 ---
 
@@ -137,8 +138,8 @@ coulisses). L'organisation légère permet de **tourner avec discrétion dans de
 ## 6. Les preuves disponibles
 
 **Un seul film publié** : *Les Pieds dans l'eau*, tourné sur le bassin
-d'Arcachon au crépuscule d'une marée montante. Présenté comme le premier film
-du studio — **auto-produit, sans commande ni client**.
+d'Arcachon au crépuscule d'une marée montante — **auto-produit, sans commande
+ni client**. Le site ne le présente plus comme « le premier film du studio ».
 
 **Aucun cas client, aucun témoignage, aucun résultat chiffré.** C'est le
 principal déficit de crédibilité, et il ne se comble pas par de la rédaction.

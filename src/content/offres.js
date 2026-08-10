@@ -25,7 +25,7 @@ export const OFFERS = [
       'L’écriture, la réalisation et toute la postproduction',
       'La musique et deux séries de retours',
       'Un film de 60 à 90 secondes',
-      'Des versions de 30 et 15 secondes',
+      'Deux coupes du film principal, en 30 et 15 secondes',
       'Des formats adaptés à votre site et à vos supports de présentation',
     ],
     cta: 'Parler de votre projet',
@@ -39,7 +39,7 @@ export const OFFERS = [
     promise: 'Faites vivre votre marque sur les réseaux.',
     description: [
       'Chaque film se concentre sur un sujet : un soin, un produit, une expérience, un geste ou un savoir-faire.',
-      'Des contenus courts pensés pour attirer l’attention sans sacrifier la qualité de votre image.',
+      'Des films courts conçus pour les réseaux, avec la même exigence d’image.',
     ],
     formats: [
       {
@@ -66,7 +66,7 @@ export const OFFERS = [
     receiveTitle: 'Inclut',
     receive: [
       'L’écriture, le tournage et toute la postproduction',
-      'Des films courts conçus pour les réseaux',
+      'Un film court par sujet',
       'Leurs déclinaisons adaptées à vos prises de parole',
       'Des formats verticaux prêts à diffuser',
     ],
@@ -84,9 +84,9 @@ export const OFFERS = [
     promise: 'Donnez à votre lancement toute son ampleur.',
     price: 'À partir de 15 000 € HT',
     description: [
-      'Ouverture, nouveau produit, nouvelle gamme ou nouvelle identité : nous imaginons une idée créative capable de donner une image forte à ce moment.',
-      'Un film principal pose l’univers. Plusieurs films courts l’annoncent, le dévoilent et le prolongent.',
-      'L’ensemble est pensé comme une seule campagne, reconnaissable d’un film à l’autre.',
+      'Pour une ouverture, un nouveau produit ou une nouvelle gamme, nous imaginons un concept créatif pensé pour l’ensemble du lancement.',
+      'Un film principal en pose l’univers. Les films courts l’annoncent, en révèlent les détails et le prolongent sur vos différents supports.',
+      'Une seule idée, déclinée dans chaque film.',
     ],
     receiveTitle: 'Inclut',
     // Ordre de production : le concept, la fabrication, puis les livrables.
@@ -106,18 +106,18 @@ export const OFFERS = [
 export const PROCESS = [
   {
     t: 'Un échange de trente minutes',
-    d: 'Votre projet, votre échéance, votre budget. Nous vous disons ce qui est possible.',
+    d: 'Nous cadrons votre projet, votre échéance et votre budget.',
   },
   {
     t: 'Une proposition détaillée',
-    d: 'Livrables, calendrier, prix : tout est écrit avant de commencer.',
+    d: 'Livrables, calendrier et prix sont définis avant de commencer.',
   },
   {
     t: 'Le tournage',
-    d: 'Une équipe resserrée, de trois à cinq personnes, dans le respect de votre lieu et de vos clients.',
+    d: 'Une équipe de trois à cinq personnes, dans le respect de votre lieu et de vos clients.',
   },
   {
-    t: 'La livraison',
-    d: 'Postproduction entièrement réalisée au studio. Deux allers-retours de validation inclus.',
+    t: 'La postproduction',
+    d: 'Entièrement réalisée au studio, avec deux séries de retours incluses.',
   },
 ]
