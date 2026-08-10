@@ -58,7 +58,7 @@ const ROUTES = [
     body: `
       <p>Le studio de production du bien-être d'exception.</p>
       <h2>Des films à la hauteur de votre expérience.</h2>
-      <p>Bel Augure crée des films qui révèlent vos lieux, vos produits et votre savoir-faire. Pour que votre image porte la même exigence que ce que vous offrez.</p>
+      <p>Bel Augure crée des films qui révèlent vos lieux, vos produits et votre savoir-faire. Pour que votre image porte la même exigence que votre expérience.</p>
       <p><a href="/films">Découvrir le film</a></p>`,
   },
   {
