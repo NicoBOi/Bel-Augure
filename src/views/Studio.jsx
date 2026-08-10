@@ -81,8 +81,8 @@ export default function Studio({ onNavigate }) {
               <span className="font-medium text-encre">lieux et marques de bien-être haut de gamme</span>.
             </p>
             <p>
-              Nous travaillons ensemble depuis quinze ans et réunissons l’écriture, la réalisation
-              et la postproduction au sein du même studio.
+              Nous nous connaissons depuis quinze ans. Bel Augure réunit aujourd’hui nos
+              savoir-faire en écriture, réalisation et postproduction.
             </p>
           </div>
         </div>

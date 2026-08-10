@@ -39,7 +39,7 @@ export const OFFERS = [
     promise: 'Faites vivre votre marque sur les réseaux.',
     description: [
       'Chaque film se concentre sur un sujet : un soin, un produit, une expérience, un geste ou un savoir-faire.',
-      'Des films courts conçus pour les réseaux, avec la même exigence d’image.',
+      'Des films courts pensés pour vos réseaux, avec la même exigence d’image.',
     ],
     formats: [
       {
