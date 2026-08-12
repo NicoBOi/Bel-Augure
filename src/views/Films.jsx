@@ -3,6 +3,23 @@ import { useReveal } from '../hooks/useReveal.js'
 import VimeoBackground from '../components/VimeoBackground.jsx'
 import VideoLoader from '../components/VideoLoader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
+import { useVimeoThumb } from '../hooks/useVimeoThumb.js'
+
+// Photogramme fixe posé sous le lecteur, comme sur l'accueil et les offres :
+// si Vimeo échoue (réseau, session expirée…), la scène retombe sur cette
+// image plutôt que sur un aplat uni ou l'écran d'erreur natif du player.
+function FilmPoster({ vimeoId }) {
+  const thumb = useVimeoThumb(vimeoId, 960)
+  if (!thumb) return null
+  return (
+    <img
+      src={thumb}
+      alt=""
+      aria-hidden="true"
+      className="absolute inset-0 h-full w-full object-cover"
+    />
+  )
+}
 
 // Un seul film pour l'instant, montré en grand et centré. En ajouter un ici
 // suffit : la page empile les films les uns sous les autres, même mise en scène.
@@ -73,6 +90,7 @@ export default function Films({ setDark, onNavigate }) {
               }}
               className="film-stage relative aspect-video w-full cursor-pointer overflow-hidden bg-encre lg:col-span-8 lg:rounded-3xl"
             >
+              <FilmPoster vimeoId={film.vimeoId} />
               {!ready[film.id] && <VideoLoader />}
               <VimeoBackground
                 id={film.vimeoId}
@@ -81,6 +99,7 @@ export default function Films({ setDark, onNavigate }) {
                 soundOn={!!sound[film.id]}
                 paused={!!paused[film.id]}
                 onPlaying={() => setReady((s) => ({ ...s, [film.id]: true }))}
+                onError={() => setReady((s) => ({ ...s, [film.id]: false }))}
                 className="absolute inset-0 h-full w-full"
               />
 
