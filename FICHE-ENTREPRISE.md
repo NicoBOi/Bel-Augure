@@ -69,7 +69,7 @@ se dit en rendez-vous et s'écrit dans la proposition.
 
 1. Un échange de trente minutes — projet, échéance, budget.
 2. Une proposition détaillée — livrables, calendrier, prix définis avant de commencer.
-3. Le tournage — équipe de trois à cinq personnes, y compris en établissement en activité.
+3. Le tournage — Nicolas et Corentin présents à chaque tournage, entourés des profils nécessaires si le projet l'exige, y compris en établissement en activité.
 4. La postproduction — entièrement réalisée au studio, deux séries de retours incluses.
 
 ## Ce qui n'est pas vrai à ce jour

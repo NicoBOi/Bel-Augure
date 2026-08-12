@@ -109,7 +109,7 @@ la mention se dit en rendez-vous et s'écrit dans la proposition.
 ### Processus affiché (4 étapes)
 1. **Un échange de trente minutes** — projet, échéance, budget.
 2. **Une proposition détaillée** — livrables, calendrier, prix définis avant de commencer.
-3. **Le tournage** — équipe de trois à cinq personnes.
+3. **Le tournage** — nous sommes présents tous les deux à chaque tournage, entourés si le projet l'exige.
 4. **La postproduction** — entièrement réalisée au studio, deux séries de retours incluses.
 
 ---
@@ -148,9 +148,18 @@ principal déficit de crédibilité, et il ne se comble pas par de la rédaction
 
 ## 7. Parcours du visiteur
 
-Accueil (film plein écran, mot-symbole, signature) → au scroll, la promesse et
-le lien vers le film → menu : **Films · Offres · Studio · Contact** → appel à
-l'action permanent « Parler de votre projet » en haut à droite → formulaire.
+*Essai du 12/08 : la home n'était plus une page unique — voir la note en tête
+du fichier `src/views/Accueil.jsx`. À révoquer avec le reste si l'essai est
+abandonné.*
+
+Accueil (film plein écran, mot-symbole, signature) → le scroll fait lever le
+jour et révèle la promesse et le lien vers le film → **« Vos trois façons de
+travailler avec nous »** (les trois offres en cartes, vers `/offres`) →
+**« Derrière chaque film, nous sommes deux »** (courte présentation, lien
+vers `/studio`) → appel à l'action final **« Parlons de votre prochain
+film »** → pied de page (mentions légales, confidentialité). Menu : **Films ·
+Offres · Studio · Contact** → appel à l'action permanent « Votre projet » en
+haut à droite → formulaire.
 
 **Le formulaire qualifie déjà le prospect** : nom, marque ou établissement,
 email, type de projet, échéance, **budget envisagé** (tranches 4 500–7 500 /
