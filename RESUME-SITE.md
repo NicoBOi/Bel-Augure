@@ -94,7 +94,7 @@ musique · des films courts conçus autour des expériences, produits et temps
 forts · des formats et déclinaisons · des versions verticales prêtes à diffuser.
 
 ### 03 — Campagne · à partir de 15 000 € HT
-*Pour un lancement.* « Donnez à votre lancement toute son ampleur. » Pour une
+*Pour vos lancements.* « Donnez à votre lancement toute son ampleur. » Pour une
 ouverture, un nouveau produit ou une nouvelle gamme.
 
 **Inclut** : un concept créatif pour toute la campagne · l'écriture, la

@@ -79,7 +79,7 @@ export const OFFERS = [
     id: 'campagne',
     num: '03',
     name: 'Campagne',
-    label: 'Pour un lancement',
+    label: 'Pour vos lancements',
     cardPhrase: 'Donnez à votre lancement toute son ampleur.',
     promise: 'Donnez à votre lancement toute son ampleur.',
     price: 'À partir de 15 000 € HT',
