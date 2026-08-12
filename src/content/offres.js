@@ -114,7 +114,7 @@ export const PROCESS = [
   },
   {
     t: 'Le tournage',
-    d: 'Nous sommes présents tous les deux à chaque tournage, entourés des profils nécessaires si le projet l’exige.',
+    d: 'Une équipe de trois à cinq personnes, dans le respect de votre lieu et de vos clients.',
   },
   {
     t: 'La postproduction',

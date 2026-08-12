@@ -59,12 +59,7 @@ const ROUTES = [
       <p>Le studio de production du bien-être d'exception.</p>
       <h2>Des films à la hauteur de votre expérience.</h2>
       <p>Vous avez pensé chaque détail de votre univers. Nous créons l'image qui donnera envie d'y entrer.</p>
-      <p><a href="/films">Découvrir le film</a></p>
-      <h2>Vos trois façons de travailler avec nous</h2>
-      <p>${OFFERS.map((o) => `${o.name} (${o.label.toLowerCase()}) : ${o.cardPhrase}`).join(' ')} <a href="/offres">Voir les offres</a></p>
-      <h2>Derrière chaque film, nous sommes deux</h2>
-      <p>Nicolas et Corentin sont présents à chaque étape de votre film, du premier échange jusqu'à la livraison. <a href="/studio">En savoir plus sur le studio</a></p>
-      <p>Parlons de votre prochain film. <a href="/contact">Votre projet</a></p>`,
+      <p><a href="/films">Découvrir le film</a></p>`,
   },
   {
     path: '/films',
@@ -73,9 +68,8 @@ const ROUTES = [
     h1: "Films — Les Pieds dans l'eau, sur le bassin d'Arcachon",
     body: `
       <h2>Les Pieds dans l'eau — bassin d'Arcachon</h2>
-      <p>Un film tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante. Une démonstration de studio, tournée sans commande : capter une lumière plutôt que vendre un lieu.</p>
-      <p>Écriture · Réalisation · Image · Montage · Étalonnage</p>
-      <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a> (lu directement sur cette page pour les visiteurs avec JavaScript activé)</p>`,
+      <p>Un film tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante.</p>
+      <p><a href="https://vimeo.com/1211391558">Voir le film sur Vimeo</a></p>`,
   },
   {
     path: '/studio',
@@ -154,7 +148,7 @@ async function filmVideoJsonLd() {
     '@type': 'VideoObject',
     name: "Les Pieds dans l'eau",
     description:
-      "Un film de Bel Augure tourné sur le bassin d'Arcachon au crépuscule d'une marée montante — une démonstration de studio, sans commande.",
+      "Le premier film de Bel Augure, tourné sur le bassin d'Arcachon au crépuscule d'une marée montante.",
     thumbnailUrl: `${SITE}/og.png`,
     embedUrl: `https://player.vimeo.com/video/${FILM_VIMEO_ID}`,
     contentUrl: `https://vimeo.com/${FILM_VIMEO_ID}`,

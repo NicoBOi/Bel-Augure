@@ -30,10 +30,6 @@ const FILMS = [
     title: "Les Pieds dans l'eau",
     world: "Bassin d'Arcachon",
     desc: "Un film tourné sur le bassin d'Arcachon, au crépuscule d'une marée montante.",
-    // Auto-produit, sans commande — cf. FICHE-ENTREPRISE.md : ne pas laisser
-    // penser qu'il s'agit d'une commande client tant que ce n'est pas vrai.
-    intent: "Une démonstration de studio, tournée sans commande : capter une lumière plutôt que vendre un lieu.",
-    credits: 'Écriture · Réalisation · Image · Montage · Étalonnage',
   },
 ]
 
@@ -176,22 +172,6 @@ export default function Films({ setDark, onNavigate }) {
               >
                 {film.desc}
               </p>
-              {film.intent && (
-                <p
-                  className="reveal-up mt-3 max-w-[46ch] text-[13.5px] font-light italic leading-[1.9] text-encre/70"
-                  style={{ '--d': '0.34s' }}
-                >
-                  {film.intent}
-                </p>
-              )}
-              {film.credits && (
-                <p
-                  className="reveal-up mt-6 text-[10.5px] font-normal uppercase tracking-[0.2em] text-encre/50"
-                  style={{ '--d': '0.38s' }}
-                >
-                  {film.credits}
-                </p>
-              )}
               <button
                 type="button"
                 onClick={() => onNavigate?.('contact')}
