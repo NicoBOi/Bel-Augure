@@ -42,26 +42,27 @@ export const OFFERS = [
     formats: [
       {
         title: 'Collection',
-        // Les deux formules répondent aux quatre mêmes questions, dans le
-        // même ordre — nature, volume, rythme, usage — pour se comparer d'un
-        // regard. nature = badge ; numbers = les deux chiffres clés, en
-        // grand ; usage = la seule ligne en texte.
+        // Les deux formules répondent aux mêmes questions, dans le même
+        // ordre — nature, volume, rythme, usage — pour se comparer d'un
+        // regard. nature = badge ; rows = fiche label/valeur, rythme d'une
+        // carte de menu plutôt que deux chiffres isolés (un « 1 » géant
+        // n'a rien d'un chiffre à mettre en avant).
         nature: 'Ponctuel',
-        numbers: [
-          { n: '3', label: 'films minimum' },
-          { n: '1', label: 'tournage' },
+        rows: [
+          { label: 'Volume', value: '3 films minimum' },
+          { label: 'Rythme', value: '1 tournage' },
+          { label: 'Usage', value: 'Pour un sujet précis' },
         ],
-        usage: 'Pour un sujet précis',
         price: 'À partir de 5 500 € HT',
       },
       {
         title: 'Quatre saisons',
         nature: 'Récurrent',
-        numbers: [
-          { n: '4', label: 'films / mois' },
-          { n: '1', label: 'tournage / mois' },
+        rows: [
+          { label: 'Volume', value: '4 films par mois' },
+          { label: 'Rythme', value: '1 tournage par mois' },
+          { label: 'Usage', value: 'Pour faire vivre la marque' },
         ],
-        usage: 'Pour faire vivre la marque',
         price: 'À partir de 4 500 € HT / mois',
         priceNote: 'Engagement de douze mois',
       },

@@ -36,8 +36,8 @@ function offresBody() {
         o.formats
           .map((f) => {
             const note = f.priceNote ? `, ${f.priceNote.toLowerCase()}` : ''
-            const bits = f.numbers
-              ? [f.nature, ...f.numbers.map((x) => `${x.n} ${x.label}`), f.usage.toLowerCase()]
+            const bits = f.rows
+              ? [f.nature, ...f.rows.map((r) => r.value.toLowerCase())]
               : null
             const stats = bits ? ` (${bits.join(', ')})` : ''
             return `${f.title}${stats} : ${f.price}${note}.`
