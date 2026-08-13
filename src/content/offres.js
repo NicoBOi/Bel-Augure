@@ -16,8 +16,7 @@ export const OFFERS = [
     promise: 'Donnez à votre marque son film de référence.',
     price: 'À partir de 9 500 € HT',
     description: [
-      'Votre marque dans ce qu’elle a de plus essentiel.',
-      'Un film de référence qui en réunit le lieu, les gestes, le savoir-faire et l’atmosphère.',
+      'Votre marque dans ce qu’elle a de plus essentiel. Un film de référence qui en réunit le lieu, les gestes, le savoir-faire et l’atmosphère.',
     ],
     receiveTitle: 'Inclut',
     // Ordre de production : ce que nous faisons, puis ce qui est livré.
@@ -38,8 +37,7 @@ export const OFFERS = [
     cardPhrase: 'Faites vivre votre marque sur les réseaux.',
     promise: 'Faites vivre votre marque sur les réseaux.',
     description: [
-      'Chaque détail de votre marque peut devenir une histoire.',
-      'Un soin, un geste, un produit, un lieu : autant de films courts pour faire vivre votre univers sur les réseaux.',
+      'Chaque détail de votre marque peut devenir une histoire. Un soin, un geste, un produit, un lieu : autant de films courts pour faire vivre votre univers sur les réseaux.',
     ],
     formats: [
       {
@@ -77,9 +75,7 @@ export const OFFERS = [
     promise: 'Donnez à votre lancement toute son ampleur.',
     price: 'À partir de 15 000 € HT',
     description: [
-      'Pour une ouverture, un nouveau produit ou une nouvelle gamme, nous imaginons un concept créatif pensé pour l’ensemble du lancement.',
-      'Un film principal en pose l’univers. Les films courts l’annoncent, en révèlent les détails et le prolongent sur vos différents supports.',
-      'Une seule idée, déclinée dans chaque film.',
+      'Vous avez quelque chose de nouveau à dévoiler. Nous construisons son lancement comme un récit : un film principal pour en poser l’univers, puis plusieurs films courts pour l’annoncer, le révéler et le faire perdurer.',
     ],
     receiveTitle: 'Inclut',
     // Ordre de production : le concept, la fabrication, puis les livrables.
