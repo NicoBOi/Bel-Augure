@@ -34,8 +34,8 @@ function offresBody() {
         o.formats
           .map((f) => {
             const note = f.priceNote ? `, ${f.priceNote.toLowerCase()}` : ''
-            const sous = f.sub ? ` (${f.sub.toLowerCase().replace(/\.$/, '')})` : ''
-            return `${f.title}${sous} : ${f.price}${note}.`
+            const stats = f.stats ? ` (${f.stats.join(', ')})` : ''
+            return `${f.title}${stats} : ${f.price}${note}.`
           })
           .join(' ')
     }

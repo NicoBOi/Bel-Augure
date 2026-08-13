@@ -106,12 +106,18 @@ function OfferChapter({ o, i, onContact }) {
                       <h4 className="font-display text-[clamp(1.5rem,2vw,1.9rem)] font-light leading-[1.1] text-encre">
                         {f.title}
                       </h4>
-                      <p className="mt-2.5 text-[14.5px] font-light leading-[1.45] text-encre/60">{f.sub}</p>
-                      <div className="mt-4 flex-1 space-y-3 text-[14px] font-light leading-[1.7] text-encre/75">
-                        {f.body.map((p) => (
-                          <p key={p}>{p}</p>
+                      {/* Fiche chiffrée plutôt que descriptive : la formule se
+                          lit d'un coup d'œil, sans prose. */}
+                      <ul className="mt-5 flex-1 space-y-2.5">
+                        {f.stats.map((s) => (
+                          <li
+                            key={s}
+                            className="text-[16px] font-medium leading-[1.3] tabular-nums text-encre"
+                          >
+                            {s}
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                       <div className="mt-7 border-t border-encre/10 pt-5">
                         <p className="text-[11px] font-normal uppercase tracking-[0.22em] text-orfonce">
                           {f.closing}

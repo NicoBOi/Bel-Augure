@@ -44,20 +44,13 @@ export const OFFERS = [
     formats: [
       {
         title: 'Collection',
-        sub: 'Plusieurs films, tournés ensemble.',
-        body: [
-          'À partir de trois films autour d’un même sujet, accompagnés de leurs déclinaisons courtes.',
-        ],
+        stats: ['3+ films', '1 sujet', '1 tournage'],
         closing: 'Ponctuel',
         price: 'À partir de 5 500 € HT',
       },
       {
         title: 'Quatre saisons',
-        sub: 'De nouveaux films chaque mois.',
-        body: [
-          'Une journée de tournage mensuelle pour suivre vos saisons, vos nouveautés et vos temps forts.',
-          'Chaque mois, au moins quatre films et leurs déclinaisons, prêts à diffuser sur vos réseaux.',
-        ],
+        stats: ['4 films / mois', '12 mois', '1 tournage / mois'],
         closing: 'Récurrent',
         price: 'À partir de 4 500 € HT / mois',
         priceNote: 'Engagement de douze mois',
