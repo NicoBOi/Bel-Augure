@@ -122,26 +122,28 @@ function OfferChapter({ o, i, onContact }) {
                       <h4 className="font-display text-[clamp(1.5rem,2vw,1.9rem)] font-light leading-[1.1] text-encre">
                         {f.title}
                       </h4>
-                      {/* Fiche chiffrée plutôt que descriptive, les deux
-                          formules répondant aux mêmes quatre questions dans
-                          le même ordre — nature, volume, rythme, usage — pour
-                          se comparer d'un regard. La nature (Ponctuel /
-                          Récurrent) ouvre la liste et se détache des trois
-                          lignes chiffrées qui suivent. */}
-                      <ul className="mt-6 flex-1 space-y-4">
-                        {f.stats.map((s, i) => (
-                          <li
-                            key={s}
-                            className={
-                              i === 0
-                                ? 'text-[11px] font-normal uppercase tracking-[0.22em] text-orfonce'
-                                : 'text-[17px] font-medium leading-[1.3] tabular-nums text-encre'
-                            }
-                          >
-                            {s}
-                          </li>
+                      {/* Fiche chiffrée et visuelle : un badge pour la nature
+                          (Ponctuel / Récurrent), deux grands chiffres pour le
+                          volume et le rythme — les deux formules se comparent
+                          d'un regard — puis l'usage en seule ligne de texte. */}
+                      <span className="mt-5 inline-flex w-fit items-center rounded-full border border-orfonce/35 px-3.5 py-1.5 text-[10.5px] font-normal uppercase tracking-[0.2em] text-orfonce">
+                        {f.nature}
+                      </span>
+                      <div className="mt-6 grid grid-cols-2 gap-5">
+                        {f.numbers.map((x) => (
+                          <div key={x.label}>
+                            <p className="font-display text-[clamp(2rem,3vw,2.5rem)] font-light leading-none tabular-nums text-encre">
+                              {x.n}
+                            </p>
+                            <p className="mt-2 text-[12.5px] font-light leading-[1.35] text-encre/60">
+                              {x.label}
+                            </p>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
+                      <p className="mt-6 flex-1 text-[14px] font-light italic leading-[1.5] text-encre/70">
+                        {f.usage}
+                      </p>
                       <div className="mt-7 border-t border-encre/10 pt-5">
                         {f.price && (
                           <p className="font-display text-[clamp(1.5rem,1.8vw,1.55rem)] font-light leading-none tabular-nums text-encre">

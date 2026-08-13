@@ -42,16 +42,26 @@ export const OFFERS = [
     formats: [
       {
         title: 'Collection',
-        // Les deux formules répondent aux quatre mêmes questions, dans le même
-        // ordre — nature, volume, rythme, usage — pour se comparer d'un
-        // regard. Le premier élément porte la nature (Ponctuel/Récurrent) et
-        // se distingue visuellement des trois autres, chiffrés.
-        stats: ['Ponctuel', '3 films minimum', '1 tournage', 'Pour un sujet précis'],
+        // Les deux formules répondent aux quatre mêmes questions, dans le
+        // même ordre — nature, volume, rythme, usage — pour se comparer d'un
+        // regard. nature = badge ; numbers = les deux chiffres clés, en
+        // grand ; usage = la seule ligne en texte.
+        nature: 'Ponctuel',
+        numbers: [
+          { n: '3', label: 'films minimum' },
+          { n: '1', label: 'tournage' },
+        ],
+        usage: 'Pour un sujet précis',
         price: 'À partir de 5 500 € HT',
       },
       {
         title: 'Quatre saisons',
-        stats: ['Récurrent', '4 films par mois', '1 tournage par mois', 'Pour faire vivre la marque'],
+        nature: 'Récurrent',
+        numbers: [
+          { n: '4', label: 'films / mois' },
+          { n: '1', label: 'tournage / mois' },
+        ],
+        usage: 'Pour faire vivre la marque',
         price: 'À partir de 4 500 € HT / mois',
         priceNote: 'Engagement de douze mois',
       },
