@@ -51,13 +51,19 @@ export const OFFERS = [
         // Nombres en toutes lettres, comme partout ailleurs dans les textes
         // de marque (cf. FICHE-ENTREPRISE.md) : jamais un chiffre à côté
         // d'un mot écrit.
-        lines: ['Trois films minimum', 'Un tournage'],
+        rows: [
+          { label: 'Volume', value: 'Trois films minimum' },
+          { label: 'Rythme', value: 'Un tournage' },
+        ],
         price: 'À partir de 5 500 € HT',
       },
       {
         title: 'Quatre saisons',
         nature: 'Récurrent',
-        lines: ['Quatre films / mois', 'Un tournage / mois'],
+        rows: [
+          { label: 'Volume', value: 'Quatre films / mois' },
+          { label: 'Rythme', value: 'Un tournage / mois' },
+        ],
         price: 'À partir de 4 500 € HT / mois',
         priceNote: 'Engagement de douze mois',
       },

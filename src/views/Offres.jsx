@@ -122,20 +122,29 @@ function OfferChapter({ o, i, onContact }) {
                       <h4 className="font-display text-[clamp(1.5rem,2vw,1.9rem)] font-light leading-[1.1] text-encre">
                         {f.title}
                       </h4>
-                      {/* Le badge porte la nature (Ponctuel / Récurrent) ;
-                          deux lignes en gras suffisent ensuite, en toutes
-                          lettres — pas de chiffre isolé grossi sans en valoir
-                          la peine. */}
+                      {/* Fiche label/valeur, rythme d'une carte de menu : les
+                          deux formules répondent aux mêmes questions, dans le
+                          même ordre, pour se comparer d'un regard. Le badge
+                          porte la nature (Ponctuel / Récurrent) ; les lignes
+                          qui suivent ont toutes le même poids visuel. */}
                       <span className="mt-5 inline-flex w-fit items-center rounded-full border border-orfonce/40 px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-orfonce">
                         {f.nature}
                       </span>
-                      <ul className="mt-6 flex-1 space-y-3">
-                        {f.lines.map((l) => (
-                          <li key={l} className="text-[16px] font-semibold leading-[1.35] text-encre">
-                            {l}
-                          </li>
+                      <div className="mt-6 flex-1 space-y-3.5">
+                        {f.rows.map((r) => (
+                          <div
+                            key={r.label}
+                            className="flex items-baseline justify-between gap-4 border-b border-encre/10 pb-3.5"
+                          >
+                            <span className="shrink-0 text-[11px] font-normal uppercase tracking-[0.16em] text-encre/50">
+                              {r.label}
+                            </span>
+                            <span className="text-right text-[15px] font-medium leading-[1.3] text-encre">
+                              {r.value}
+                            </span>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                       <div className="mt-7 border-t border-encre/10 pt-5">
                         {f.price && (
                           <p className="font-display text-[clamp(1.5rem,1.8vw,1.55rem)] font-light leading-none tabular-nums text-encre">
