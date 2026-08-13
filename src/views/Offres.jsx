@@ -23,6 +23,22 @@ const DASH = 'bg-orfonce/70'
 const RULE = 'border-orfonce/20'
 const BG = '#EFE4D5'
 
+// Segmente un texte marqué **ainsi** dans src/content/offres.js : les
+// passages soulignés ressortent en medium, sans changer de couleur pour
+// rester lisibles aussi bien sur le papier clair que sur la bande encre de
+// Campagne.
+function withBold(text, ink = false) {
+  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={i} className={`font-medium ${ink ? 'text-creme' : 'text-encre'}`}>
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  )
+}
+
 function DashList({ items, className = '', muted = false, cols = 1, ink = false }) {
   const dash = ink ? 'bg-or/60' : DASH
   const txt = muted ? (ink ? 'text-sable/60' : 'text-encre/65') : ink ? 'text-sable/90' : 'text-encre/85'
@@ -82,7 +98,7 @@ function OfferChapter({ o, i, onContact }) {
           </p>
           <div className={`mt-7 max-w-[62ch] space-y-3 text-[16px] font-light leading-[1.75] ${cBody}`}>
             {o.description.map((p) => (
-              <p key={p}>{p}</p>
+              <p key={p}>{withBold(p, ink)}</p>
             ))}
           </div>
 

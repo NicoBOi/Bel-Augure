@@ -26,7 +26,9 @@ function offresBody() {
     // Offre sans tarif global (Histoires) : on annonce le plancher de sa
     // première formule.
     const price = o.price || (o.formats && o.formats[0].price)
-    const desc = o.description.join(' ')
+    // Le prérendu est du texte brut : les repères **gras** de la page React
+    // n'ont pas leur place ici.
+    const desc = o.description.join(' ').replace(/\*\*/g, '')
     let formats = ''
     if (o.formats) {
       formats =
