@@ -38,8 +38,8 @@ export const OFFERS = [
     cardPhrase: 'Faites vivre votre marque sur les réseaux.',
     promise: 'Faites vivre votre marque sur les réseaux.',
     description: [
-      'Chaque film se concentre sur un sujet : un soin, un produit, une expérience, un geste ou un savoir-faire.',
-      'Des films courts pensés pour vos réseaux, avec la même exigence d’image.',
+      'Chaque détail de votre marque peut devenir une histoire.',
+      'Un soin, un geste, un produit, un lieu : autant de films courts pour faire vivre votre univers sur les réseaux.',
     ],
     formats: [
       {
