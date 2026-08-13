@@ -16,8 +16,8 @@ export const OFFERS = [
     promise: 'Donnez à votre marque son film de référence.',
     price: 'À partir de 9 500 € HT',
     description: [
-      'Un film pensé pour présenter votre marque dans son ensemble : son univers, son savoir-faire, ses lieux ou ses produits.',
-      'La pièce centrale de votre image, conçue pour votre site, vos présentations et vos rendez-vous professionnels.',
+      'Votre marque dans ce qu’elle a de plus essentiel.',
+      'Un film de référence qui en réunit le lieu, les gestes, le savoir-faire et l’atmosphère.',
     ],
     receiveTitle: 'Inclut',
     // Ordre de production : ce que nous faisons, puis ce qui est livré.
