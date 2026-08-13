@@ -49,9 +49,9 @@ export const OFFERS = [
         // n'a rien d'un chiffre à mettre en avant).
         nature: 'Ponctuel',
         rows: [
-          { label: 'Volume', value: '3 films minimum' },
+          { label: 'Volume', value: '3 films' },
           { label: 'Rythme', value: '1 tournage' },
-          { label: 'Usage', value: 'Pour un sujet précis' },
+          { label: 'Usage', value: 'Un sujet' },
         ],
         price: 'À partir de 5 500 € HT',
       },
@@ -59,9 +59,9 @@ export const OFFERS = [
         title: 'Quatre saisons',
         nature: 'Récurrent',
         rows: [
-          { label: 'Volume', value: '4 films par mois' },
-          { label: 'Rythme', value: '1 tournage par mois' },
-          { label: 'Usage', value: 'Pour faire vivre la marque' },
+          { label: 'Volume', value: '4 films' },
+          { label: 'Rythme', value: 'Mensuel' },
+          { label: 'Usage', value: 'Toute la marque' },
         ],
         price: 'À partir de 4 500 € HT / mois',
         priceNote: 'Engagement de douze mois',
