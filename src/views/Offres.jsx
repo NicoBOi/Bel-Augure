@@ -122,24 +122,29 @@ function OfferChapter({ o, i, onContact }) {
                       <h4 className="font-display text-[clamp(1.5rem,2vw,1.9rem)] font-light leading-[1.1] text-encre">
                         {f.title}
                       </h4>
-                      {/* Fiche chiffrée plutôt que descriptive : la formule se
-                          lit d'un coup d'œil, sans prose. */}
-                      <ul className="mt-5 flex-1 space-y-2.5">
-                        {f.stats.map((s) => (
+                      {/* Fiche chiffrée plutôt que descriptive, les deux
+                          formules répondant aux mêmes quatre questions dans
+                          le même ordre — nature, volume, rythme, usage — pour
+                          se comparer d'un regard. La nature (Ponctuel /
+                          Récurrent) ouvre la liste et se détache des trois
+                          lignes chiffrées qui suivent. */}
+                      <ul className="mt-6 flex-1 space-y-4">
+                        {f.stats.map((s, i) => (
                           <li
                             key={s}
-                            className="text-[16px] font-medium leading-[1.3] tabular-nums text-encre"
+                            className={
+                              i === 0
+                                ? 'text-[11px] font-normal uppercase tracking-[0.22em] text-orfonce'
+                                : 'text-[17px] font-medium leading-[1.3] tabular-nums text-encre'
+                            }
                           >
                             {s}
                           </li>
                         ))}
                       </ul>
                       <div className="mt-7 border-t border-encre/10 pt-5">
-                        <p className="text-[11px] font-normal uppercase tracking-[0.22em] text-orfonce">
-                          {f.closing}
-                        </p>
                         {f.price && (
-                          <p className="mt-2.5 font-display text-[clamp(1.5rem,1.8vw,1.55rem)] font-light leading-none tabular-nums text-encre">
+                          <p className="font-display text-[clamp(1.5rem,1.8vw,1.55rem)] font-light leading-none tabular-nums text-encre">
                             {f.price}
                           </p>
                         )}

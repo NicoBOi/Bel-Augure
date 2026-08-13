@@ -42,14 +42,16 @@ export const OFFERS = [
     formats: [
       {
         title: 'Collection',
-        stats: ['3+ films', '1 sujet', '1 tournage'],
-        closing: 'Ponctuel',
+        // Les deux formules répondent aux quatre mêmes questions, dans le même
+        // ordre — nature, volume, rythme, usage — pour se comparer d'un
+        // regard. Le premier élément porte la nature (Ponctuel/Récurrent) et
+        // se distingue visuellement des trois autres, chiffrés.
+        stats: ['Ponctuel', '3 films minimum', '1 tournage', 'Pour un sujet précis'],
         price: 'À partir de 5 500 € HT',
       },
       {
         title: 'Quatre saisons',
-        stats: ['4 films / mois', '12 mois', '1 tournage / mois'],
-        closing: 'Récurrent',
+        stats: ['Récurrent', '4 films par mois', '1 tournage par mois', 'Pour faire vivre la marque'],
         price: 'À partir de 4 500 € HT / mois',
         priceNote: 'Engagement de douze mois',
       },
