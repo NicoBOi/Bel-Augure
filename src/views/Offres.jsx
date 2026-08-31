@@ -16,7 +16,7 @@ function DashList({ items }) {
 
 function OfferChapter({ offer, num, onContact }) {
   const [open, setOpen] = useState(false)
-  return <div id={`detail-${offer.id}`} className="scroll-mt-24 px-6 py-24 md:px-16 md:py-32" style={{ backgroundColor: num === '02' ? '#E6D8C1' : '#F4ECDF' }}>
+  return <div id={`detail-${offer.id}`} className="scroll-mt-32 px-6 py-24 md:px-16 md:py-32" style={{ backgroundColor: num === '02' ? '#E6D8C1' : '#F4ECDF' }}>
     <article className="mx-auto grid w-full max-w-[1180px] items-start gap-x-10 gap-y-8 lg:grid-cols-[minmax(0,13rem)_1fr] lg:gap-x-24">
       <span className="font-display text-[clamp(4.5rem,10vw,8.5rem)] font-light leading-[0.8] tabular-nums text-encre">{num}</span>
       <div className="min-w-0"><p className="text-[11px] uppercase tracking-[0.3em] text-orfonce">{offer.eyebrow}</p><h2 className="mt-3 font-display text-[clamp(2.3rem,4.8vw,3.4rem)] font-light leading-[1.03] text-encre">{offer.title}</h2><p className="mt-5 max-w-[32ch] font-display text-[clamp(1.45rem,2.1vw,1.75rem)] font-light leading-[1.22] text-encre/90">{offer.short}</p><p className="mt-7 max-w-[61ch] text-[16px] font-light leading-[1.75] text-encre/80">{offer.detail}</p>

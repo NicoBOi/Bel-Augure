@@ -73,7 +73,11 @@ export default function Navbar({ activeView, onNavigate, onBack, dark }) {
 
   return (
     <header
-      className="absolute inset-x-0 top-0 z-10"
+      className={`absolute inset-x-0 top-0 z-10 transition-[background-color,border-color,backdrop-filter] duration-500 ${
+        activeView === 'offres'
+          ? 'border-b border-encre/10 bg-[#EFE4D5]/95 backdrop-blur-md'
+          : ''
+      }`}
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
       {/* Voile givré couvrant tout le header (rangée + panneau) quand le menu est ouvert */}
