@@ -6,42 +6,21 @@ export const HERO_FILM_ID = '1211391558'
 
 export const OFFERS = [
   {
-    id: 'film',
+    id: 'histoires',
     num: '01',
-    name: 'Film Signature',
-    label: 'Pour votre image',
+    name: 'Histoires',
+    contactName: 'Histoires de marque',
+    label: 'Trois récits',
     // La carte du haut et le chapitre portent la même promesse : le visiteur
     // retrouve mot pour mot ce qu'il a lu plus haut.
-    cardPhrase: 'Donnez à votre marque son film de référence.',
-    promise: 'Donnez à votre marque son film de référence.',
-    price: 'À partir de 9 500 € HT',
+    cardPhrase: 'Trois histoires pour faire vivre votre univers.',
+    promise: 'Trois histoires pour faire vivre votre univers.',
     description: [
-      'Votre marque dans ce qu’elle a de plus **essentiel**. Un **film de référence** qui en réunit le lieu, les gestes, le savoir-faire et l’atmosphère.',
-    ],
-    receiveTitle: 'Inclut',
-    // Ordre de production : ce que nous faisons, puis ce qui est livré.
-    receive: [
-      'L’écriture, la réalisation et toute la postproduction',
-      'La musique et deux séries de retours',
-      'Un film de 60 à 90 secondes',
-      'Deux coupes du film principal, en 30 et 15 secondes',
-      'Des formats adaptés à votre site et à vos supports de présentation',
-    ],
-    cta: 'Parler de votre projet',
-  },
-  {
-    id: 'histoires',
-    num: '02',
-    name: 'Histoires de marque',
-    label: 'Pour vos réseaux',
-    cardPhrase: 'Faites vivre votre marque sur les réseaux.',
-    promise: 'Faites vivre votre marque sur les réseaux.',
-    description: [
-      'Chaque détail de votre marque peut devenir **une histoire**. Un soin, un geste, un produit, un lieu : autant de **films courts** pour faire vivre votre univers sur les **réseaux**.',
+      'Trois **films narratifs courts**, chacun construit autour d’une idée, d’une situation et d’une émotion propres.',
     ],
     formats: [
       {
-        title: 'Collection',
+        title: 'Trois histoires',
         // Les deux formules répondent aux mêmes questions, dans le même
         // ordre — nature, volume, rythme, usage — pour se comparer d'un
         // regard. nature = badge ; rows = fiche label/valeur, rythme d'une
@@ -52,31 +31,53 @@ export const OFFERS = [
         // de marque (cf. FICHE-ENTREPRISE.md) : jamais un chiffre à côté
         // d'un mot écrit.
         rows: [
-          { label: 'Volume', value: 'Trois films minimum' },
+          { label: 'Volume', value: 'Trois films de 15 à 30 s' },
           { label: 'Rythme', value: 'Un tournage' },
         ],
-        price: 'À partir de 5 500 € HT',
+        price: 'À partir de 3 900 € HT',
       },
       {
         title: 'Quatre saisons',
         nature: 'Récurrent',
         rows: [
-          { label: 'Volume', value: 'Quatre films / mois' },
+          { label: 'Volume', value: 'Trois Histoires / mois' },
           { label: 'Rythme', value: 'Un tournage / mois' },
         ],
-        price: 'À partir de 4 500 € HT / mois',
-        priceNote: 'Engagement de douze mois',
+        price: 'À partir de 3 600 € HT / mois',
+        priceNote: 'Premier cycle de trois mois',
       },
     ],
     receiveTitle: 'Inclut',
     receive: [
-      'L’écriture, le tournage et toute la postproduction',
-      'Un film court par sujet',
-      'Leurs déclinaisons adaptées à vos prises de parole',
-      'Des formats verticaux prêts à diffuser',
+      'La conception, l’écriture et le casting',
+      'La réalisation, la direction d’acteur et la lumière',
+      'Le montage, le sound design, l’étalonnage et une série de retours',
+      'Des formats définis dès l’écriture selon les supports de diffusion',
     ],
     receiveNote: [
-      'Quatre saisons comprend également la préparation du calendrier annuel des sujets.',
+      'Quatre saisons construit votre univers dans le temps, à mesure que nous apprenons à connaître votre maison, ses lieux et son langage visuel.',
+    ],
+    cta: 'Parler de votre projet',
+  },
+  {
+    id: 'film',
+    num: '02',
+    name: 'Film',
+    contactName: 'Film Signature',
+    label: 'Un récit ample',
+    cardPhrase: 'Une histoire pour incarner votre maison.',
+    promise: 'Une histoire pour incarner votre maison.',
+    price: 'À partir de 6 900 € HT',
+    description: [
+      'Un **récit plus ample**, pensé comme le film central de votre marque. Le scénario laisse vivre une progression, des personnages, une voix ou un silence.',
+    ],
+    receiveTitle: 'Inclut',
+    receive: [
+      'La conception, l’écriture, la préproduction et la direction artistique',
+      'Le casting, la réalisation et la direction d’acteur',
+      'Un tournage dimensionné selon le scénario',
+      'Le montage, le sound design, l’étalonnage et deux séries de retours',
+      'Un film d’environ 60 secondes à 2 minutes, avec les versions courtes définies en amont',
     ],
     cta: 'Parler de votre projet',
   },
@@ -85,22 +86,24 @@ export const OFFERS = [
     num: '03',
     name: 'Campagne',
     label: 'Pour vos lancements',
-    cardPhrase: 'Donnez à votre lancement toute son ampleur.',
-    promise: 'Donnez à votre lancement toute son ampleur.',
-    price: 'À partir de 15 000 € HT',
+    cardPhrase: 'Un récit principal, plusieurs histoires.',
+    promise: 'Un récit principal, plusieurs histoires.',
+    price: 'À partir de 9 900 € HT',
     description: [
-      'Vous avez quelque chose de nouveau à dévoiler. Nous construisons son lancement comme **un récit** : un **film principal** pour en poser l’univers, puis plusieurs **films courts** pour l’annoncer, le révéler et le faire perdurer.',
+      'Une **idée centrale**, un **Film principal** et plusieurs **Histoires** complémentaires, réunis par une même direction artistique.',
     ],
     receiveTitle: 'Inclut',
     // Ordre de production : le concept, la fabrication, puis les livrables.
     receive: [
-      'Le concept créatif de la campagne',
-      'L’écriture, la réalisation et toute la postproduction',
-      'La musique et deux séries de retours par étape',
-      'Un film principal de 60 à 90 secondes',
-      'Au moins trois films courts de 15 à 30 secondes',
-      'Des formats adaptés à vos différents supports',
+      'Le concept et la direction artistique de la campagne',
+      'L’écriture, le casting, la réalisation et la direction d’acteur',
+      'Un Film principal et plusieurs Histoires autour de la même idée',
+      'Le montage, le sound design et l’étalonnage',
+      'Des formats définis selon les supports de diffusion',
+      'Deux séries de retours par étape',
     ],
+    priceNote:
+      'Chaque projet est écrit sur mesure. Le devis final dépend du scénario, du casting, des lieux et du périmètre de diffusion.',
     cta: 'Parler de votre projet',
   },
 ]
@@ -108,19 +111,19 @@ export const OFFERS = [
 // Bloc transverse (bas de page) — commun aux trois offres.
 export const PROCESS = [
   {
-    t: 'Un échange de trente minutes',
-    d: 'Nous cadrons votre projet, votre échéance et votre budget.',
+    t: 'Comprendre',
+    d: 'Découvrir votre marque, son expérience et ce que le film doit faire ressentir.',
   },
   {
-    t: 'Une proposition détaillée',
-    d: 'Livrables, calendrier et prix sont définis avant de commencer.',
+    t: 'Écrire',
+    d: 'Développer le concept, l’histoire et la direction visuelle, validés avant le tournage.',
   },
   {
-    t: 'Le tournage',
-    d: 'Une équipe de trois à cinq personnes, dans le respect de votre lieu et de vos clients.',
+    t: 'Réaliser',
+    d: 'Mettre en scène et tourner le récit avec l’équipe adaptée au scénario.',
   },
   {
-    t: 'La postproduction',
-    d: 'Entièrement réalisée au studio, avec deux séries de retours incluses.',
+    t: 'Finaliser',
+    d: 'Assurer le montage, le sound design et l’étalonnage jusqu’aux masters.',
   },
 ]

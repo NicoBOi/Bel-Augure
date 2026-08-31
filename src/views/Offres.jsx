@@ -189,7 +189,7 @@ function OfferChapter({ o, i, onContact }) {
                   {o.priceNote && <p className={`mt-2 text-[12.5px] font-light ${cMuted}`}>{o.priceNote}</p>}
                 </div>
               )}
-              <button type="button" onClick={() => onContact(o.name)} className={ink ? CTA_INK : CTA_LIGHT}>
+              <button type="button" onClick={() => onContact(o.contactName || o.name)} className={ink ? CTA_INK : CTA_LIGHT}>
                 {o.cta}
               </button>
             </div>
@@ -258,11 +258,11 @@ export default function Offres({ setDark, onNavigate }) {
         <div className="reveal-up grid flex-1 items-center gap-10 lg:grid-cols-2 lg:gap-16" style={{ '--d': '0.08s' }}>
           <div>
             <h2 className="max-w-[16ch] font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.08] text-encre">
-              Un format pour chaque ambition
+              Deux façons de raconter
             </h2>
             <p className="mt-6 max-w-[44ch] text-[16px] font-light leading-[1.7] text-encre/75">
-              Peu importe <span className="font-medium text-encre">l’ampleur du projet</span>, nous
-              adaptons le format avec <span className="font-medium text-encre">la même exigence</span>.
+              Histoires courtes ou Film plus ample :
+              <span className="font-medium text-encre"> l’ambition narrative reste la même</span>.
             </p>
           </div>
 
@@ -321,7 +321,7 @@ export default function Offres({ setDark, onNavigate }) {
         <div className="reveal-up pb-4 pt-10 md:pt-12" style={{ '--d': '0.22s' }}>
           <button
             type="button"
-            onClick={() => scrollToDetail('film')}
+            onClick={() => scrollToDetail('histoires')}
             aria-label="Voir le détail des trois offres, plus bas"
             className="group flex w-full cursor-pointer flex-col items-center gap-3"
           >
