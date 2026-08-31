@@ -1,126 +1,41 @@
-// Source de vérité UNIQUE des trois offres : la page /offres (React) et le
-// prérendu SEO (scripts/prerender.mjs) lisent tous deux ce fichier. Toute
-// modification de prix ou de texte se propage donc partout au build — plus
-// jamais un prix à l'écran différent de celui des meta ou du JSON-LD.
+// Source de vérité de la page Offres et de son pré-rendu SEO.
 export const HERO_FILM_ID = '1211391558'
 
 export const OFFERS = [
   {
-    id: 'film',
-    num: '01',
-    name: 'Film Signature',
-    label: 'Pour votre image',
-    // La carte du haut et le chapitre portent la même promesse : le visiteur
-    // retrouve mot pour mot ce qu'il a lu plus haut.
-    cardPhrase: 'Donnez à votre marque son film de référence.',
-    promise: 'Donnez à votre marque son film de référence.',
-    price: 'À partir de 9 500 € HT',
-    description: [
-      'Votre marque dans ce qu’elle a de plus **essentiel**. Un **film de référence** qui en réunit le lieu, les gestes, le savoir-faire et l’atmosphère.',
-    ],
-    receiveTitle: 'Inclut',
-    // Ordre de production : ce que nous faisons, puis ce qui est livré.
-    receive: [
-      'L’écriture, la réalisation et toute la postproduction',
-      'La musique et deux séries de retours',
-      'Un film de 60 à 90 secondes',
-      'Deux coupes du film principal, en 30 et 15 secondes',
-      'Des formats adaptés à votre site et à vos supports de présentation',
-    ],
-    cta: 'Parler de votre projet',
+    id: 'histoires', eyebrow: 'HISTOIRES', title: 'Trois histoires pour faire vivre votre univers.',
+    short: 'Plusieurs récits courts, chacun avec sa propre émotion.', price: 'À partir de 3 900 € HT',
+    for: 'Pour raconter plusieurs facettes de votre maison à travers des récits courts.',
+    detail: 'Une collection de trois histoires indépendantes. Chaque film part d’une idée, d’une situation et d’une présence humaine pour laisser une impression singulière.',
+    notes: ['Trois histoires de 15 à 30 secondes environ', 'Formats pensés selon les supports', 'Une journée principale de tournage'],
+    includes: ['Conception et écriture', 'Casting et direction d’acteur selon l’histoire', 'Réalisation, lumière, montage, son et étalonnage', 'Adaptations prévues avant la production', 'Une série de retours structurée'],
   },
   {
-    id: 'histoires',
-    num: '02',
-    name: 'Histoires de marque',
-    label: 'Pour vos réseaux',
-    cardPhrase: 'Faites vivre votre marque sur les réseaux.',
-    promise: 'Faites vivre votre marque sur les réseaux.',
-    description: [
-      'Chaque détail de votre marque peut devenir **une histoire**. Un soin, un geste, un produit, un lieu : autant de **films courts** pour faire vivre votre univers sur les **réseaux**.',
-    ],
-    formats: [
-      {
-        title: 'Collection',
-        // Les deux formules répondent aux mêmes questions, dans le même
-        // ordre — nature, volume, rythme, usage — pour se comparer d'un
-        // regard. nature = badge ; rows = fiche label/valeur, rythme d'une
-        // carte de menu plutôt que deux chiffres isolés (un « 1 » géant
-        // n'a rien d'un chiffre à mettre en avant).
-        nature: 'Ponctuel',
-        // Nombres en toutes lettres, comme partout ailleurs dans les textes
-        // de marque (cf. FICHE-ENTREPRISE.md) : jamais un chiffre à côté
-        // d'un mot écrit.
-        rows: [
-          { label: 'Volume', value: 'Trois films minimum' },
-          { label: 'Rythme', value: 'Un tournage' },
-        ],
-        price: 'À partir de 5 500 € HT',
-      },
-      {
-        title: 'Quatre saisons',
-        nature: 'Récurrent',
-        rows: [
-          { label: 'Volume', value: 'Quatre films / mois' },
-          { label: 'Rythme', value: 'Un tournage / mois' },
-        ],
-        price: 'À partir de 4 500 € HT / mois',
-        priceNote: 'Engagement de douze mois',
-      },
-    ],
-    receiveTitle: 'Inclut',
-    receive: [
-      'L’écriture, le tournage et toute la postproduction',
-      'Un film court par sujet',
-      'Leurs déclinaisons adaptées à vos prises de parole',
-      'Des formats verticaux prêts à diffuser',
-    ],
-    receiveNote: [
-      'Quatre saisons comprend également la préparation du calendrier annuel des sujets.',
-    ],
-    cta: 'Parler de votre projet',
-  },
-  {
-    id: 'campagne',
-    num: '03',
-    name: 'Campagne',
-    label: 'Pour vos lancements',
-    cardPhrase: 'Donnez à votre lancement toute son ampleur.',
-    promise: 'Donnez à votre lancement toute son ampleur.',
-    price: 'À partir de 15 000 € HT',
-    description: [
-      'Vous avez quelque chose de nouveau à dévoiler. Nous construisons son lancement comme **un récit** : un **film principal** pour en poser l’univers, puis plusieurs **films courts** pour l’annoncer, le révéler et le faire perdurer.',
-    ],
-    receiveTitle: 'Inclut',
-    // Ordre de production : le concept, la fabrication, puis les livrables.
-    receive: [
-      'Le concept créatif de la campagne',
-      'L’écriture, la réalisation et toute la postproduction',
-      'La musique et deux séries de retours par étape',
-      'Un film principal de 60 à 90 secondes',
-      'Au moins trois films courts de 15 à 30 secondes',
-      'Des formats adaptés à vos différents supports',
-    ],
-    cta: 'Parler de votre projet',
+    id: 'film', eyebrow: 'FILM', title: 'Une histoire pour incarner votre maison.',
+    short: 'Un récit plus ample, porté par une mise en scène.', price: 'À partir de 6 900 € HT',
+    for: 'Pour créer le film central qui porte réellement l’univers de votre marque.',
+    detail: 'Une production narrative plus développée, avec le temps de faire exister une progression, des personnages, une voix, un silence ou une révélation.',
+    notes: ['60 secondes à 2 minutes environ', 'La durée est décidée par l’histoire', 'Formats pensés selon les supports'],
+    includes: ['Conception, écriture et préproduction', 'Casting, réalisation et direction d’acteur', 'Production dimensionnée selon le scénario', 'Montage, sound design et étalonnage', 'Deux séries de retours structurées'],
   },
 ]
 
-// Bloc transverse (bas de page) — commun aux trois offres.
+export const EXTENSIONS = [
+  { id: 'campagne', title: 'Une campagne ?', body: 'Pour un lancement important, nous réunissons un Film et plusieurs Histoires autour d’une même idée : un récit principal, puis les histoires qui le prolongent.', price: 'À partir de 9 900 € HT', cta: 'Parler d’une campagne' },
+  { id: 'collaboration', title: 'Des films toute l’année ?', body: 'Pour les maisons qui ont besoin de nous régulièrement, nous développons dans le temps un langage visuel cohérent, avec une journée principale de production chaque mois.', price: 'À partir de 3 600 € HT / mois', cta: 'Parler d’un accompagnement' },
+]
+
 export const PROCESS = [
-  {
-    t: 'Un échange de trente minutes',
-    d: 'Nous cadrons votre projet, votre échéance et votre budget.',
-  },
-  {
-    t: 'Une proposition détaillée',
-    d: 'Livrables, calendrier et prix sont définis avant de commencer.',
-  },
-  {
-    t: 'Le tournage',
-    d: 'Une équipe de trois à cinq personnes, dans le respect de votre lieu et de vos clients.',
-  },
-  {
-    t: 'La postproduction',
-    d: 'Entièrement réalisée au studio, avec deux séries de retours incluses.',
-  },
+  { t: 'Comprendre', d: 'La maison, le lieu, l’expérience — et ce que le spectateur doit ressentir.' },
+  { t: 'Écrire', d: 'Le concept, l’histoire, les personnages et la direction visuelle. Cette direction est validée avant le tournage.' },
+  { t: 'Réaliser', d: 'Le tournage, puis le montage, le son, l’étalonnage et les masters.' },
+]
+
+export const FAQS = [
+  { q: 'Quelle différence entre Histoires et Film ?', a: 'Histoires réunit trois récits courts qui explorent différentes facettes de votre univers. Film construit une histoire principale plus ample.' },
+  { q: 'Peut-on tourner en vertical et en horizontal ?', a: 'Oui. Les formats sont pensés dès l’écriture selon le récit, les usages et les supports de diffusion.' },
+  { q: 'Comment le concept est-il validé ?', a: 'La direction narrative et visuelle est présentée et validée avant le tournage.' },
+  { q: 'Comment fonctionne le casting ?', a: 'Le casting et la direction d’acteur sont définis selon l’histoire et son périmètre de diffusion.' },
+  { q: 'Que signifie « à partir de » ?', a: 'Chaque film est écrit sur mesure. Le scénario, le casting, les lieux et le périmètre de diffusion déterminent le devis final.' },
+  { q: 'Peut-on travailler ensemble régulièrement ?', a: 'Oui. Nous pouvons devenir le studio de réalisation récurrent de votre maison, d’abord sur un premier cycle de trois mois.' },
 ]

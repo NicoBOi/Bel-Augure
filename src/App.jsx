@@ -36,7 +36,7 @@ const TITLES = {
   accueil: 'Bel Augure — Films pour le bien-être haut de gamme',
   films: 'Films — Bel Augure',
   studio: 'Studio de production audiovisuelle à Bordeaux — Bel Augure',
-  offres: 'Films de marque, réseaux & campagnes — Bel Augure',
+  offres: 'Histoires & Films de marque — Bel Augure',
   contact: 'Contact — Bel Augure',
   mentions: 'Mentions légales — Bel Augure',
   confidentialite: 'Confidentialité — Bel Augure',
@@ -52,7 +52,7 @@ const DESCRIPTIONS = {
   studio:
     "Bel Augure, studio de production fondé à Bordeaux par Nicolas Sempere et Corentin Crestia : des films de marque pour les lieux et marques de bien-être haut de gamme.",
   offres:
-    'Trois façons de travailler ensemble : Film Signature (dès 9 500 € HT), Histoires de marque (dès 5 500 € HT, ou 4 500 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Proposition détaillée après un échange de trente minutes.',
+    'Deux façons de travailler avec Bel Augure : Histoires, trois récits courts dès 3 900 € HT, ou Film, une histoire plus ample dès 6 900 € HT. Campagnes et collaborations sur mesure.',
   contact:
     'Parler de votre prochain film avec Bel Augure, studio à Bordeaux. Un email, une idée, et le projet commence.',
   mentions: 'Mentions légales de Bel Augure : éditeur, hébergeur et propriété intellectuelle.',

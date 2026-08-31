@@ -11,14 +11,12 @@ const ENDPOINT = '/api/contact'
 // Champs qualifiants du rendez-vous : orientent le projet et filtrent les
 // leads sous-budgétés (champ budget). La diffusion se précise de vive voix
 // lors du premier échange, pas dans le formulaire.
-const PROJETS = ['Film Signature', 'Histoires de marque', 'Campagne', 'Je ne sais pas encore']
+const PROJETS = ['Histoires', 'Film', 'Une campagne', 'Une collaboration dans la durée', 'Je ne sais pas encore']
 const ECHEANCES = ['Une date précise', 'Dans les 3 mois', 'Dans l’année', 'Pas d’échéance']
-// Tranches calées sur la grille : rien en dessous du plancher affiché
-// (4 500 € HT), et une tranche haute qui couvre la Campagne.
 const BUDGETS = [
-  '4 500 – 7 500 €',
-  '7 500 – 12 000 €',
-  '12 000 – 20 000 €',
+  '3 900 – 6 900 €',
+  '6 900 – 9 900 €',
+  '9 900 – 20 000 €',
   '20 000 € et plus',
   'À définir ensemble',
 ]

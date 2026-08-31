@@ -7,7 +7,7 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 // Source de vérité unique des offres (textes + prix), partagée avec la page
 // React : le corps SEO de /offres est généré depuis ces données.
-import { OFFERS, PROCESS } from '../src/content/offres.js'
+import { EXTENSIONS, OFFERS, PROCESS } from '../src/content/offres.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = resolve(root, 'dist')
@@ -22,35 +22,11 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, 
 // publier un prix ici différent de celui affiché à l'écran.
 function offresBody() {
   const offers = OFFERS.map((o) => {
-    const parts = [`<h2>${o.name} — ${o.label.toLowerCase()}</h2>`]
-    // Offre sans tarif global (Histoires) : on annonce le plancher de sa
-    // première formule.
-    const price = o.price || (o.formats && o.formats[0].price)
-    // Le prérendu est du texte brut : les repères **gras** de la page React
-    // n'ont pas leur place ici.
-    const desc = o.description.join(' ').replace(/\*\*/g, '')
-    let formats = ''
-    if (o.formats) {
-      formats =
-        ' ' +
-        o.formats
-          .map((f) => {
-            const note = f.priceNote ? `, ${f.priceNote.toLowerCase()}` : ''
-            const bits = f.rows
-              ? [f.nature, ...f.rows.map((r) => r.value.toLowerCase())]
-              : null
-            const stats = bits ? ` (${bits.join(', ')})` : ''
-            return `${f.title}${stats} : ${f.price}${note}.`
-          })
-          .join(' ')
-    }
-    const receive = ` ${o.receiveTitle} : ${o.receive.map((r) => r.toLowerCase()).join(', ')}.`
-    const note = o.receiveNote ? ` ${o.receiveNote.join(' ')}` : ''
-    parts.push(`<p>${price}. ${desc}${formats}${receive}${note}</p>`)
-    return parts.join('\n      ')
+    return `<h2>${o.eyebrow}</h2><p>${o.price}. ${o.short} ${o.for} ${o.detail}</p>`
   })
+  const extensions = EXTENSIONS.map((e) => `<h2>${e.title}</h2><p>${e.price}. ${e.body}</p>`).join('\n      ')
   const process = `<h2>Comment nous travaillons</h2>\n      <p>${PROCESS.map((st) => `${st.t} : ${st.d}`).join(' ')}</p>`
-  return `\n      ${offers.join('\n      ')}\n      ${process}`
+  return `\n      <p>Votre univers mérite une histoire.</p>\n      ${offers.join('\n      ')}\n      ${extensions}\n      ${process}`
 }
 
 // Le texte du site, tel qu'il existe dans les vues React.
@@ -94,9 +70,9 @@ const ROUTES = [
   },
   {
     path: '/offres',
-    title: 'Films de marque, réseaux & campagnes — Bel Augure',
-    desc: 'Trois façons de travailler ensemble : Film Signature (dès 9 500 € HT), Histoires de marque (dès 5 500 € HT, ou 4 500 € HT par mois sur douze mois) et Campagne (dès 15 000 € HT). Proposition détaillée après un échange de trente minutes.',
-    h1: 'Un format pour chaque ambition — films pour les lieux et marques de bien-être haut de gamme',
+    title: 'Histoires & Films de marque — Bel Augure',
+    desc: 'Deux façons de travailler avec Bel Augure : Histoires, trois récits courts dès 3 900 € HT, ou Film, une histoire plus ample dès 6 900 € HT. Campagnes et collaborations sur mesure.',
+    h1: 'Des histoires et des films pour les maisons et marques de qualité',
     body: offresBody(),
   },
   {
